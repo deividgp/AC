@@ -1,8 +1,8 @@
 -fastfwd 50000000
 -max:inst 50000000
 -cache:dl1 dl1:256:64:8:l
--cache:il1 il1:512:64:6:l
--cache:dl2 ul2:3072:128:8:l
+-cache:il1 il1:512:64:8:l
+-cache:dl2 ul2:4096:128:8:l
 -fetch:ifqsize 8
 -decode:width 8
 -issue:width 8
