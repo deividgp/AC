@@ -1,0 +1,5 @@
+-fastfwd 	50000000 # salta 50M
+-max:inst 	50000000 # simula 10M
+
+-mem:lat	300 2	# 1a dada 300 cicles i dos cicles per cada ample bus
+-mem:width	32	# 256 de bus
