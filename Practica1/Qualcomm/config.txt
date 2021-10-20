@@ -7,7 +7,7 @@
 -decode:width 5
 -issue:width 15
 -commit:width 8
--ruu:size 224
+-ruu:size 256
 -lsq:size 128
 -mem:lat 64 2
 -mem:width 8
