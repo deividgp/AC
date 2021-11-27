@@ -7,4 +7,4 @@ sim-outorder -redir:sim gshareBzip2 -fastfwd 50000000 -max:inst 65000000 -bpred:
 #Vpr
 sim-outorder -redir:sim gshareVpr -fastfwd 50000000 -max:inst 65000000  -bpred 2lev -bpred:2lev 1 8 3 1 -mem:width 32 -mem:lat 300 2 ../vpr/exe/vpr.exe ../vpr/data/ref/net.in ../vpr/data/ref/arch.in place.out dum.out -nodisp -place_only -init_t 5 -exit_t 0.005 -alpha_t 0.9412 -inner_num 2 > vpr_log.out 2> vpr_log.err
 #Art
-sim-outorder -redir:sim gshareArt -fastfwd 50000000 -max:inst 65000000  -bpred 2lev -bpred:2lev 1 8 3 1 -mem:width 32 -mem:lat 300 2 ../art/exe/art.exe -scanfile c756hel.in -trainfile1 ../art/data/ref/a10.img -stride 2 -startx 134 -starty 220 -endx 139 -endy 225 -objects 1 > ./art.out 2> ./art.err
+sim-outorder -redir:sim gshareArt -fastfwd 50000000 -max:inst 65000000  -bpred 2lev -bpred:2lev 1 8 3 1 -mem:width 32 -mem:lat 300 2 ../art/exe/art.exe -scanfile ../art/data/ref/c756hel.in -trainfile1 ../art/data/ref/a10.img -stride 2 -startx 134 -starty 220 -endx 139 -endy 225 -objects 1 > ./art.out 2> ./art.err

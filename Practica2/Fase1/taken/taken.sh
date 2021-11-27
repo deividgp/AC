@@ -7,4 +7,4 @@ sim-bpred -redir:sim takenBzip2 -fastfwd 50000000 -max:inst 65000000 -bpred take
 #Vpr:
 sim-bpred -redir:sim takenVpr -fastfwd 50000000 -max:inst 65000000 -bpred taken ../vpr/exe/vpr.exe ../vpr/data/ref/net.in ../vpr/data/ref/arch.in place.out dum.out -nodisp -place_only -init_t 5 -exit_t 0.005 -alpha_t 0.9412 -inner_num 2 > vpr_log.out 2> vpr_log.err
 #Art
-sim-bpred -redir:sim takenArt -fastfwd 50000000 -max:inst 65000000 -bpred taken ../art/exe/art.exe -scanfile c756hel.in -trainfile1 ../art/data/ref/a10.img -stride 2 -startx 134 -starty 220 -endx 139 -endy 225 -objects 1 > ./art.out 2> ./art.err
+sim-bpred -redir:sim takenArt -fastfwd 50000000 -max:inst 65000000 -bpred taken ../art/exe/art.exe -scanfile ../art/data/ref/c756hel.in -trainfile1 ../art/data/ref/a10.img -stride 2 -startx 134 -starty 220 -endx 139 -endy 225 -objects 1 > ./art.out 2> ./art.err

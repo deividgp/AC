@@ -8,7 +8,7 @@ of SimpleScalar, LLC (info@simplescalar.com).
 warning: section `.comment' ignored...
 sim: command line: sim-outorder -redir:sim bimodalAmmp -fastfwd 50000000 -max:inst 65000000 -bpred:bimod 8 -mem:width 32 -mem:lat 300 2 ../ammp/exe/ammp.exe ammp 
 
-sim: simulation started @ Tue Nov 16 13:41:46 2021, options follow:
+sim: simulation started @ Tue Nov 23 20:03:24 2021, options follow:
 
 sim-outorder: This simulator implements a very detailed out-of-order issue
 superscalar processor with a two-level memory system and speculative
@@ -3262,6 +3262,6 @@ ld_target_big_endian              0 # target executable endian-ness, non-zero if
 mem.page_count                   60 # total number of pages allocated
 mem.page_mem                   480k # total size of memory pages allocated
 mem.ptab_misses               18486 # total first level page table misses
-mem.ptab_accesses          27469180 # total page table accesses
+mem.ptab_accesses          27469046 # total page table accesses
 mem.ptab_miss_rate           0.0007 # first level page table miss rate
 
