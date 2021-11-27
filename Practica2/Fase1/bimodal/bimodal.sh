@@ -1,10 +1,30 @@
 #Applu
-#sim-outorder -redir:sim bimodalApplu -fastfwd 50000000 -max:inst 65000000 -bpred:bimod 8 -mem:width 32 -mem:lat 300 2 ../../../applu/exe/applu.exe < ../../../applu/data/ref/applu.in
+sim-outorder -redir:sim bimodalApplu8 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 8 -mem:width 32 -mem:lat 300 2 ../../../applu/exe/applu.exe < ../../../applu/data/ref/applu.in
+sim-outorder -redir:sim bimodalApplu32 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 32 -mem:width 32 -mem:lat 300 2 ../../../applu/exe/applu.exe < ../../../applu/data/ref/applu.in
+sim-outorder -redir:sim bimodalApplu128 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 128 -mem:width 32 -mem:lat 300 2 ../../../applu/exe/applu.exe < ../../../applu/data/ref/applu.in
+sim-outorder -redir:sim bimodalApplu512 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 512 -mem:width 32 -mem:lat 300 2 ../../../applu/exe/applu.exe < ../../../applu/data/ref/applu.in
+sim-outorder -redir:sim bimodalApplu2048 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 2048 -mem:width 32 -mem:lat 300 2 ../../../applu/exe/applu.exe < ../../../applu/data/ref/applu.in
 #Crafty
-#sim-outorder -redir:sim bimodalCrafty -fastfwd 50000000 -max:inst 65000000 -bpred:bimod 8 -mem:width 32 -mem:lat 300 2 ../../../crafty/exe/crafty.exe < ../../../crafty/data/ref/crafty.in
+sim-outorder -redir:sim bimodalCrafty8 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 8 -mem:width 32 -mem:lat 300 2 ../../../crafty/exe/crafty.exe < ../../../crafty/data/ref/crafty.in
+sim-outorder -redir:sim bimodalCrafty32 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 32 -mem:width 32 -mem:lat 300 2 ../../../crafty/exe/crafty.exe < ../../../crafty/data/ref/crafty.in
+sim-outorder -redir:sim bimodalCrafty128 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 128 -mem:width 32 -mem:lat 300 2 ../../../crafty/exe/crafty.exe < ../../../crafty/data/ref/crafty.in
+sim-outorder -redir:sim bimodalCrafty512 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 512 -mem:width 32 -mem:lat 300 2 ../../../crafty/exe/crafty.exe < ../../../crafty/data/ref/crafty.in
+sim-outorder -redir:sim bimodalCrafty2048 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 2048 -mem:width 32 -mem:lat 300 2 ../../../crafty/exe/crafty.exe < ../../../crafty/data/ref/crafty.in
 #Mesa
-#sim-outorder -redir:sim bimodalMesa -fastfwd 50000000 -max:inst 65000000 -bpred:bimod 8 -mem:width 32 -mem:lat 300 2 ../../../mesa/exe/mesa.exe -frames 1000 -meshfile ../../../mesa/data/ref/mesa.in -ppmfile ../../../mesa/data/ref/mesa.ppm
+sim-outorder -redir:sim bimodalMesa8 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 8 -mem:width 32 -mem:lat 300 2 ../../../mesa/exe/mesa.exe -frames 1000 -meshfile ../../../mesa/data/ref/mesa.in -ppmfile ../../../mesa/data/ref/mesa.ppm
+sim-outorder -redir:sim bimodalMesa32 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 32 -mem:width 32 -mem:lat 300 2 ../../../mesa/exe/mesa.exe -frames 1000 -meshfile ../../../mesa/data/ref/mesa.in -ppmfile ../../../mesa/data/ref/mesa.ppm
+sim-outorder -redir:sim bimodalMesa128 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 128 -mem:width 32 -mem:lat 300 2 ../../../mesa/exe/mesa.exe -frames 1000 -meshfile ../../../mesa/data/ref/mesa.in -ppmfile ../../../mesa/data/ref/mesa.ppm
+sim-outorder -redir:sim bimodalMesa512 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 512 -mem:width 32 -mem:lat 300 2 ../../../mesa/exe/mesa.exe -frames 1000 -meshfile ../../../mesa/data/ref/mesa.in -ppmfile ../../../mesa/data/ref/mesa.ppm
+sim-outorder -redir:sim bimodalMesa2048 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 2048 -mem:width 32 -mem:lat 300 2 ../../../mesa/exe/mesa.exe -frames 1000 -meshfile ../../../mesa/data/ref/mesa.in -ppmfile ../../../mesa/data/ref/mesa.ppm
 #Vpr
-#sim-outorder -redir:sim bimodalVpr -fastfwd 50000000 -max:inst 65000000  -bpred bimod -bpred:bimod 8 -mem:width 32 -mem:lat 300 2 ../../../vpr/exe/vpr.exe ../../../vpr/data/ref/net.in ../../../vpr/data/ref/arch.in place.out dum.out -nodisp -place_only -init_t 5 -exit_t 0.005 -alpha_t 0.9412 -inner_num 2
+sim-outorder -redir:sim bimodalVpr8 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 8 -mem:width 32 -mem:lat 300 2 ../../../vpr/exe/vpr.exe ../../../vpr/data/ref/net.in ../../../vpr/data/ref/arch.in place.out dum.out -nodisp -place_only -init_t 5 -exit_t 0.005 -alpha_t 0.9412 -inner_num 2
+sim-outorder -redir:sim bimodalVpr32 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 32 -mem:width 32 -mem:lat 300 2 ../../../vpr/exe/vpr.exe ../../../vpr/data/ref/net.in ../../../vpr/data/ref/arch.in place.out dum.out -nodisp -place_only -init_t 5 -exit_t 0.005 -alpha_t 0.9412 -inner_num 2
+sim-outorder -redir:sim bimodalVpr128 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 128 -mem:width 32 -mem:lat 300 2 ../../../vpr/exe/vpr.exe ../../../vpr/data/ref/net.in ../../../vpr/data/ref/arch.in place.out dum.out -nodisp -place_only -init_t 5 -exit_t 0.005 -alpha_t 0.9412 -inner_num 2
+sim-outorder -redir:sim bimodalVpr512 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 512 -mem:width 32 -mem:lat 300 2 ../../../vpr/exe/vpr.exe ../../../vpr/data/ref/net.in ../../../vpr/data/ref/arch.in place.out dum.out -nodisp -place_only -init_t 5 -exit_t 0.005 -alpha_t 0.9412 -inner_num 2
+sim-outorder -redir:sim bimodalVpr2048 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 2048 -mem:width 32 -mem:lat 300 2 ../../../vpr/exe/vpr.exe ../../../vpr/data/ref/net.in ../../../vpr/data/ref/arch.in place.out dum.out -nodisp -place_only -init_t 5 -exit_t 0.005 -alpha_t 0.9412 -inner_num 2
 #Vortex
-sim-outorder -redir:sim bimodalVortex -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 8 -mem:width 32 -mem:lat 300 2 ../../../vortex/exe/vortex.exe ../../../vortex/data/ref/lendian1.raw
+sudo sim-outorder -redir:sim bimodalVortex8 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 8 -mem:width 32 -mem:lat 300 2 ../../../vortex/exe/vortex.exe ../../../vortex/data/ref/lendian1.raw
+sudo sim-outorder -redir:sim bimodalVortex32 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 32 -mem:width 32 -mem:lat 300 2 ../../../vortex/exe/vortex.exe ../../../vortex/data/ref/lendian1.raw
+sudo sim-outorder -redir:sim bimodalVortex128 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 128 -mem:width 32 -mem:lat 300 2 ../../../vortex/exe/vortex.exe ../../../vortex/data/ref/lendian1.raw
+sudo sim-outorder -redir:sim bimodalVortex512 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 512 -mem:width 32 -mem:lat 300 2 ../../../vortex/exe/vortex.exe ../../../vortex/data/ref/lendian1.raw
+sudo sim-outorder -redir:sim bimodalVortex2048 -fastfwd 50000000 -max:inst 65000000 -bpred bimod -bpred:bimod 2048 -mem:width 32 -mem:lat 300 2 ../../../vortex/exe/vortex.exe ../../../vortex/data/ref/lendian1.raw
