@@ -123,6 +123,11 @@ static int twolev_nelt = 4;
 static int twolev_config[4] =
   { /* l1size */1, /* l2size */1024, /* hist */8, /* xor */FALSE};
 
+/* agree predictor config (<l1size> <l2size> <hist_size> <xor>) */
+static int agree_nelt = 4;
+static int agree_config[4] =
+  { /* l1size */1, /* l2size */1024, /* hist */8, /* xor */FALSE};
+
 /* combining predictor config (<meta_table_size> */
 static int comb_nelt = 1;
 static int comb_config[1] =
@@ -934,6 +939,25 @@ sim_check_options(struct opt_odb_t *odb,        /* options database */
 			  /* ret-addr stack size */ras_size);
     }
   else if (!mystricmp(pred_type, "2lev"))
+    {
+      /* 2-level adaptive predictor, bpred_create() checks args */
+      if (twolev_nelt != 4)
+	fatal("bad 2-level pred config (<l1size> <l2size> <hist_size> <xor>)");
+      if (btb_nelt != 2)
+	fatal("bad btb config (<num_sets> <associativity>)");
+
+      pred = bpred_create(BPred2Level,
+			  /* bimod table size */0,
+			  /* 2lev l1 size */twolev_config[0],
+			  /* 2lev l2 size */twolev_config[1],
+			  /* meta table size */0,
+			  /* history reg size */twolev_config[2],
+			  /* history xor address */twolev_config[3],
+			  /* btb sets */btb_config[0],
+			  /* btb assoc */btb_config[1],
+			  /* ret-addr stack size */ras_size);
+    }
+  else if (!mystricmp(pred_type, "agree"))
     {
       /* 2-level adaptive predictor, bpred_create() checks args */
       if (twolev_nelt != 4)
