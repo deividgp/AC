@@ -6,9 +6,9 @@ entity, or for any commercial purpose, without the prior written permission
 of SimpleScalar, LLC (info@simplescalar.com).
 
 warning: section `.comment' ignored...
-sim: command line: sim-outorder -redir:sim pagVortex -fastfwd 50000000 -max:inst 65000000 -bpred 2lev -bpred:2lev 4 4 3 0 -mem:width 32 -mem:lat 300 2 ../../../vortex/exe/vortex.exe ../../../vortex/data/ref/lendian1.raw 
+sim: command line: sim-outorder -redir:sim pagVortex16-64 -fastfwd 50000000 -max:inst 65000000 -bpred 2lev -bpred:2lev 16 64 6 0 -mem:width 32 -mem:lat 300 2 ../../../vortex/exe/vortex.exe ../../../vortex/data/ref/lendian1.raw 
 
-sim: simulation started @ Sat Nov 27 12:36:31 2021, options follow:
+sim: simulation started @ Sun Nov 28 11:33:21 2021, options follow:
 
 sim-outorder: This simulator implements a very detailed out-of-order issue
 superscalar processor with a two-level memory system and speculative
@@ -24,7 +24,7 @@ latency of all pipeline operations.
 -seed                       1 # random number generator seed (0 for timer seed)
 # -q                    false # initialize and terminate immediately
 # -chkpt               <null> # restore EIO trace execution from <fname>
-# -redir:sim        pagVortex # redirect simulator output to file (non-interactive only)
+# -redir:sim     pagVortex16-64 # redirect simulator output to file (non-interactive only)
 # -redir:prog          <null> # redirect simulated program output to file
 -nice                       0 # simulator scheduling priority
 -max:inst            65000000 # maximum number of inst's to execute
@@ -35,7 +35,7 @@ latency of all pipeline operations.
 -fetch:speed                1 # speed of front-end of machine relative to execution core
 -bpred                   2lev # branch predictor type {nottaken|taken|perfect|bimod|2lev|comb}
 -bpred:bimod     2048 # bimodal predictor config (<table size>)
--bpred:2lev      4 4 3 0 # 2-level predictor config (<l1size> <l2size> <hist_size> <xor>)
+-bpred:2lev      16 64 6 0 # 2-level predictor config (<l1size> <l2size> <hist_size> <xor>)
 -bpred:comb      1024 # combining predictor config (<meta_table_size>)
 -bpred:ras                  8 # return address stack size (0 for no return stack)
 -bpred:btb       512 4 # BTB config (<num_sets> <associativity>)
@@ -57,8 +57,8 @@ latency of all pipeline operations.
 -cache:il2lat               6 # l2 instruction cache hit latency (in cycles)
 -cache:flush            false # flush caches on system calls
 -cache:icompress        false # convert 64-bit inst addresses to 32-bit inst equivalents
--mem:lat         300 2 # memopersons.1k:  can't open PERSONS data file
-ry access latency (<first_chunk> <inter_chunk>)
+-mem:lat         3persons.1k:  can't open PERSONS data file
+00 2 # memory access latency (<first_chunk> <inter_chunk>)
 -mem:width                 32 # memory access bus width (in bytes)
 -tlb:itlb        itlb:16:4096:4:l # instruction TLB config, i.e., {<config>|none}
 -tlb:dtlb        dtlb:32:4096:4:l # data TLB config, i.e., {<config>|none}
@@ -249,9 +249,9 @@ ld_stack_size                 16384 # program initial stack size
 ld_prog_entry          0x01200245c0 # program entry point (initial PC)
 ld_environ_base        0x011ff97000 # program environment base address address
 ld_target_big_endian              0 # target executable endian-ness, non-zero if big endian
-mem.page_count                  133 # total number of pages allocated
-mem.page_mem                  1064k # total size of memory pages allocated
-mem.ptab_misses                 249 # total first level page table misses
-mem.ptab_accesses           3594634 # total page table accesses
+mem.page_count                  134 # total number of pages allocated
+mem.page_mem                  1072k # total size of memory pages allocated
+mem.ptab_misses                 250 # total first level page table misses
+mem.ptab_accesses           3595126 # total page table accesses
 mem.ptab_miss_rate           0.0001 # first level page table miss rate
 
