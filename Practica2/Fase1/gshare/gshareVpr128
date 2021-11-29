@@ -8,7 +8,7 @@ of SimpleScalar, LLC (info@simplescalar.com).
 warning: section `.comment' ignored...
 sim: command line: sim-outorder -redir:sim gshareVpr128 -fastfwd 50000000 -max:inst 65000000 -bpred 2lev -bpred:2lev 1 128 7 1 -mem:width 32 -mem:lat 300 2 ../../../vpr/exe/vpr.exe ../../../vpr/data/ref/net.in ../../../vpr/data/ref/arch.in place.out dum.out -nodisp -place_only -init_t 5 -exit_t 0.005 -alpha_t 0.9412 -inner_num 2 
 
-sim: simulation started @ Sun Nov 28 09:51:48 2021, options follow:
+sim: simulation started @ Mon Nov 29 18:29:41 2021, options follow:
 
 sim-outorder: This simulator implements a very detailed out-of-order issue
 superscalar processor with a two-level memory system and speculative
@@ -138,8 +138,8 @@ sim_num_refs               15059082 # total number of loads and stores committed
 sim_num_loads              11862325 # total number of loads committed
 sim_num_stores         3196757.0000 # total number of stores committed
 sim_num_branches           13133575 # total number of branches committed
-sim_elapsed_time                 34 # total simulation time in seconds
-sim_inst_rate          1911764.7353 # simulation speed (in insts/sec)
+sim_elapsed_time                 32 # total simulation time in seconds
+sim_inst_rate          2031250.0312 # simulation speed (in insts/sec)
 sim_total_insn             83119176 # total number of instructions executed
 sim_total_refs             19405878 # total number of loads and stores executed
 sim_total_loads            15740649 # total number of loads executed
@@ -251,6 +251,6 @@ ld_target_big_endian              0 # target executable endian-ness, non-zero if
 mem.page_count                  342 # total number of pages allocated
 mem.page_mem                  2736k # total size of memory pages allocated
 mem.ptab_misses              157536 # total first level page table misses
-mem.ptab_accesses         615998316 # total page table accesses
+mem.ptab_accesses         615998348 # total page table accesses
 mem.ptab_miss_rate           0.0003 # first level page table miss rate
 

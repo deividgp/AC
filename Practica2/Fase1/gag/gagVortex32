@@ -8,7 +8,7 @@ of SimpleScalar, LLC (info@simplescalar.com).
 warning: section `.comment' ignored...
 sim: command line: sim-outorder -redir:sim gagVortex32 -fastfwd 50000000 -max:inst 65000000 -bpred 2lev -bpred:2lev 1 32 5 0 -mem:width 32 -mem:lat 300 2 ../../../vortex/exe/vortex.exe ../../../vortex/data/ref/lendian1.raw 
 
-sim: simulation started @ Sun Nov 28 09:41:06 2021, options follow:
+sim: simulation started @ Mon Nov 29 18:20:25 2021, options follow:
 
 sim-outorder: This simulator implements a very detailed out-of-order issue
 superscalar processor with a two-level memory system and speculative
