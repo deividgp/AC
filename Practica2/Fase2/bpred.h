@@ -132,7 +132,6 @@ struct bpred_dir_t {
       int *shiftregs;		/* level-1 history table */
       unsigned char *l2table;	/* level-2 prediction state table */
 
-      int l3size; /* size of btb table */
       unsigned char *btbtable;
     } two;
   } config;

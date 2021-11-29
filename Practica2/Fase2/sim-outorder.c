@@ -672,6 +672,13 @@ sim_reg_options(struct opt_odb_t *odb)
 		   /* default */twolev_config,
                    /* print */TRUE, /* format */NULL, /* !accrue */FALSE);
 
+  opt_reg_int_list(odb, "-bpred:agree",
+                   "agree predictor config "
+		   "(<l1size> <l2size> <hist_size> <xor>)",
+                   agree_config, agree_nelt, &agree_nelt,
+		   /* default */agree_config,
+                   /* print */TRUE, /* format */NULL, /* !accrue */FALSE);
+
   opt_reg_int_list(odb, "-bpred:comb",
 		   "combining predictor config (<meta_table_size>)",
 		   comb_config, comb_nelt, &comb_nelt,
@@ -959,19 +966,19 @@ sim_check_options(struct opt_odb_t *odb,        /* options database */
     }
   else if (!mystricmp(pred_type, "agree"))
     {
-      /* 2-level adaptive predictor, bpred_create() checks args */
-      if (twolev_nelt != 4)
+      /* agree adaptive predictor, bpred_create() checks args */
+      if (agree_nelt != 4)
 	fatal("bad 2-level pred config (<l1size> <l2size> <hist_size> <xor>)");
-      if (btb_nelt != 2)
+      if (agree_nelt != 2)
 	fatal("bad btb config (<num_sets> <associativity>)");
 
-      pred = bpred_create(BPred2Level,
+      pred = bpred_create(BPredAgree,
 			  /* bimod table size */0,
-			  /* 2lev l1 size */twolev_config[0],
-			  /* 2lev l2 size */twolev_config[1],
+			  /* 2lev l1 size */agree_config[0],
+			  /* 2lev l2 size */agree_config[1],
 			  /* meta table size */0,
-			  /* history reg size */twolev_config[2],
-			  /* history xor address */twolev_config[3],
+			  /* history reg size */agree_config[2],
+			  /* history xor address */agree_config[3],
 			  /* btb sets */btb_config[0],
 			  /* btb assoc */btb_config[1],
 			  /* ret-addr stack size */ras_size);

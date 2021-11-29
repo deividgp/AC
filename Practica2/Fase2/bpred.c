@@ -99,6 +99,7 @@ bpred_create(enum bpred_class class,	/* type of predictor to create */
     break;
 
   case BPred2Level:
+  case BPredAgree:
     pred->dirpred.twolev = 
       bpred_dir_create(class, l1size, l2size, shift_width, xor);
 
