@@ -581,12 +581,14 @@ bpred_dir_lookup(struct bpred_dir_t *pred_dir,	/* branch dir predictor inst */
       break;
     case BPredAgree:
       {
-	int l1index, l2index, gbhrindex;
-
-        gbhrindex = (baddr >> MD_BR_SHIFT) & (1 - 1);
+	int l1index, l2index, gbhrindex, gbhrsize = 1;
+  unsigned char btbvalue, phtvalue;
+        gbhrindex = (baddr >> MD_BR_SHIFT) & (gbhrsize - 1);
         l2index = pred_dir->config.two.shiftregs[gbhrindex];
         l2index = l2index | ((baddr >> MD_BR_SHIFT) << pred_dir->config.two.shift_width);
         l2index = l2index & (pred_dir->config.two.l2size - 1);
+        phtvalue = pred_dir->config.two.btbtable[l2index];
+        btbvalue = pred_dir->config.two.btbtable[(baddr >> MD_BR_SHIFT)];
       }
       break;
     case BPred2bit:
