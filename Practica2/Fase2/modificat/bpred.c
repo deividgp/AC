@@ -123,6 +123,7 @@ bpred_create(enum bpred_class class,	/* type of predictor to create */
   case BPredComb:
   case BPred2Level:
   case BPred2bit:
+  case BPredAgree:
     {
       int i;
 
@@ -233,7 +234,45 @@ bpred_dir_create (
 
       break;
     }
+  case BPredAgree:
+    {
+      if (!l1size || (l1size & (l1size-1)) != 0)
+	fatal("level-1 size, `%d', must be non-zero and a power of two", 
+	      l1size);
+      pred_dir->config.two.l1size = l1size;
+      
+      if (!l2size || (l2size & (l2size-1)) != 0)
+	fatal("level-2 size, `%d', must be non-zero and a power of two", 
+	      l2size);
+      pred_dir->config.two.l2size = l2size;
+      
+      if (!shift_width || shift_width > 30)
+	fatal("shift register width, `%d', must be non-zero and positive",
+	      shift_width);
+      pred_dir->config.two.shift_width = shift_width;
+      
+      pred_dir->config.two.xor = xor;
+      pred_dir->config.two.shiftregs = calloc(1, sizeof(int));
+      if (!pred_dir->config.two.shiftregs)
+	fatal("cannot allocate shift register table");
+      
+      pred_dir->config.two.l2table = calloc(l2size, sizeof(unsigned char));
+      if (!pred_dir->config.two.l2table)
+	fatal("cannot allocate second level table");
 
+      pred_dir->config.two.btbtable = calloc(l1size, sizeof(unsigned char));
+      if (!pred_dir->config.two.btbtable)
+	fatal("cannot allocate btb table");
+      /* initialize counters to weakly this-or-that */
+      flipflop = 1;
+      for (cnt = 0; cnt < l2size; cnt++)
+	{
+	  pred_dir->config.two.l2table[cnt] = flipflop;
+	  flipflop = 3 - flipflop;
+	}
+
+      break;
+    }
   case BPred2bit:
     if (!l1size || (l1size & (l1size-1)) != 0)
       fatal("2bit table size, `%d', must be non-zero and a power of two", 
@@ -273,6 +312,7 @@ bpred_dir_config(
 {
   switch (pred_dir->class) {
   case BPred2Level:
+  case BPredAgree:
     fprintf(stream,
       "pred_dir: %s: 2-lvl: %d l1-sz, %d bits/ent, %s xor, %d l2-sz, direct-mapped\n",
       name, pred_dir->config.two.l1size, pred_dir->config.two.shift_width,
@@ -318,7 +358,12 @@ bpred_config(struct bpred_t *pred,	/* branch predictor instance */
 	    pred->btb.sets, pred->btb.assoc);
     fprintf(stream, "ret_stack: %d entries", pred->retstack.size);
     break;
-
+  case BPredAgree:
+    bpred_dir_config (pred->dirpred.twolev, "agree", stream);
+    fprintf(stream, "btb: %d sets x %d associativity", 
+	    pred->btb.sets, pred->btb.assoc);
+    fprintf(stream, "ret_stack: %d entries", pred->retstack.size);
+    break;
   case BPred2bit:
     bpred_dir_config (pred->dirpred.bimod, "bimod", stream);
     fprintf(stream, "btb: %d sets x %d associativity", 
@@ -364,6 +409,9 @@ bpred_reg_stats(struct bpred_t *pred,	/* branch predictor instance */
       break;
     case BPred2Level:
       name = "bpred_2lev";
+      break;
+    case BPredAgree:
+      name = "bpred_agree";
       break;
     case BPred2bit:
       name = "bpred_bimod";
@@ -531,6 +579,16 @@ bpred_dir_lookup(struct bpred_dir_t *pred_dir,	/* branch dir predictor inst */
         p = &pred_dir->config.two.l2table[l2index];
       }
       break;
+    case BPredAgree:
+      {
+	int l1index, l2index, gbhrindex;
+
+        gbhrindex = (baddr >> MD_BR_SHIFT) & (1 - 1);
+        l2index = pred_dir->config.two.shiftregs[gbhrindex];
+        l2index = l2index | ((baddr >> MD_BR_SHIFT) << pred_dir->config.two.shift_width);
+        l2index = l2index & (pred_dir->config.two.l2size - 1);
+      }
+      break;
     case BPred2bit:
       p = &pred_dir->config.bimod.table[BIMOD_HASH(pred_dir, baddr)];
       break;
@@ -617,6 +675,7 @@ bpred_lookup(struct bpred_t *pred,	/* branch predictor instance */
 	    bpred_dir_lookup (pred->dirpred.bimod, baddr);
 	}
       break;
+    case 
     case BPredTaken:
       return btarget;
     case BPredNotTaken:
