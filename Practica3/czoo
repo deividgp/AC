@@ -1,0 +1,14 @@
+#per establir el tunel
+ssh -NfL XXXX:zoo.lab.deim:22 loginURV@portal1-deim.urv.cat
+#on XXXX es un numero de port arbitrari ex: 8055
+#on loginURV es el login que teniu de la URV (el de llegir el e-mail) amb la lletra majuscula
+
+#per connectar-se:
+ssh -X -p XXXX loginURV@localhost
+#on XXXX es port d'abans (mateix numero)
+#on loginURV amb lletra majuscula
+
+#per copiar:
+#scp -P XXXX fitxer loginURV@localhost:.
+#fitxer es el nom del fitxer a transferir
+#ho deixa al home directori de xoo
