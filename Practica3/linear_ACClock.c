@@ -46,8 +46,8 @@ int main(int np, char*p[])
     }*/
     for (i=0;i<nn;i++) {
         for (j=0;j<nn;j+=8)            
-            X[i][j]=100;
-        Y[i]=50;
+            X[i][j]=90;
+        Y[i]=40;
 	X[i+1] = X[i] + nn;
     }
     
