@@ -46,7 +46,6 @@ int main(int np, char*p[])
     int i,j;
     double sA,sB;
     clock_t ta,t;
-    int porcion, resto, result_code;
     pthread_t threads[MAX_THREADS];
 
     assert(np==3);
@@ -88,12 +87,12 @@ int main(int np, char*p[])
     }
 
     // Càlcul de la porció
-    porcion = nn*nn/numThreads;
+    int porcion = nn*nn/numThreads;
     // Resto sobra dels primers
-    resto = nn*nn % numThreads;
+    float resto = nn*nn % numThreads;
 
     if(resto != 0.00){
-        resto = resto*numThreads;   
+        resto = resto*numThreads;
         for(i=0; i<resto; i++){
             rangos[i] = rangos[i] + 1;
         }
@@ -108,14 +107,12 @@ int main(int np, char*p[])
 
     for (int i = 0; i < numThreads; i++)
     {
-        result_code = pthread_create(&threads[i], NULL, parallel_code, (void *) (intptr_t)i);
-        assert(!result_code);
+        assert(!pthread_create(&threads[i], NULL, parallel_code, (void *) (intptr_t)i));
     }
 
     for(int i = 0; i < numThreads; i++)
     {
-        result_code = pthread_join(threads[i], NULL );
-        assert(!result_code);
+        assert(!pthread_join(threads[i], NULL ));
     }
     
     // calcul linealitat
