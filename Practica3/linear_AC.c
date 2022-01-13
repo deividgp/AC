@@ -88,12 +88,12 @@ int main(int np, char*p[])
 
     // Càlcul de la porció
     int porcion = nn*nn/numThreads;
-    // Resto sobra dels primers
-    float resto = nn*nn % numThreads;
+    // Mòdul
+    int modul = nn*nn % numThreads;
 
-    if(resto != 0.00){
-        resto = resto*numThreads;
-        for(i=0; i<resto; i++){
+    if(modul != 0.00){
+        modul = modul*numThreads;
+        for(i=0; i<modul; i++){
             rangos[i] = rangos[i] + 1;
         }
     }
