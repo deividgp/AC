@@ -27,7 +27,7 @@ void * parallel_code(void * id){
         ini = range[index-1];
     
     for(i=ini; i<range[index]; i++){
-        
+        // Versió ràpida
         /*for (j=0;j<nn;j++) {
             sumaX[i] += X[i][j];
             sumaX2[i] += X[i][j] * X[i][j];
@@ -36,6 +36,8 @@ void * parallel_code(void * id){
         pthread_mutex_lock(&mutex);
         sumaY += Y[i];
         pthread_mutex_unlock(&mutex);*/
+
+        // Versió lenta
         row = i/nn;
         col = i%nn;
         sumaX[row] += X[row][col];
@@ -83,33 +85,21 @@ int main(int np, char*p[])
     A = calloc(nn,sizeof(double)); assert (A);
     B = calloc(nn,sizeof(double)); assert (B);
     // Inicialitzacio
-    /*X[0] = apX;
+    X[0] = apX;
     for (i=0;i<nn;i++) {
         for (j=0;j<nn;j+=8)            
             X[i][j]=rand()%100+1;
         Y[i]=rand()%100 - 49;
-	X[i+1] = X[i] + nn;
-    }*/
-    X[0] = apX;
-    for (i=0;i<nn;i++) {
-        for (j=0;j<nn;j+=8)            
-            X[i][j]=90;
-        Y[i]=40;
 	X[i+1] = X[i] + nn;
     }
 
     int porcion = nn*nn/numThreads;
     int mod = nn*nn % numThreads;
     
-    if(mod != 0){
-        for(i=0; i<mod; i++){
-            range[i] += 1;
-        }
-    }
-
-    range[0] = range[0] + porcion;
-    for(i=1; i<numThreads; i++){
-        range[i] += range[i-1] + porcion;
+    for(i=0; i<numThreads; i++){
+        range[i] = porcion;
+        if (i != 0) range[i] += range[i-1];
+        if (i < mod) range[i]++;
     }
     
     sumaY = 0;
