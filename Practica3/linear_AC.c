@@ -12,53 +12,46 @@ int nn, numThreads;
 int *X[N+1],*apX, *Y;
 long *sumaX, *sumaX2, sumaY, *sumaXY;
 double *A, *B;
-int rangos[MAX_THREADS];
+int range[MAX_THREADS];
 pthread_mutex_t mutex= PTHREAD_MUTEX_INITIALIZER;
 int ret;
+int visitedRows[N];
+int counter = 0;
 
 void * parallel_code(void * id){
     int index = (intptr_t) id;
-    int i, ini, fil, col;
-    int filAux = -5;
-    int maxFil = 0, maxCol = 0;
+    int i, ini, row, col;
+    int colCounter = 0;
 
     if(index == 0)
         ini = 0;
     else
-        ini = rangos[index-1];
+        ini = range[index-1];
 
-    for(i=ini; i<rangos[index]; i++){
-        fil = i/nn;
+    for(i=ini; i<range[index]; i++){
+        row = i/nn;
         col = i%nn;
-        if(fil > maxFil){
-            maxFil = fil;
-        }
-        if(col > maxCol){
-            maxCol = col;
-        }
-        /*printf("fil: %d \n", fil);
-        printf("col: %d \n", col);*/
-        sumaX[fil] += X[fil][col];
-        sumaX2[fil] += X[fil][col] * X[fil][col];
-        sumaXY[fil] += X[fil][col] * Y[col];
-
+        printf("Inicial: %d Final: %d \n", ini, range[index]-1);
+        sumaX[row] += X[row][col];
+        sumaX2[row] += X[row][col] * X[row][col];
+        sumaXY[row] += X[row][col] * Y[col];
+        counter++;
         pthread_mutex_lock(&mutex);
-        if(filAux != fil){
-            sumaY += Y[fil];
-            filAux = fil;
-            pthread_mutex_unlock(&mutex);
-        }else{
+        if(visitedRows[row] == 0){
+            visitedRows[row] = 1;
+            sumaY += Y[row];
+            colCounter++;
             pthread_mutex_unlock(&mutex);
         }
+        pthread_mutex_unlock(&mutex);
     }
-    printf("MaxFil: %d", maxFil);
-    printf("MaxCol: %d", maxCol);
+    //printf("COL COUNTER %d \n", colCounter);
     pthread_exit(0);
 }
 
 int main(int np, char*p[])
 {
-    int i,j;
+    int i,j,index;
     double sA,sB;
     clock_t ta,t;
     pthread_t threads[MAX_THREADS];
@@ -74,9 +67,9 @@ int main(int np, char*p[])
 
     printf("Dimensio dades =~ %g Mbytes\n",((double)(nn*(nn+11))*4)/(1024*1024)); 
 
-    memset(rangos,0,numThreads*sizeof(int));
+    memset(range,0,numThreads*sizeof(int));
+    memset(visitedRows,0,nn*sizeof(int));
 
-    //creacio matrius i vectors
     apX = calloc(nn*nn,sizeof(int)); assert (apX);
     Y = calloc(nn,sizeof(int)); assert (Y);
     sumaX = calloc(nn,sizeof(long long)); assert (sumaX);
@@ -84,7 +77,6 @@ int main(int np, char*p[])
     sumaXY = calloc(nn,sizeof(long long)); assert (sumaXY);
     A = calloc(nn,sizeof(double)); assert (A);
     B = calloc(nn,sizeof(double)); assert (B);
-
     // Inicialitzacio
     /*X[0] = apX;
     for (i=0;i<nn;i++) {
@@ -102,42 +94,60 @@ int main(int np, char*p[])
     }
 
     int porcion = nn*nn/numThreads;
-    int modul = nn*nn % numThreads;
-
-    if(modul != 0.00){
-        modul = modul*numThreads;
-        for(i=0; i<modul; i++){
-            rangos[i] = rangos[i] + 1;
+    int mod = nn*nn% numThreads;
+    
+    //printf("resto: %d", mod);
+    if(mod != 0){
+        for(i=0; i<mod; i++){
+            range[i] += 1;
         }
     }
+    
+    /*float porcionf = (float)(nn*nn)/(float)numThreads;  //celdas por Thread
+    int porcion = porcionf;           //parte entera
+    float resto = porcionf - porcion; //parte decimal
 
-    rangos[0] = rangos[0] + porcion;
+    if(resto != 0.00){
+        resto = resto*numThreads;   
+        for(i=0; i<resto; i++){
+            range[i] = range[i] + 1;
+        }
+    }*/
+
+    printf("\n");
+    range[0] = range[0] + porcion;
     for(i=1; i<numThreads; i++){
-        rangos[i] += rangos[i-1] + porcion;
+        range[i] = range[i-1] + porcion;
     }
 
     sumaY = 0;
     pthread_mutex_init(&mutex, NULL);
-    for (int i = 0; i < numThreads; i++)
+    for (index = 0; index < numThreads; index++)
     {
-        assert(!pthread_create(&threads[i], NULL, parallel_code, (void *) (intptr_t)i));
+        assert(!pthread_create(&threads[index], NULL, parallel_code, (void *) (intptr_t)index));
     }
 
-    for(int i = 0; i < numThreads; i++)
+    for(index = 0; index < numThreads; index++)
     {
-        assert(!pthread_join(threads[i], NULL ));
+        assert(!pthread_join(threads[index], NULL ));
     }
     pthread_mutex_destroy(&mutex);
-    // calcul linealitat
+
+    /*for(int k = 0; k < nn; k++){
+        if(visitedRows[k] == 0){
+            printf("index %d \n, k");
+        }
+    }*/
+    printf("COUNTER %d\n", counter);
+
     for (i=0;i<nn;i++) {
 	B[i] = sumaXY[i] - (sumaX[i] * sumaY)/nn;
 	B[i] = B[i] / (sumaX2[i] - (sumaX[i] * sumaX[i])/nn);
 	A[i] = (sumaY -B[i]*sumaX[i])/nn;
     }
 
-    // comprovacio
-    sA = 0;
-    sB = 0;
+    // check
+    sA = sB = 0;
     for (i=0;i<nn;i++) {
             //printf("%f, %f\n",sA,sB);
 	    sA += A[i];
