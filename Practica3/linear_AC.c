@@ -28,17 +28,17 @@ void * parallel_code(void * id){
     
     for(i=ini; i<range[index]; i++){
         // Versió ràpida
-        /*for (j=0;j<nn;j++) {
+        for (j=0;j<nn;j++) {
             sumaX[i] += X[i][j];
             sumaX2[i] += X[i][j] * X[i][j];
             sumaXY[i] += X[i][j] * Y[j];
         }
         pthread_mutex_lock(&mutex);
         sumaY += Y[i];
-        pthread_mutex_unlock(&mutex);*/
+        pthread_mutex_unlock(&mutex);
 
         // Versió lenta
-        row = i/nn;
+        /*row = i/nn;
         col = i%nn;
         sumaX[row] += X[row][col];
         sumaX2[row] += X[row][col] * X[row][col];
@@ -50,7 +50,7 @@ void * parallel_code(void * id){
             sumaY += Y[row];
             pthread_mutex_unlock(&mutex);
         }
-        pthread_mutex_unlock(&mutex);
+        pthread_mutex_unlock(&mutex);*/
 
     }
     pthread_exit(0);
@@ -100,12 +100,12 @@ int main(int np, char*p[])
     }
 
     // Versió ràpida
-    //int porcion = nn*nn/numThreads;
-    //int mod = nn*nn % numThreads;
+    int porcion = nn/numThreads;
+    int mod = nn % numThreads;
 
     // Versió lenta
-    int porcion = nn*nn/numThreads;
-    int mod = nn*nn % numThreads;
+    //int porcion = nn*nn/numThreads;
+    //int mod = nn*nn % numThreads;
     
     for(i=0; i<numThreads; i++){
         range[i] = porcion;
