@@ -11,41 +11,46 @@
 int nn, numThreads;
 int *X[N+1],*apX, *Y;
 long *sumaX, *sumaX2, sumaY, *sumaXY;
-double *A, *B;
+long *A, *B;
 int range[MAX_THREADS];
 pthread_mutex_t mutex= PTHREAD_MUTEX_INITIALIZER;
 int ret;
 int visitedRows[N];
-int counter = 0;
 
 void * parallel_code(void * id){
     int index = (intptr_t) id;
-    int i, ini, row, col;
-    int colCounter = 0;
+    int i, j, ini, row, col;
 
     if(index == 0)
         ini = 0;
     else
         ini = range[index-1];
-
+    
     for(i=ini; i<range[index]; i++){
+        
+        /*for (j=0;j<nn;j++) {
+            sumaX[i] += X[i][j];
+            sumaX2[i] += X[i][j] * X[i][j];
+            sumaXY[i] += X[i][j] * Y[j];
+        }
+        pthread_mutex_lock(&mutex);
+        sumaY += Y[i];
+        pthread_mutex_unlock(&mutex);*/
         row = i/nn;
         col = i%nn;
-        printf("Inicial: %d Final: %d \n", ini, range[index]-1);
         sumaX[row] += X[row][col];
         sumaX2[row] += X[row][col] * X[row][col];
         sumaXY[row] += X[row][col] * Y[col];
-        counter++;
+        
         pthread_mutex_lock(&mutex);
         if(visitedRows[row] == 0){
             visitedRows[row] = 1;
             sumaY += Y[row];
-            colCounter++;
             pthread_mutex_unlock(&mutex);
         }
         pthread_mutex_unlock(&mutex);
+
     }
-    //printf("COL COUNTER %d \n", colCounter);
     pthread_exit(0);
 }
 
@@ -94,37 +99,24 @@ int main(int np, char*p[])
     }
 
     int porcion = nn*nn/numThreads;
-    int mod = nn*nn% numThreads;
+    int mod = nn*nn % numThreads;
     
-    //printf("resto: %d", mod);
     if(mod != 0){
         for(i=0; i<mod; i++){
             range[i] += 1;
         }
     }
-    
-    /*float porcionf = (float)(nn*nn)/(float)numThreads;  //celdas por Thread
-    int porcion = porcionf;           //parte entera
-    float resto = porcionf - porcion; //parte decimal
 
-    if(resto != 0.00){
-        resto = resto*numThreads;   
-        for(i=0; i<resto; i++){
-            range[i] = range[i] + 1;
-        }
-    }*/
-
-    printf("\n");
     range[0] = range[0] + porcion;
     for(i=1; i<numThreads; i++){
-        range[i] = range[i-1] + porcion;
+        range[i] += range[i-1] + porcion;
     }
-
+    
     sumaY = 0;
     pthread_mutex_init(&mutex, NULL);
     for (index = 0; index < numThreads; index++)
     {
-        assert(!pthread_create(&threads[index], NULL, parallel_code, (void *) (intptr_t)index));
+        assert(!pthread_create(&threads[index], NULL, parallel_code, (void *)(intptr_t) index));
     }
 
     for(index = 0; index < numThreads; index++)
@@ -132,13 +124,6 @@ int main(int np, char*p[])
         assert(!pthread_join(threads[index], NULL ));
     }
     pthread_mutex_destroy(&mutex);
-
-    /*for(int k = 0; k < nn; k++){
-        if(visitedRows[k] == 0){
-            printf("index %d \n, k");
-        }
-    }*/
-    printf("COUNTER %d\n", counter);
 
     for (i=0;i<nn;i++) {
 	B[i] = sumaXY[i] - (sumaX[i] * sumaY)/nn;
