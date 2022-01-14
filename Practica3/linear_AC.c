@@ -10,8 +10,8 @@
 
 int nn, numThreads;
 int *X[N+1],*apX, *Y;
-long *sumaX, *sumaX2, sumaY, *sumaXY;
-long *A, *B;
+long long *sumaX, *sumaX2, sumaY, *sumaXY;
+double *A, *B;
 int range[MAX_THREADS];
 pthread_mutex_t mutex= PTHREAD_MUTEX_INITIALIZER;
 int ret;
@@ -86,13 +86,24 @@ int main(int np, char*p[])
     B = calloc(nn,sizeof(double)); assert (B);
     // Inicialitzacio
     X[0] = apX;
-    for (i=0;i<nn;i++) {
+    /*for (i=0;i<nn;i++) {
         for (j=0;j<nn;j+=8)            
             X[i][j]=rand()%100+1;
         Y[i]=rand()%100 - 49;
 	X[i+1] = X[i] + nn;
+    }*/
+    for (i=0;i<nn;i++) {
+        for (j=0;j<nn;j+=8)            
+            X[i][j]=50;
+        Y[i]=20;
+	X[i+1] = X[i] + nn;
     }
 
+    // Versió ràpida
+    //int porcion = nn*nn/numThreads;
+    //int mod = nn*nn % numThreads;
+
+    // Versió lenta
     int porcion = nn*nn/numThreads;
     int mod = nn*nn % numThreads;
     

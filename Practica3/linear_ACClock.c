@@ -38,10 +38,16 @@ int main(int np, char*p[])
     // Inicialitzacio
     X[0] = apX;
     start_t = clock();
-    for (i=0;i<nn;i++) {
+    /*for (i=0;i<nn;i++) {
         for (j=0;j<nn;j+=8)            
             X[i][j]=rand()%100+1;
         Y[i]=rand()%100 - 49;
+	X[i+1] = X[i] + nn;
+    }*/
+    for (i=0;i<nn;i++) {
+        for (j=0;j<nn;j+=8)            
+            X[i][j]=50;
+        Y[i]=20;
 	X[i+1] = X[i] + nn;
     }
     end_t = clock();
