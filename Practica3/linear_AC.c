@@ -15,10 +15,11 @@ double *A, *B;
 int range[MAX_THREADS];
 pthread_mutex_t mutex= PTHREAD_MUTEX_INITIALIZER;
 int ret;
-int visitedRows[N];
+// Versió lenta
+//int visitedRows[N];
 
-void * parallel_code(void * id){
-    int index = (intptr_t) id;
+void * parallel_code(void * args){
+    int index = (*(int*)args);
     int i, j, ini, row, col;
 
     if(index == 0)
@@ -60,7 +61,7 @@ int main(int np, char*p[])
 {
     int i,j,index;
     double sA,sB;
-    clock_t ta,t;
+    unsigned int thread_args[MAX_THREADS];
     pthread_t threads[MAX_THREADS];
 
     assert(np==3);
@@ -75,7 +76,8 @@ int main(int np, char*p[])
     printf("Dimensio dades =~ %g Mbytes\n",((double)(nn*(nn+11))*4)/(1024*1024)); 
 
     memset(range,0,numThreads*sizeof(int));
-    memset(visitedRows,0,nn*sizeof(int));
+    // Versió lenta
+    //memset(visitedRows,0,nn*sizeof(int));
 
     apX = calloc(nn*nn,sizeof(int)); assert (apX);
     Y = calloc(nn,sizeof(int)); assert (Y);
@@ -86,16 +88,10 @@ int main(int np, char*p[])
     B = calloc(nn,sizeof(double)); assert (B);
     // Inicialitzacio
     X[0] = apX;
-    /*for (i=0;i<nn;i++) {
+    for (i=0;i<nn;i++) {
         for (j=0;j<nn;j+=8)            
             X[i][j]=rand()%100+1;
         Y[i]=rand()%100 - 49;
-	X[i+1] = X[i] + nn;
-    }*/
-    for (i=0;i<nn;i++) {
-        for (j=0;j<nn;j+=8)            
-            X[i][j]=50;
-        Y[i]=20;
 	X[i+1] = X[i] + nn;
     }
 
@@ -117,7 +113,8 @@ int main(int np, char*p[])
     pthread_mutex_init(&mutex, NULL);
     for (index = 0; index < numThreads; index++)
     {
-        assert(!pthread_create(&threads[index], NULL, parallel_code, (void *)(intptr_t) index));
+        thread_args[index] = index;
+        assert(!pthread_create(&threads[index], NULL, parallel_code, &thread_args[index]));
     }
 
     for(index = 0; index < numThreads; index++)
