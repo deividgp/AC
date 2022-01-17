@@ -14,7 +14,6 @@ long long *sumaX, *sumaX2, sumaY, *sumaXY;
 double *A, *B;
 int range[MAX_THREADS];
 pthread_mutex_t mutex= PTHREAD_MUTEX_INITIALIZER;
-int ret;
 // Versió lenta
 //int visitedRows[N];
 
