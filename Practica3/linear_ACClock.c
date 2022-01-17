@@ -37,17 +37,12 @@ int main(int np, char*p[])
 
     // Inicialitzacio
     X[0] = apX;
-    start_t = clock();
     for (i=0;i<nn;i++) {
         for (j=0;j<nn;j+=8)            
             X[i][j]=rand()%100+1;
         Y[i]=rand()%100 - 49;
 	X[i+1] = X[i] + nn;
     }
-    end_t = clock();
-    total_t = end_t - start_t;
-    total = (float)total_t/1000000;
-    printf("\nTemps primer bucle: %f\n", total  );
 
     // calcul de sumatoris
     sumaY = 0;
@@ -64,32 +59,22 @@ int main(int np, char*p[])
     end_t = clock();
     total_t = end_t - start_t;
     total = (float)total_t/1000000;
-    printf("\nTemps segon bucle: %f\n", total  );
+    printf("\nTemps sumatoris: %f\n", total  );
 
     // calcul linealitat
-    start_t = clock();
     for (i=0;i<nn;i++) {
 	B[i] = sumaXY[i] - (sumaX[i] * sumaY)/nn;
 	B[i] = B[i] / (sumaX2[i] - (sumaX[i] * sumaX[i])/nn);
 	A[i] = (sumaY -B[i]*sumaX[i])/nn;
     }
-    end_t = clock();
-    total_t = end_t - start_t;
-    total = (float)total_t/1000000;
-    printf("\nTemps tercer bucle: %f\n", total  );
 
     // comprovacio
     sA = sB = 0;
-    start_t = clock();
     for (i=0;i<nn;i++) {
             //printf("%lg, %lg\n",A[i],B[i]);
 	    sA += A[i];
 	    sB += B[i];
     }
-    end_t = clock();
-    total_t = end_t - start_t;
-    total = (float)total_t/1000000;
-    printf("\nTemps quart bucle: %f\n", total  );
 
     printf("Suma elements de A: %lg B:%lg\n",sA,sB);
 
