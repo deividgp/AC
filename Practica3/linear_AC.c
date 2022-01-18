@@ -12,21 +12,23 @@ int nn, numThreads;
 int *X[N+1],*apX, *Y;
 long long *sumaX, *sumaX2, sumaY, *sumaXY;
 double *A, *B;
-int range[MAX_THREADS];
+int rang[MAX_THREADS];
 pthread_mutex_t mutex= PTHREAD_MUTEX_INITIALIZER;
 // Versió lenta
 //int visitedRows[N];
 
 void * parallel_code(void * args){
     int index = (*(int*)args);
-    int i, j, ini, row, col;
+    int i, j, ini;
+    // Versió lenta
+    int row, col;
 
     if(index == 0)
         ini = 0;
     else
-        ini = range[index-1];
+        ini = rang[index-1];
     
-    for(i=ini; i<range[index]; i++){
+    for(i=ini; i<rang[index]; i++){
         // Versió ràpida
         for (j=0;j<nn;j++) {
             sumaX[i] += X[i][j];
@@ -49,9 +51,9 @@ void * parallel_code(void * args){
             visitedRows[row] = 1;
             sumaY += Y[row];
             pthread_mutex_unlock(&mutex);
-        }
-        pthread_mutex_unlock(&mutex);*/
-
+        }else{
+            pthread_mutex_unlock(&mutex);
+        }*/
     }
     pthread_exit(0);
 }
@@ -74,7 +76,7 @@ int main(int np, char*p[])
 
     printf("Dimensio dades =~ %g Mbytes\n",((double)(nn*(nn+11))*4)/(1024*1024)); 
 
-    memset(range,0,numThreads*sizeof(int));
+    memset(rang,0,numThreads*sizeof(int));
     // Versió lenta
     //memset(visitedRows,0,nn*sizeof(int));
 
@@ -95,17 +97,17 @@ int main(int np, char*p[])
     }
 
     // Versió ràpida
-    int porcion = nn/numThreads;
+    int porcio = nn/numThreads;
     int mod = nn % numThreads;
 
     // Versió lenta
-    //int porcion = nn*nn/numThreads;
+    //int porcio = nn*nn/numThreads;
     //int mod = nn*nn % numThreads;
     
     for(i=0; i<numThreads; i++){
-        range[i] = porcion;
-        if (i != 0) range[i] += range[i-1];
-        if (i < mod) range[i]++;
+        rang[i] = porcio;
+        if (i != 0) rang[i] += rang[i-1];
+        if (i < mod) rang[i]++;
     }
     
     sumaY = 0;
