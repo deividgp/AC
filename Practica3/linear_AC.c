@@ -21,7 +21,7 @@ void * parallel_code(void * args){
     int index = (*(int*)args);
     int i, j, ini;
     // Versió lenta
-    int row, col;
+    // int row, col;
 
     if(index == 0)
         ini = 0;
