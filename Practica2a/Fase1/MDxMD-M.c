@@ -20,7 +20,7 @@ long long Sum;
 
 void * parallel_code1(void * args){
     int index = (*(int*)args);
-    int i, j, ini, k, fin;
+    int i, j, ini, k;
     int j_ini, j_fin;
 
     if(index == 0)
