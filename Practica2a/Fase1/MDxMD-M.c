@@ -20,9 +20,34 @@ long long Sum;
 
 void * parallel_code1(void * args){
     int index = (*(int*)args);
-    int i, j, ini, k;
+    int i, j, ini, k, fin;
+    int j_ini, j_fin;
 
     if(index == 0)
+        ini = 0;
+    else
+        ini = rang[index-1];
+
+    int fin = rang[index];
+    int i_ini = ini / nnD;
+    int k_ini = ini % nnD;
+
+    int i_fin = fin / nnD;
+    int k_fin = fin % nnD;
+
+    for (i = i_ini; i <= i_fin; i++){
+        //Si estoy en la primera fila empiezo en la columna k_ini
+        if(i == i_ini) j_ini = k_ini;
+        else j_ini = 0;
+        //Si estoy en la última fila acabo en la columna K_fin
+        if(i == i_fin) j_fin = k_fin;
+        else j_fin = nnD;
+
+        for (int aux = j_ini;  aux < j_fin; aux++){
+            C1[AD[aux].i][i] += AD[aux].v * B[AD[aux].j][i];
+        }
+    }
+    /*if(index == 0)
         ini = 0;
     else
         ini = rang[index-1];
@@ -31,7 +56,7 @@ void * parallel_code1(void * args){
         for (k=0;k<nnD;k++){
             C1[AD[k].i][i] += AD[k].v * B[AD[k].j][i];
         }
-    }
+    }*/
 }
 
 void * parallel_code2(void * args){
