@@ -52,7 +52,7 @@ int main(int np, char *p[])
     unsigned int thread_args[MAX_THREADS];
     pthread_t threads[MAX_THREADS];
 
-    assert(np==2);
+    assert(np==3);
 
     nn = atoi(p[1]);
     assert(nn<=N);
