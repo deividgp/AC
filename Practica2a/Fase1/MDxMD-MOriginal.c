@@ -3,6 +3,7 @@
 #include <time.h>
 #include <strings.h>
 #include <assert.h>
+#include <string.h>
 
 #define N 10000L
 #define ND N*N/100
