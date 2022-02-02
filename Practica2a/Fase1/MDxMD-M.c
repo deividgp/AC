@@ -122,14 +122,11 @@ int main(int np, char *p[])
         B[BD[k].i][BD[k].j] = BD[k].v;
     }
 
-    // Versió ràpida
-    int porcio = nn/numThreads;
-    int mod = nn % numThreads;
+    //int porcio = nn/numThreads;
+    //int mod = nn % numThreads;
+    int porcio = nn*nnD/numThreads;
+    int mod = nn*nnD % numThreads;
 
-    // Versió lenta
-    //int porcio = nn*nn/numThreads;
-    //int mod = nn*nn % numThreads;
-    
     for(i=0; i<numThreads; i++){
         rang[i] = porcio;
         if (i != 0) rang[i] += rang[i-1];
