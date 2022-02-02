@@ -41,9 +41,9 @@ void * parallel_code1(void * args){
         else j_ini = 0;
         //Si estoy en la última fila acabo en la columna K_fin
         if(i == i_fin) j_fin = k_fin;
-        else j_fin = nnD-1;
+        else j_fin = nnD;
 
-        for (int aux = j_ini; aux <= j_fin; aux++){
+        for (int aux = j_ini; aux < j_fin; aux++){
             C1[AD[aux].i][i] += AD[aux].v * B[AD[aux].j][i];
         }
     }
