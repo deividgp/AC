@@ -160,8 +160,8 @@ int main(int np, char *p[])
         assert(!pthread_join(threads[index], NULL ));
     }
     
-    int porcio = nn/numThreads;
-    int mod = nn % numThreads;
+    porcio = nn/numThreads;
+    mod = nn % numThreads;
 
     for(i=0; i<numThreads; i++){
         rang[i] = porcio;
