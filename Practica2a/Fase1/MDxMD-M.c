@@ -10,7 +10,7 @@
 #define ND N*N/100
 #define MAX_THREADS 256
 
-int A[N][N],B[N][N],C[N][N],C1[N][N],C2[N][N],VBcol[N];
+int A[N][N],B[N][N],C[N][N],C1[N][N],C2[N][N];
 struct {
     int i,j,v;
 }AD[ND],BD[ND];
@@ -35,6 +35,7 @@ void * parallel_code1(void * args){
     int i_fin = fin / nnD;
     int k_fin = fin % nnD;
 
+    //Sparce Matrix X Dense Matrix -> Dense Matrix
     for (i = i_ini; i <= i_fin; i++){
         //Si estoy en la primera fila empiezo en la columna k_ini
         if(i == i_ini) j_ini = k_ini;
@@ -60,16 +61,31 @@ void * parallel_code1(void * args){
 }
 
 void * parallel_code2(void * args){
+    int VBcol[N];
     int index = (*(int*)args);
-    int i, j, ini;
+    int i, j, ini, k;
+
+    memset(VBcol,0,sizeof(int)*nn);
 
     if(index == 0)
         ini = 0;
     else
         ini = rang[index-1];
+
+    for(i=ini;i<rang[index];i++)
+    {
+        // Column expansion of B[*][i]
+        for (k=0;k<nnD;k++)
+            if (BD[k].j == i)
+                VBcol[BD[k].i] = BD[k].v;
+        // Full column C computation
+        for (k=0;k<nnD;k++)
+            C2[AD[k].i][i] += AD[k].v * VBcol[AD[k].j];
+        // Clear of  B[*][i]
+        for (j=0;j<nn;j++)
+            VBcol[j] = 0;
+    }
 }
-
-
 
 int main(int np, char *p[])
 {
@@ -143,35 +159,44 @@ int main(int np, char *p[])
     {
         assert(!pthread_join(threads[index], NULL ));
     }
+    
+    int porcio = nn/numThreads;
+    int mod = nn % numThreads;
 
-    ////Original Matrix X Matrix (column first)
-    //for (i=0;i<nn;i++)
-    //    for (j=0;j<nn;j++)
-    //        for (k=0;k<nn;k++)
-    //            C[j][i] += A[j][k] * B[k][i];
- 
-    //Sparce Matrix X Dense Matrix -> Dense Matrix
-    //for(i=0;i<nn;i++)
-    //    for (k=0;k<nnD;k++)
-    //        C1[AD[k].i][i] += AD[k].v * B[AD[k].j][i];
-            
+    for(i=0; i<numThreads; i++){
+        rang[i] = porcio;
+        if (i != 0) rang[i] += rang[i-1];
+        if (i < mod) rang[i]++;
+    }
+
+    for (index = 0; index < numThreads; index++)
+    {
+        thread_args[index] = index;
+        assert(!pthread_create(&threads[index], NULL, parallel_code2, &thread_args[index]));
+    }
+
+    for(index = 0; index < numThreads; index++)
+    {
+        assert(!pthread_join(threads[index], NULL ));
+    }
+
     //Sparce Matrix X Sparce Matrix -> Dense Matrix
-    for (j=0;j<nn;j++)
-        VBcol[j] = 0;
+    //for (j=0;j<nn;j++)
+    //    VBcol[j] = 0;
 
-    for(i=0;i<nn;i++)
-      {
-        // Column expansion of B[*][i]
-        for (k=0;k<nnD;k++)
-            if (BD[k].j == i)
-                VBcol[BD[k].i] = BD[k].v;
-        // Full column C computation
-        for (k=0;k<nnD;k++)
-            C2[AD[k].i][i] += AD[k].v * VBcol[AD[k].j];
-        // Clear of  B[*][i]
-        for (j=0;j<nn;j++)
-            VBcol[j] = 0;
-      }
+    //for(i=0;i<nn;i++)
+    //  {
+    //    // Column expansion of B[*][i]
+    //    for (k=0;k<nnD;k++)
+    //        if (BD[k].j == i)
+    //            VBcol[BD[k].i] = BD[k].v;
+    //    // Full column C computation
+    //    for (k=0;k<nnD;k++)
+    //        C2[AD[k].i][i] += AD[k].v * VBcol[AD[k].j];
+    //    // Clear of  B[*][i]
+    //    for (j=0;j<nn;j++)
+    //        VBcol[j] = 0;
+    //  }
                 
     // Check (MD x M -> M) vs (MD x MD -> M)
     neleC = 0;
