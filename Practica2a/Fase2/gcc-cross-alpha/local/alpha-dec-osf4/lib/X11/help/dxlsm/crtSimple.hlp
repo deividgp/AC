@@ -1,0 +1,73 @@
+#/* @(#)@(#)help/crtSimple.hlp	2.1 11 May 1993 19:03:55 -  */
+#ident  "@(#)va11:help/crtSimple.hlp   2.1"
+#
+#
+Forms, forms.hlp
+Usage Types, usetype.hlp
+Volume, volume.hlp
+Plex, plex.hlp
+Subdisk, subdisk.hlp
+Disk Group, diskGrp.hlp
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+#########################################
+SIMPLE VOLUME/FILE SYSTEM CREATE FORM
+
+This form is used to create a volume that one concatenated plex.  A file
+system also may be created on the volume.
+
+The form is divided into two sections: the top section dealing specifically
+with volume creation, and the bottom section with file system creation.
+The fields in the file system creation section are conditionally available
+for used based on the status of the "Create file system" and "Mount file
+system" fields.  For more information on these fields, see below.
+
+If this form was brought up as a result of a basic volume create operation,
+then by default the "Create file system" options is set to No, and the file
+system fields are disabled.  The opposite will be true if a basic file
+system create operation brought up the form.
+
+
+Fields
+----------
+
+Volume Name:
+	The name of the volume you are about to create.  The name must be
+	unique within this disk group.  The maximum length of this field is
+	14 characters.  This field is required.
+
+Volume Size:
+	This is the size of the volume that you wish to create.  If no
+	unit is specified, then the default unit is sectors.  This
+	field is required.  This size must be wholly divisible by the
+	stripe width.
+
+Usage Type:
+	The different types of usage types available on your system.
+	Typically, these are "gen" and "fsgen".  See Usage Types Help for
+	more information.
+
+Create file system:
+	Specify whether or not you want to create a file system on this
+	volume.  All fields below this field are only accessible when "Yes"
+	is selected in this field.
+
+FS type:
+	The type of file system you wish to create.  The default file
+	system type is UFS. 
+
+Mount file system:
+	This specifies whether or not you want to mount the file system
+	after you create it.  If so, you must specify a mount point name in
+	the "Mount point" field.  All fields below this field are only
+	accessible when "Yes" is specified in this field.
+
+Mount point:
+	The desired mount point for the new file system.  If the specified
+	mount point does not already exist, the Visual Administrator will
+	automatically create it for you.
+
+Mount automatically:
+	This specifies if an entry should be made in /etc/fstab so that
+	this file system is mounted by the system every time the system
+	comes up.

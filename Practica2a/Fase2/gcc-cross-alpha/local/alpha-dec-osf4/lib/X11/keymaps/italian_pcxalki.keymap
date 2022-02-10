@@ -1,0 +1,122 @@
+!
+! This is an `xmodmap' input file for the PCXAL keyboard.
+! keymake automatically generated this file
+!
+keycode 8 =	Escape 
+keycode 9 =	F1 
+keycode 13 =	Tab 
+keycode 14 =	backslash bar backslash bar 
+keycode 15 =	F2 
+keycode 17 =	Control_L 
+keycode 18 =	Shift_L 
+keycode 19 =	less greater 
+keycode 20 =	Caps_Lock 
+keycode 21 =	Q 
+keycode 22 =	1 exclam 
+keycode 23 =	F3 
+keycode 25 =	Alt_L Meta_L 
+keycode 26 =	Z 
+keycode 27 =	S 
+keycode 28 =	A 
+keycode 29 =	W 
+keycode 30 =	2 quotedbl 
+keycode 31 =	F4 
+keycode 33 =	C 
+keycode 34 =	X 
+keycode 35 =	D 
+keycode 36 =	E 
+keycode 37 =	4 dollar 
+keycode 38 =	3 sterling 
+keycode 39 =	F5 
+keycode 41 =	space 
+keycode 42 =	V 
+keycode 43 =	F 
+keycode 44 =	T 
+keycode 45 =	R 
+keycode 46 =	5 percent 
+keycode 47 =	F6 
+keycode 49 =	N 
+keycode 50 =	B 
+keycode 51 =	H 
+keycode 52 =	G 
+keycode 53 =	Y 
+keycode 54 =	6 ampersand 
+keycode 55 =	F7 
+keycode 57 =	Mode_switch 
+keycode 58 =	M 
+keycode 59 =	J 
+keycode 60 =	U 
+keycode 61 =	7 slash 
+keycode 62 =	8 parenleft 
+keycode 63 =	F8 
+keycode 65 =	comma semicolon 
+keycode 66 =	K 
+keycode 67 =	I 
+keycode 68 =	O 
+keycode 69 =	0 equal 
+keycode 70 =	9 parenright 
+keycode 71 =	F9 
+keycode 73 =	period colon 
+keycode 74 =	minus underscore 
+keycode 75 =	L 
+keycode 76 =	ograve ccedilla at 
+keycode 77 =	P 
+keycode 78 =	apostrophe question 
+keycode 79 =	F10 
+keycode 82 =	agrave degree numbersign 
+keycode 83 =	ugrave section 
+keycode 84 =	egrave eacute bracketleft 
+keycode 85 =	igrave asciicircum 
+keycode 86 =	F11 
+keycode 87 =	Print Sys_Req 
+keycode 88 =	Control_R 
+keycode 89 =	Shift_R 
+keycode 90 =	Return 
+keycode 91 =	plus asterisk bracketright 
+keycode 94 =	F12 
+keycode 95 =	Scroll_Lock 
+keycode 96 =	Down 
+keycode 97 =	Left 
+keycode 98 =	Pause Break 
+keycode 99 =	Up 
+keycode 100 =	Delete 
+keycode 101 =	End 
+keycode 102 =	BackSpace 
+keycode 103 =	Insert 
+keycode 105 =	KP_End KP_1 
+keycode 106 =	Right 
+keycode 107 =	KP_Left KP_4 
+keycode 108 =	KP_Home KP_7 
+keycode 109 =	Next 
+keycode 110 =	Home 
+keycode 111 =	Prior 
+keycode 112 =	KP_Insert KP_0 
+keycode 113 =	KP_Delete KP_Decimal 
+keycode 114 =	KP_Down KP_2 
+keycode 115 =	KP_5 
+keycode 116 =	KP_Right KP_6 
+keycode 117 =	KP_Up KP_8 
+keycode 118 =	Num_Lock 
+keycode 119 =	KP_Divide 
+keycode 121 =	KP_Enter 
+keycode 122 =	KP_Next KP_3 
+keycode 124 =	KP_Add 
+keycode 125 =	KP_Prior KP_9 
+keycode 126 =	KP_Multiply 
+keycode 132 =	KP_Subtract 
+
+clear Shift
+clear Lock
+clear Control
+clear Mod1
+clear Mod2
+clear Mod3
+clear Mod4
+clear Mod5
+
+add Shift	 = Shift_L Shift_R
+add Lock	 = Caps_Lock
+add Control	 = Control_L Control_R
+add Mod1	= Alt_L 
+add Mod3	= Mode_switch 
+add Mod4	= Num_Lock 

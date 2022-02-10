@@ -1,0 +1,1 @@
+#define NHSC 0

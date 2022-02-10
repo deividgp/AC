@@ -1,0 +1,203 @@
+# Locale : zh_TW.dechanyu
+#  
+# 
+# 	XLC_FONTSET category
+# 
+XLC_FONTSET
+# Base font sets 
+# 	fs0 class (7 bit ASCII)
+fs0	{
+	charset		ISO8859-1:GL;CNS11643.1986-0:GL
+	font		ISO8859-1:GL;CNS11643.1986-0:GL
+}
+# 	fs1 class	CNS11643 plane 1
+fs1	{
+	charset		CNS11643.1986-1:GL
+	font		CNS11643.1986-1:GL;DEC.CNS11643.1986-2:GR;\
+			CNS11643.1986.1-2:GL;\
+			REMAP-0;REMAP-1
+}
+# 	fs2 class	CNS11643 plane 2
+fs2	{
+	charset		CNS11643.1986-2:GL
+	font		CNS11643.1986-2:GL;DEC.CNS11643.1986-2:Q10;\
+			CNS11643.1986.2-2:GL;\
+			REMAP-0;REMAP-1
+}
+#	fs3 class
+fs3	{
+	charset		DEC.DTSCS.1990-2
+	font		DEC.DTSCS.1990-2:GR
+}
+
+# Optional font sets  
+#	fs4 class
+fs4	{
+	optional	True
+	udc_font	True 
+	charset		HANYU_UDC-1
+	font		CNS11643.1986.1-UDC:GR;DEC.CNS11643.1986-UDC:GR;\
+			CNS11643.1986-1:GL;DEC.CNS11643.1986-2:GR
+}
+#	fs5 class	
+fs5	{
+	optional	True
+	udc_font	True 
+	charset		HANYU_UDC-2
+	font		CNS11643.1986.2-UDC:GR;DEC.CNS11643.1986-UDC:Q10;\
+			CNS11643.1986-2:GR;DEC.CNS11643.1986-2:Q10
+}
+#	fs6 class	
+fs6	{
+	optional	True
+	charset		BIG5-0
+	font		BIG5-0;BIG5.HKU-0
+}
+ 
+ 
+#	fs7 class	
+fs7	{
+	optional	True
+	charset		GB2312.1980-0:GL
+	font		GB2312.1980-1:GR;GB2312.1980-0:GL
+} 
+
+# Remapping font sets
+# 
+# remap charset class 1
+REMAP-0	{
+	locale		zh_TW.big5
+	charset		BIG5-0
+}
+	 
+# remap charset class 2
+REMAP-1	{
+	locale		zh_CN.dechanzi 
+	charset		GB2312.1980-0:GL
+}
+ 
+END XLC_FONTSET
+
+# 
+# 	XLC_XLOCALE category
+# 
+XLC_XLOCALE
+
+encoding_name		dechanyu
+mb_cur_max		4
+state_depend_encoding	False
+wc_encoding_mask	\x3fffc000
+wc_shift_bits		7
+use_stdc_env		True
+force_convert_to_mb	True
+
+# 	cs0 class
+cs0	{
+	side		GL:Default
+	length		1
+	wc_encoding	\x00000000
+	ct_encoding	ISO8859-1:GL;CNS11643.1986-0:GL
+}
+
+# 	cs1 class
+cs1	{
+	side		GR:Default
+	length		2
+	wc_encoding	\x30000000
+	ct_encoding	CNS11643.1986-1:GL;CNS11643.1986-1:GR
+#	region		A1A1-FDCB
+	region		A1A1-FCFE;FDA1-FDCB
+}
+
+# 	cs2 class	plane 2
+cs2	{
+	side		Q10
+	length		2
+	wc_encoding	\x10088000
+	ct_encoding	CNS11643.1986-2:GL;CNS11643.1986-2:GR
+#	region		A121-F244
+	region		A121-F17E;F221-F244
+}
+
+#	cs3 class	DTSCS code - DEC.DTSCS.1990-2 
+cs3	{
+	side		GR
+	length		2
+        mb_encoding     <SS> \xc2\xcb
+	wc_encoding	\x70088000
+	ct_encoding	DEC.DTSCS.1990-2
+#	region		A1A1-E4B5
+	region		A1A1-E3FE;E4A1-E4B5
+} 
+
+#	cs4 class	HANYU_UDC-1:GR
+#			UDC in CNS11643 plane 1
+cs4	{
+	side		GR
+	length		2
+	wc_encoding	\x70088000
+	ct_encoding	HANYU_UDC-1
+#	region		FDCC-FEFE
+	region		FDCC-FDFE;FEA1-FEFE
+} 
+
+#	cs5 class	HANYU_UDC-2
+#			UDC in CNS11643 plane 2
+cs5	{
+	side		Q10
+	length		2
+	wc_encoding	\x70088000
+	ct_encoding	HANYU_UDC-2
+#	region		F245-FE7E
+	region		F245-F27E;F321-FE7E
+} 
+
+#
+# Associated locales
+# Functions :
+#       1) Backward compatibility in CT exchange  
+#       2) Font remapping
+#
+#	associated locale 0  
+assoc_locale0   {       
+        locale          zh_TW.dechanyu_r5
+#   no conversion required 
+        conversion      dechanyu-dechanyu    
+}
+#	associated locale 1  
+assoc_locale1   {       
+        locale          zh_TW.big5
+        conversion      dechanyu-big5        
+}
+#	associated locale 2  
+assoc_locale2   {       
+        locale          zh_TW.big5_r5
+        conversion      dechanyu-big5        
+}
+#	associated locale 3  
+assoc_locale3   {       
+        locale          zh_TW.eucTW
+        conversion      dechanyu-eucTW
+}
+#	associated locale 4  
+assoc_locale4   {       
+        locale          zh_CN.dechanzi 
+        conversion      dechanyu-dechanzi
+}
+
+# 
+# Comment out ct_charset_remap0 if you do not want private tag
+# CT segments to be generated for this locale.
+#
+
+#
+# CT Charset remapping
+#
+ct_charset_remap0 {
+	charset			CNS11643.1986-1:GL;CNS11643.1986-2:GL;\
+				CNS11643.1986-1:GR;CNS11643.1986-2:GR;\
+				HANYU_UDC-1;HANYU_UDC-2
+	assoc_locale_index      0
+}
+ 
+END XLC_XLOCALE

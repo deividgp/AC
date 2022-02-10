@@ -1,0 +1,59 @@
+// **************************************************************
+// *								*
+// * Keymaps for lt_LT.ISO8859-4 - Lithuanian for Lithuania     *
+// *								*
+// * NOTES:  There isn't a VT105 (i.e. LK201) keyboard for	*
+// *	     lt_LT.  In addition, there aren't any TW/DP keys 	*
+// *	     for the VT108.  The Group Shift (i.e. Mode_switch)	*
+// *	     takes care of this.				*
+// *								*
+// **************************************************************
+
+xkb_keymap "lk401" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_lithuanian(vt108)"	};
+    xkb_geometry	{ description = "Digital Lithuanian LK401";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_lithuanian(vt108)"	};
+    xkb_geometry	{ description = "Digital Lithuanian LK411";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "pcxal" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_lithuanian(pcxal)"	};
+    xkb_geometry	{ description = "Digital Lithuanian PCXAL";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_lithuanian(pcxal)"	};
+    xkb_geometry	{ description = "Digital Lithuanian LK471";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+xkb_keymap "lk97w" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_lithuanian(pcxal)"	};
+    xkb_geometry	{ description = "Digital Lithuanian LK97W";
+			  include "geometry/digital_pc(pc105)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+

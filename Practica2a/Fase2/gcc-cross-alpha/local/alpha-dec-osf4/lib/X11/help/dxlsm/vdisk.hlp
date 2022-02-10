@@ -1,0 +1,32 @@
+#/* @(#)@(#)help/vdisk.hlp	2.1 11 May 1993 19:06:24 -  */
+#ident  "@(#)va11:help/vdisk.hlp   2.1"
+#
+#
+Physical Disk, pdisk.hlp
+Partition, part.hlp
+Volume, volume.hlp
+Plex, plex.hlp
+Subdisk, subdisk.hlp
+#########################################
+LOGICAL STORAGE MANAGER DISK HELP
+
+The name "Logical Storage Manager Disk" is used within the Visual Administrator
+to represent the Logical Storage Manager concept of Disk Media Records (DMRs). 
+They are graphically represented in the Visual Administrator as cylinders with
+single-dark outlines and a "D" at the top.  LSM Disks normally contain one
+or more rectangles that represent subdisks.
+
+A DMR is a reference to a physical disk, or possibly a disk partition.
+Disk media records are configuration records that provide a short name that
+an administrator can use to reference a particular disk independent of its
+location on the system's various disk controllers.  Disk media records
+reference particular physical disks through a disk ID, which is a long
+unique identifier that is assigned to a disk when it is initialized for use
+with the Logical Storage Manager. 
+
+Operations are provided to set or remove the disk ID stored in a disk media
+record.  Such operations effectively remove or replace disks, with any
+subdisks defined relative to the disk media record tracking the disk
+removal and replacement.
+
+For more information consult the Logical Storage Manager documentation.

@@ -1,0 +1,21 @@
+// **************************************************************
+// *								*
+// * Symbols for en_CA.ISO8859-1 - English for Canada		*
+// *								*
+// **************************************************************
+
+// **************************************************************
+// *								*
+// * NOTES:  These appear to be the same as Canadian French.	*
+// *								*
+// **************************************************************
+xkb_symbols "vt105-tw" { include "digital_canadian_french(vt105-tw)"	};
+xkb_symbols "vt105-dp" { include "digital_canadian_french(vt105-dp)"	};
+xkb_symbols "vt105"    { include "digital_canadian_french(vt105)"	};
+xkb_symbols "vt108-tw" { include "digital_canadian_french(vt108-tw)"	};
+xkb_symbols "vt108-dp" { include "digital_canadian_french(vt108-dp)"	};
+xkb_symbols "vt108"    { include "digital_canadian_french(vt108)"	};
+xkb_symbols "pcxal"    { include "digital_canadian_french(pcxal)"	};
+xkb_symbols "pcxaldq"  { include "digital_canadian_french(pcxal)"	};
+xkb_symbols "pcxalgq"  { include "digital_canadian_french(pcxal)"	};
+xkb_symbols "lk44x"    { include "digital_canadian_french(lk44x)"	};

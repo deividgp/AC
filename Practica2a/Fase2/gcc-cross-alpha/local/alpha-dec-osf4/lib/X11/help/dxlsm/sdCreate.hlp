@@ -1,0 +1,118 @@
+#/* @(#)@(#)help/sdCreate.hlp	2.1 11 May 1993 19:05:53 -  */
+#ident  "@(#)va11:help/sdCreate.hlp   2.1"
+#
+#
+Forms, forms.hlp
+Volume, volume.hlp
+Plex, plex.hlp
+Subdisk, subdisk.hlp
+Disk Group, diskGrp.hlp
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+Mirroring, mirror.hlp
+Striping, stripe.hlp
+Concatenated, concat.hlp
+#########################################
+SUBDISK CREATE FORM
+
+The subdisk create form is where you specify parameters on how you want a
+subdisk to be created.
+
+For more information about these fields, see the sdrec(4) reference
+manual page from the Logical Storage Manager Programmers Reference Guide.
+
+
+Fields
+----------
+
+Disk Name:
+	This is the name of the Logical Storage Manager disk where this subdisk 
+	will be created.  You may not modify this field. 
+
+Subdisk Name:
+	The name of the subdisk you are about to create.  The name must be
+	unique within this disk group.  The maximum length of this field is
+	14 characters.  This field is required. 
+
+Disk Offset:
+	Length into the disk where this subdisk should be located.  If no
+	unit is specified the number is assumed to be in sectors.  This
+	offset should not place this subdisk within the bounds of another
+	subdisk on the disk or past the end of the disk.  Only valid
+	positive numbers are allowed in this field.  The maximum length of
+	this field is 14 characters.
+
+Subdisk Length:
+	The length of the subdisk you are about to create. If no unit is
+	specified the number is assumed to be in sectors.  This offset
+	should not place this subdisk within the bounds of another subdisk
+	on the disk or past the end of the disk.  Only valid positive
+	numbers are allowed in this field.  The maximum length of this
+	field is 14 characters.
+
+Plex Name:
+	The name of the plex that you want the subdisk to be associated
+	with. The name must be a valid plex in this disk group.  The
+	maximum length of this field is 14 characters.  This field is not
+	required. 
+
+Plex Offset:
+	The offset of this subdisk into its associated plex.  If the
+	subdisk is unassociated then this field must be left blank.  Only
+	valid positive numbers are allowed in this field. 
+
+Comment:
+	The user-specified comment for this subdisk.  The maximum length of
+	the comment is 40 characters. 
+
+Putil[0]:
+	Permanent utility field 0.  This is reserved for Subdisk Manager
+	use, but may be changed.  The maximum length of all Putil fields is
+	14 characters. 
+
+Putil[1]:
+	Permanent utility field 1.  This field is reserved, but may be
+	changed.
+
+Putil[2]:
+	Permanent utility field 2.  This field is reserved, but may be
+	changed.
+
+
+Errors
+----------
+
+"Subdisk name is required."
+A valid name must be entered in this field for the operation to continue.
+Enter a valid name.
+
+"There's already a component by this name in this disk group."
+The name specified for this subdisk is not unique within this disk group.
+Enter a different name.
+
+"Plex <NAME> does not exist."
+Name specified in the "Plex Name" field does not correspond to a valid plex
+in this disk group.  Enter a valid plex name in the field, or leave it
+blank.
+
+"Bad characters in Disk Offset field."
+"Bad characters in Subdisk Length field."
+"Bad characters in Plex Offset field."
+The string entered in the  field contains invalid characters.  Enter a
+positive number greater or equal to than zero. 
+
+"Subdisk length must be greater than zero."
+A positive subdisk length greater than zero is required.  Enter a different
+number in this field.
+
+"Subdisk overlaps subdisk <NAME> on the disk."
+The specified disk offset and subdisk length puts all or part the
+newly-created subdisk on top of a region of the disk already occupied by
+another subdisk.  This is not allowed.  Enter a different offset or length
+so that the subdisk does not overlap any other subdisks already present on
+the disk.
+
+"Subdisk overlaps subdisk <NAME> on the plex."
+The specified plex offset and subdisk length puts all or part of the
+newly-created subdisk on top of another subdisk on the plex.  Change the
+plex offset, subdisk length, or plex name.

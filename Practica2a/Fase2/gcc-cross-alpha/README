@@ -1,0 +1,20 @@
+
+//fitxer configuracio i execucio del cross-compiler de linux-x86 a osf4-alpha
+
+Els scripts i fitxers que teniu necesssiten tenir creada la variable d'entorn:
+GCC_CROSS_ALPHA
+
+Aquesta variable indica el directory on heu descomprimit el cross-compiler
+
+Aixi si haguessiu descomprimit en el vostre home directory s'ha d'executar des de la shell:
+
+$ GCC_CROSS_ALPHA=$HOME/gcc-cross-alpha
+$ export GCC_CROSS_ALPHA
+
+Per compilar:
+
+cd gcc-cross-alpha/local/bin
+./alpha-dec-osf4-gcc -O fitxer.c -o fitxer_alpha
+
+Per executar el fitxer_alpha, feu servir els simuladors de simpleScalar de manera habitual.
+ 

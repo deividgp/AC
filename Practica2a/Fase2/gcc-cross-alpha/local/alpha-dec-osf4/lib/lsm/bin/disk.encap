@@ -1,0 +1,102 @@
+#!/sbin/sh -
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+# @(#)$RCSfile: disk.encap.sh,v $ $Revision: 1.1.6.3 $ (DEC) $Date: 1995/08/01 19:59:27 $
+# @(#)src/common/cmd/vxvm/voladm/disk.encap.sh	5.9 16 Mar 1993 01:19:07 - Copyright (c) 1993 VERITAS Software Corp.
+#ident	"@(#)vxvm:common/cmd/vxvm/voladm/disk.encap.sh	5.9"
+
+
+DSPMSG="/sbin/lsm.d/bin/dspmsg -s 1 lsm_sh.cat"
+
+VOLADM_ROOT=${VOLADM_ROOT-/usr/lib/lsm}
+VOLADM_LIB=${VOLADM_LIB-$VOLADM_ROOT/lib}
+. $VOLADM_LIB/voladm_lib.sh
+
+voladm_menu_push Encapsulate
+voladm_help_push disk.encap.help
+
+while true
+do
+	voladm_begin_screen -M 2400 "Encapsulate a disk"
+	$DSPMSG 2401 "  Use this operation to convert a disk to use the volume manager.\n"
+	$DSPMSG 2402 "  This adds the disk to a disk group and replaces existing partitions\n"
+	$DSPMSG 2403 "  with volumes.  Disk encapsulation requires a reboot for the changes\n"
+	$DSPMSG 2404 "  to take effect.\n"
+
+	voladm_disk_device -M 2405 "Select disk device to encapsulate"
+
+	$DSPMSG 2406 "\n  You can choose to add this disk to an existing disk group, or to\n"
+	$DSPMSG 2407 "  create a new disk group.  To create a new disk group, select a\n"
+	$DSPMSG 2408 "  disk group name that does not yet exist.\n"
+
+	creat_group=
+	voladm_disk_group -n "" rootdg
+	[ $? -eq 10 ] && creat_group=yes
+
+	if [ "$creat_group" ]
+	then
+	 $DSPMSG 2409 "\n  The requested operation is to encapsulate disk device %s and\n" \
+			"$device"
+	 $DSPMSG 2410 "  to create a new disk group from this device named %s.  The\n" \
+			"$dgname"
+	 $DSPMSG 2411 "  disk will be named %s within the disk group.  The system must\n" \
+			"$device"
+	 $DSPMSG 2412 "  be rebooted before this can take effect.\n"
+		c_opt=-c
+	else
+	 $DSPMSG 2409 "\n  The requested operation is to encapsulate disk device %s and\n" \
+			"$device"
+	 $DSPMSG 2413 "  to add this device to disk group %s.  The\n" \
+			"$dgname"
+	 $DSPMSG 2414 "  system must be rebooted before this can take effect.\n"
+		c_opt=
+	fi
+
+	voladm_yorn -M 2415 "Continue with operation?" y
+	if [ $? -ne 0 ]
+	then
+		voladm_yorn -M 2416 "Select a different disk device?" n &&
+			continue
+		break
+	fi
+	doit volencap $c_opt -g "$dgname" $daname 2> $tmpfile1
+	if [ $? -ne 0 ]
+	then
+		$DSPMSG 2417 "\n  The encapsulation operation failed.\n"
+		$DSPMSG 2418 "  Error: %s\n"
+			"`cat $tmpfile1`"
+		voladm_yorn -M 2416 "Select a different disk device?" n || break
+	else
+	 $DSPMSG 2419 "\n  The first stage of encapsulation for %s has completed\n" $device
+	 $DSPMSG 2420 "  successfully.  If disk %s is in use (e.g. a partition is mounted)\n" $device
+	 $DSPMSG 2421 "  you might have to reboot the system.\n" 
+	 $DSPMSG 2422 "\n  If the disk %s is NOT in use, execute /sbin/vol-reconfig\n" $device
+	 $DSPMSG 2423 "  To reboot execute the command:\n"
+	 $DSPMSG 2425 "\n	shutdown -r -now \n\n"
+	 $DSPMSG 2426 "  This will update the /etc/fstab file so that volume devices are\n"
+	 $DSPMSG 2427 "  used to mount the file systems on this disk device.  You will need\n"
+	 $DSPMSG 2428 "  to update any other references such as backup scripts, databases,\n"
+	 $DSPMSG 2429 "  or manually created swap devices.\n"
+		voladm_yorn -M 2430 "Encapsulate another disk?" n || break
+	fi
+done
+
+quit 0

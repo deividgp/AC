@@ -1,0 +1,46 @@
+#/* @(#)@(#)help/views.hlp	2.1 11 May 1993 19:06:42 -  */
+#ident  "@(#)va11:help/views.hlp   2.1"
+#
+#
+Volume, volume.hlp
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+Disk Group, diskGrp.hlp
+DXlsm Root Window, rootWin.hlp
+#########################################
+VIEWS HELP
+
+The user may use views within the Visual Administrator to examine and
+manipulate different parts of the physical and logical storage systems.  A
+view may display all or any subset of the icons in the Visual
+Administrator.  They are a useful way to organize icons into groups
+corresponding to the user's semantics: type of entity, physical location,
+functionality, etc.
+
+There are two types of views in the Visual Administrator: default and user
+views.  They function identically except for the restrictions placed on
+default views.  The default views are listed below.
+
+	View Name	Description
+	---------	-----------
+	Disks		All physical disks on the system
+	Volumes		All volumes on the system
+	World		Everything on the system (disks, volumes, etc.)
+	rootdg		Everything in the root disk group
+
+Default views cannot be removed or renamed by the user and icons can only
+be added or removed to the view by the Visual Administrator.  For example,
+all icons are added to the world view, and all volume icons are added to
+the volumes view.
+
+A default view is created and maintained for each disk group on your
+system.  If a disk group is imported then a view will be created and all
+objects in that disk group will have an icon in that view.  Icons are added
+to a disk group view whenever an object is added to that disk group.  This
+view cannot be manually removed, but will be automatically removed when the
+disk group becomes unaccessible (after disk group deport, for example).
+
+In the DXlsm root window is the views subwindow.  There is a button for 
+every view on the system, and pushing this button pops up that view. 
+The view can always be closed and re-opened without having an effect on 
+the objects with icons in that view.

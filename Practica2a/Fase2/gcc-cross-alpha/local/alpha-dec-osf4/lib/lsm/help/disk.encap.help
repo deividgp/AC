@@ -1,0 +1,62 @@
+# 
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+#
+# HISTORY
+# 
+# @(#)$RCSfile: disk.encap.help,v $ $Revision: 1.1.2.4 $ (DEC) $Date: 1994/02/02 23:25:37 $
+# 
+# @(#)src/common/cmd/vxvm/voladm/disk.encap.help	5.4 16 Mar 1993 01:19:04 - Copyright (c) 1993 VERITAS Software Corp.
+#ident	"@(#)vxvm:common/cmd/vxvm/voladm/disk.encap.help	5.4"
+#
+# Copyright(C)1993 VERITAS Software Corporation.  ALL RIGHTS RESERVED.
+# UNPUBLISHED -- RIGHTS RESERVED UNDER THE COPYRIGHT
+# LAWS OF THE UNITED STATES.  USE OF A COPYRIGHT NOTICE
+# IS PRECAUTIONARY ONLY AND DOES NOT IMPLY PUBLICATION
+# OR DISCLOSURE.
+# 
+# THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION AND
+# TRADE SECRETS OF VERITAS SOFTWARE.  USE, DISCLOSURE,
+# OR REPRODUCTION IS PROHIBITED WITHOUT THE PRIOR
+# EXPRESS WRITTEN PERMISSION OF VERITAS SOFTWARE.
+# 
+#               RESTRICTED RIGHTS LEGEND
+# USE, DUPLICATION, OR DISCLOSURE BY THE GOVERNMENT IS
+# SUBJECT TO RESTRICTIONS AS SET FORTH IN SUBPARAGRAPH
+# (C) (1) (ii) OF THE RIGHTS IN TECHNICAL DATA AND
+# COMPUTER SOFTWARE CLAUSE AT DFARS 252.227-7013.
+#               VERITAS SOFTWARE
+# 4800 GREAT AMERICA PARKWAY, SANTA CLARA, CA 95054
+#
+  This operation can be used to convert a disk to use Logical Storage 
+  Manager. This adds the disk to a disk group and replaces existing 
+  partitions with volumes.
+
+  This operation takes as input a physical disk name or a physical 
+  partition name, a disk group name, and a disk name to give to the disk
+  within the disk group.  A disk group can be created from the encapsulated 
+  disk can be created from the encapsulated disk by specifying a disk group 
+  name that does not yet exist.
+
+  Disk encapsulation is in two parts.  The first part is to use the disk
+  operation menus to request that a disk be encapsulated.  The second
+  part is done when the system reboots.  Most of the work is done during
+  system reboot.

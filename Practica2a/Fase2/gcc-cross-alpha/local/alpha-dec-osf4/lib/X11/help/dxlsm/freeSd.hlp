@@ -1,0 +1,30 @@
+#/* @(#)@(#)help/freeSd.hlp	2.1 11 May 1993 19:04:35 -  */
+#ident  "@(#)va11:help/freeSd.hlp   2.1"
+#
+#
+Projection Menu, projM.hlp
+Icon Projection, iconProj.hlp
+Colors, colors.hlp
+X Resources, resources.hlp
+Analysis, analysis.hlp
+Volume, volume.hlp
+Plex, plex.hlp
+Subdisk, subdisk.hlp
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+#########################################
+SHOW FREE SUBDISKS HELP
+
+When show free subdisks is turned on the Visual Administrator highlights
+all unassociated subdisks with the projection color/bitmap.
+
+These highlighted subdisk should stand out on their disks.  This is useful
+since these unassociated subdisks represent unallocated disk space.  Once
+they are associated with a plex, they will no longer be highlighted.
+
+This option is saved as one of your user preferences.  If you turn free
+subdisk projection on and exit from the Visual Administrator, next time you
+start the Visual Administrator it will still be on.
+
+The projection color and bitmap can be changed by the user.  See help on
+X Resources for more information.

@@ -1,0 +1,9 @@
+// $XConsortium: complete,v 1.2 94/04/08 15:54:51 erik Exp $
+default xkb_compatibility "complete"  {
+    include "basic"
+    augment "iso9995"
+    augment "mousekeys"
+    augment "accessx(full)"
+    augment "misc"
+};
+

@@ -1,0 +1,364 @@
+
+LINTOBJS= \
+	Locore.ln \
+	ace_data.ln \
+	audit_data.ln \
+	autoconf_data.ln \
+	binlog_data.ln \
+	cam_config.ln \
+	cam_data.ln \
+	cam_debug.ln \
+	cam_special_data.ln \
+	cm_data.ln \
+	conf.ln \
+	cons_sw_data.ln \
+	cpuconf.ln \
+	dcedfs_data.ln \
+	gw_screen_data.ln \
+	if_tu_data.ln \
+	ioconf.ln \
+	isa_option_data.ln \
+	lockinfo.ln \
+	netaf_config.ln \
+	param.ln \
+	pci_option_data.ln \
+	pcxal_data.ln \
+	pcxas_data.ln \
+	pmap_data.ln \
+	presto_data.ln \
+	sec_data.ln \
+	sim_config.ln \
+	steal_mem.ln \
+	str_config.ln \
+	swapgeneric.ln \
+	time_data.ln \
+	trn_sr_data.ln \
+	tty_conf.ln \
+	ufs_quota_stubs.ln \
+	vfs_conf.ln \
+	ws_data.ln
+
+LINTOBJS1= \
+	alpha_init.ln \
+	bootio_net.ln \
+	bootio_subrs.ln \
+	devz.ln \
+	dma_direct_map.ln \
+	init_main.ln \
+	io.ln \
+	ipc_globals.ln \
+	kern_memcntl.ln \
+	kern_swapctl.ln \
+	pmap_init.ln \
+	rt_hab_cfg.ln \
+	rt_init_sysent.ln \
+	rt_syscalls.ln \
+	soe_two_cfg.ln \
+	soe_two_init_sysent.ln \
+	soe_two_syscalls.ln \
+	startup.ln \
+	svid_three_cfg.ln \
+	svid_three_init_sysent.ln \
+	svid_three_syscalls.ln \
+	svr_four_cfg.ln \
+	svr_four_init_sysent.ln \
+	svr_four_syscalls.ln \
+	sys.ln \
+	sys_advfs.ln \
+	sys_cdfs.ln \
+	sysv_hab_cfg.ln \
+	sysv_init_sysent.ln \
+	sysv_syscalls.ln \
+	ufs_quota.ln \
+	vfs_svid2calls.ln \
+	vm_init.ln
+
+lint:	${LINTOBJS} ${LINTOBJS1}
+	@${ECHO} "${LINT} ${LINTFLAGS} *.ln > linterrs 2>&1"
+	@${LINT} ${LINTFLAGS} ${LINTOBJS} ${LINTOBJS1} > linterrs 2>&1
+	${TOUCH} lint
+
+flint:	${LINTFILES}
+	@${ECHO} "${LINT} ${LINTFLAGS} *.ln > linterrs 2>&1"
+	@${LINT} ${LINTFLAGS} ${LINTOBJS} ${LINTOBJS1} > linterrs 2>&1
+
+Locore.ln: arch/alpha/Locore.c
+	-${LINT} -c ${LINTFLAGS} arch/alpha/Locore.c | \
+		(${LINTFILTER} ; exit 0) > Locore.lint 2>&1
+
+ace_data.ln: data/ace_data.c
+	-${LINT} -c ${LINTFLAGS} data/ace_data.c | \
+		(${LINTFILTER} ; exit 0) > ace_data.lint 2>&1
+
+audit_data.ln: data/audit_data.c
+	-${LINT} -c ${LINTFLAGS} data/audit_data.c | \
+		(${LINTFILTER} ; exit 0) > audit_data.lint 2>&1
+
+autoconf_data.ln: data/autoconf_data.c
+	-${LINT} -c ${LINTFLAGS} data/autoconf_data.c | \
+		(${LINTFILTER} ; exit 0) > autoconf_data.lint 2>&1
+
+binlog_data.ln: data/binlog_data.c
+	-${LINT} -c ${LINTFLAGS} data/binlog_data.c | \
+		(${LINTFILTER} ; exit 0) > binlog_data.lint 2>&1
+
+cam_config.ln: io/cam/cam_config.c
+	-${LINT} -c ${LINTFLAGS} io/cam/cam_config.c | \
+		(${LINTFILTER} ; exit 0) > cam_config.lint 2>&1
+
+cam_data.ln: data/cam_data.c
+	-${LINT} -c ${LINTFLAGS} data/cam_data.c | \
+		(${LINTFILTER} ; exit 0) > cam_data.lint 2>&1
+
+cam_debug.ln: io/cam/cam_debug.c
+	-${LINT} -c ${LINTFLAGS} io/cam/cam_debug.c | \
+		(${LINTFILTER} ; exit 0) > cam_debug.lint 2>&1
+
+cam_special_data.ln: data/cam_special_data.c
+	-${LINT} -c ${LINTFLAGS} data/cam_special_data.c | \
+		(${LINTFILTER} ; exit 0) > cam_special_data.lint 2>&1
+
+cm_data.ln: data/cm_data.c
+	-${LINT} -c ${LINTFLAGS} data/cm_data.c | \
+		(${LINTFILTER} ; exit 0) > cm_data.lint 2>&1
+
+conf.ln: conf.c
+	-${LINT} -c ${LINTFLAGS} conf.c | \
+		(${LINTFILTER} ; exit 0) > conf.lint 2>&1
+
+cons_sw_data.ln: data/cons_sw_data.c
+	-${LINT} -c ${LINTFLAGS} data/cons_sw_data.c | \
+		(${LINTFILTER} ; exit 0) > cons_sw_data.lint 2>&1
+
+cpuconf.ln: arch/alpha/hal/cpuconf.c
+	-${LINT} -c ${LINTFLAGS} arch/alpha/hal/cpuconf.c | \
+		(${LINTFILTER} ; exit 0) > cpuconf.lint 2>&1
+
+dcedfs_data.ln: data/dcedfs_data.c
+	-${LINT} -c ${LINTFLAGS} data/dcedfs_data.c | \
+		(${LINTFILTER} ; exit 0) > dcedfs_data.lint 2>&1
+
+gw_screen_data.ln: data/gw_screen_data.c
+	-${LINT} -c ${LINTFLAGS} data/gw_screen_data.c | \
+		(${LINTFILTER} ; exit 0) > gw_screen_data.lint 2>&1
+
+if_tu_data.ln: data/if_tu_data.c
+	-${LINT} -c ${LINTFLAGS} data/if_tu_data.c | \
+		(${LINTFILTER} ; exit 0) > if_tu_data.lint 2>&1
+
+ioconf.ln: ioconf.c
+	-${LINT} -c ${LINTFLAGS} ioconf.c | \
+		(${LINTFILTER} ; exit 0) > ioconf.lint 2>&1
+
+isa_option_data.ln: ./isa_option_data.c
+	-${LINT} -c ${LINTFLAGS} ./isa_option_data.c | \
+		(${LINTFILTER} ; exit 0) > isa_option_data.lint 2>&1
+
+lockinfo.ln: kern/lockinfo.c
+	-${LINT} -c ${LINTFLAGS} kern/lockinfo.c | \
+		(${LINTFILTER} ; exit 0) > lockinfo.lint 2>&1
+
+netaf_config.ln: net/netaf_config.c
+	-${LINT} -c ${LINTFLAGS} net/netaf_config.c | \
+		(${LINTFILTER} ; exit 0) > netaf_config.lint 2>&1
+
+param.ln: param.c
+	-${LINT} -c ${LINTFLAGS} param.c | \
+		(${LINTFILTER} ; exit 0) > param.lint 2>&1
+
+pci_option_data.ln: ./pci_option_data.c
+	-${LINT} -c ${LINTFLAGS} ./pci_option_data.c | \
+		(${LINTFILTER} ; exit 0) > pci_option_data.lint 2>&1
+
+pcxal_data.ln: data/pcxal_data.c
+	-${LINT} -c ${LINTFLAGS} data/pcxal_data.c | \
+		(${LINTFILTER} ; exit 0) > pcxal_data.lint 2>&1
+
+pcxas_data.ln: data/pcxas_data.c
+	-${LINT} -c ${LINTFLAGS} data/pcxas_data.c | \
+		(${LINTFILTER} ; exit 0) > pcxas_data.lint 2>&1
+
+pmap_data.ln: data/pmap_data.c
+	-${LINT} -c ${LINTFLAGS} data/pmap_data.c | \
+		(${LINTFILTER} ; exit 0) > pmap_data.lint 2>&1
+
+presto_data.ln: data/presto_data.c
+	-${LINT} -c ${LINTFLAGS} data/presto_data.c | \
+		(${LINTFILTER} ; exit 0) > presto_data.lint 2>&1
+
+sec_data.ln: data/sec_data.c
+	-${LINT} -c ${LINTFLAGS} data/sec_data.c | \
+		(${LINTFILTER} ; exit 0) > sec_data.lint 2>&1
+
+sim_config.ln: io/cam/sim_config.c
+	-${LINT} -c ${LINTFLAGS} io/cam/sim_config.c | \
+		(${LINTFILTER} ; exit 0) > sim_config.lint 2>&1
+
+steal_mem.ln: data/steal_mem.c
+	-${LINT} -c ${LINTFLAGS} data/steal_mem.c | \
+		(${LINTFILTER} ; exit 0) > steal_mem.lint 2>&1
+
+str_config.ln: streams/str_config.c
+	-${LINT} -c ${LINTFLAGS} streams/str_config.c | \
+		(${LINTFILTER} ; exit 0) > str_config.lint 2>&1
+
+swapgeneric.ln: arch/alpha/swapgeneric.c
+	-${LINT} -c ${LINTFLAGS} arch/alpha/swapgeneric.c | \
+		(${LINTFILTER} ; exit 0) > swapgeneric.lint 2>&1
+
+time_data.ln: data/time_data.c
+	-${LINT} -c ${LINTFLAGS} data/time_data.c | \
+		(${LINTFILTER} ; exit 0) > time_data.lint 2>&1
+
+trn_sr_data.ln: data/trn_sr_data.c
+	-${LINT} -c ${LINTFLAGS} data/trn_sr_data.c | \
+		(${LINTFILTER} ; exit 0) > trn_sr_data.lint 2>&1
+
+tty_conf.ln: bsd/tty_conf.c
+	-${LINT} -c ${LINTFLAGS} bsd/tty_conf.c | \
+		(${LINTFILTER} ; exit 0) > tty_conf.lint 2>&1
+
+ufs_quota_stubs.ln: ufs/ufs_quota_stubs.c
+	-${LINT} -c ${LINTFLAGS} ufs/ufs_quota_stubs.c | \
+		(${LINTFILTER} ; exit 0) > ufs_quota_stubs.lint 2>&1
+
+vfs_conf.ln: vfs/vfs_conf.c
+	-${LINT} -c ${LINTFLAGS} vfs/vfs_conf.c | \
+		(${LINTFILTER} ; exit 0) > vfs_conf.lint 2>&1
+
+ws_data.ln: data/ws_data.c
+	-${LINT} -c ${LINTFLAGS} data/ws_data.c | \
+		(${LINTFILTER} ; exit 0) > ws_data.lint 2>&1
+
+alpha_init.ln:
+	@${RM} alpha_init.ln
+	@${LN} -s ../BINARY/alpha_init.ln alpha_init.ln
+
+bootio_net.ln:
+	@${RM} bootio_net.ln
+	@${LN} -s ../BINARY/bootio_net.ln bootio_net.ln
+
+bootio_subrs.ln:
+	@${RM} bootio_subrs.ln
+	@${LN} -s ../BINARY/bootio_subrs.ln bootio_subrs.ln
+
+devz.ln:
+	@${RM} devz.ln
+	@${LN} -s ../BINARY/devz.ln devz.ln
+
+dma_direct_map.ln:
+	@${RM} dma_direct_map.ln
+	@${LN} -s ../BINARY/dma_direct_map.ln dma_direct_map.ln
+
+init_main.ln:
+	@${RM} init_main.ln
+	@${LN} -s ../BINARY/init_main.ln init_main.ln
+
+io.ln:
+	@${RM} io.ln
+	@${LN} -s ../BINARY/io.ln io.ln
+
+ipc_globals.ln:
+	@${RM} ipc_globals.ln
+	@${LN} -s ../BINARY/ipc_globals.ln ipc_globals.ln
+
+kern_memcntl.ln:
+	@${RM} kern_memcntl.ln
+	@${LN} -s ../BINARY/kern_memcntl.ln kern_memcntl.ln
+
+kern_swapctl.ln:
+	@${RM} kern_swapctl.ln
+	@${LN} -s ../BINARY/kern_swapctl.ln kern_swapctl.ln
+
+pmap_init.ln:
+	@${RM} pmap_init.ln
+	@${LN} -s ../BINARY/pmap_init.ln pmap_init.ln
+
+rt_hab_cfg.ln:
+	@${RM} rt_hab_cfg.ln
+	@${LN} -s ../BINARY/rt_hab_cfg.ln rt_hab_cfg.ln
+
+rt_init_sysent.ln:
+	@${RM} rt_init_sysent.ln
+	@${LN} -s ../BINARY/rt_init_sysent.ln rt_init_sysent.ln
+
+rt_syscalls.ln:
+	@${RM} rt_syscalls.ln
+	@${LN} -s ../BINARY/rt_syscalls.ln rt_syscalls.ln
+
+soe_two_cfg.ln:
+	@${RM} soe_two_cfg.ln
+	@${LN} -s ../BINARY/soe_two_cfg.ln soe_two_cfg.ln
+
+soe_two_init_sysent.ln:
+	@${RM} soe_two_init_sysent.ln
+	@${LN} -s ../BINARY/soe_two_init_sysent.ln soe_two_init_sysent.ln
+
+soe_two_syscalls.ln:
+	@${RM} soe_two_syscalls.ln
+	@${LN} -s ../BINARY/soe_two_syscalls.ln soe_two_syscalls.ln
+
+startup.ln:
+	@${RM} startup.ln
+	@${LN} -s ../BINARY/startup.ln startup.ln
+
+svid_three_cfg.ln:
+	@${RM} svid_three_cfg.ln
+	@${LN} -s ../BINARY/svid_three_cfg.ln svid_three_cfg.ln
+
+svid_three_init_sysent.ln:
+	@${RM} svid_three_init_sysent.ln
+	@${LN} -s ../BINARY/svid_three_init_sysent.ln svid_three_init_sysent.ln
+
+svid_three_syscalls.ln:
+	@${RM} svid_three_syscalls.ln
+	@${LN} -s ../BINARY/svid_three_syscalls.ln svid_three_syscalls.ln
+
+svr_four_cfg.ln:
+	@${RM} svr_four_cfg.ln
+	@${LN} -s ../BINARY/svr_four_cfg.ln svr_four_cfg.ln
+
+svr_four_init_sysent.ln:
+	@${RM} svr_four_init_sysent.ln
+	@${LN} -s ../BINARY/svr_four_init_sysent.ln svr_four_init_sysent.ln
+
+svr_four_syscalls.ln:
+	@${RM} svr_four_syscalls.ln
+	@${LN} -s ../BINARY/svr_four_syscalls.ln svr_four_syscalls.ln
+
+sys.ln:
+	@${RM} sys.ln
+	@${LN} -s ../BINARY/sys.ln sys.ln
+
+sys_advfs.ln:
+	@${RM} sys_advfs.ln
+	@${LN} -s ../BINARY/sys_advfs.ln sys_advfs.ln
+
+sys_cdfs.ln:
+	@${RM} sys_cdfs.ln
+	@${LN} -s ../BINARY/sys_cdfs.ln sys_cdfs.ln
+
+sysv_hab_cfg.ln:
+	@${RM} sysv_hab_cfg.ln
+	@${LN} -s ../BINARY/sysv_hab_cfg.ln sysv_hab_cfg.ln
+
+sysv_init_sysent.ln:
+	@${RM} sysv_init_sysent.ln
+	@${LN} -s ../BINARY/sysv_init_sysent.ln sysv_init_sysent.ln
+
+sysv_syscalls.ln:
+	@${RM} sysv_syscalls.ln
+	@${LN} -s ../BINARY/sysv_syscalls.ln sysv_syscalls.ln
+
+ufs_quota.ln:
+	@${RM} ufs_quota.ln
+	@${LN} -s ../BINARY/ufs_quota.ln ufs_quota.ln
+
+vfs_svid2calls.ln:
+	@${RM} vfs_svid2calls.ln
+	@${LN} -s ../BINARY/vfs_svid2calls.ln vfs_svid2calls.ln
+
+vm_init.ln:
+	@${RM} vm_init.ln
+	@${LN} -s ../BINARY/vm_init.ln vm_init.ln
+

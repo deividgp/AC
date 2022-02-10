@@ -1,0 +1,69 @@
+# 
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+#
+# HISTORY
+# 
+# @(#)$RCSfile: disk.k-rm.help,v $ $Revision: 1.1.2.3 $ (DEC) $Date: 1993/11/16 18:31:10 $
+# 
+# @(#)src/common/cmd/vxvm/voladm/disk.k-rm.help	5.4 16 Mar 1993 01:19:23 - Copyright (c) 1993 VERITAS Software Corp.
+#ident	"@(#)vxvm:common/cmd/vxvm/voladm/disk.k-rm.help	5.4"
+#
+# Copyright(C)1993 VERITAS Software Corporation.  ALL RIGHTS RESERVED.
+# UNPUBLISHED -- RIGHTS RESERVED UNDER THE COPYRIGHT
+# LAWS OF THE UNITED STATES.  USE OF A COPYRIGHT NOTICE
+# IS PRECAUTIONARY ONLY AND DOES NOT IMPLY PUBLICATION
+# OR DISCLOSURE.
+# 
+# THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION AND
+# TRADE SECRETS OF VERITAS SOFTWARE.  USE, DISCLOSURE,
+# OR REPRODUCTION IS PROHIBITED WITHOUT THE PRIOR
+# EXPRESS WRITTEN PERMISSION OF VERITAS SOFTWARE.
+# 
+#               RESTRICTED RIGHTS LEGEND
+# USE, DUPLICATION, OR DISCLOSURE BY THE GOVERNMENT IS
+# SUBJECT TO RESTRICTIONS AS SET FORTH IN SUBPARAGRAPH
+# (C) (1) (ii) OF THE RIGHTS IN TECHNICAL DATA AND
+# COMPUTER SOFTWARE CLAUSE AT DFARS 252.227-7013.
+#               VERITAS SOFTWARE
+# 4800 GREAT AMERICA PARKWAY, SANTA CLARA, CA 95054
+#
+  This operation can be used as part of replacing a disk.  This
+  operation takes as input the name of a disk.  If that disk name is
+  used by more than one disk group, you will also be asked to choose
+  the disk group.
+
+  This operation removes the association between the disk name and the
+  physical disk that it is currently attached to.  You can then remove
+  that disk from the system and substitute a replacement.  If any free
+  disks are available that are large enough to serve as replacements,
+  you will be presented with a list of disk devices.  You can choose
+  one of those disk devices, or leave the disk name unassociated.
+
+  You can replace the disk at any time by selecting "Replace a failed
+  or removed disk" from the main disk operations menu.
+
+  Dissociating a physical disk will disable any volume mirrors on that
+  disk.  If all mirrors of a volume are disabled (for example, if a
+  volume has only one mirror), then the volume itself will be disabled
+  and will likely have to be restored from backup.  This operation
+  will check for disabled volumes and will ask you before completing
+  the operation.

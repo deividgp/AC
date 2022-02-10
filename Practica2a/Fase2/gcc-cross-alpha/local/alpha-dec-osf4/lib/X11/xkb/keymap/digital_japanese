@@ -1,0 +1,136 @@
+// **************************************************************
+// *								*
+// * Keymaps for Japanese					*
+// *								*
+// **************************************************************
+
+xkb_keymap "lk201aj" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk201aj)"	};
+    xkb_types           { include "types/default"    	         	};
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_japanese(lk201aj)"};
+    xkb_geometry	{ description = "Digital Japanese LK201-AJ";
+			  include "geometry/digital_lk(lk201)"		};
+};
+
+xkb_keymap "lk401aj" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)"		};
+    xkb_types           { include "types/default"    	         	};
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_japanese(lk401aj)"};
+    xkb_geometry	{ description = "Digital Japanese LK401-AJ";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk401aj-esc" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)"		};
+    xkb_types           { include "types/default"    	         	};
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_japanese(lk401aj_esc)"};
+    xkb_geometry	{ description = "Digital Japanese LK401-AJ ESC";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk401bj" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401bj)"	};
+    xkb_types           { include "types/default"    	         	};
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_japanese(lk401bj)"};
+    xkb_geometry	{ description = "Digital Japanese LK401-BJ";
+			  include "geometry/digital_lk(lk401bj)"	};
+};
+
+xkb_keymap "lk401bj-esc" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401bj)"	};
+    xkb_types           { include "types/default"    	         	};
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_japanese(lk401bj_esc)"};
+    xkb_geometry	{ description = "Digital Japanese LK401-BJ ESC";
+			  include "geometry/digital_lk(lk401bj)"	};
+};
+
+xkb_keymap "lk401jj" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401jj)"	};
+    xkb_types           { include "types/default"    	         	};
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_japanese(lk401jj)"};
+    xkb_geometry	{ description = "Digital Japanese LK401-JJ";
+			  include "geometry/digital_lk(lk401jj)"	};
+};
+
+xkb_keymap "lk411aj" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411aj)"	};
+    xkb_types           { include "types/default"    	         	};
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_japanese(lk401bj)"};
+    xkb_geometry	{ description = "Digital Japanese LK411-AJ";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411aj-esc" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411aj)"	};
+    xkb_types           { include "types/default"    	         	};
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_japanese(lk401bj_esc)"};
+    xkb_geometry	{ description = "Digital Japanese LK411-AJ ESC";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411jj" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411jj)"	};
+    xkb_types           { include "types/default"    	         	};
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_japanese(lk401jj)"};
+    xkb_geometry	{ description = "Digital Japanese LK411-JJ";
+			  include "geometry/digital_lk(lk401jj)"	};
+};
+
+xkb_keymap "lk421aj" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk421aj)"	};
+    xkb_types           { include "types/default"    	         	};
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_japanese(lk421aj)"};
+    xkb_geometry	{ description = "Digital Japanese LK421-AJ";
+			  include "geometry/digital_unix(unix)"		};
+};
+
+xkb_keymap "lk421jj" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk421jj)"	};
+    xkb_types           { include "types/default"    	         	};
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_japanese(lk421jj)"};
+    xkb_geometry	{ description = "Digital Japanese LK421-JJ";
+			  include "geometry/digital_unix(lk421jj)"	};
+};
+
+xkb_keymap "pcxajaa" {
+    xkb_keycodes        { include "keycodes/digital_pc(pcxajaa)"	};
+    xkb_types           { include "types/default"    	         	};
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_japanese(pcxaj)"};
+    xkb_geometry	{ description = "Digital Japanese PCXAJ-AA";
+                          include "geometry/digital_pc(leds_alone)"
+			  include "geometry/digital_pc(pcxaj)"		};
+};
+
+xkb_keymap "lk97waj" {
+    xkb_keycodes        { include "keycodes/digital_pc(pcxajaa)"	};
+    xkb_types           { include "types/default"    	         	};
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_japanese(lk97waj)"};
+    xkb_geometry	{ description = "Digital Japanese LK97W-AJ";
+                          include "geometry/digital_pc(leds_alone)"
+			  include "geometry/digital_pc(pc109)"		};
+};
+
+xkb_keymap "lk97w" {
+    xkb_keycodes        { include "keycodes/digital_pc(pcxajaa)"	};
+    xkb_types           { include "types/default"    	         	};
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_japanese(lk97w)"};
+    xkb_geometry	{ description = "Digital Japanese LK97W";
+                          include "geometry/digital_pc(leds_alone)"
+			  include "geometry/digital_pc(pc109)"		};
+};
+
+

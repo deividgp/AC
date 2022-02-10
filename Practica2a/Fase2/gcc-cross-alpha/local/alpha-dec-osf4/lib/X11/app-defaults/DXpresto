@@ -1,0 +1,32 @@
+#ifdef COLOR
+!Suggested colors. To enable these colors, uncomment the first
+!character in the lines below. These colors will override system settings.
+!DXpresto*background:			midnightblue
+!DXpresto*foreground:			lightblue
+!DXpresto*background:			darkslategray
+!DXpresto*foreground:			wheat1
+!DXpresto*borderColor:			gold3
+!DXpresto*graph_parent*borderColor: 	firebrick
+!DXpresto*dirty_graph*highlight: 		gold3
+!DXpresto*dirty_graph*background: 	black
+!DXpresto*clean_graph*highlight: 		gold3
+!DXpresto*clean_graph*background: 	black
+!DXpresto*inval_graph*highlight: 		gold3
+!DXpresto*inval_graph*background: 	black
+!DXpresto*active_graph*highlight: 	gold3
+!DXpresto*active_graph*background: 	black
+!DXpresto*write_graph*highlight: 		gold3
+!DXpresto*write_graph*background: 	black
+!DXpresto*hit_graph*highlight:	 	gold3
+!DXpresto*hit_graph*background: 		black
+!DXpresto*topShadowColor:		gold2
+!DXpresto*bottomShadowColor:		gold4
+!DXpresto*armColor:			gold3
+!DXpresto*selectColor:			gold3
+!DXpresto*presto_on.selectColor:			green
+!DXpresto*presto_off.selectColor:		yellow
+!DXpresto*presto_error.selectColor:		red
+#endif
+
+
+

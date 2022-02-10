@@ -1,0 +1,22 @@
+#/* @(#)@(#)help/volStop.hlp	2.1 11 May 1993 19:06:56 -  */
+#ident  "@(#)va11:help/volStop.hlp   2.1"
+#
+#
+Pulldown Menu, pulldown.hlp
+Advanced Operations, advOps.hlp
+Advanced Volume Operations, volOps.hlp
+Volume, volume.hlp
+#########################################
+STOP VOLUMES HELP
+
+This pulldown menu lets you stop one, several, or all volumes.  
+
+
+Stop
+----
+Stop the selected volume(s).  At least one volume must be selected for
+this operation, and all selected volumes must be stoppable.
+
+Stop All
+--------
+Stop all volumes in this disk group that can be stopped.

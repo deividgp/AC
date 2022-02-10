@@ -1,0 +1,34 @@
+#/* @(#)@(#)help/sdSplitM.hlp	2.1 11 May 1993 19:06:06 -  */
+#ident  "@(#)va11:help/sdSplitM.hlp   2.1"
+#
+#
+Forms, forms.hlp
+Advanced Operations, advOps.hlp
+Advanced Subdisk Operations, sdOps.hlp
+Subdisk, subdisk.hlp
+Subdisk Split Into Two, sdSplit.hlp
+Subdisk Split Into Many, sdSplit2.hlp
+#########################################
+ADVANCED SUBDISK SPLIT MENU HELP
+
+The options on this pulldown menu allow you to specify how you want the
+selected subdisk to be split.  Only one subdisk may be selected for either
+of these operations.
+
+
+Into 2 Subdisks
+---------------
+The selected subdisk will be split into two subdisks.  A form is popped up
+allowing you to specify the size and name of the new subdisk.  If the
+subdisk is associated with a plex, then the two resulting subdisks will
+also be associated with the plex.  See the help on Subdisk Split for two
+subdisks for more information.
+
+Into More Than 2 Subdisks
+-------------------------
+The selected subdisk will be split into several subdisks.  A form is popped
+up where you may specify how many subdisks you wish to have.  The resulting
+subdisks will all have identical sizes and will have DXlsm generated names.
+See the help on Subdisk Split for many subdisks for more information.
+
+

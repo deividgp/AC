@@ -1,0 +1,245 @@
+// **************************************************************
+// *								*
+// * Symbols for lt_LT.ISO8859-4 - Lithuanian for Lithuania	*
+// *								*
+// **************************************************************
+
+// **************************************************************
+// *								*
+// * The VT108 layouts						*
+// *								*
+// * NOTES:  There isn't a VT105 (i.e. LK201) keyboard for	*
+// *	     lt_LT.  In addition, there aren't any TW/DP keys	*
+// *	     for the VT108.  The Group Shift (i.e. Mode_switch)	*
+// *	     takes care of this.				*
+// *								*
+// **************************************************************
+xkb_symbols "vt108" {
+    include "digital_vt(vt108)"
+
+    key <AE00> {       [     Dgrave_accent,          Dtilde ] };
+    key <AE01> {       [  	    exclam,		  1 ] };
+    key <AE02> {
+	symbols[Group1]= [	  quotedbl,		  2 ],
+	symbols[Group2]= [	        at ]
+    };
+    key <AE03> {
+	symbols[Group1]= [	     slash,		  3 ],
+	symbols[Group2]= [      numbersign ]
+    };
+    key <AE04> {
+	symbols[Group1]= [	 semicolon,		  4 ],
+	symbols[Group2]= [	    dollar ]
+    };
+    key <AE05> {
+	symbols[Group1]= [	     colon,		  5 ],
+	symbols[Group2]= [	   percent ]
+    };
+    key <AE06> {
+	symbols[Group1]= [	     comma,		  6 ],
+	symbols[Group2]= [     asciicircum ]
+    };
+    key <AE07> {
+	symbols[Group1]= [	    period,		  7 ],
+	symbols[Group2]= [	 ampersand ]
+    };
+    key <AE08> {
+	symbols[Group1]= [	  question,		  8 ],
+	symbols[Group2]= [	  asterisk ]
+    };
+    key <AE09> {       [	 parenleft,		  9 ] };
+    key <AE10> {       [        parenright,		  0 ] };
+    key <AE11> {       [	     minus,      underscore ] };
+    key <AE12> {       [	     equal,            plus ] };
+
+    key <AD01> {
+	symbols[Group1]= [	   aogonek,         Aogonek ],
+	symbols[Group2]= [	         q,		  Q ]
+    };
+    key <AD02> {
+	symbols[Group1]= [	    zcaron,          Zcaron ],
+	symbols[Group2]= [	         w,		  W ]
+    };
+    key <AD03> { 
+        symbols[Group1]= [             e,                 E ],
+        symbols[Group2]= [       EuroSign ]
+    };
+    key <AD04> {       [	         r,		  R ] };
+    key <AD05> {       [	         t,		  T ] };
+    key <AD06> {       [	         y,		  Y ] };
+    key <AD07> {       [	         u,		  U ] };
+    key <AD08> {       [	         i,		  I ] };
+    key <AD09> {       [	         o,		  O ] };
+    key <AD10> {       [	         p,		  P ] };
+    key <AD11> {
+	symbols[Group1]= [	   iogonek,	    Iogonek ],
+	symbols[Group2]= [     bracketleft,	  braceleft ]
+    };
+    key <AD12> {
+	symbols[Group1]= [	   percent,	   asterisk ],
+	symbols[Group2]= [    bracketright,	 braceright ]
+    };
+
+    key <AC01> {       [	       a,		A ] };
+    key <AC02> {       [	       s,		S ] };
+    key <AC03> {       [	       d,		D ] };
+    key <AC04> {       [	       f,		F ] };
+    key <AC05> {       [	       g,		G ] };
+    key <AC06> {       [	       h,		H ] };
+    key <AC07> {       [	       j,		J ] };
+    key <AC08> {       [	       k,		K ] };
+    key <AC09> {       [	       l,		L ] };
+    key <AC10> {
+	symbols[Group1]= [	 uogonek,	  Uogonek ],
+	symbols[Group2]= [     semicolon,	    colon ]
+    };
+    key <AC11> {
+	symbols[Group1]= [     eabovedot,	Eabovedot ],
+	symbols[Group2]= [    apostrophe,        quotedbl ]
+    };
+    key <BKSL> {       [       backslash,	      bar ] };
+
+    key <AB00> {       [            less,	  greater ] };
+    key <AB01> {       [	       z,		Z ] };
+
+    key <AB02> {
+	symbols[Group1]= [	 umacron,	  Umacron ],
+	symbols[Group2]= [             x,	        X ]
+    };
+    key <AB03> {       [	       c,		C ] };
+    key <AB04> {       [	       v,		V ] };
+    key <AB05> {       [	       b,		B ] };
+    key <AB06> {       [	       n,		N ] };
+    key <AB07> {       [	       m,		M ] };
+    key <AB08> {
+	symbols[Group1]= [	  ccaron,	   Ccaron ],
+	symbols[Group2]= [	   comma,	     less ]
+    };
+    key <AB09> {
+	symbols[Group1]= [	  scaron,	   Scaron ],
+	symbols[Group2]= [	  period,	  greater ]
+    };
+    key <AB10> {
+	symbols[Group1]= [	 eogonek,	  Eogonek ],
+	symbols[Group2]= [	   slash,	 question ]
+    };
+};
+
+xkb_symbols "vt108-tw" { include "digital_lithuanian(vt108)" };
+xkb_symbols "vt108-dp" { include "digital_lithuanian(vt108)" };
+
+// **************************************************************
+// *								*
+// * The PCXAL layouts (102-key)				*
+// *								*
+// **************************************************************
+xkb_symbols "pcxal" {
+    include "digital_pc(pc)"
+
+    key <AE00> {	[     Dgrave_accent,	          Dtilde ] };
+    key <AE01> {	[	  exclam,		  1 ] };
+    key <AE02> {
+	symbols[Group1]= [	quotedbl,		  2 ],
+	symbols[Group2]= [	         at ]
+    };
+    key <AE03> {
+	symbols[Group1]= [	     slash,		  3 ],
+	symbols[Group2]= [	numbersign ]
+    };
+    key <AE04> {
+	symbols[Group1]= [ semicolon,		  4 ],
+	symbols[Group2]= [	    dollar ]
+    };
+    key <AE05> {
+	symbols[Group1]= [	    colon,		  5 ],
+	symbols[Group2]= [	  percent ]
+    };
+    key <AE06> {
+	symbols[Group1]= [	  comma,		  6 ],
+	symbols[Group2]= [  asciicircum ]
+    };
+    key <AE07> {
+	symbols[Group1]= [	   period,		  7 ],
+	symbols[Group2]= [	ampersand ]
+    };
+    key <AE08> {
+	symbols[Group1]= [	 question,		  8 ],
+	symbols[Group2]= [	 asterisk ]
+    };
+    key <AE09> {	[	 parenleft,		  9 ] };
+    key <AE10> {	[            parenright,		  0 ] };
+    key <AE11> {	[	     minus,	    underscore ] };
+    key <AE12> {	[	      equal,	             plus ] };
+
+    key <AD01> {
+	symbols[Group1]= [	  aogonek,       Aogonek ],
+	symbols[Group2]= [	           q,		 Q ]
+    };
+    key <AD02> {
+	symbols[Group1]= [	    zcaron,         Zcaron ],
+	symbols[Group2]= [	           w,		 W ]
+    };
+    key <AD03> {
+        symbols[Group1]= [             e,                 E ],
+        symbols[Group2]= [       EuroSign ]
+    };
+    key <AD04> {       [	           r,		  R ] };
+    key <AD05> {       [	           t,		  T ] };
+    key <AD06> {	 [	           y,		  Y ] };
+    key <AD07> {       [	           u,		  U ] };
+    key <AD08> {       [	           i,		   I ] };
+    key <AD09> {       [	           o,		  O ] };
+    key <AD10> {       [	           p,		  P ] };
+    key <AD11> {
+	symbols[Group1]= [	  iogonek,         Iogonek ],
+	symbols[Group2]= [ bracketleft,	       braceleft ]
+    };
+    key <AD12> {
+	symbols[Group1]= [     percent,         asterisk ],
+	symbols[Group2]= [ bracketright,   braceright ]
+    };
+
+    key <AC01> {       [	           a,		  A ] };
+    key <AC02> {       [	           s,		  S ] };
+    key <AC03> {       [	           d,  	  D ] };
+    key <AC04> {       [	           f,		  F ] };
+    key <AC05> {       [	           g,		  G ] };
+    key <AC06> {       [	           h,		  H ] };
+    key <AC07> {       [	           j,		  J ] };
+    key <AC08> {       [	           k,		  K ] };
+    key <AC09> {       [	           l,		  L ] };
+    key <AC10> {
+	symbols[Group1]= [	 uogonek,         Uogonek ],
+	symbols[Group2]= [  semicolon,	            colon ]
+    };
+    key <AC11> {
+	symbols[Group1]= [ eabovedot,       Eabovedot ],
+	symbols[Group2]= [ apostrophe,	        quotedbl ]
+    };
+    key <AC12> {	 [            backslash,	               bar ] };
+
+    key <BKSL> {      [                    less,	          greater ] };
+    key <AB01> {	 [	          z,		   Z ] };
+    key <AB02> {
+	symbols[Group1]= [   umacron,         Umacron ],
+	symbols[Group2]= [	           x,		   X ]
+    };
+    key <AB03> {       [	           c,		   C ] };
+    key <AB04> {       [	           v,		   V ] };
+    key <AB05> {       [	           b,		   B ] };
+    key <AB06> {       [	           n,		   N ] };
+    key <AB07> {       [	          m,		  M ] };
+    key <AB08> {
+	symbols[Group1]= [	    ccaron,	          Ccaron ],
+	symbols[Group2]= [	    comma,	               less ]
+    };
+    key <AB09> {
+	symbols[Group1]= [	     scaron,           Scaron ],
+	symbols[Group2]= [	     period,	           greater ]
+    };
+    key <AB10> {
+	symbols[Group1]= [	   eogonek,         Eogonek ],
+	symbols[Group2]= [	       slash,	          question ]
+    };
+};
+

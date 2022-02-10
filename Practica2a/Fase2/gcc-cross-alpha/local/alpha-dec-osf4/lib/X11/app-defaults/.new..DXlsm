@@ -1,0 +1,37 @@
+#ifdef COLOR
+!Suggested colors. 
+!DXlsm*foreground:			black
+!DXlsm*background:			white
+!DXlsm*projectPixel:			deeppink
+!DXlsm*selectedPixel:			royalblue
+!DXlsm*alarmPixel:			red
+!DXlsm*freesdPixel:			lightgrey
+!DXlsm*disabledPixel:			lightgrey
+!DXlsm*lowPixel:	 	   	green
+!DXlsm*midPixel	:	 		yellow
+!DXlsm*highPixel: 			red
+#endif COLOR
+#ifndef COLOR
+!DXlsm*projectPixmap:	 		wide_weave
+!DXlsm*selectedPixmap: 			root_weave
+!DXlsm*alarmPixmap: 			cross_weave
+!DXlsm*freedsPixmap: 			1x1
+!DXlsm*disabledPixmap: 			2x2
+!DXlsm*lowPixmap: 			gray1
+!DXlsm*medPixmap: 			gray2
+!DXlsm*highPixmap: 			gray3
+#endif /* not COLOR */
+
+!DXlsm*volumeMinimizeIcons:             False
+!DXlsm*plexMinimizeIcons:              	False
+!DXlsm*diskMinimizeIcons:              	False
+!DXlsm*phyDiskMinimizeIcons:            False
+
+!DXlsm*mono:              		False
+!DXlsm*commandHistorySize:             	50
+!DXlsm*commandSilos: 		        40
+!DXlsm*fontList: 		  	10x18
+!DXlsm*twoButtonMouse: 	             	False
+!DXlsm*autoDeselect: 	             	True
+!DXlsm*defaultViewWindow: 	        rootdg
+!DXlsm*title: 	        		Test Title

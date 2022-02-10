@@ -1,0 +1,195 @@
+// **************************************************************
+// *								*
+// * Symbols for ja_JP - Japanese				*
+// *								*
+// **************************************************************
+
+xkb_symbols "kana" {
+    name[Group2]= "kana";
+    key <AE01> {	[], [	  kana_NU			]	};
+    key <AE02> {	[], [	  kana_FU			]	};
+    key <AE03> {	[], [	   kana_A,     kana_a		]	};
+    key <AE04> {	[], [	   kana_U,     kana_u		]	};
+    key <AE05> {	[], [	   kana_E,     kana_e		]	};
+    key <AE06> {	[], [	   kana_O,     kana_o		]	};
+    key <AE07> {	[], [	  kana_YA,     kana_ya		]	};
+    key <AE08> {	[], [	  kana_YU,     kana_yu		]	};
+    key <AE09> {	[], [	  kana_YO,     kana_yo		]	};
+    key <AE10> {	[], [	  kana_WA,     kana_WO		]	};
+    key <AE11> {	[], [	  kana_HO			]	};
+    key <AE12> {	[], [	  kana_HE			]	};
+
+    key <AD01> {	[], [	  kana_TA			]	};
+    key <AD02> {	[], [	  kana_TE			]	};
+    key <AD03> {	[], [	   kana_I,     kana_i		]	};
+    key <AD04> {	[], [	  kana_SU			]	};
+    key <AD05> {	[], [	  kana_KA			]	};
+    key <AD06> {	[], [	   kana_N			]	};
+    key <AD07> {	[], [	  kana_NA			]	};
+    key <AD08> {	[], [	  kana_NI			]	};
+    key <AD09> {	[], [	  kana_RA			]	};
+    key <AD10> {	[], [	  kana_SE			]	};
+    key <BKSL> {	[], [ prolongedsound			]	};
+
+    key <AC01> {	[], [	 kana_CHI			]	};
+    key <AC02> {	[], [	  kana_TO			]	};
+    key <AC03> {	[], [	 kana_SHI			]	};
+    key <AC04> {	[], [	  kana_HA			]	};
+    key <AC05> {	[], [	  kana_KI			]	};
+    key <AC06> {	[], [	  kana_KU			]	};
+    key <AC07> {	[], [	  kana_MA			]	};
+    key <AC08> {	[], [	  kana_NO			]	};
+    key <AC09> {	[], [	  kana_RI			]	};
+    key <AC10> {	[], [	  kana_RE			]	};
+    key <AC11> {	[], [	  kana_KE			]	};
+
+    key <AB01> {	[], [	 kana_TSU, kana_tsu		]	};
+    key <AB02> {	[], [	  kana_SA			]	};
+    key <AB03> {	[], [	  kana_SO			]	};
+    key <AB04> {	[], [	  kana_HI			]	};
+    key <AB05> {	[], [	  kana_KO			]	};
+    key <AB06> {	[], [	  kana_MI			]	};
+    key <AB07> {	[], [	  kana_MO			]	};
+    key <AB08> {	[], [	  kana_NE, kana_comma		]	};
+    key <AB09> {	[], [	  kana_RU, kana_fullstop	]	};
+    key <AB10> {	[], [	  kana_ME, kana_conjunctive	]	};
+};
+
+xkb_symbols "switch" {
+    key <MUHE> { [ Muhenkan	      ] };
+    key <KANJ> { [ Kanji	      ] };
+    key <HIRA> { [ Hiragana, Katakana ] };
+};
+
+xkb_symbols "lk201aj" {
+    include "digital_us(us)"
+    include "digital_vt(vt105)"
+    key <AB00> {       [	     less,	  greater ] };
+    include "digital_japanese(kana)"
+	     key <AD11> { [], [ kana_RO, voicedsound		] };
+	     key <AD12> { [], [ kana_MU, semivoicedsound	] };
+	     key <AE00> { [], [ prolongedsound			] };
+	     key <LCMP> { [ Alt_L				] };
+    override key <BKSL> { [], [ kana_openingbracket, kana_closingbracket ] };
+    override key <FK11> { [ F11					] };
+    override key <AB08> { [ comma, comma ] };
+    override key <AB09> { [ period, period ] };
+    replace key <SPCE> {
+        type= "PC_SYSRQ",
+        symbols[Group1]= [ space , Mode_switch ]
+    };
+};
+
+xkb_symbols "lk401aj" {
+    include "digital_us(vt108)"
+    include "digital_japanese(kana)"
+    key <AD11> { [], [		   kana_RO, voicedsound		] };
+    key <AD12> { [], [		   kana_MU, semivoicedsound	] };
+    key <BKSL> { [], [ kana_openingbracket, kana_closingbracket ] };
+    key <AE00> { [], [ prolongedsound				] };
+    replace key <LCMP> { [Mode_switch ] };
+    override key <FK11> { [ F11					] };
+};
+
+xkb_symbols "lk401aj_esc" {
+    include "digital_japanese(lk401aj)"
+    replace key <AE00> { [ Escape				] };
+    override key <AB00> { [ quoteleft,asciitilde ],[ prolongedsound	] };
+};     
+
+xkb_symbols "lk401bj" {
+    include "digital_japanese(lk401aj)"
+    include "digital_japanese(switch)"
+};
+
+xkb_symbols "lk401bj_esc" {
+    include "digital_japanese(lk401aj_esc)"
+    include "digital_japanese(switch)"
+};
+
+xkb_symbols "lk4xx_jis" {
+    key <AD11> { [], [ voicedsound				] };
+    key <AD12> { [], [	   semivoicedsound,kana_openingbracket	] };
+    key <BKSL> { [], [		   kana_MU,kana_closingbracket	] };
+    key <AB11> { [		  NoSymbol,underscore		],
+		 [ kana_RO					] };
+    override key <FK11> { [ F11					] };
+    replace key <AE00> { [ Escape				] };
+    override key <AE02> { [		 2, quotedbl		] };
+    override key <AB00> { [	 backslash, bar			],
+			  [ prolongedsound			] };
+    override key <AE06> { [		 6, ampersand		] };
+    override key <AE07> { [		 7, apostrophe		] };
+    override key <AE08> { [		 8, parenleft		] };
+    override key <AE09> { [		 9, parenright		] };
+    override key <AE10> { [		 0, 0			] };
+    override key <AC10> { [	 semicolon, plus		] };
+    override key <AE12> { [    asciicircum, asciitilde		] };
+    override key <AD12> { [    bracketleft, braceleft		] };
+    override key <BKSL> { [   bracketright, braceright		] };
+    override key <AE11> { [	     minus, equal		] };
+    override key <AD11> { [		at, grave		] };
+    override key <AC11> { [	     colon, asterisk		] };
+    replace key <LCMP> { [Mode_switch ] };
+};
+
+xkb_symbols "lk401jj" {
+    include "digital_us(vt108)"
+    include "digital_japanese(kana)"
+    include "digital_japanese(switch)"
+    include "digital_japanese(lk4xx_jis)"
+};
+
+xkb_symbols "lk421aj" {
+    include "digital_us(unix)"
+    include "digital_japanese(kana)"
+    include "digital_japanese(lk4xx_jis)"
+};
+
+xkb_symbols "lk421jj" {
+    include "digital_japanese(lk421aj)"
+    include "digital_japanese(switch)"
+};
+
+xkb_symbols "pcxaj" {
+    include "digital_us(pcxal)"
+    include "digital_japanese(kana)"
+    include "digital_japanese(switch)"
+	     key <AB11> { [	  backslash, underscore		],
+			  [	    kana_RO			] };
+	     key <AC12> { [    bracketright, braceright		],
+			  [	    kana_MU, kana_closingbracket] };
+    replace  key <AE00> { [ Zenkaku_Hankaku			] };
+    override key <AE02> { [		  2, quotedbl		] };
+    override key <AE06> { [		  6, ampersand		] };
+    override key <AE07> { [		  7, apostrophe		] };
+    override key <AE08> { [		  8, parenleft		] };
+    override key <AE09> { [		  9, parenright		] };
+    override key <AE10> { [		  0, asciitilde		] };
+    override key <AE11> { [	      minus, equal		] };
+    override key <AE12> { [	asciicircum, asciitilde		] };
+    // In Japan, the "yen" key and the "backslash" key
+    // both produce a backslash character.
+    // If using a JIS font, the backslash is displayed
+    // as a yen symbol.
+    replace  key <AE13> { [       backslash, bar                ],
+                          [   prolongedsound                    ] };
+    replace  key <BKSP> { [       BackSpace                     ] };
+
+    override key <AD11> { [		 at, grave		],
+			  [	voicedsound			] };
+    override key <AD12> { [	bracketleft, braceleft		],
+			  [ semivoicedsound, kana_openingbracket] };
+    override key <AC10> { [	  semicolon, plus		] };
+    override key <AC11> { [	      colon, asterisk		] };
+    override key <RCTL> { [	Mode_switch			] };
+};
+
+xkb_symbols "lk97waj" {
+    include "digital_japanese(pcxaj)"
+};
+
+xkb_symbols "lk97w" {
+    include "digital_japanese(lk97waj)"
+};
+

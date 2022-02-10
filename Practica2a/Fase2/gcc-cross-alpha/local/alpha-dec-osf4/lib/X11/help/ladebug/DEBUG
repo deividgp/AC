@@ -1,0 +1,2474 @@
+1 debug
+=Title Debugger Commands
+ This help library contains information on debugger commands.
+
+ For information on a particular command, click on the command name in
+ the list of Additional Topics below.
+
+ For information on debugger menus, push buttons, and mouse actions, go
+ to the Main Window and pull down the Help:  On Context or Help:  On
+ Window items.
+
+2 lad_cmd
+=Title Ladebug Commands
+ See the Additional Topics for information on Ladebug commands.
+
+ To enter several debugger commands on the same line, separate each
+ command with a semicolon (;).
+
+ To enter multiple-line commands, type a backslash at the end of each
+ line.  The maximum command-line length is 255 characters.
+
+3 slash
+=Title / string, ?  string
+=include debug lad_cmd list
+=include debug lad_cmd use
+=include debug lad_cmd file
+=include debug lad_cmd
+ Syntax:
+
+     / string
+     ? string
+
+ Use the string search commands / and ?  to locate text in the source
+ code.  The / character invokes a forward search; the ?  character
+ invokes a backwards search.  Enter / or ?  without an argument to find
+ the next location of the previously specified text.
+
+ The search begins from the current position of the program counter.  If
+ no program counter exists for the current source file, the search
+ begins after the last source line displayed by the debugger.
+
+ For information on other commands that you use to examine program
+ source code, see the Additional Topics below.
+
+3 exclamation
+=Title !, !!, !integer, !-integer, !text
+=include debug lad_cmd history
+=include debug lad_cmd
+ Syntax:
+
+     !
+     !!
+     !integer
+     !-integer
+     !text
+         
+ To repeat the last-entered command line, enter two exclamation points
+ or press the Return key.  You can also enter !-1.
+
+ To repeat a command line entered during the current debugging session,
+ enter an exclamation point followed by the integer associated with the
+ command.  (Use the history command to list commands entered in the
+ current debugging session.) For example, to repeat the
+ seventh-most-recent command of the current debugging session, enter !7.
+ To repeat the third-most-recent command, enter !-3.
+
+ To repeat the most recent command starting with a string, use the last
+ form of the command.  For example, to repeat a command that started
+ with bp, enter !bp.
+
+ For information on other commands that repeat previously issued
+ debugger commands, see the Additional Topic below.
+
+3 examine_address
+=Title <examine address>
+=include debug lad_cmd stopi
+=include debug lad_cmd tracei
+=include debug lad_cmd wheni
+=include debug lad_cmd nexti
+=include debug lad_cmd stepi
+=include debug lad_cmd printregs
+=include debug lad_cmd
+ Syntax:
+
+     startaddress, endaddress / mode
+     startaddress / count mode
+
+ You can display stored values as character strings, machine
+ instructions, or decimal, octal, hexadecimal, or real numbers.  Specify
+ the address and the number or words or bytes (count) information in
+ decimal, octal, or hexadecimal.  The display mode must be specified
+ along with the address range.  The modes are:
+
+    d   Print a short word in decimal
+
+    D   Print a long word in decimal
+
+    o   Print a short word in octal
+
+    O   Print a long word in octal
+
+    x   Print a short word in hexadecimal
+
+    X   Print a long word in hexadecimal
+
+    b   Print a byte in octal
+
+    c   Print a byte as a character
+
+    s   Print a string of characters (a C-style string that ends in null)
+
+    f   Print a single-precision real number
+
+    g   Print a double-precision real number
+
+    i   Disassemble machine instructions 
+
+
+ For information on other machine-code level commands, see the
+ Additional Topics below.
+
+3 pound
+=Title "#"
+=include debug lad_cmd
+ Syntax:
+
+    "#"
+
+ When Ladebug encounters the "#" command, the debugger ignores all
+ inputs until the end of the line.  The "#" command must be the first
+ identifier on the command line, but can be preceded by white space.
+
+ The pound character must be enclosed in quotation marks.  Pound
+ characters that appear within a quoted string must also be enclosed in
+ quotation marks.
+
+3 alias
+=Title alias, unalias
+=include debug lad_cmd ladebug_predefined_aliases
+=include debug lad_cmd
+ Syntax:
+
+     alias [aliasname]
+     alias aliasname [(argument)] "[aliasname]string"
+     unalias aliasname
+
+ Enter the alias command without an argument to display all aliases and
+ their definitions.  Specify an alias name to display the definition for
+ that alias.
+
+ Use the second form to define a new alias or to redefine an existing
+ alias.  The definition can contain the name of another alias, if the
+ nested alias is the first identifier in the definition.  Invoke the
+ alias by entering the alias name, including an argument if the alias
+ definition specified an argument.
+
+ The following example defines a nested alias and then invokes the
+ alias:
+
+    (ladebug)alias begin "stop in main; run"
+
+    (ladebug)alias pv(x) "begin; print(x)"
+
+    (ladebug)pv(i)
+
+ Use the unalias command to delete an alias.
+
+ Alias commands may contain no more than 56 arguments.
+
+3 ladebug_predefined_aliases
+=Title Ladebug Predefined Aliases
+=include debug lad_cmd alias
+=include debug lad_cmd
+
+ The following predefined aliases are included with the Ladebug
+ Debugger:
+
+    ?           help
+    a           assign
+    b           stop at
+    bp          stop in
+    c           cont
+    d           delete
+    e           file
+    f           func
+    g           goto
+    h           history
+    j           status
+    l           list
+    li          $curpc/10 i; set $curpc = $curpc + 40
+    n           next
+    ni          nexti
+    p           print
+    pd          printf "%ld",
+    pi          playback input
+    po          printf "0%o",
+    pr          printregs
+    ps          printf "%s"
+    px          printf "0x%lx",
+    q           quit
+    r           rerun
+    ri          record input
+    ro          record output
+    s           step
+    si          stepi
+    S           next
+    Si          nexti
+    t           where
+    tlist       show thread (only defined during kernel debugging)
+    tset        thread (only defined during kernel debugging)
+    u           list $curline - 9:10
+    W           list $curline - 10:20
+    w           list $curline - 5:10
+    wi          ($curpc - 20)/10 i
+
+ For information on other commands that you use to define, view, or
+ delete a debugger command alias, see the Additional Topic below.
+
+3 assign
+=Title assign
+=include debug lad_cmd print
+=include debug lad_cmd printf
+=include debug lad_cmd dump
+=include debug lad_cmd whatis
+=include debug lad_cmd which
+=include debug lad_cmd whereis
+=include debug lad_cmd
+ Syntax:
+
+     assign target = expression
+
+ Use the assign command to change the value of a variable, memory
+ address, or expression that is accessible according to the scope or
+ visibility rules of the language.  The expression can be any expression
+ that is valid in the current context.
+
+ For C++:
+    assign [classname::]member = ["filename"]`expression
+    assign [object.]member = ["filename"]`expression
+
+ Use the assign command to modify static and object data members in a
+ class, and variables declared as reference types, type const, or type
+ static.  The address referred to by a reference type cannot be changed
+ but the value at that address can be changed.
+
+ For information on other commands that examine program variables, see
+ the Additional Topics below.
+
+3 attach
+=Title attach
+=include debug lad_cmd detach
+=include debug lad_cmd
+ Syntax:
+    attach process_id image_file
+
+ Use the attach command to connect to a running process.  Supply the
+ process ID number and image file name.
+
+3 call
+=Title call
+=include debug lad_cmd run
+=include debug lad_cmd cont
+=include debug lad_cmd next
+=include debug lad_cmd step
+=include debug lad_cmd return
+=include debug lad_cmd goto
+=include debug lad_cmd kill
+=include debug lad_cmd
+ Syntax:
+
+     call function ([parameter])
+
+ Use the call command to execute a single function.  Specify the
+ function as if you were calling it from within the program.  If the
+ function has no parameters, specify empty parentheses.
+
+ Nest called functions by setting a breakpoint in a function and
+ executing it using the call command.  When execution suspends at the
+ breakpoint, use this command to execute the nested function.
+
+ The call is made in the context of the current thread,
+
+ For C++:
+ When you set the $overloadmenu debugger variable to 1 and call an
+ overloaded function, the debugger will list the overloaded functions
+ and call the function you specify.
+
+ For information on other commands that execute a program under debugger
+ control, see the Additional Topics below.
+
+3 catch
+=Title catch
+=include debug lad_cmd ignore
+=include debug lad_cmd
+ Syntax:
+
+     catch [signal]
+
+ Enter the catch command without an argument to see which operating
+ system signals the debugger currently traps.  Use the catch command
+ followed by an argument to trap that signal.
+
+ Only one signal at a time can be added to or removed from the list of
+ trapped or ignored signals.
+
+ The catch command operates on a per program basis; you must first load
+ a program (using the load command) or attach to a process (using the
+ attach command).
+
+ For information on other commands that you use to trap or ignore
+ operating system signals, see the Additional Topic below.
+
+3 catch_unaligned
+=Title catch unaligned
+=include debug lad_cmd ignore_unaligned
+=include debug lad_cmd
+ Syntax:
+
+     catch unaligned 
+
+ Enter the catch unaligned command to instruct the debugger to stop when
+ unaligned data occurs in the debuggee process.  The debugger stops at
+ the instruction following the instruction where the unaligned process
+ occurs, and issues a message.  The default is ignore unaligned.
+
+ For information on related commands, see the Additional Topics below.
+
+3 class
+=Title class
+=include debug lad_cmd
+ Syntax:
+
+    class [classname]
+
+ For C++ only:
+ Use the class command without an argument to display the current class
+ scope.  Specify an argument to change the class scope.  After the class
+ scope is set, refer to members of the class by omitting the class name
+ prefix.  Setting the class scope nullifies the function scope.
+
+3 cont
+=Title cont
+=include debug lad_cmd run
+=include debug lad_cmd next
+=include debug lad_cmd step
+=include debug lad_cmd return
+=include debug lad_cmd call
+=include debug lad_cmd goto
+=include debug lad_cmd kill
+=include debug lad_cmd
+ Syntax:
+
+     cont [signal] [to line_number]
+
+ Use the cont command without a parameter value to resume program
+ execution until a breakpoint, a signal, an error, or the end of the
+ program is encountered.  Specify a signal parameter value to send an
+ operating system signal to the program continuing execution.  Specify a
+ to line_number parameter value to halt program execution when that line
+ number is reached.
+
+ When you use the cont command, Ladebug resumes execution of the entire
+ process.
+
+ The signal parameter value can be either a signal number of a string
+ name (for example, SIGSEGV).  The default is 0, which allows the
+ program to continue execution without specifying a signal.  If you
+ specify a signal parameter value, the program continues execution with
+ that signal.
+
+ The to line_number parameter value is used to resume execution and then
+ halt when the specified source line is reached.
+
+ The form of the optional line_number argument must be one of the
+ following:
+
+  -  line_number, a positive numeric which indicates the line number of
+     the current source file where execution is to be halted
+
+  -  "filename":line_number, which explicitly identifies both the source
+     file and the line number where execution is to be halted.
+
+
+ For information on other commands that execute a program under debugger
+ control, see the Additional Topics below.
+
+3 delete
+=Title delete
+=include debug lad_cmd stop
+=include debug lad_cmd when
+=include debug lad_cmd trace
+=include debug lad_cmd status
+=include debug lad_cmd disable
+=include debug lad_cmd enable
+=include debug lad_cmd
+ Syntax:
+
+     delete integer[,...]
+     delete all
+     delete *
+
+ Enter the delete command followed by the number or numbers associated
+ with a breakpoint or trace (as listed in the status command) to remove
+ the specified breakpoint or tracepoint.
+
+ Enter the delete all command or the delete * command to remove all
+ breakpoints and tracepoints.
+
+ This command operates on a per program basis; you must first load a
+ program (using the load command) or attach to a process (using the
+ attach command).
+
+ For information on other commands that affect breakpoints and
+ tracepoints, see the Additional Topics below.
+
+3 delsharedobj
+=Title delsharedobj
+=include debug lad_cmd readsharedobj
+=include debug lad_cmd
+ Syntax:
+
+     delsharedobj shared_object
+
+ Use the delsharedobj command to remove the symbol table information for
+ the specified shared object from the debugger.
+
+ For information on related commands, see the Additional Topics below.
+
+3 detach
+=Title detach
+=include debug lad_cmd attach
+=include debug lad_cmd
+ Syntax:
+
+     detach [process_id_list]
+
+ Use the detach command to detach from a running process you specify
+ from the process ID list.  Specifying a process ID and detaching from
+ the process disables your ability to debug the process.  If you do not
+ specify a process ID from the list, Ladebug detaches from the current
+ process.
+
+3 disable
+=Title disable
+=include debug lad_cmd stop
+=include debug lad_cmd when
+=include debug lad_cmd trace
+=include debug lad_cmd status
+=include debug lad_cmd delete
+=include debug lad_cmd enable
+=include debug lad_cmd
+ Syntax:
+
+     disable integer[,...]
+     disable all
+     disable *
+
+ Enter the disable command followed by the number or numbers associated
+ with a breakpoint or trace (as listed by the status command) to disable
+ the breakpoint or trace.  Enter the disable all command or the disable
+ * command to disable all breakpoints and traces.
+
+ The disabled breakpoint is displayed in response to the status command,
+ but it is ignored during execution.  Disabled breakpoints remain
+ disabled until they are explicitly reactivated or deleted.
+
+ This command operates on a per program basis; you must first load a
+ program (using the load command) or attach to a process (using the
+ attach command).
+
+ For information on other commands that affect breakpoints and
+ tracepoints, see the Additional Topics below.
+
+3 down
+=Title down
+=include debug lad_cmd where
+=include debug lad_cmd up
+=include debug lad_cmd func
+=include debug lad_cmd
+ Syntax:
+
+     down [number]
+
+ Use the up command or the down command without an argument to change
+ the function scope to the function located one level up or down the
+ stack.  Enter a number argument to change the function scope to the
+ function up or down the specified number of levels.  If the number of
+ levels exceeds the number of active functions on the stack, the
+ function scope moves up or down as many levels as possible, and the
+ debugger issues a warning message.
+
+ When the function scope changes, the debugger displays the source line
+ corresponding to the last point of execution in that function.
+
+ For information on other stack trace commands, see the Additional
+ Topics below.
+
+3 dump
+=Title dump
+=include debug lad_cmd print
+=include debug lad_cmd printf
+=include debug lad_cmd assign
+=include debug lad_cmd whatis
+=include debug lad_cmd which
+=include debug lad_cmd whereis
+=include debug lad_cmd
+ Syntax:
+
+     dump [function]
+     dump.
+
+ Use the dump command without an argument to list the local parameters
+ and local variables in the current function.  To list the parameters
+ and local variables in an active function, specify it as an argument.
+
+ Enter the dump command to list the parameters and local variables for
+ all functions active on the stack.
+
+ For information on other commands that examine program variables, see
+ the Additional Topics below.
+
+3 enable
+=Title enable
+=include debug lad_cmd stop
+=include debug lad_cmd when
+=include debug lad_cmd trace
+=include debug lad_cmd status
+=include debug lad_cmd delete
+=include debug lad_cmd disable
+=include debug lad_cmd
+ Syntax:
+
+     enable integer[,...]
+     enable all
+     enable *
+
+
+ Enter the enable command followed by the number or numbers associated
+ with a breakpoint or trace (as listed by the status command) to enable
+ a breakpoint or trace.
+
+ Enter the enable all command or the enable * command to activate all
+ previously disabled breakpoints and traces.
+
+ This command operates on a per program basis; you must first load a
+ program (using the load command) or attach to a process (using the
+ attach command).
+
+ For information on other commands that affect breakpoints and
+ tracepoints, see the Additional Topics below.
+
+3 export
+=Title export
+=include debug lad_cmd printenv
+=include debug lad_cmd setenv
+=include debug lad_cmd unsetenv
+=include debug lad_cmd
+ Syntax:
+
+     export [env_variable [=value]]
+
+ Sets the value of the specified environment variable.  If no variable
+ is specified, the command displays the values of all environment
+ variables.  If a variable is specified but no value is specified, then
+ the variable is set to NULL.
+
+ This command is not for the current debuggee's environment, but for the
+ environment of any debuggees subsequently created with fork(2) or with
+ subsequent run or rerun commands.
+
+ The commands export and setenv are synonyms.
+
+3 file
+=Title file
+=include debug lad_cmd list
+=include debug lad_cmd use
+=include debug lad_cmd slash
+=include debug lad_cmd
+ Syntax:
+
+     file [filename]
+
+ Enter the file command without an argument to display the name of the
+ current file scope.  Include a file name as an argument to change the
+ file scope.  Change the file scope to set a breakpoint in a function
+ not in the file currently being executed.  To see source code for a
+ function not in the file currently being executed, use the file command
+ to set the file scope and the use command to direct the search for the
+ sources of that file.
+
+ For information on other commands that you use to examine program
+ source code, see the Additional Topics below.
+
+3 func
+=Title func
+=include debug lad_cmd where
+=include debug lad_cmd up
+=include debug lad_cmd down
+=include debug lad_cmd
+ Syntax:
+
+     func [function]
+     func [integer]
+
+ Use the func command without an argument to display the current
+ function scope.  To change the function scope to a function currently
+ active on the stack, specify either the name of the function or the
+ number corresponding to the stack activation level.  (Enter the where
+ command to display the stack trace.)
+
+ When the function scope is changed, the debugger displays the source
+ line corresponding to the last point of execution in that function.
+
+ For information on other stack trace commands, see the Additional
+ Topics below.
+
+3 goto
+=Title goto
+=include debug lad_cmd run
+=include debug lad_cmd cont
+=include debug lad_cmd next
+=include debug lad_cmd step
+=include debug lad_cmd return
+=include debug lad_cmd call
+=include debug lad_cmd kill
+=include debug lad_cmd
+ Syntax:
+
+     goto line_number
+
+ Use the goto command to branch to a line located in the function where
+ execution is suspended.  When you branch to a line, the source code
+ between the line where execution suspended and the specified line is
+ not executed.
+
+3 help
+=Title help
+=include debug lad_cmd quit
+=include debug lad_cmd
+ Syntax:
+
+     help [command]
+
+ Enter the help command without an argument to display a list of
+ debugger commands.  Include a command argument to display a description
+ of that command.
+
+ For information on other commands that you use to exit, get information
+ about the debugger, and execute a shell command, see the Additional
+ Topics below.
+
+3 history
+=Title history
+=include debug lad_cmd exclamation
+=include debug lad_cmd
+ Syntax:
+
+     history [integer]
+
+ Enter the history command without an argument to display previously
+ executed commands.  The debugger displays the number of command lines
+ defined for the $historylines debugger variable.  (The default is 20
+ lines of user input.) Include an integer argument to display that
+ number of previous commands.
+
+ For information on other commands that repeat enter previously issued
+ debugger commands, see the Additional Topics below.
+
+3 ignore
+=Title ignore
+=include debug lad_cmd catch
+=include debug lad_cmd
+ Syntax:
+
+     ignore [signal]
+
+ Enter the ignore command without an argument to see which operating
+ system signals the debugger currently ignores.  Use the ignore command
+ followed by an argument to ignore that signal.
+
+ Only one signal at a time can be added to or removed from the list of
+ trapped or ignored signals.
+
+ The ignore command operates on a per program basis; you must first load
+ a program (using the load command) or attach to a process (using the
+ attach command).
+
+ For information on other commands that trap or ignore operating system
+ signals, see the Additional Topics below.
+
+3 ignore_unaligned
+=Title ignore unaligned
+=include debug lad_cmd catch_unaligned
+=include debug lad_cmd
+ Syntax:
+
+     ignore unaligned 
+
+ Enter the ignore unaligned command, which is the default, to instruct
+ the debugger not to stop when unaligned access occurs.
+
+ For information on related commands, see Additional Topics below.
+
+3 kill
+=Title kill
+=include debug lad_cmd run
+=include debug lad_cmd cont
+=include debug lad_cmd next
+=include debug lad_cmd step
+=include debug lad_cmd return
+=include debug lad_cmd call
+=include debug lad_cmd goto
+=include debug lad_cmd
+ Syntax:
+
+     kill
+
+ Use the kill command to terminate the program process leaving the
+ debugger running.  When a process terminates, any breakpoints and
+ traces previously set are retained.  You can later rerun the program.
+
+ For information on other commands that execute a program under debugger
+ control, see the Additional Topics below.
+
+3 kps
+=Title kps
+=include debug lad_cmd
+ Syntax:
+
+     kps
+
+ Use the kps command to list all system processes.  (This command is
+ valid for local kernel debugging only.)
+
+3 list
+=Title list
+=include debug lad_cmd use
+=include debug lad_cmd file
+=include debug lad_cmd slash
+=include debug lad_cmd
+ Syntax:
+
+     list startline [,endline]
+     list startline [:count] 
+     list function
+
+ The list command displays source-code lines beginning with the source
+ line corresponding to the position of the program counter, the last
+ line listed if multiple list commands are issued, or the line number
+ specified as the first argument to the list command.  Specify the exact
+ range of source-code lines by including either the endline or the
+ number of lines you want to display.  The arguments can be expressions
+ that evaluate to integer values.
+
+ To display the source code for a particular function, enter the
+ function as an argument.
+
+ For information on other commands that examine program source code, see
+ the Additional Topics below.
+
+3 listobj
+=Title listobj
+=include debug lad_cmd
+ Syntax:
+
+    listobj
+
+ Use the listobj command to list all loaded objects, including the main
+ image and the shared libraries.  For each object, the information
+ listed consists of the full object name (with pathname), the starting
+ address for the text, the size of the text region and whether the
+ symbol table information has been read by the debugger.
+
+3 load
+=Title load
+=include debug lad_cmd
+ Syntax:
+
+     load [image_file [core_file]]
+     unload process_id_list or image_file
+
+ The load command loads an image file and optionally a core file.  After
+ loading an image file, specify the run command to start program
+ execution.
+
+ The unload command removes all related symbol table information that
+ the debugger associated with the process being debugged, specified by
+ either a process ID or image file.
+
+3 next
+=Title next
+=include debug lad_cmd
+=include debug lad_cmd nexti
+=include debug lad_cmd run
+=include debug lad_cmd cont
+=include debug lad_cmd step
+=include debug lad_cmd return
+=include debug lad_cmd call
+=include debug lad_cmd kill
+ Syntax:
+
+     next
+
+ Use the next and step commands to execute a line of source code.  When
+ the next line to be executed contains a function call, the next command
+ executes the function being called and returns to the line immediately
+ after the function call.  The step command executes only the first line
+ of the function.
+
+ For multithreaded applications, use these commands to step the current
+ thread while putting all other threads on hold.
+
+ For information on other commands that execute a program under debugger
+ control, see the Additional Topics below.
+
+3 nexti
+=Title nexti
+=include debug lad_cmd next
+=include debug lad_cmd examine_address
+=include debug lad_cmd stopi
+=include debug lad_cmd tracei
+=include debug lad_cmd wheni
+=include debug lad_cmd stepi
+=include debug lad_cmd printregs
+=include debug lad_cmd
+ Syntax:
+
+     nexti
+
+ Use the stepi and the nexti commands to execute a machine instruction.
+ When the instruction contains a function call, the stepi command steps
+ into the function being called, and the nexti command executes over the
+ function being called.
+
+ For multithreaded applications, use these commands to step the current
+ thread while putting all other threads on hold.
+
+ For information on other machine-code level commands, see the
+ Additional Topics below.
+
+3 patch
+=Title patch
+=include debug lad_cmd assign
+=include debug lad_cmd
+ Syntax:
+
+     patch expression1 = expression2
+
+ Use the patch command to correct bad data or instructions in executable
+ disk files.  The text, initialized data, or read-only data areas can be
+ patched.  The bss segment, as well as stack and register locations,
+ cannot be patched because they do not exist on disk files.
+
+ This command is for kernel debugging only.  Use it exclusively when you
+ need to change the on-disk binary.  Use the assign command when you
+ need only to modify debuggee memory.
+
+ If the image is executing when you issue the patch command, the
+ corresponding location in the debuggee address space is updated as
+ well.  (The debuggee is updated regardless of whether the patch to disk
+ succeeded, as long as the source and destination expressions can be
+ processed by the assign command.)
+
+ If the user program is loaded but not yet started, the patch to disk is
+ performed without the corresponding assign to memory.
+
+ For more information on related commands, see the Additional Topics
+ below.
+
+3 playback_input
+=Title playback input
+=include debug lad_cmd source
+=include debug lad_cmd record
+=include debug lad_cmd
+ Syntax:
+
+     playback input filename
+
+ Use the source command and the playback input command to execute
+ debugger commands contained within a file.  (You can also execute
+ debugger commands when you invoke Ladebug by creating an initialization
+ file named .dbxinit.  By default, Ladebug searches for this file during
+ startup, first in the current directory; if it is not there, Ladebug
+ searches your home directory for the file.) Format the commands as if
+ they were entered at the debugger prompt.
+
+ When a command file is executed, the value of the $pimode debugger
+ variable determines whether the commands are echoed.  If the $pimode
+ variable is set to 1, commands are echoed; if $pimode is set to 0 (the
+ default), commands are not echoed.  The debugger output resulting from
+ the commands is always echoed.
+
+ For information on other commands that affect debugger I/O files, see
+ the Additional Topics below.
+
+3 pop
+=Title pop
+=include debug lad_cmd
+ Syntax:
+
+     pop [number_of_frames] 
+
+ The pop command removes one or more execution frames from the call
+ stack, undoing the work already done by the removed execution frames.
+ The optional argument is the number of execution frames to remove from
+ the call stack.  If you do not specify the argument, one frame is
+ removed.  If specified, the number must be a positive integer less than
+ or equal to the number of frames currently on the call stack.
+
+3 print
+=Title print
+=include debug lad_cmd printf
+=include debug lad_cmd dump
+=include debug lad_cmd assign
+=include debug lad_cmd whatis
+=include debug lad_cmd which
+=include debug lad_cmd whereis
+=include debug lad_cmd
+ Syntax:
+
+     print expression [,...]
+
+ The print command displays the current value of a variable or
+ expression that is visible in the current context, as defined by the
+ scope and visibility rules of the program language.  The expression can
+ be any expression that is valid in the current context.
+
+ The print @line_number command displays the address of the specified
+ line number.  For example, print @10 displays the address of line
+ number 10.
+
+ For C++;
+     print *this
+     print object
+     print [object.]member
+     print *(derived_class*)object
+
+ Use the print command to display the value of an object, including
+ inherited members and the value of data members in an object.  Type
+ casts can be used to interpret a base class object as a derived class
+ object, or to interpret a derived class object as a base class object.
+ To interpret a base class type object as the derived type, use the last
+ form of the print command.
+
+ For information on other commands that examine program variables, see
+ the Additional Topics below.
+
+3 printenv
+=Title printenv
+=include debug lad_cmd setenv
+=include debug lad_cmd unsetenv
+=include debug lad_cmd export
+=include debug lad_cmd
+ Syntax:
+
+     printenv [env_variable]
+
+ Displays the value of the specified environment variable.  If none is
+ specified, the command displays the value of all environment variables.
+
+ This command is not for the current debuggee's environment, but for the
+ environment of any debuggees subsequently created with fork(2) or with
+ subsequent run and rerun commands.
+
+3 printf
+=Title printf
+=include debug lad_cmd print
+=include debug lad_cmd dump
+=include debug lad_cmd assign
+=include debug lad_cmd whatis
+=include debug lad_cmd which
+=include debug lad_cmd whereis
+=include debug lad_cmd
+ Syntax:
+
+     printf [format [expression,...]]
+
+ Use the printf command to format and display a complex structure.  The
+ format argument is a string expression containing characters and
+ conversion specifications, using the same format specifiers as the
+ printf C function.
+
+3 printregs
+=Title printregs
+=include debug lad_cmd examine_address
+=include debug lad_cmd stopi
+=include debug lad_cmd tracei
+=include debug lad_cmd wheni
+=include debug lad_cmd nexti
+=include debug lad_cmd stepi
+=include debug lad_cmd
+ Syntax:
+
+     printregs
+
+ Use the printregs command to display the contents of all machine
+ registers and, for multithreaded applications, of the current thread.
+ Register values are given in both decimal and hexadecimal formats.  The
+ list of registers displayed by the debugger is machine dependent.  The
+ actual format of the registers is dependent upon the value of $hexints.
+
+ For information on other machine-code level commands, see the
+ Additional Topics below.
+
+3 process
+=Title process
+=include debug lad_cmd show_process
+=include debug lad_cmd
+ Syntax:
+
+     process [process_id or image_file]
+
+ Use the process command to switch to the process indicated by the
+ process ID number or to the process whose image is that of the image
+ file name.  If you do not specify a process ID number or image file
+ name, the debugger displays the current process.
+
+ For information on related commands, see the Additional Topics below.
+
+3 quit
+=Title quit
+=include debug lad_cmd help
+=include debug lad_cmd
+ Syntax:
+
+     quit
+
+ Use the quit command to end the debugging session and return to the
+ operating system prompt.
+
+ For information on related commands, see the Additional Topics below.
+
+3 readsharedobj
+=Title readsharedobj
+=include debug lad_cmd delsharedobj
+=include debug lad_cmd
+ Syntax:
+
+     readsharedobj shared_object
+
+ Use the readsharedobj command to read in the symbol table information
+ for the specified shared object.  This object must be a shared library
+ or loadable kernel module.  The command can be used only when a
+ debuggee program is specified; either Ladebug has been invoked with it,
+ or the debuggee was loaded by the load command.
+
+ For information on related commands, see the Additional Topics below.
+
+3 record
+=Title record
+=include debug lad_cmd source
+=include debug lad_cmd playback_input
+=include debug lad_cmd
+ Syntax:
+
+     record input filename
+     record output filename
+     record io filename
+
+ Use the record input command to save all the debugger commands to a
+ file.  The commands in a file can be executed by using the source
+ command or the playback input command.
+
+ The record output command saves all debugger output to a file.  The
+ output is simultaneously echoed to the screen.  (The program output is
+ not saved.)
+
+ The record io command saves both input to and output from the debugger
+ to the specified file.  To stop recording debugger input or output,
+ exit the debugger.
+
+ For information on other commands that affect debugger I/O files, see
+ the Additional Topics below.
+
+3 return
+=Title return
+=include debug lad_cmd cont
+=include debug lad_cmd run
+=include debug lad_cmd next
+=include debug lad_cmd step
+=include debug lad_cmd call
+=include debug lad_cmd kill
+=include debug lad_cmd
+ Syntax:
+
+     return [function]
+
+ Use the return command without an argument to continue execution of the
+ current function until it returns to its caller.  If you include a
+ function name, execution continues until control is returned to the
+ specified function.  The function must be active on the call stack.
+
+ For information on related commands, see the Additional Topics below.
+
+3 run
+=Title run, rerun
+=include debug lad_cmd cont
+=include debug lad_cmd next
+=include debug lad_cmd step
+=include debug lad_cmd return
+=include debug lad_cmd call
+=include debug lad_cmd kill
+=include debug lad_cmd
+ Syntax:
+
+     run   [program arguments] [io redirection]
+     rerun [program arguments] [io redirection]
+
+ Use the run and rerun commands to start program execution.  Enter
+ program flags, options, and input and output redirections as arguments.
+ If the rerun command is specified without arguments, the arguments
+ entered with the previous run command are used.
+
+ If the last modification time and/or size of the binary file or any of
+ the shared objects used by the binary file has changed since the last
+ run command was issued, Ladebug automatically rereads the symbol table
+ information.
+
+ If the breakpoint settings have been modified between runs, they may
+ not be valid when you issue the run/rerun command.
+
+ For information on other commands that execute a program under debugger
+ control, see the Additional Topics below.
+
+3 set
+=Title set, unset
+=include debug lad_cmd ladebug_predefined_variables
+=include debug lad_cmd
+ Syntax:
+
+     set [variable = definition]
+     unset variable
+
+ To examine the definitions of all debugger variables, enter the set
+ command without arguments.  (Use the print command to display the
+ definition of a single debugger variable.)
+
+ To define a debugger variable, enter the set command followed by a
+ variable name, an equal sign, and a definition.  Enclose string
+ definitions in quotes.  The definition can be any expression allowed by
+ the language of the program being debugged.
+
+ Use the unset command to delete a variable.
+
+ The debugger contains many predefined variables to describe the current
+ state of the debugger, and to allow you to customize the debugger
+ environment.  You can delete and redefine the predefined debugger
+ variables in the same way you define your own variables.
+
+ If you delete a predefined debugger variable, the debugger uses the
+ default value for that variable.  The settings on the predefined
+ variables apply to all debugging processes.
+
+ For information on predefined variables, see the Additional Topics
+ below.
+
+3 ladebug_predefined_variables
+=Title Ladebug Predefined Variables
+=include debug lad_cmd set
+=include debug lad_cmd
+
+ The debugger has the following predefined variables:
+
+ $ascii
+      With the default value of 1, allows the print command to print
+      character-type data as ASCII characters, only when the bit value 
+      is that of a printable 7-bit subset ASCII character.  (Other bit
+      values are printed as octal numbers.)  With a value of 0, this
+      variable causes all printable ISO Latin-1 characters to be printed
+      as characters.
+
+ $beep
+      With the default value of 1, causes a beep to sound when a user
+      attempts to perform an illegal action while editing the debugger
+      command line (for example, moving the cursor past the end of the
+      line, or "yanking" (pasting) from an empty cut buffer).
+
+ $childprocess
+      Can be specified in place of the process ID.  Ladebug
+      automatically sets this variable when an application forks 
+      a child process.
+
+ $catchexecs
+      When set to 1, instructs the debugger to notify the user when a
+      program execs.  The default is 0.
+
+ $catchforks
+      When set to 1, instructs the debugger to notify the user when a
+      program forks a child process.  The child process stops and is
+      brought under debugger control.  By default, the parent process
+      is not stopped (see the description of $stopparentonfork).  The
+      default is 0.
+
+ $curevent
+      Set to the event number of the current event at the start of an
+      event, allowing its use within the expression of an event.
+
+ $curfile
+      Specifies the current source-code file.
+
+ $curline
+      Specifies the current line in the source file.
+
+ $curpc
+      Specifies the current point of program execution.
+      The $curpc variable is used by the wi and li aliases.
+
+ $cursrcline
+      Specifies the line number of the last
+      line of source code listed plus one.
+
+ $curthread
+      Indicates the thread ID of the current thread within the
+      current process.  You can change to a different thread by
+      setting $curthread.
+
+ $decints
+      When set to 1, all integers printed by the debugger are displayed
+      as decimal numbers.  The default is 0.
+
+ $editline
+      With the default of 1, enables the command-line editing
+      features.  For backward compatibility, you can set this
+      variable to 0.
+
+ $eventecho
+      When set to 1, echoes events (such as breakpoints) with event 
+      numbers when executed. The default is 1.
+
+ $hasmeta
+      For international users.  When set to 1, causes any 8-bit character
+      to be interpreted as the corresponding 7-bit character plus the
+      Meta character (which is the ALT key whose MSB bit represents
+      a Meta modifier).  This could be used for binding editing
+      functions to ALT plus key sequences.  The default depends on
+      several factors, including the locale and whether the terminal
+      has Meta capability.  In the United States, the default is
+      usually 0.
+
+ $hexints
+      When set to 1, all integers will be displayed as hexadecimal 
+      numbers.  The default is 0.
+
+ $historylines
+      Specifies the number of previously input commands listed in 
+      response to the history command.  The default is 20.
+
+ $indent
+      If set to 1, specifies that structures will be printed
+      with added indentation to render them more readable.
+      The default value is 1.
+
+ $lang
+      Specifies the programming language used in the program
+      being debugged.  For mixed-language programs, this variable
+      is set to the language corresponding to the current frame.
+      The variable is updated when the program execution stops.
+
+ $listwindow
+      Specifies how many lines the list command displays.
+      The default is 20.
+
+ $main
+      Specifies the name of the procedure that the debugger
+      enters first.  The default is main(), but this can be
+      set to any function.  This variable is useful when
+      debugging languages whose primary function is called
+      something other than main().
+
+ $maxstrlen
+      Specifies the maximum number of characters to print
+      when the value of a string is printed.  The default
+      is 128.
+
+ $octints
+      When set to 1, the debugger prints all integers as octal numbers.
+      The default is 0.
+
+ $overloadmenu
+      When debugging C++ programs only, if this variable is
+      set to 1, a menu of overloaded functions is displayed
+      so you can select the desired function from the list of
+      type signatures of the function. When set to 0, no
+      menu is displayed, and you must disambiguate overloaded
+      functions by providing the full type signature.  The
+      default is 1.
+  
+ $parentprocess
+      Can be specified in place of the process ID.  Ladebug automatically
+      sets this variable when an application forks a child process.
+
+ $pid
+      Indicates the process ID of the current process.  Only for
+      use in kernel debugging (either local or remote).
+
+ $pimode
+      Specifies whether the playback input command echoes input.
+      If set to 1, commands from the script file are echoed.
+      If set to 0, commands are not echoed.  The default is 0.
+
+ $prompt
+      Specifies the debugger prompt.  The default is (ladebug).
+
+
+ $repeatmode
+      When set to 1, causes the debugger to repeat the previous command
+      if you press the Return key at the (ladebug) prompt.  The default
+      is 1.
+
+ $stackargs
+      When set to 1, causes the values of arguments to be
+      included in the output of the where, up, down, and dump
+      commands.  When large or complex values are passed by
+      value, the output can be voluminous.  You can set the
+      $stackargs to 0 to suppress the output of argument
+      values.  The default is 1.
+
+ $stepg0
+      When set to 0, the debugger steps over calls to routines
+      that are compiled without symbol information.
+      When set to 1, the debugger will step into these calls.
+      The default is 0.
+
+ $stoponattach
+      When set to 1, causes the debugger to stop a running process 
+      right after attaching to it. When set to 0, causes the debugger 
+      to allow the process to run to completion; in this case, to 
+      interrupt the process, enter Ctrl/C. The default is 0.
+
+ $stopparentonfork
+      When set to 1, instructs the debugger to stop the parent process
+      when a program forks a child process.  (Also see the $catchforks
+      description.)  The default is 0.
+
+ $threadlevel
+      Enables Ladebug to determine whether you are working with
+      DECthreads or native threads.  The default is decthreads if the
+      application is multithreaded and is using DECthreads. Otherwise,
+      the default is native. You can switch from one mode to the other
+      by setting $threadlevel. In kernel mode, threadlevel is always
+      native.
+
+ $tid
+      Indicates the thread ID of the current thread within the current
+      process.  You can change to a different thread by setting $tid.  
+      Only for use in kernel debugging (either local or remote).
+
+ $verbose
+      When set to 1, specifies whether debugger output should include all
+      possible program information, including base pointers
+      and virtual function pointers (for C++ programs only).
+      The default is 0.
+
+ For information on other commands that examine debugger variables, see
+ the Additional Topic below.
+
+3 setenv
+=Title setenv
+=include debug lad_cmd unsetenv
+=include debug lad_cmd printenv
+=include debug lad_cmd export
+=include debug lad_cmd
+ Syntax:
+
+     setenv [env_variable [value]] 
+
+ Sets the value of the specified environment variable.  If no variable
+ is specified, the command displays the values of all environment
+ variables.  If a variable is specified but no value is specified, then
+ the variable is set to NULL.
+
+ This command is not for the current debuggee's environment, but for the
+ environment of any debuggee's subsequently created with fork(2) or with
+ the run or rerun commands.
+
+ The commands setenv and export are synonyms.
+
+3 sh
+=Title sh
+=include debug lad_cmd
+ Syntax:
+
+     sh command [argument...]
+
+ Use the sh command to execute a Bourne shell command.  Do not enclose
+ the shell command and its arguments in quotes.
+   
+ Example:
+
+   (ladebug)sh ls -l sample.c
+
+
+3 show_condition
+=Title show condition
+=include debug lad_cmd show_mutex
+=include debug lad_cmd show_thread
+=include debug lad_cmd
+ Syntax:
+
+     show condition [condition_variable_list]
+     show condition [condition_identifier_list] with state == wait
+
+
+ For DECthreads only.  Use the show condition command to list
+ information about currently available DECthread condition variables.
+
+  -  If you supply one or more condition identifiers, the debugger
+     displays information about those condition variables that you
+     specify, provided that the list matches the identity of currently
+     available condition variables.
+
+  -  If you omit the condition variable specification, the debugger
+     displays information about all condition variables currently
+     available.
+
+ Use the show condition command with state == wait to display
+ information exclusively for condition identifiers you specify that have
+ one or more threads waiting.  If $verbose is set to 1, the sequence
+ numbers of the threads waiting on the condition variables are
+ displayed.
+
+ For information on other commands that debug multithreaded programs,
+ see the Additional Topics below.
+
+3 show_mutex
+=Title show mutex
+=include debug lad_cmd show_thread
+=include debug lad_cmd show_condition
+=include debug lad_cmd thread
+=include debug lad_cmd
+ Syntax:
+
+     show mutex [mutex_identifier_list]
+     show mutex [mutex_identifier_list] with state == locked
+
+ For DECthreads only.  Use the show mutex command to list information
+ about currently available mutexes.
+
+  -  If you supply one or more mutex identifiers, the debugger displays
+     information about only those mutexes that you specify, provided
+     that the list matches the identity currently available mutexes.
+
+  -  If you omit the mutex identifier specification, the debugger
+     displays information about all mutexes currently available.
+
+ Use the show mutex command with state == locked to display information
+ exclusively for locked mutexes.  If $verbose is set to 1, the sequence
+ numbers of the threads locking the mutexes are displayed.
+
+ For information on other commands that debug multithreaded programs,
+ see the Additional Topics below.
+
+3 show_process
+=Title show process
+=include debug lad_cmd process
+=include debug lad_cmd
+ Syntax:
+
+     show process
+     show process *
+     show process all
+
+
+ Use the show process command to display information for the current
+ process.  The show process * and show process all commands display
+ information for all processes.
+
+ For information on related commands, see the Additional Topics below.
+
+3 show_thread
+=Title show thread
+=include debug lad_cmd show_condition
+=include debug lad_cmd
+ Syntax:
+
+     show thread [thread_identifier_list]
+     show thread [thread_identifier_list] with state == ready
+     show thread [thread_identifier_list] with state == blocked
+     show thread [thread_identifier_list] with state == running
+     show thread [thread_identifier_list] with state == terminated
+     show thread [thread_identifier_list] with state == detached
+     show thread [thread_identifier_list] with state == stopped
+
+
+ Use the show thread command to list all the threads known to the
+ debugger.
+
+  -  If you specify one or more thread identifiers, the debugger
+     displays information about the threads that you specify, if the
+     thread matches what you specified in the list.
+
+  -  If you omit a thread specification, the debugger displays
+     information for all threads.
+
+ Use the show thread with state command to list only the threads with a
+ specific state (characteristic).
+
+ The valid state values for DECthreads are ready, blocked, running,
+ terminated, and detached.
+
+ The valid state values for native threads are stopped, running, and
+ terminated.
+
+ For information on other commands that debug multithreaded programs,
+ see the Additional Topics below.
+
+3 source
+=Title source
+=include debug lad_cmd playback_input
+=include debug lad_cmd record
+=include debug lad_cmd
+ Syntax:
+
+     source filename
+
+ Use the source command and the playback input command to execute
+ debugger commands contained within a file.  (You can also execute
+ debugger commands when you invoke Ladebug by creating an initialization
+ file named .dbxinit.
+
+ By default, Ladebug searches for this file during startup, first in the
+ current directory; if it is not there, Ladebug searches your home
+ directory for the file.) Format the commands as if they were entered at
+ the debugger prompt.
+
+ When a command file is executed, the value of the $pimode debugger
+ variable determines whether the commands are echoed.  If the $pimode
+ variable is set to 1, commands are echoed; if $pimode is set to 0 (the
+ default), commands are not echoed.  The output resulting from the
+ commands is always echoed.
+
+ For information on other debugger I/O commands, see the Additional
+ Topics below.
+
+3 status
+=Title status
+=include debug lad_cmd stop
+=include debug lad_cmd when
+=include debug lad_cmd trace
+=include debug lad_cmd delete
+=include debug lad_cmd enable
+=include debug lad_cmd disable
+=include debug lad_cmd
+ Syntax:
+
+     status
+
+ The status command lists all breakpoints and tracepoints, the reference
+ number associated with each, and whether each breakpoint is disabled.
+
+ For information on other commands that affect breakpoints and
+ tracepoints, see the Additional Topics below.
+
+3 step
+=Title step
+=include debug lad_cmd run
+=include debug lad_cmd cont
+=include debug lad_cmd next
+=include debug lad_cmd return
+=include debug lad_cmd call
+=include debug lad_cmd goto
+=include debug lad_cmd kill
+=include debug lad_cmd
+ Syntax:
+
+     step
+
+ Use the next and step commands to execute a line of source code.  When
+ the next line to be executed contains a function call, the next command
+ executes the function being called and returns to the line immediately
+ after the function call.  The step command executes only the first line
+ of the function.
+
+ For multithreaded applications, use these commands to step the current
+ thread while putting all other threads on hold.
+
+ For information on other commands that execute a program under debugger
+ control, see the Additional Topics below.
+
+3 stepi
+=Title stepi
+=include debug lad_cmd examine_address
+=include debug lad_cmd stopi
+=include debug lad_cmd tracei
+=include debug lad_cmd wheni
+=include debug lad_cmd nexti
+=include debug lad_cmd printregs
+=include debug lad_cmd
+ Syntax:
+
+     stepi
+
+ Use the stepi command and the nexti command to execute a machine
+ instruction.  When the next instruction contains a function call, the
+ stepi command steps into the function being called, and the nexti
+ command executes the function being called.
+
+ For multithreaded applications, use these commands to step the current
+ thread while putting all other threads on hold.
+
+ For information on other machine-code level commands, see the
+ Additional Topics below.
+
+3 stop
+=Title stop
+=include debug lad_cmd when
+=include debug lad_cmd trace
+=include debug lad_cmd status
+=include debug lad_cmd delete
+=include debug lad_cmd enable
+=include debug lad_cmd disable
+=include debug lad_cmd
+ Syntax:
+
+     stop [variable]
+     stop [variable] if expression
+     stop [variable] at line_number [if expression]
+     stop [variable] at "filename":line_number
+     stop [variable] in function [if expression]
+     stop [variable] in "filename" `function [if expression]
+     stop [variable] [thread thread_identifier_list] [at line_number]   
+      [if expression]
+     stop [variable] [thread thread_identifier_list] [in function] 
+      [if expression]
+
+ Enter the stop command without a variable argument to suspend program
+ execution and return to the prompt.  (All breakpoint settings are on a
+ per process basis.)
+
+ Enter the stop command with a variable argument to suspend program
+ execution when the variable changes.
+
+ Specify if with an expression to suspend execution when the expression
+ evaluates to true.  When you specify both an expression and a variable,
+ execution suspends only if the specified expression evaluates to true
+ and the variable has changed.
+
+ To suspend execution when a line or function is encountered, use the
+ third, fourth, or fifth form.
+
+  -  If you specify a variable, execution suspends only if the variable
+     has changed when the line or function is encountered.
+
+  -  If you specify an expression, execution suspends only if the
+     expression evaluates to true when the line or function is
+     encountered.
+
+  -  If you specify both a variable and an expression, execution
+     suspends only if the variable has changed and the expression
+     evaluates to true when the line or function is encountered.
+
+ Specify a filename and function to instruct Ladebug to stop in a
+ particular function in the specified file, thus eliminating ambiguity.
+
+ Use forms seven and eight for multithreaded applications.  The
+ thread_identifier_list parameter identifies one or more threads of the
+ current debugging level (native or DECthreads).
+
+  -  If you specify one or more thread identifiers, the breakpoint is
+     set only in those threads.
+
+  -  If you do not specify any thread identifier, the breakpoint is set
+     on all threads or at the process level.
+
+ The following example shows how to suspend program execution when line
+ number 10 is encountered and the variable f equals 2:
+
+   (ladebug)stop at 10 if f==2
+
+ For C++:
+ stop in [classname::]function
+ stop in object.function
+ stop in objectptr->function
+ stop in object.function if (& object == this)
+ stop in [classname::]classname (type_signature)
+ stop in [classname::]~classname
+ stop in [classname::] function[(type signature)] [(void)]
+ stop in all function
+
+ The first form of the stop command sets a breakpoint in a member
+ function using the static class type information.  This form presumes
+ that run-time information from an object is needed to determine the
+ address of the function at which to set the breakpoint.
+
+ If you need run-time information to determine the correct virtual
+ function, use the second or third form to qualify the function name
+ with the object when you set the breakpoint.  This way of setting the
+ breakpoint causes the debugger to stop at the member function in all
+ objects declared with the same class type as the specified object.
+
+ To set a breakpoint that stops only in the member function for this
+ specific object and not all instances of the same class type, use the
+ fourth form of the stop command.
+
+ The fifth and sixth forms set breakpoints in a constructor and
+ destructor, respectively.
+
+ To set a breakpoint in a specific version of an overloaded function,
+ either set $overloadmenu to 1, enter the command stop in function, and
+ choose the appropriate function from the menu, or specify the function
+ and the type signature as arguments to the command.  If the overloaded
+ function has no parameters, void must be explicitly specified.
+
+ Use the last form to set a breakpoint in all version of an overloaded
+ function.
+
+ Example:
+
+    (ladebug) stop at 10 if f==2
+
+ For information on other commands that affect breakpoints and
+ tracepoints, see the Additional Topics below.
+
+3 stopi
+=Title stopi
+=include debug lad_cmd examine_address
+=include debug lad_cmd tracei
+=include debug lad_cmd wheni
+=include debug lad_cmd nexti
+=include debug lad_cmd stepi
+=include debug lad_cmd printregs
+=include debug lad_cmd
+ Syntax:
+
+     stopi variable
+     stopi [variable] if expression
+     stopi [variable] at address [if expression]
+
+ Enter the stopi command with a variable to suspend execution when the
+ variable value changes.
+
+ Specify stopi with an expression to suspend execution when the
+ expression evaluates to true.  When you specify both a variable and an
+ expression, execution suspends only if the specified expression
+ evaluates to true and the variable has changed.
+
+ To suspend execution when an address or function is encountered, use
+ the third form.
+
+  -  If you specify a variable, execution suspends only if the variable
+     has changed when the address is encountered.
+
+  -  If you specify an expression, execution suspends only if the
+     expression evaluates to true when the address is encountered.
+
+  -  If you specify both a variable and an expression, execution
+     suspends only if the variable has changed and the expression
+     evaluates to true when the address is encountered.
+
+ The stopi is different from the stop command because the debugger
+ checks the breakpoint set with the stopi command after executing each
+ machine instruction.  Thus, the debugger performance is affected when
+ you use the stopi command.
+
+ With Version 4.0 (or higher) of the debugger, the stopi in command is
+ no longer valid, and results in an error message.  Replace stopi in in
+ your code with stopi at for an address or stop in for a routine.
+
+ For information on other machine-code level commands, see the
+ Additional Topics below.
+
+3 thread
+=Title thread
+=include debug lad_cmd show_thread
+=include debug lad_cmd
+ Syntax:
+
+     thread [thread_identifier]
+
+ Use the thread command to identify or set the current thread context.
+ If you supply a thread identifier, the debugger sets the current
+ context to the thread you specify.  If you omit the thread
+ identification, the debugger displays the current thread context.
+
+ The debugger interprets the thread identifier as a DECthreads or kernel
+ thread identifier depending on the value of the debugger variable
+ $threadlevel.
+
+ For information on other commands that debug multithreaded programs,
+ see the Additional Topics below.
+
+3 trace
+=Title trace
+=include debug lad_cmd stop
+=include debug lad_cmd when
+=include debug lad_cmd status
+=include debug lad_cmd delete
+=include debug lad_cmd enable
+=include debug lad_cmd disable
+=include debug lad_cmd
+ Syntax:
+
+     trace variable [if expression]
+     trace [variable] at line_number [if expression]
+     trace [variable] in function [if expression]
+     trace [variable] [thread thread_identifier_list] [at line_number]
+      [if expression]
+     trace [variable] [thread thread_identifier_list} [in function]
+      [if expression]
+
+ When you use the trace command without an argument, the debugger prints
+ a message but does not suspend program execution when each function is
+ entered.
+
+  -  Specify a variable to print a message when the variable value
+     changes.
+
+  -  Specify trace with an expression to print a message when an
+     expression evaluates to true.
+
+  -  When you specify both a variable and an expression, a message is
+     printed only if the expression evaluates to true and the variable
+     has changed.
+
+ To print a message when a line or function is encountered, use the
+ second or third form.
+
+  -  If you specify a variable, a message is printed only if the
+     variable has changed when the line or function is encountered.
+
+  -  If you specify an expression, a message is printed only if the
+     expression evaluates to true when the line or function is
+     encountered.
+
+  -  If you specify both a variable and an expression, a message is
+     printed only if the variable has changed and the expression
+     evaluates to true when the line or function is encountered.
+
+ The following example traces the variable f when the program is
+ executing the function main:
+
+   (ladebug)trace f in main
+
+ Use the trace thread command to set tracepoints in specific threads.
+ If you list one or more thread identifiers, the debugger sets a
+ tracepoint only in those threads you specify.  If you omit the thread
+ identifier specification, the debugger sets a tracepoint in all the
+ threads of the application.
+
+ For information on other commands that affect breakpoints and
+ tracepoints, see the Additional Topics below.
+
+3 tracei
+=Title tracei
+=include debug lad_cmd examine_address
+=include debug lad_cmd stopi
+=include debug lad_cmd wheni
+=include debug lad_cmd nexti
+=include debug lad_cmd stepi
+=include debug lad_cmd printregs
+=include debug lad_cmd
+ Syntax:
+
+     tracei [variable] [if expression]
+     tracei [variable] at address [if expression]
+     tracei [variable] in function [if expression]
+     tracei [variable] [thread thread_identifier_list] [at line_number]
+      [if expression]
+     tracei [variable] [thread thread_identifier_list] [in function]
+      [if expression]
+
+ When you use the tracei command the debugger prints a message, but does
+ not suspend program execution.
+
+  -  Specify a variable to print a message when the variable value
+     changes.
+
+  -  Specify an expression to print a message when an expression
+     evaluates to true.
+
+  -  When you specify both a variable and an expression, a message is
+     printed only if the expression evaluates to true and the variable
+     has changed.
+
+ To print a message when an address or function is encountered, use the
+ second or third form.
+
+  -  If you specify a variable, a message is printed only if the
+     variable has changed when the address or function is encountered.
+
+  -  If you specify an expression, a message is printed only if the
+     expression evaluates to true when the address or function is
+     encountered.
+
+  -  If you specify both a variable and an expression, a message is
+     printed only if the variable has changed and the expression
+     evaluates to true when the address or function is encountered.
+
+ When you use the tracei command, debugger performance is affected more
+ than with the trace command.  With the tracei command, the debugger
+ evaluates the tracepoint set with tracei after the debugger executes
+ each machine instruction.
+
+ In the following example, a breakpoint is set to print a message every
+ time the function factorial is entered.
+
+   (ladebug)tracei factorial
+
+ Use the tracei thread command to set tracepoints in specific threads.
+ If you list one or more thread identifiers, the debugger sets a
+ tracepoint only in those threads you specify.  If you omit the thread
+ identifier specification, the debugger sets a tracepoint in all the
+ threads of the application.
+
+ For information on other machine-code level commands, see the
+ Additional Topics below.
+
+3 unsetenv
+=Title unsetenv
+=include debug lad_cmd printenv
+=include debug lad_cmd setenv
+=include debug lad_cmd export
+=include debug lad_cmd
+ Syntax:
+
+     unsetenv [env_variable]
+
+ Removes the specified environment variable.  If no variable is
+ specified, all environment variables are removed.
+
+ This command is not for the current debuggee's environment, but for the
+ environment of any debuggees subsequently created with fork(2) or with
+ the run or rerun commands.
+
+3 up
+=Title up
+=include debug lad_cmd where
+=include debug lad_cmd down
+=include debug lad_cmd func
+=include debug lad_cmd
+ Syntax:
+
+     up [number]
+
+ Use the up command or the down command without an argument to change
+ the function scope to the function located one level up or down the
+ stack.
+
+ Enter a number argument to change the function scope to the function up
+ or down the specified number of levels.  If the number of levels
+ exceeds the number of active functions on the stack, the function scope
+ moves up or down as many levels as possible and the debugger issues a
+ warning message.
+
+ When the function scope changes, the debugger displays the source line
+ corresponding to the last point of execution in that function.
+
+ For information on other stack trace commands, see the Additional
+ Topics below.
+
+3 use
+=Title use, unuse
+=include debug lad_cmd list
+=include debug lad_cmd file
+=include debug lad_cmd slash
+=include debug lad_cmd
+ Syntax:
+
+     use   [ directory ]
+     unuse [ directory ]
+     unuse *
+
+ Enter the use command without an argument to list the directories the
+ debugger searches for source-code files.  Specify a directory argument
+ to make source-code files in that directory available to the debugger.
+ (You can also use the ladebug command -I option to specify search
+ directories.)
+
+ Enter the unuse command without an argument to set the search list to
+ the default, the home directory, the current directory, and the
+ directory containing the executable file.  Include the name of a
+ directory to remove it from the search list.  The asterisk * argument
+ removes all directories from the search list.
+
+ For information on other commands that examine program source code, see
+ the Additional Topics below.
+
+3 whatis
+=Title whatis
+=include debug lad_cmd print
+=include debug lad_cmd printf
+=include debug lad_cmd dump
+=include debug lad_cmd assign
+=include debug lad_cmd which
+=include debug lad_cmd whereis
+=include debug lad_cmd
+ Syntax:
+
+     whatis expression
+
+ The whatis command prints the type of the specified expression.  The
+ expression can be any expression that follows the syntax, scope, and
+ visibility rules of the program language.
+
+ For C++:
+    whatis classname
+    whatis [classname::]member
+    whatis [classname::]function
+
+ The first form of the whatis command displays the class type.  The
+ second form displays the type of a member function or data member.  To
+ display all versions of an overloaded function, use the third form.
+
+ For information on other commands that examine program variables, see
+ the Additional Topics below.
+
+3 when
+=Title when
+=include debug lad_cmd stop
+=include debug lad_cmd trace
+=include debug lad_cmd status
+=include debug lad_cmd delete
+=include debug lad_cmd enable
+=include debug lad_cmd disable
+=include debug lad_cmd
+ Syntax:
+
+     when {command [,...]}
+     when if expression {command[,...]}
+     when at line_number [if expression] {command[,...]}
+     when in function [if expression] {command[,...]}
+     when [thread thread_identifier_list] [at line_number]
+      [if expression] {command[,...]}
+     when [thread thread_identifier_list] [in function]
+      [if expression] {command[,...]}
+
+ Use the when command to execute the specified command.  (The when
+ command does not suspend program execution.) The debugger command must
+ be enclosed in braces.  Separate multiple commands with semicolons.
+
+ To execute a command when an expression evaluates to true, use the
+ second form.  To execute commands when a line or function is
+ encountered, use the third or fourth form.
+
+ If you specify an expression, the command is executed only if the
+ expression evaluates true when the line or function is encountered.
+
+ Example:
+
+   (ladebug)when at 5 {list;where}
+
+ Use the when thread command to set tracepoints in specific threads.
+
+  -  If you list one or more thread identifiers, the debugger sets a
+     tracepoint only those threads that you specify.
+
+  -  If you omit the thread identifier specification, the debugger sets
+     a tracepoint in all the threads in the application.
+
+ For information on other commands that affect breakpoints and
+ tracepoints, see the Additional Topics below.
+
+3 wheni
+=Title wheni
+=include debug lad_cmd examine_address
+=include debug lad_cmd stopi
+=include debug lad_cmd tracei
+=include debug lad_cmd wheni
+=include debug lad_cmd nexti
+=include debug lad_cmd stepi
+=include debug lad_cmd printregs
+=include debug lad_cmd
+ Syntax:
+
+     wheni {command[,...]}
+     wheni if expression {command[,...]}
+     wheni at line_number [if expression] {command[,...]}
+     wheni in function [if expression] {command[,...]}
+     wheni [thread thread_identifier_list] [at line_number]
+      [if expression] {command[,...]}
+     wheni [thread thread_identifier_list] [in function]
+      [if expression] {command[,...]}
+
+ Use the wheni command to execute the specified command.  (The wheni
+ command does not suspend program execution.) The debugger command must
+ be enclosed in braces.  Separate multiple commands with semicolons.
+
+ To execute a command when an expression evaluates to true, use the
+ second form.  To execute commands when an address or function is
+ encountered, use the third or fourth form.
+
+ If you specify an expression, the command is executed only if the
+ expression evaluates true when the address or function is encountered.
+
+ Using the wheni command affects performance.  The wheni command differs
+ from the when command in that the debugger evaluates the tracepoint set
+ with the wheni command after each machine instruction is executed.
+
+ For example, the following command stops program execution, lists ten
+ lines of source code and displays the stack trace when the value of the
+ variable i is equal to 3 in the function main:
+
+ Example:
+
+   (ladebug)wheni in main if i == 3 {wi;where}
+
+ Use the wheni thread command to set tracepoints in specific threads.
+
+  -  If you list one or more thread identifiers, the debugger sets a
+     tracepoint only in those threads you specify.
+
+  -  If you omit the thread identifier specification, the debugger sets
+     a tracepoint in all the threads of the application.
+
+ For information on other machine-code level commands, see the
+ Additional Topics below.
+
+3 where
+=Title where
+=include debug lad_cmd up
+=include debug lad_cmd down
+=include debug lad_cmd func
+=include debug lad_cmd
+ Syntax:
+
+     where [number]
+     where [number]thread thread_identifier_list
+     where [number]thread all
+     where [number]thread *
+
+ The where command displays the stack trace of currently active
+ functions, for the current thread.  The where thread
+ thread_identifier_list command displays the stack trace(s) of the
+ specified thread(s).  The where thread all and the where thread *
+ commands are equivalent; they display the stack traces of all threads.
+
+ Include the optional number argument to see a specified number of
+ levels at the top of the stack.  (Each active function is designated by
+ a number, which can be used as an argument to the func command.  The
+ top level on the stack is 0; so if you enter the command where 3, you
+ will see levels 0, 1, and 2.) If you do not specify the number
+ argument, you will see all levels.
+
+ For information on other stack trace commands, see the Additional
+ Topics below.
+
+3 whereis
+=Title whereis
+=include debug lad_cmd print
+=include debug lad_cmd printf
+=include debug lad_cmd dump
+=include debug lad_cmd assign
+=include debug lad_cmd whatis
+=include debug lad_cmd which
+=include debug lad_cmd
+ Syntax:
+
+     whereis expression
+
+ The whereis command shows all declarations of the expression.  Each
+ declaration is fully qualified with scope information.
+
+ For information on other commands that examine program variables, see
+ the Additional Topics below.
+
+3 which
+=Title which
+=include debug lad_cmd print
+=include debug lad_cmd printf
+=include debug lad_cmd dump
+=include debug lad_cmd assign
+=include debug lad_cmd whatis
+=include debug lad_cmd whereis
+=include debug lad_cmd
+ Syntax:
+
+     which expression
+
+ The which command shows the fully qualified scope information for the
+ instance of the specified variable in the current scope.  If available
+ to the debugger, this information includes the name of the source file
+ containing the function in which the expression is declared, the name
+ of the function, and the name of the expression.  The components of the
+ qualification are separated by period (.) characters.
+
+ For information on other commands that you use to examine program
+ variables, see the Additional Topics below.
+
+2 glossary_frame
+=Title Ladebug Glossary
+ action breakpoint
+    Specifies a location at which the debugger suspends program execution
+    and performs a designated action.
+
+ address
+    Identifies a storage location in memory.
+
+ address expression
+    Specifies a program location. For example, line numbers, routine
+    names, memory addresses, and byte offsets are address expressions.
+
+ alias 
+    Defines an abbreviation for a frequently-used command.  You can
+    add, modify, display, or delete aliases.
+
+ assembly language
+    A machine-oriented programming language. 
+
+ breakpoint
+    Specifies a location at which the debugger suspends program
+    execution.  See also action breakpoint, conditional breakpoint.
+
+ call frame
+    The body of information that a procedure must save to allow it to
+    properly return to its caller.  A call frame can exist on the stack
+    or in registers. A call frame can optionally contain additional
+    information required by the called procedure.  See stack frame.
+
+ call stack
+    The stack and the conventional stack structure used during a
+    procedure call.  
+
+ client
+    A computing system entity that uses the services of other system
+    entities called servers.  
+
+ client/server
+    A style of computing in which a server system provides common
+    database access, performs computations, and assumes system
+    management tasks for its clients.  
+
+ code address expression
+    Denotes the address of a machine code instruction and must be one 
+    of the following: line number associated with one or more 
+    instructions, label, routine name, or memory address of an
+    instruction.
+
+ conditional breakpoint
+    Specifies a location at which the debugger suspends program
+    execution if a designated condition is met at that location.
+
+ core file
+    Contains the state of your program at the time an irrecoverable
+    error occurs.
+
+ current context
+    Used by the debugger (in conjunction with the scoping rules of the
+    symbols in the target program) to effect access to program symbols.
+
+    The current context is determined by the file scope, function 
+    scope, and the class scope, if the current language supports
+    the concept of classes.  The context is automatically set to
+    the current point of execution when the debugger is given 
+    control (for example, when the debugger stops at a breakpoint).  
+
+ current file
+    Specifies the name of the file containing the source code of
+    the function you are debugging.
+
+ current function
+    Specifies the topmost function on the call stack, the first
+    function name listed in the Call Stack menu.  This function is at
+    activation level 0.
+
+ current language
+    Specifies the language of the main module containing the main
+    program.
+
+ debugger
+    A tool that helps you locate run-time programming errors (bugs). 
+    You  use the debugger on executable programs that are created when
+    a program has been compiled and linked successfully.  You can also
+    use the debugger to examine core files when an unrecoverable error
+    occurs while running a program.
+
+ default directory
+    Specifies the directory that the operating system assumes when a
+    directory specification has not been supplied by the user.
+
+ dereference pointer
+    Access the value at the address pointed to by the pointer. 
+    
+ editor
+    Within the debugger, the source-level editor that allows you to
+    edit source files, then recompile and relink them without leaving
+    the debugger.
+
+ environment variable
+    Specifies an internal debugger setting, which you can display or
+    modify. (For example, the $lang environment variable indicates the
+    current programming language.)  You can also add new environment
+    variables to use in scripts, alias commands, or as placeholders of
+    important information.
+
+ event
+    - A change in process status or an indication of the occurrence of
+      some activity that concerns an individual process or cooperating
+     processes. For example, state transitions in multitasking programs.
+
+    - An exception or interrupt.
+
+ eventpoint
+    An event that you can use to return control to the debugger. 
+    Breakpoints, tracepoints, and the completion of step commands are
+    eventpoints.
+
+ executable image
+    Specifies an image that can be run in a process.
+
+ expression
+    Any combination of variables and/or constants with operators that
+    the computer can evaluate to produce a result.
+
+ global symbol
+    Specifies a symbol such as a routine name, procedure entry point,
+    or global data name, that is defined in one module but referenced
+    in other modules.
+
+ high-level language
+    A language for specifying computing procedures or organization of
+    data within a digital computer.  High-level languages are
+    distinguished from assembly and machine languages by the omission
+    of machine-specific details required for direct execution on a
+    given computer.
+
+ image
+    Procedures and data bound together by the linker to form an
+    executable program.  This executable program is executed by the
+    process.  See executable image, shareable image, and system image.
+
+ language expression
+    Specifies a value.  Can consist of any combination of one or more
+    symbols, literals, and operators that evaluates to a single value
+    in the syntax of the current language and in the current radix.
+
+ local symbol
+    Specifies a symbol referenced only within the module where it is
+    defined.
+
+ module
+    A portion of a program or program library, as in a source module,
+    object module, or image module.
+
+ path name
+    Uniquely identifies a symbol in your program to the debugger. A
+    path name consists of the symbol plus a prefix that identifies the
+    symbol's location.  For example, test\count\%line 27.
+
+ pointer
+    A variable containing an address.
+
+ procedure
+    A closed sequence of instructions (routine) entered by means of a
+    call instruction and returning control to the calling program.
+
+ procedure value
+    An address value that represents a procedure.  
+
+ process
+    The basic entity scheduled by the system software, a process
+    provides the context in which an image executes.  A process
+    consists of an address space and both hardware and software
+    contexts.
+
+ Program Counter (PC)
+    A CPU register that contains the virtual address of the next
+    instruction to be executed.  The register is incremented as each
+    instruction is executed.  
+
+ PC scope
+    The scope, defined by the scope and visibility rules of the current
+    language, of the block or routine where execution is paused.
+
+ program symbol
+    An entity that when defined will represent a particular function or
+    entity in a particular context.  See also local symbol, global
+    symbol.
+
+ register
+    Specifies a storage location in hardware logic other than main
+    memory, used for temporary address and data storage.
+
+ remote debugger
+    Consists of a server running on the target hardware and a client 
+    running on the host system (the debugger).  Remote debugging with 
+    Ladebug is unique because the server keeps track of breakpoints
+    that have been set.  If the communications link should fail, a new 
+    client can connect to an existing server, and you can continue 
+    debugging using your original breakpoint.
+
+ scope search list
+    (0,1,2,...,n) where 0 denotes the PC scope and n is the number of
+    calls on the call stack.  Within each scope (call frame), the
+    debugger uses the visibility rules of the language to locate a
+    symbol.  The scope search list, based on the call stack, enables
+    the debugger to differentiate symbols that are defined multiple
+    times in a convenient, predictable way.
+
+ script commands
+    Assist you in specifying a file to input as debugger commands, send
+    debugger output to a file, or send a transcript of an entire
+    debugging session to a file.  For more information, see the record,
+    record io, record output, record input, source, and playback
+    commands in the Help menu's On Commands menu item.
+    
+ server
+    A computing system entity that provides a service to other system
+    entities called clients.  
+
+ stack trace
+    Displays the dynamic call chain from function to function.  The
+    most recently called function appears at the top of the stack,
+    followed  by its calling function, the calling function's calling
+    function, and so on, until all active functions are displayed.
+
+ step unit
+    By default, a step unit is one line of source code.
+
+ stepping
+    Action by which you execute your source-code line by line in the
+    debugger, which gives you the opportunity to examine variables and
+    data structures.  If the source-code line contains a function call,
+    you can direct the debugger to enter the function or to step around
+    it.
+
+ symbolic debugger
+    A debugger that allows you to refer to program locations by the
+    symbols you used for them in your program---the names of variables,
+    routines, labels, and so on.  You do not need to specify memory
+    addresses or machine registers when referring to program locations,
+    although you can, if you wish.
+
+ task
+    (Applies to Ada multitasking programs.) Specifies an entity that
+    executes in parallel with other tasks.  A task is characterized by
+    a unique task ID, a separate stack, and a separate register set.
+
+ task body
+    (Applies to Ada multitasking programs.)  Specifies the code
+    that is executed by the flow of control.
+
+ task object
+    (Applies to Ada multitasking programs.)  Specifies the data item
+    that represents the flow of control within a debugging session.
+
+ task priority
+    (Applies to Ada multitasking programs.)  Specifies the method of
+    scheduling execution.
+
+ task state
+    (Applies to Ada multitasking programs.)  Specifies an execution
+    state (waiting, ready, running, or terminated).
+
+ thread
+    (Applies to DECthreads multithread programs.)  Specifies an entity
+    that executes in parallel with other threads. A thread is
+    characterized by a unique task ID, a separate stack, and a separate
+    register set.
+
+ thread creation attribute
+    (Applies to DECthreads multithread programs.)  Specifies attributes
+    of the parallel entity.
+
+ thread object
+    (Applies to DECthreads multithread programs.)  Specifies the data
+    item that represents the flow of control within a debugging
+    session.
+
+ thread state
+    (Applies to DECthreads multithread programs.) Specifies an
+    execution state (waiting, ready, running, or terminated).
+
+ tracepoint
+    Specifies a location at which you trace the execution of your
+    program, without stopping its execution.  The debugger notifies you
+    when  program variables change value and when functions are entered
+    and exited.
+
+ visible task
+    (Applies to Ada multitasking and DECthreads multithread programs.)
+    Specifies the task whose stack and register set are the current
+    context the debugger uses when looking up symbols, register values,
+    routine calls, breakpoints, and so on.
+

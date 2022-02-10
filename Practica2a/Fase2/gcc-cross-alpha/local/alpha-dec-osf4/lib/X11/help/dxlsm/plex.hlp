@@ -1,0 +1,27 @@
+#/* @(#)@(#)help/plex.hlp	2.1 11 May 1993 19:05:36 -  */
+#ident  "@(#)va11:help/plex.hlp   2.1"
+#
+#
+Mirroring, mirror.hlp
+Striping, stripe.hlp
+Concatenated, concat.hlp
+Volume, volume.hlp
+Subdisk, subdisk.hlp
+Disk Group, diskGrp.hlp
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+#########################################
+PLEX HELP
+
+A plex is a copy of a volume, also sometimes known as a mirror.  A volume
+can have up to eight plexes associated with it.  Each plex is, at least
+conceptually, a copy of the volume that is maintained consistently in the
+presence of volume I/O and reconfigurations.  Plexes represent the primary
+means of configuring storage for a volume.  Plexes can have a striped or
+concatenated organization.
+
+Plexes are graphically represented in the Visual Administrator as
+rectangles with double-dark borders.  They usually reside within a cylinder
+that represents a volume.
+
+For more information consult the Logical Storage Manager documentation.

@@ -1,0 +1,1 @@
+#define LDTTY 1

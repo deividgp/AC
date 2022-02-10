@@ -1,0 +1,1 @@
+#define STRIFNET 0

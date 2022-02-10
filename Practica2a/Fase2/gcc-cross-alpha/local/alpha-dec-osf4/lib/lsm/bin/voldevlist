@@ -1,0 +1,40 @@
+#!/sbin/sh -
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+# @(#)$RCSfile: voldevlist.sh,v $ $Revision: 1.1.6.2 $ (DEC) $Date: 1995/04/11 21:07:25 $
+# @(#)src/common/cmd/vxvm/support/voldevlist.sh	5.3 16 Mar 1993 01:17:33 - Copyright (c) 1993 VERITAS Software Corp.
+#ident	"@(#)vxvm:common/cmd/vxvm/support/voldevlist.sh	5.3"
+
+
+PATH=/sbin:/usr/sbin:/usr/bin
+
+voldisk -q list | awk '
+BEGIN {
+	printf("%-12s %-12s %-12s %s\n", \
+	       "DEVICE", "DISK", "GROUP", "STATUS");
+}
+$1 != "-" {
+	printf("%-12s %-12s %-12s %s", $1, $3, $4, $5);
+	for (i = 6; i < NF; i++) {
+		printf(" %s", $i);
+	}
+	printf("\n");
+}'

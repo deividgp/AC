@@ -1,0 +1,243 @@
+// **************************************************************
+// *								*
+// * Keymaps for it_IT.ISO8859-1 - Italian for Italy		*
+// *								*
+// **************************************************************
+
+xkb_keymap "lk201-tw" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk201)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(vt105-tw)"	};
+    xkb_geometry	{ description = "Digital Italian LK201 - Typewriter Keys";
+			  include "geometry/digital_lk(lk201)"		};
+};
+
+xkb_keymap "lk201-dp" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk201)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(vt105-dp)"	};
+    xkb_geometry	{ description = "Digital Italian LK201 - Data Processing Keys";
+			  include "geometry/digital_lk(lk201)"		};
+};
+
+xkb_keymap "lk201" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk201)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(vt105)"	};
+    xkb_geometry	{ description = "Digital Italian LK201";
+			  include "geometry/digital_lk(lk201)"		};
+};
+
+xkb_keymap "lk401-tw" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(vt108-tw)"	};
+    xkb_geometry	{ description = "Digital Italian LK401 - Typewriter Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk401-dp" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(vt108-dp)"	};
+    xkb_geometry	{ description = "Digital Italian LK401 - Data Processing Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk401" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(vt108)"	};
+    xkb_geometry	{ description = "Digital Italian LK401";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411-tw" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(vt108-tw)"	};
+    xkb_geometry	{ description = "Digital Italian LK411 - Typewriter Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411-dp" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(vt108-dp)"	};
+    xkb_geometry	{ description = "Digital Italian LK411 - Data Processing Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(vt108)"	};
+    xkb_geometry	{ description = "Digital Italian LK411";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461-tw" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(vt108-tw)"	};
+    xkb_geometry	{ description = "Digital Italian LK461 - Typewriter Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461-dp" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(vt108-dp)"	};
+    xkb_geometry	{ description = "Digital Italian LK461 - Data Processing Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(vt108)"	};
+    xkb_geometry	{ description = "Digital Italian LK461";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk442" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk444)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(lk44x)"	};
+    xkb_geometry	{ description = "Digital Italian LK442";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk444" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk444)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(lk44x)"	};
+    xkb_geometry	{ description = "Digital Italian LK444";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk44x" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk444)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(lk44x)"	};
+    xkb_geometry	{ description = "Digital Italian LK444";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk450" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk450)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(vt108)"	};
+    xkb_geometry	{ description = "Digital Italian LK450";
+			  include "geometry/digital_lk(lk450)"		};
+};
+
+xkb_keymap "pcxalai" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(pcxalai)"	};
+    xkb_geometry	{ description = "Digital Italian PCXAL-AI";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxalfi" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(pcxalfi)"	};
+    xkb_geometry	{ description = "Digital Italian PCXAL-FI";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_on_keys)"	};
+};
+
+xkb_keymap "pcxalgi" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(pcxalgi)"	};
+    xkb_geometry	{ description = "Digital Italian PCXAL-GI";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxalki" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(pcxalki)"	};
+    xkb_geometry	{ description = "Digital Italian PCXAL-KI";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxal" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(pcxal)"	};
+    xkb_geometry	{ description = "Digital Italian PCXAL";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471ai" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(lk471ai)"	};
+    xkb_geometry	{ description = "Digital Italian LK471-AI";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(lk471)"	};
+    xkb_geometry	{ description = "Digital Italian LK471";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97wai" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(lk471ai)"	};
+    xkb_geometry	{ description = "Digital Italian LK97W-AI";
+			  include "geometry/digital_pc(pc105)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97w" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_italian(lk471)"	};
+    xkb_geometry	{ description = "Digital Italian LK97W";
+			  include "geometry/digital_pc(pc105)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+

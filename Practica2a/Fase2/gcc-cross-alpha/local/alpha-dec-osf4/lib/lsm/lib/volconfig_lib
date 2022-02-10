@@ -1,0 +1,1087 @@
+#!/sbin/sh
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+# @(#)$RCSfile: volconfig_lib.sh,v $ $Revision: 1.1.2.5 $ (DEC) $Date: 1996/02/09 23:01:55 $
+tmpfile1=${TMPDIR:-/etc/vol/reconfig.d/tmp.d}/lsmback1.$$
+tmpfile2=${TMPDIR:-/etc/vol/reconfig.d/tmp.d}/lsmback2.$$
+disklist=${TMPDIR:-/etc/vol/reconfig.d/tmp.d}/disklist.$$    # List of disks
+dglist=${TMPDIR:-/etc/vol/reconfig.d/tmp.d}/dglist.$$    # List of diskgroups
+vollist=${TMPDIR:-/etc/vol/reconfig.d/tmp.d}/vollist.$$    # List of volumes
+donelist=${TMPDIR:-/etc/vol/reconfig.d/tmp.d}/donelist.$$ # List of all LSM objs created.
+errfile=${TMPDIR:-/etc/vol/reconfig.d/tmp.d}/lsmerr.$$     # Error file
+mkdir -p /etc/vol/reconfig.d/tmp.d
+MAGIC="LSMCONFIG"
+VERSION=1
+
+debugflag=no
+debugprint()
+{
+	if [ "$debugflag" = "yes" ]; then 
+		echo $* 
+	fi
+}
+LSMERR_OBJ_NOT_FOUND=11
+
+check_disk()
+{
+	c_line=$1
+	set $c_line
+	daname=$1
+	type=$3
+	unset c_line
+
+	debugprint check_disk $daname
+	set -- `voldisk -q list | grep "^\$daname[ 	]" 2>/dev/null`
+	if [ $? -eq 1 -o  $# -lt 5 ]
+	then
+	
+		voldisk define $daname type=$type 2>$errfile
+		ret=$?
+		if [ $ret -eq ${LSMERR_OBJ_NOT_FOUND} ]; then 
+				return 0;
+		fi
+		if [ $ret -ne 0 -a $ret -ne 12 ]; then 
+			return 1
+		fi
+		rm -f $errfile
+	else
+		if [ "X$5" = "Xoffline" ]
+		then
+			writemsg "Access to disk device $daname is disabled."
+			voladm_yorn "Enable access to $daname?" y || return 1
+		fi
+		if [ "X$4" != "X-" ]
+		then
+			return 20
+		fi
+	fi
+
+
+	voldisk online $daname 2>/dev/null
+
+
+	voldisk -s list $daname > $disklist 2>$errfile
+	diskflags=`grep "^flags:" $disklist`
+	if [ -z "$diskflags" ]
+	then
+		writemsg \
+	 	"Unexpected error encountered while getting " \
+	 	"information about disk $daname." \
+	 	"Error: `cat $errfile`"
+		return 1
+	fi
+	debugprint $daname $diskflags
+
+	if list_member invalid $diskflags
+	then
+		voldisk rm $daname
+		return 0
+	fi
+
+	if not list_member online $diskflags
+	then
+		writemsg \
+                "Disk device $daname is disabled (offline) and cannot be used."
+		return 1
+	fi
+	if list_member error $diskflags
+	then
+		return 1
+	fi
+
+	if list_member imported $diskflags
+	then
+		return 20
+	fi
+	dgname=`grep "^dgname:" $disklist`
+	[ -n "$dgname" ] && dgname=`list_item 2 $dgname`
+	if [ -n "$dgname" -a "$dgname" != "-" ]; then 
+		return 10;
+	fi
+
+	return 10
+}
+
+init_lsm_disk()
+{
+	d_line=$1
+	debugprint init_lsm_disk $d_line
+	set $d_line
+	da=$1
+	dm=$2
+	type=$3
+	dg=$4
+	systemdisk=`echo $d_line | awk '{print $NF}'`
+	if [ "$systemdisk" = "YES" ]; then 
+		unset d_line
+		writemsg \
+		"Disk $da is in use for a system (root, /usr, /var)"\
+		"volume. volrestore will not restore disks and volumes"\
+		"used for root, swap, /usr, or /var. Refer to volrestore(8)."\
+		""
+		return 2; # Return failure 
+	fi 
+	check_disk "$d_line" 2>$errfile
+	ret=$?
+	debugprint check_disk returned $ret
+	if [ $ret -eq 1 ]; then 
+	      echo "Initializing disk $da failed." 
+       	      echo `cat $errfile`
+	      return $ret
+	else
+		if [ $ret -eq 20  ]; then 
+	      		return $ret
+		else
+			if [ $ret -eq 10  ]; then 
+				return 0;
+			fi
+		fi
+	fi
+	if [ "$type" = "nopriv" ]; then 
+		if [ $ret -eq 0 ]; then 
+			voldisk -f init $da type=$type 2>$errfile
+			ret=$?
+		fi
+	else
+		if [ $ret -eq 0 ]; then 
+			voldisksetup -i $da privlen=$5 nconfig=$6 \
+			    configlen=$7 nlogs=$8 loglen=$9  2>$errfile
+			ret=$?
+		fi
+	fi
+	unset d_line
+	debugprint init_lsm_disk returning $ret
+	return $ret
+}
+
+
+addto_lsm_diskgroup()
+{
+	dg_line=$1
+	debugprint addto_lsm_diskgroup $dg_line
+	set $dg_line
+	da=$1
+	dm=$2
+	dg=$4
+	volprint -td -g $dg $dm > /dev/null 2>/dev/null
+	if [ $? -eq 0 ]; then 
+		voldg -g $dg -k adddisk $dm=$da 2>$errfile
+	else
+		voldg -g $dg adddisk $dm=$da 2>$errfile
+	fi
+	if [ $? -ne 0 ]; then 
+		echo  "Adding disk $da as $dm to diskgroup $dg failed"
+       		echo `cat $errfile`
+	fi
+	unset dg_line
+}
+check_fix_rootdg()
+{
+	debugprint check_fix_rootdg $*
+	if [ ! -c /dev/volconfig ]; then
+		if [ -x /usr/sbin/volinstall ]; then
+			/usr/sbin/volinstall
+		fi
+	fi
+	x=`voldctl mode`
+	case $x in
+		"mode: disabled" | "0:mode: booted")
+			voldctl enable >/dev/null 2>/dev/null
+	    		;;
+	
+		"mode: enabled") ;;
+
+		"mode: not-running" | *)
+			/sbin/vold -k >/dev/null 2>/dev/null
+	    		;;
+	esac
+	x=`voldctl mode`
+	if [ "X$x" != "Xmode: enabled" ]; then
+		if [ ! -f /etc/vol/volboot ]; then 
+			writemsg \
+			"/etc/vol/volboot does not exist. To restart LSM this"\
+			"file is required."
+			voladm_yorn "Restore saved copy of /etc/vol/volboot?" y
+			if [ $? -eq 0 ]; then
+				cp ${CUR_BACKUP_DIR}/volboot /etc/vol/volboot
+			else
+				writemsg \
+				"$progname aborting ...."\
+				"vold could not be enabled and /etc/vol/volboot not found."
+				quit 1
+			fi
+		fi
+		volbootllist=`cat ${CUR_BACKUP_DIR}/volboot | \
+			    egrep 'simple|sliced' |  awk '{printf("%s "), $2}'`
+		for disk in $volbootllist
+		do
+			voldctl add disk $disk >/dev/null 2>&1
+		done
+		/sbin/vold -k >/dev/null 2>/dev/null
+		x=`voldctl mode`
+		if [ "X$x" != "Xmode: enabled" ]; then 
+			writemsg "System does not have a valid rootdg configuration."
+			writemsg \
+			"Would you like to re-create rootdg from "\
+			"LSM description set in $CUR_BACKUP_DIR ??"
+			voladm_yorn "Would you like to continue ?" n
+			if [ $? -eq 0 ]; then
+				redo_rootdg;
+			else
+				writemsg "$progname: Exiting. "
+				quit 1
+			fi
+		fi
+	fi
+
+	debugprint check_fix_rootdg checking rootdg disks
+	awk '{
+		if ($4 == "rootdg" ) print $0
+             }' ${voldisk_list}  > $tmpfile1
+	num_rootdg_disks=`wc -l $tmpfile1 | awk '{print $1}'`
+	num=1
+	while [ $num -le $num_rootdg_disks ];
+	do
+        	r_line=`echo $num | ed - $tmpfile1`
+		debugprint check_fix_rootdg $r_line
+		init_lsm_disk "$r_line"
+		ret=$?
+		set $r_line
+		dm=$2
+		if [ "$dm" != "-" ]; then 
+			if [ $ret -eq 0 ]; then 
+				addto_lsm_diskgroup "$r_line"
+			fi
+		fi
+		unset r_line
+		num=`expr $num + 1`
+	done
+	rm -f $tmpfile1
+
+	debugprint check_fix_rootdg checking replacement disks
+	awk '{
+		if ($2 =="-") print $0
+             }' ${voldisk_list}  > $tmpfile1
+	num_disks=`wc -l $tmpfile1 | awk '{print $1}'`
+	num=1
+	while [ $num -le $num_disks ];
+	do
+        	r_line=`echo $num | ed - $tmpfile1`
+		debugprint check_fix_rootdg non-diskgroup disks $r_line
+		init_lsm_disk "$r_line"
+		num=`expr $num + 1`
+	done
+	rm -f $tmpfile1
+}
+redo_rootdg()
+{
+	debugprint redo_rootdg $*
+
+	host=`hostname`
+	if [ -z "$host" ]; then 
+		echo "Hostname should be set for LSM initialization."
+		quit 1
+	else
+		voldctl init >$errfile 2>&1
+		if [ $? -ne 0 ]; then 
+			echo "Could not initialize /etc/vol/volboot file."
+       			echo `cat $errfile`
+			quit 1
+		fi
+	fi
+	vold -k -m disable >/dev/null 2>$errfile
+	if [ $? -ne 0 ]; then 
+		echo "Starting vold in disabled mode failed"
+       		echo `cat $errfile`
+		quit 1
+	fi
+	voldg init rootdg 2>$errfile
+	if [ $? -ne 0 ]; then 
+		echo "Initializing diskgroup rootdg failed"
+       		echo `cat $errfile`
+		quit 1
+	fi
+
+	check_dg rootdg
+	ret=$?
+	if [ $ret -ne 0 ]; then 
+		writemsg "Quitting ...."
+		quit 1;
+	fi
+}
+
+
+check_dg()
+{
+	diskfile1=${TMPDIR:-/tmp}/disk1.$$
+	diskfile2=${TMPDIR:-/tmp}/disk2.$$
+	diskfile3=${TMPDIR:-/tmp}/disk3.$$
+
+	dg=$1
+	debugprint check_dg $dg
+	awk -v dg=$dg '{if (($4 == dg) &&($2 != "-")) print $0}' ${voldisk_list} \
+		> $diskfile1
+	numdisk=`wc -l $diskfile1 | awk '{print $1}'`
+	if [ $numdisk -eq 0 ]; then 
+		return; 
+	fi
+	num=1
+	dgdisks=
+	cp $diskfile1 $diskfile2
+	while [ $num -le $numdisk ];
+	do
+        	r_line=`echo $num | ed - $diskfile1`
+		init_lsm_disk "$r_line"
+		if [ $? -eq 1 ]; then 
+			set $r_line
+			da=$1
+			unset r_line
+			if [ -z "$b_best" ]; then 
+				if [ -n "$dgdisks" ]; then 
+					voldisk rm $dgdisks
+				fi
+				writemsg \
+				"Use -b option to continue restoration despite failures."\
+				""
+				return 1;
+			else
+				awk -v da=$da '{if ($1 != da)  print $0}' ${diskfile2} \
+				> $diskfile3
+				mv $diskfile3 $diskfile2
+			fi
+		else
+			append_list dgdisks $da
+		fi
+		num=`expr $num + 1`
+	done
+
+	if [ "$dg" != "rootdg" ]; then 
+		voldg list $dg >/dev/null 2>&1
+		if [ $? -eq ${LSMERR_OBJ_NOT_FOUND} ]; then # Returns 11 if it does not. 
+			voldg import $dg >$errfile 2>&1
+			if [ $? -ne 0 ]; then 
+				debugprint "import of $dg failed"
+				addfirst_disk_to_dg $diskfile2
+			fi
+		fi
+	else
+		addfirst_disk_to_dg $diskfile2
+	fi
+			 
+	voldg list $dg >/dev/null 2>&1
+	if [ $? -eq ${LSMERR_OBJ_NOT_FOUND} ]; then 
+		writemsg \
+		"Diskgroup $dg could not be initialized."
+		quit 1
+	fi
+		
+	num=1
+	numdisk=`wc -l $diskfile2 | awk '{print $1}'`
+	while [ $num -le $numdisk ];
+	do
+        	r_line=`echo $num | ed - $diskfile2`
+		set $r_line
+		da=$1
+		dm=$2
+		dg=$4
+		systemdisk=`echo $r_line | awk '{print $NF}'`
+                if [ "$systemdisk" = "YES" ]; then
+                        num=`expr $num + 1`
+                        unset r_line
+                        continue;
+                fi
+		volprint -tdq -g $dg $dm > /dev/null 2>/dev/null
+		ret=$?
+		diskflags=`voldisk -s list $da | grep "^flags:" 2>/dev/null` 
+		if list_member error $diskflags
+		then
+			num=`expr $num + 1`
+			unset r_line
+			continue;
+		fi
+		dgname=`voldisk -s list $da | grep "^dgname:" 2>/dev/null` 
+		[ -n "$dgname" ] && dgname=`list_item 2 $dgname`
+		if [ -n "$dgname" -a "$dgname" != "-" ]; then 
+			if [ "$dgname" != $dg ]; then 
+				writemsg\
+				"Disk $da in use by diskgroup $dgname."\
+				"Cannot add $da to diskgroup $dg."\
+				""
+				if [ -z "$b_best" ]; then 
+					voldg deport $dg
+					voldisk rm $dgdisks
+					return 1;
+				fi
+				num=`expr $num + 1`
+				unset r_line
+				continue;
+			fi
+		fi
+		if [ $ret -eq 0 ]; then 
+			device=`volprint -tdq -g $dg $dm | \
+					awk '{print $3}'`
+			if [ "$device" = "-" ]; then 
+				addto_lsm_diskgroup "$r_line"
+			else
+        			num=`expr $num + 1`
+				unset r_line
+				continue;
+			fi
+		else
+			addto_lsm_diskgroup "$r_line"
+		fi
+		unset r_line
+        	num=`expr $num + 1`
+	done
+	rm -f $diskfile1 $diskfile2 $diskfile3
+}
+addfirst_disk_to_dg()
+{
+	fname=$1
+	dgfile2=${TMPDIR:-/tmp}/dgdisk2.$$
+	debugprint "addfirst_disk_to_dg $dg"
+	awk 'BEGIN{
+	       nlog=0; config=0; da=""; dm="";
+	     }
+	{
+		if($12 == "YES")
+			getline;
+		if (($6 > 0) && ($8 > 0)){ 
+			if ($4 != "rootdg")
+				printf("voldg init %s %s=%s\n"), $4, $2, $1;
+			else{
+				printf("voldg adddisk %s=%s\n"), $2, $1;
+				printf("voldctl enable \n");
+			}
+			exit;
+		}
+		
+		if ($6 > 0){
+			if(nlog > 0){
+				if ($4 != "rootdg")
+					printf("voldg init %s %s=%s %s=%s\n"),
+						$4,$2,$1,dm,da;
+				else{
+					printf("voldg adddisk %s=%s %s=%s\n"),
+						$2,$1,dm,da;
+					printf("voldctl enable \n");
+				}
+				exit;
+			}
+			da=$1
+			dm=$2
+			config=1
+		}
+		if ($8 > 0){
+			if(config > 0){
+				if ($4 != "rootdg")
+					printf("voldg init %s %s=%s %s=%s\n"),
+						$4,$2,$1,dm,da;
+				else {
+					printf("voldg adddisk %s=%s %s=%s\n"),
+						$2,$1,dm,da;
+					printf("voldctl enable \n");
+				}
+				exit;
+			}
+			da=$1;
+			dm=$2;
+			nlog=1;
+		}
+	}' ${fname} > ${dgfile2}
+
+	sh -x ${dgfile2}
+	rm -f ${dgfile2}
+}
+create_df()
+{
+	lsmobj=$1
+	fname=$2
+	awkfile=/tmp/lsmrestore.$$      #Temporary file
+	awk -vlsmobj=${lsmobj} 'BEGIN{
+		endline=0;
+     	}
+     	{
+		if((NF==2)&&($1==lsmobj)){ 
+			if(endline != 0){
+				endline=NR-1;
+				printf("%d %d %s\n "),topline, endline, vname;
+			}
+			else {
+				vname=$2;
+				endline=1;
+			}
+			topline=NR;
+			vname=$2;
+       		}
+     	}
+     	END {
+		if(endline == 0){
+			printf("Description file is incomplete\n");
+			exit 1;
+		}
+		else{	
+			printf("%d %d %s\n "),topline, NR, vname;
+			exit 0;
+		}
+     	}' $fname > $awkfile
+
+	if [ $? -eq 1 ]; then 
+		writemsg\
+		"LSM description file $fname in $CUR_BACKUP_DIR is "\
+		"incomplete or corrupted. Aborting ...."
+		clean2
+	fi
+	i=1
+	j=1
+	printf "Working ."
+	num=`wc -l < $awkfile`
+     	while [ $i -le $num ]; do
+		line=`echo $i | ed - $awkfile`
+		set $line
+		start=$1
+		end=$2
+		vname=$3
+		awk -vstart=${start} -vend=${end} '
+			{if((NR>=start)&&(NR<=end)) print $0}' $fname >${vname}.tmp
+		i=`expr $i + 1`
+		if [ $j -eq 10 ]; then
+			printf "."
+			j=1
+		else
+			j=`expr $j + 1`
+		fi
+     	done
+	printf "\n\n"
+
+	rm -f $awkfile
+}
+
+showbackup()
+{
+
+	x=`voldctl mode`
+	case $x in
+		"mode: not-running" )
+			writemsg \
+			"vold is not running."\
+			"vold needs to be running to use -l option."
+			quit 1
+	    		;;
+	esac
+
+	curdir=`pwd`
+
+	trap "clean2 " 2 1 3 15
+	HEADER=${CUR_BACKUP_DIR}/header
+	voldisk_list=${CUR_BACKUP_DIR}/voldisk.list
+	cd ${CUR_BACKUP_DIR}
+	check_backup_status; 
+	ret=$?
+	if [ -z "$f_force" -a $ret -eq 1 ]; then 
+		writemsg \
+		"The checksum of the LSM Description set saved in "\
+		"${HEADER} does not match current "\
+		"LSM description set in ${CUR_BACKUP_DIR}."\
+		""\
+		"The following files fail checksum validation: "\
+		""\
+		"`cat $tmpfile2`"\
+		""\
+		"LSM configuration is not valid."
+		rm -f $tmpfile2
+		quit 1
+	fi
+	if [ $ret -eq 2 ]; then 
+		writemsg\
+		"LSM configuration was saved on host `cat $tmpfile2`"\
+		""
+		rm -f $tmpfile2
+	fi
+	str=`egrep 'Created' ${HEADER} | sed -e 's/^#//'`
+	writemsg \
+	"LSM Configuration Save Utility Version $version."\
+	"Configuration Information stored in directory"\
+	"$CUR_BACKUP_DIR"\
+	"`echo $str`"
+	
+	if [ -z "$g_diskgroup" ]; then 
+		rm -f $dglist
+		for dir in *.d; do
+			if [ -d $dir ]; then 
+				basename $dir | sed -e 's/\.d//' >>$dglist
+			else
+				writemsg\
+				"Bogus file $dir in ${CUR_BACKUP_DIR}"
+				quit 1
+			fi
+		done
+	else
+		if [ ! -d ${g_diskgroup}.d ]; then 
+			writemsg \
+			"LSM configuration files for diskgroup $g_diskgroup"\
+			"does not exist in ${CUR_BACKUP_DIR}"
+			quit 1
+		fi
+		echo $g_diskgroup > $dglist
+	fi
+	for dg in `cat $dglist`; do
+		writemsg \
+		"LSM Configuration for Diskgroup ${dg}."\
+		""
+		cd ${dg}.d
+		ls *.DF >/dev/null 2>/dev/null
+		if [ $? -eq 0 ]; then 
+			if [ -n "${vopt}" ]; then 
+				if [ -f allvol.DF ]; then 
+					create_df "vol" allvol.DF; 
+				fi
+				if [ -f allplex.DF ]; then 
+					create_df "plex" allplex.DF; 
+				fi
+				if [ -f allsubdisk.DF ]; then 
+					create_df "sd" allsubdisk.DF; 
+				fi
+				for vol in ${v_volume} 
+				do
+					if [ ! -f ${vol}.tmp ]; then 
+						writemsg \
+					       "Configuration for volume $vol"\
+                                               "in diskgroup ${dg} not found."
+					else
+						volprint -htq -D - < ${vol}.tmp
+						echo ""
+					fi
+				done
+			else
+				display_disks $dg
+				for file in *.DF
+				do
+					volprint -htq -D - < $file
+				done
+				echo ""
+			fi
+			rm -rf *.tmp
+		else
+			writemsg \
+			"Configuration for no volume or plex found"\
+                        "for diskgroup ${dg}."
+		fi
+		cd ..
+	done
+	rm -f $dglist
+}
+
+display_disks()
+{
+	dg=$1
+	
+	awk -v dg=$dg '
+	{
+		if ($4 == dg) 
+			print $0
+	}' ${voldisk_list} > $disklist
+		
+	numdisk=`wc -l $disklist | awk '{print $1}'`
+	i=1
+	while [ $i -le $numdisk ];
+	do
+	        		r_line=`echo $i | ed - $disklist`
+		set $r_line
+		da=$1; shift;
+		dm=$1; shift;
+		type=$1; shift;shift;
+		if [ "$type" = "nopriv" ]; then 
+			privlen=0;
+			publen=$1; shift;
+			pubpath=$1;
+		else
+			privlen=$1;shift;shift;shift;shift;shift
+			publen=$1;shift;
+			pubpath=$1;
+		fi
+		echo "dm\t$dm\t$da\t$type\t$privlen\t$publen\t$pubpath"
+		unset r_line
+		i=`expr $i + 1`
+	done
+	writemsg ""
+	rm -f $disklist
+}
+	
+
+create_disk_list()
+{
+	debugprint create_disk_list
+	voldisk_list=$1
+
+	system_disks=
+	get_systemdisks_list;
+
+	voldisk -q list | awk '{if($1 != "-")print $1}' \
+			> ${disklist} 2>/dev/null || clean3
+	echo "# DEVICE  DISK  TYPE  GROUP  PRIVLEN  NCONFIG  CONFIGLEN  NLOG  LOGLEN PUBLEN PUBPATH SYSTEMDISK" > ${voldisk_list} 
+	for disk in `cat ${disklist}`
+	do
+		voldisk -s list $disk > $disklist 2>$errfile
+		diskflags=`grep "^flags:" $disklist`
+
+		if list_member error $diskflags
+		then
+			writemsg\
+			"Disk $disk is in error state. Not saving configuration for $disk. "
+			continue;
+		fi
+		if list_member invalid $diskflags
+		then
+			writemsg\
+			"Disk $disk is in invalid state. Not saving configuration. "
+			continue;
+		fi
+		infolist=${TMPDIR:-/tmp}/${disk}.$$
+		voldisk list ${disk} | \
+		egrep 'Device:|disk:|type:|group:|private:|public:|pubpaths:|configs:|logs:' \
+		  > ${infolist} 2>/dev/null || clean3
+		awk '{
+			if($1=="Device:") 
+				printf("%s  "), $2
+	      	}' ${infolist} >> ${voldisk_list}
+		sed -e 's/name=//' ${infolist} | \
+		awk '{
+			if($1=="disk:")
+				if(NF==3) 
+					printf("%s  "), $2; 
+				else 
+					printf("-  ")
+		}' >> ${voldisk_list}
+		awk '{
+			if($1=="type:") 
+				printf("%s  "), $2
+		}' ${infolist} >> ${voldisk_list}
+		sed -e 's/name=//' ${infolist} | \
+		awk '{
+			if($1=="group:")
+				if(NF==3) 
+					printf("%s  "), $2; 
+				else 
+					printf("-  ")
+		}' >> ${voldisk_list}
+		sed -e 's/len=//' ${infolist} | \
+		awk '{
+			if($1=="private:") 
+				printf("%s  "), $4
+		}' >> ${voldisk_list}
+		sed -e 's/count=//' ${infolist} | \
+		awk '{
+			if($1=="configs:") 
+				printf("%s  "), $2
+		}' >> ${voldisk_list}
+		sed -e 's/len=//' ${infolist} | \
+		awk '{
+			if($1=="configs:") 
+				printf("%s  "), $3
+		}' >> ${voldisk_list}
+		sed -e 's/count=//' ${infolist} | \
+		awk '{
+			if($1=="logs:") 
+				printf("%s  "), $2
+		}' >> ${voldisk_list}
+		sed -e 's/len=//' ${infolist} | \
+		awk '{
+			if($1=="logs:") 
+				printf("%s  "), $3
+		}' >> ${voldisk_list}
+		sed -e 's/len=//' ${infolist} | \
+		awk '{
+			if($1=="public:") 
+				printf("%s  "), $4
+		}' >> ${voldisk_list}
+		sed -e 's/block=//' ${infolist} | \
+		awk '{
+			if($1=="pubpaths:") 
+				printf("%s  "), $2
+		}' >> ${voldisk_list}
+		if list_member $disk $system_disks
+		then
+			echo YES  >> ${voldisk_list}
+		else
+			echo NO  >> ${voldisk_list}
+		fi
+		rm -f $infolist
+
+	done
+}
+
+get_systemdisks_list()
+{
+	rootdisk=`volprint -sF "%device" -e 'assoc.assoc="rootvol"' | uniq`
+	append_list system_disks $rootdisk
+	swapdisk=`volprint -sF "%device" -e 'assoc.assoc="swapvol"' | uniq`
+	append_list system_disks $swapdisk
+	usrtype=`mount | awk '{if ($3 == "/usr") print $5}'`
+	if [ "$usrtype" = "ufs" ]; then 
+		usrmnt=
+		usrmnt=`mount 2>/dev/null | awk '{if ($3 == "/usr") 
+					if(match($1,"/dev/vol/") != 0) 
+						print $1
+				}'`
+	else 
+		if [ "$usrtype" = "advfs" ]; then 
+			usrmnt=`/sbin/showfdmn usr_domain | \
+					awk '{if(match($8,"/dev/vol/") != 0)
+						print $8
+					}'`
+		fi
+	fi
+
+	vartype=
+	vartype=`mount | awk '{if ($3 == "/usr/var") print $5}'`
+	if [ -z "$vartype" ]; then 
+		vartype=`mount | awk '{if ($3 == "/var") print $5}'`
+	fi
+	if [ "$vartype" = "ufs" ]; then 
+		varmnt=
+		varmnt=`mount 2>/dev/null | awk '{if ($3 == "/var") 
+					if(match($1,"/dev/vol/") != 0) 
+						print $1
+				}'`
+	else 
+		if [ "$vartype" = "advfs" ]; then 
+			varmnt=`/sbin/showfdmn var_domain | awk '{ 
+					if(match($8,"/dev/vol/") != 0)
+						print $8
+					}'`
+		fi
+	fi
+	if [ -n "$usrmnt" -o -n "$varmnt" ]; then 
+		for mnt in $usrmnt $varmnt; do 
+			dg=`echo $mnt | awk -F'/' '{
+						if (NF==5) 
+							print $4
+						else
+							print "rootdg"
+				   	}'`
+			sysvol=`echo $mnt | awk -F'/' '{
+						if (NF==5) 
+							print $5
+						else
+							print $4
+				   	}'`
+			lsmdisk=`volprint -g $dg -htqv $sysvol | 
+					awk '{if($1=="sd") print $8}' | uniq`
+			append_list system_disks $lsmdisk
+		done
+	fi
+
+	if [ -n "$system_disks" ]; then 
+		writemsg \
+		"volsave does not save configuration for volumes used for"\
+		"root, swap, /usr or /var."\
+		"LSM configuration for following system disks not saved:"\
+		"$system_disks"\
+		""
+	fi
+
+	debugprint "get_systemdisks_list" "$system_disks"
+		
+}
+check_backup_status()
+{
+	if [ ! -f $HEADER ]; then 
+		writemsg \
+		"$HEADER does not exist. Cannot find valid "\
+        	"LSM configuration files in ${CUR_BACKUP_DIR}"
+		quit 1
+	fi
+	magic=`egrep MAGIC ${HEADER} | awk '{print $2}'`
+	if [ "$magic" != "$MAGIC" ]; then 
+		writemsg\
+		"${CUR_BACKUP_DIR} does not have a valid LSM "\
+		"description set. Magic number in $HEADER is not valid."
+		quit 1
+	fi
+	
+	version=`egrep VERSION ${HEADER} | awk '{print $2}'`
+	if [ $version -ne $VERSION ]; then  
+		writemsg\
+		"The LSM description set in ${CUR_BACKUP_DIR} was"\
+		"saved with Version $version."\
+		"$progname version $VERSION cannot be used to read "\
+                "this description set."
+		quit 1
+	fi
+	rm -f $tmpfile2
+	ret=0 # Return 0 if checksum for all files match. 
+	for file in volboot voldisk.list *.d/*.DF ; do
+		checksum=`awk -v file=$file '{if ($1 == file) print $2}' ${HEADER}` 
+		curchecksum=`sum $file | awk '{print $1}'`
+		debugprint $file $checksum $curchecksum
+		if [ $checksum -ne $curchecksum ]; then 
+			echo "$CUR_BACKUP_DIR/$file"  >> $tmpfile2
+			ret=1
+		fi
+	done 
+	if [ $ret -gt 0 ]; then 
+		return $ret; 
+	fi
+
+	voldisk_list=${CUR_BACKUP_DIR}/voldisk.list
+	if [ ! -f ${voldisk_list} ]; then 
+		writemsg \
+		"Saved copy of LSM disk configuration not found in"\
+        	"$CUR_BACKUP_DIR"
+		quit 1
+	fi
+
+	host=`egrep HOST ${HEADER} | awk '{print $NF}'`
+	if [ ${host} != `hostname` ]; then 
+		echo ${host} > $tmpfile2
+		ret=2
+	fi
+
+	return $ret; 
+}
+
+cluster_check()
+{
+if [ -f /var/run/Agent.pid ]; then 
+	 ps `cat /var/run/Agent.pid`  > /dev/null 2>/dev/null
+	 if [ $? -eq 0 ]; then 
+		if [ -z "${i_interactive}" -o -z "${g_diskgroup}" ]; then 
+		writemsg \
+			"In ASE/Clusters, volrestore can restore only one LSM diskgroup"\
+			"at a time. The -i and -g options are both required on an ASE/Clusters node."\
+			"Before restoring a diskgroup, it should be ensured that the latest "\
+			"LSM configuration saved using volsave across all cluster nodes is "\
+			"being used. volrestore -l can be used to verify the latest LSM configuration "\
+                        "on each node. Refer to LSM and ASE/Clusters documentation for more details."\
+			""
+			quit 1
+		fi
+		return 1;
+	fi
+	return 0;
+fi
+return 0;
+}
+
+do_interactive()
+{
+	if [ -n "${i_interactive}" ]; then 
+		cluster_check;
+		it_is_cluster=$?
+		if [ ${it_is_cluster} -eq 1 ]; then 
+			writemsg \
+			"volrestore is being run on an ASE/cluster node."\
+			"Ensure that ${CUR_BACKUP_DIR} has "\
+			"the latest LSM configuration for diskgroup ${dg} across all"\
+			"cluster/ASE nodes. Use volrestore -l on each ASE/cluster"\
+			"node to determine the directory with the latest LSM configuration"\
+			"saved on all nodes."\
+			""
+		else
+			writemsg \
+			"Ensure that ${CUR_BACKUP_DIR} has "\
+			"the lastest LSM configuration for diskgroup ${dg}."\
+			"Use volrestore -l to determine the directory with the"\
+			"latest LSM configuration."\
+			""
+		fi
+		voladm_yorn "Would you like to continue ?" n
+		if [ $? -eq 1 ]; then
+			if [ ${it_is_cluster} -eq 1 ]; then 
+				writemsg "Quitting ..."
+				quit 1
+			else
+				return 1;
+			fi
+		fi
+	fi
+	return 0;
+}
+
+clean1()
+{
+	rm -r ${CUR_BACKUP_DIR}
+	writemsg \
+		"$progname was interrupted."\
+		"LSM Configuration not saved."
+	rm -f "$tmpfile1" "$tmpfile2" 
+	rm -f "$dglist" "$disklist" "$vollist" 
+	rm -f "$errfile" "$donelist"
+	exit 1
+}
+clean2()
+{
+	if [ "$progname" = "volrestore" ]; then 
+		writemsg "$progname was interrupted."\
+	 	"Interrupting $progname will leave LSM "\
+	 	"configuration in an inconsistient state."
+		voladm_yorn "Would you like to continue with $progname" y
+		ret=$?
+	else
+		ret=1
+	fi
+	if [ $ret -eq 0 ]; then 
+		return;
+	else
+		rm -f *.d/*.tmp *.tmp
+		rm -f "$tmpfile1" "$tmpfile2" 
+		rm -f "$dglist" "$disklist" "$vollist" 
+		rm -f "$errfile" "$donelist"
+		exit 1
+	fi
+}
+
+clean3()
+{
+	rm -r ${CUR_BACKUP_DIR}
+	writemsg \
+		"Error in saving LSM configuration."\
+		"$progname aborted ......."
+	rm -f "$tmpfile1" "$tmpfile2" 
+	rm -f "$dglist" "$disklist" "$vollist" 
+	rm -f "$errfile" "$donelist"
+	exit 1
+}
+quit()
+{
+	rm -f "$tmpfile1" "$tmpfile2" 
+	rm -f "$dglist" "$disklist" "$vollist" 
+	rm -f  "$errfile" "$donelist"
+	exit 1
+}
+append_list()
+{
+	_list=$1
+	shift
+	eval "set -- \$$_list \$*"
+	eval "$_list=\$*"
+}
+list_member()
+{
+	_want=$1
+	shift
+	for i in $@
+	do
+		[ "X$_want" = "X$i" ] && return 0
+	done
+	return 1
+}

@@ -1,0 +1,30 @@
+#/* @(#)@(#)help/colors.hlp	2.1 11 May 1993 19:03:51 -  */
+#ident  "@(#)va11:help/colors.hlp   2.1"
+#
+#
+X Resources, resources.hlp
+#########################################
+COLORS HELP
+
+Icons in the Visual Administrator are colored according to a strict
+priority scheme.  If an icon is in a particular state, then it will be
+displayed with the corresponding color or bitmap, depending on the type of
+display you are using (color or monochrome).
+
+All the colors and bitmaps may be changed by specifying the correct
+resources.  See the help on X Resources for more information.
+
+The priority scheme is listed below, with the first level listed being the
+highest priority.  The colors and bitmaps are also listed.
+
+		Color Display		Monochrome Display
+		-------------		------------------
+Blocked		(none)			(none)
+Error		red			gray1 bitmap
+Select		green			gray3 bitmap
+Free Subdisk	yellow			root weave bitmap
+Project		yellow			root weave bitmap
+Analysis High	green			cross weave bitmap
+Analysis Mid	yellow			root weave bitmap
+Analysis Low	red			wide weave bitmap
+Disabled	blue			stripe4 bitmap

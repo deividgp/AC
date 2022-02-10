@@ -1,0 +1,68 @@
+XCOMM 
+XCOMM *****************************************************************
+XCOMM *                                                               *
+XCOMM *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+XCOMM *                                                               *
+XCOMM *   All Rights Reserved.  Unpublished rights  reserved  under   *
+XCOMM *   the copyright laws of the United States.                    *
+XCOMM *                                                               *
+XCOMM *   The software contained on this media  is  proprietary  to   *
+XCOMM *   and  embodies  the  confidential  technology  of  Digital   *
+XCOMM *   Equipment Corporation.  Possession, use,  duplication  or   *
+XCOMM *   dissemination of the software and media is authorized only  *
+XCOMM *   pursuant to a valid written license from Digital Equipment  *
+XCOMM *   Corporation.                                                *
+XCOMM *                                                               *
+XCOMM *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+XCOMM *   by the U.S. Government is subject to restrictions  as  set  *
+XCOMM *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+XCOMM *   or  in  FAR 52.227-19, as applicable.                       *
+XCOMM *                                                               *
+XCOMM *****************************************************************
+XCOMM
+XCOMM HISTORY
+XCOMM 
+XCOMM @(#)$RCSfile: osfLib.tmpl,v $ $Revision: 1.1.4.5 $ (DEC) $Date: 1994/11/07 21:58:42 $
+XCOMM 
+XCOMM $XConsortium: osfLib.tmpl,v 1.18 94/06/03 21:38:46 matt Exp $
+
+/*
+ * OSF/1 shared library template
+ */
+
+#if ThreadedX && ModernOSF1
+#if HasDECnet
+/* #define SharedX11Reqs -lpthreads -lmach -ldnet_stub */
+#define SharedX11Reqs -ldnet_stub
+#else
+/* #define SharedX11Reqs -lpthreads -lmach */
+#define SharedX11Reqs
+#endif
+#endif
+#define SharedOldXReqs $(LDPRELIB) $(XLIBONLY)
+
+#if ThreadedX && ModernOSF1
+/* #define SharedXtReqs $(LDPRELIB) $(XLIBONLY) $(SMLIB) $(ICELIB) -lpthreads -lmach */
+#define SharedXtReqs $(LDPRELIB) $(XLIBONLY) $(SMLIB) $(ICELIB) 
+#else
+#define SharedXtReqs $(LDPRELIB) $(XLIBONLY) $(SMLIB) $(ICELIB)
+#endif
+#define SharedXawReqs $(LDPRELIB) $(XMULIB) $(XTOOLLIB) $(XLIB) -init _XawFixupVendorShell
+#define SharedXmuReqs $(LDPRELIB) $(XTOOLLIB) $(XLIB)
+#define SharedXextReqs $(LDPRELIB) $(XLIBONLY)
+#define SharedXiReqs $(LDPRELIB) $(XLIB)
+#define SharedPexReqs $(LDPRELIB) $(XLIBONLY) MathLibrary
+#define SharedXtstReqs $(LDPRELIB) $(XLIB)
+#define SharedXieReqs $(LDPRELIB) $(XLIBONLY)
+#define SharedSMReqs $(LDPRELIB) $(ICELIB)
+
+#ifndef FrescoSysLibs
+#if ThreadedX && ModernOSF1
+#define FrescoSysLibs  -lpthreads -lmach CplusplusLibC MathLibrary
+#else
+#define FrescoSysLibs  CplusplusLibC MathLibrary
+#endif
+#endif
+
+#define SharedFrescoReqs $(LDPRELIB) $(XLIBONLY) FrescoSysLibs
+#define SharedXtfReqs $(LDPRELIB) $(FRESCOLIB) $(XTOOLLIB) $(XLIB) FrescoSysLibs

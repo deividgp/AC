@@ -1,0 +1,63 @@
+# 
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+#
+# HISTORY
+# 
+# @(#)$RCSfile: disk.deport.help,v $ $Revision: 1.1.2.3 $ (DEC) $Date: 1993/11/16 17:55:27 $
+# 
+# @(#)src/common/cmd/vxvm/voladm/disk.deport.help	5.4 16 Mar 1993 01:18:56 - Copyright (c) 1993 VERITAS Software Corp.
+#ident	"@(#)vxvm:common/cmd/vxvm/voladm/disk.deport.help	5.4"
+#
+# Copyright(C)1993 VERITAS Software Corporation.  ALL RIGHTS RESERVED.
+# UNPUBLISHED -- RIGHTS RESERVED UNDER THE COPYRIGHT
+# LAWS OF THE UNITED STATES.  USE OF A COPYRIGHT NOTICE
+# IS PRECAUTIONARY ONLY AND DOES NOT IMPLY PUBLICATION
+# OR DISCLOSURE.
+# 
+# THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION AND
+# TRADE SECRETS OF VERITAS SOFTWARE.  USE, DISCLOSURE,
+# OR REPRODUCTION IS PROHIBITED WITHOUT THE PRIOR
+# EXPRESS WRITTEN PERMISSION OF VERITAS SOFTWARE.
+# 
+#               RESTRICTED RIGHTS LEGEND
+# USE, DUPLICATION, OR DISCLOSURE BY THE GOVERNMENT IS
+# SUBJECT TO RESTRICTIONS AS SET FORTH IN SUBPARAGRAPH
+# (C) (1) (ii) OF THE RIGHTS IN TECHNICAL DATA AND
+# COMPUTER SOFTWARE CLAUSE AT DFARS 252.227-7013.
+#               VERITAS SOFTWARE
+# 4800 GREAT AMERICA PARKWAY, SANTA CLARA, CA 95054
+#
+  Use this operation to remove access to a disk group.  This can be
+  used either as part of moving a disk group from one system to
+  another system.  The second part of this operation is to move all
+  disks to the other system and to select "Enable access to (import) a
+  disk group" from the disk operations menu on that system.
+
+  You can also use this operation to make all disks in a disk group
+  available for some other use, such as adding the disks to a
+  different disk group.
+
+  This operation takes as input the name of the disk group to deport.
+  The operation will fail if any volumes in the disk group are
+  currently open or mounted.  If you want to remove disk groups with
+  active volumes, you will need to unmount file systems on those
+  volumes or stop any processes that are using the volumes.

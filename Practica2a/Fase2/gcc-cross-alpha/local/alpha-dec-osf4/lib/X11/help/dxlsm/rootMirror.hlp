@@ -1,0 +1,37 @@
+Forms, forms.hlp
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+#########################################
+ROOT MIRROR FORM HELP
+
+The root mirror form is where you specify the disk to be used to mirror the
+root and swap volumes.
+
+For more information refer to the the volrootmir manpage.
+
+Fields
+----------
+
+Disk Name:
+	The name of a disk which is empty except for the default disklabel.
+
+
+Errors
+----------
+
+"Mirroring of rootvol and swapvol is in progress."
+Only 1 mirriring of the root and swap volumes are allowed at a time.
+
+"Some partitions on disk seem to be in use"
+The disk being used to mirror root must be empty except for its disklabel.
+
+"rootvol/swapvol not found in the rootdg diskgroup."
+The root and swap volumes do not exist so you must first convert the root
+disk to LSM partitions using the volencap(8) command.
+
+"Plex attach of rootvol-0X failed."
+Refer to the volpex() manpage for more information.
+
+"Plex attach of swapvol-0X failed."
+Refer to the volpex() manpage for more information.
+

@@ -1,0 +1,47 @@
+#/* @(#)@(#)help/dgDeport.hlp	2.1 11 May 1993 19:04:03 -  */
+#ident  "@(#)va11:help/dgDeport.hlp   2.1"
+#
+#
+Disk Group, diskGrp.hlp
+Disk Group Import, dgImport.hlp
+#########################################
+DISK GROUP DEPORT FORM HELP
+
+The disk group deport operation takes a disk group that the system
+currently has access to and makes it inaccessible.  
+
+Disk groups are graphically represented in the Visual Administrator as
+default views.  When a disk group is deported, the default view
+corresponding to it is automatically removed, along with the button for
+that view in the root window.
+
+See the Logical Storage Manager documentation on disk groups for more information.
+
+
+Fields
+----------
+
+Disk group:
+	This is the name of the disk group to be deported.  This must the
+	name of a valid, existing disk group.
+
+
+Errors
+----------
+
+"rootdg is not allowed to deport"
+This special disk group, the root disk group, cannot be deported.  Enter
+the name of a valid disk group to deport, or cancel the operation.
+
+"The disk group doesn't exist"
+The name specified for the disk group does not correspond to a disk group
+that is currently valid for this system.  Enter the name of a valid disk
+group to deport, or cancel the operation.
+
+"Disk group name is required"
+A valid name for the disk group must be specified.  Enter a valid disk
+group name in the field.
+
+"The disk group still contains open volumes(s)"
+This disk group is still in use.  Close all open volumes in this disk
+group and try again.

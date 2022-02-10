@@ -1,0 +1,52 @@
+#/* @(#)@(#)help/analParmF.hlp	2.1 11 May 1993 19:03:41 -  */
+#ident  "@(#)va11:help/analParmF.hlp   2.1"
+#
+#
+Analysis, analysis.hlp
+Analysis Statistics Form, analStatF.hlp
+Volume, volume.hlp
+Plex, plex.hlp
+Subdisk, subdisk.hlp
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+#########################################
+ANALYSIS PARAMETERS FORM HELP
+
+This form lets you specify your analysis preferences.
+
+The parameters fields let you specify the cutoff values for colorization of
+the icon(s) under analysis.  These values are compared to the Total
+Read/Write field to see if the icon represents a high, medium, or low use
+object.
+
+
+Fields
+----------
+
+Sample Rate:
+	This slider bar lets you select the time interval between data
+	samples.  The interval must be between one and sixty seconds or one
+	or sixty minutes.  An option button to the right of the slider bar
+	is where you select what the unit for the number specified by the
+	slider should be (seconds or minutes).  A shorter interval means
+	the data will be updated more often at the cost of placing more
+	load on your system. 
+
+Volume Parameters:
+	Here you can specify the high and low values that decide the
+	coloring of the volume icons. 
+
+Disk Parameters:
+	Here you can specify the high and low values that decide the
+	coloring of the Logical Storage Manager disk icons. 
+
+Subdisk Parameters:
+	Here you can specify the high and low values that decide the
+	coloring of the subdisk icons. 
+
+Log File:
+	The pathname of the file where you want a copy of the analysis
+	statistics to be written to.  Statistics for all analyzed objects
+	are written to this file once per interval.  The file is written in
+	a binary format that can be converted to text using the utility 
+	/usr/sbin/lsmlog2txt.

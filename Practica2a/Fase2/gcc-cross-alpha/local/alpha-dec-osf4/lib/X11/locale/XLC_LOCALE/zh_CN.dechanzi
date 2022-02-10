@@ -1,0 +1,132 @@
+# Locale : zh_CN.dechanzi 
+# 
+
+# 
+# 	XLC_FONTSET category
+# 
+XLC_FONTSET
+# Base font sets 
+# 	fs0 class (7 bit ASCII)
+fs0	{
+	charset		ISO8859-1:GL
+	font		ISO8859-1:GL
+}
+# 	fs1 class	
+fs1	{
+	charset		GB2312.1980-1:GR;GB2312.1980-0:GL 
+	font		GB2312.1980-1:GR;GB2312.1980-0:GL;REMAP-0;REMAP-1
+}
+
+# Optional font sets 
+#	fs2 class
+fs2     {
+        optional        True
+	udc_font	True 
+        charset         GB2312.1980-UDC
+        font            GB2312.1980-UDC:Q10;GB2312.1980-1:Q10
+}
+
+#	fs3 class	CNS11643 plane 1
+fs3     {
+        optional        True
+        charset         CNS11643.1986-1:GL
+        font            CNS11643.1986-1:GL;DEC.CNS11643.1986-2:GR;\
+			CNS11643.1986.1-2:GL
+}
+#	fs4 class	CNS11643 plane 2
+fs4     {
+        optional        True
+        charset         CNS11643.1986-2:GL
+        font            CNS11643.1986-2:GL;DEC.CNS11643.1986-2:Q10;\
+			CNS11643.1986.2-2:GL
+}
+
+#	fs5 class	BIG5 
+fs5     {
+        optional        True
+        charset         BIG5-0
+        font            BIG5-0;BIG5.HKU-0
+}
+
+# Remapping font sets 
+#	charset remap class 1
+REMAP-0 {
+        locale          zh_TW.dechanyu
+        charset         CNS11643.1986-1:GL;CNS11643.1986-2:GL
+}
+
+#	charset remap class 2
+REMAP-1 {
+        locale          zh_TW.big5
+        charset         BIG5-0
+}
+ 
+END XLC_FONTSET
+
+# 
+# 	XLC_XLOCALE category
+# 
+XLC_XLOCALE
+
+encoding_name		dechanzi
+mb_cur_max		2
+state_depend_encoding	False
+wc_encoding_mask	\x3fffc000
+wc_shift_bits		7
+use_stdc_env		True
+force_convert_to_mb	True
+
+# 	cs0 class
+cs0	{
+	side		GL:Default
+	length		1
+	wc_encoding	\x00000000
+	ct_encoding	ISO8859-1:GL
+}
+
+# 	cs1 class
+cs1	{
+	side		GR:Default
+	length		2
+	wc_encoding	\x30000000
+	ct_encoding	GB2312.1980-0:GL;GB2312.1980-1:GR
+	region		A1A1-FCFE;FDA1-FDCB
+}
+
+#       cs2 class
+cs2     {
+        side            Q10
+        length          2
+        wc_encoding     \x00000000
+        ct_encoding     GB2312.1980-UDC
+        region          A121-FE7E
+}
+
+#
+# 	Associated locales
+xCOMM 	Functions :
+#       1) Backward compatibility in CT exchange 
+#       2) Font remapping
+#
+#	associated locale 0
+#	for CT exchange and font usage 
+assoc_locale0   {       
+        locale          zh_TW.dechanyu
+        conversion      dechanzi-dechanyu
+}
+
+#	for CT exchange 
+#	associated locale 1
+assoc_locale1   {       
+        locale          zh_TW.dechanyu_r5
+        conversion      dechanzi-dechanyu
+}
+
+#	for font usage 
+#	associated locale 2
+assoc_locale2   {       
+        locale          zh_TW.big5
+        conversion      dechanzi-big5
+}
+
+END XLC_XLOCALE 

@@ -1,0 +1,99 @@
+#/* @(#)@(#)help/cmdInfo.hlp	2.1 11 May 1993 19:03:47 -  */
+#ident  "@(#)va11:help/cmdInfo.hlp   2.1"
+#
+#
+Pulldown Menus, pulldown.hlp
+#########################################
+COMMAND INFORMATION WINDOW HELP
+
+The command information window is were you can view what commands are
+currently being executed by the Visual Administrator, the history of past
+commands, and the output of commands.
+
+The sections of the window are described first, and then the structure and
+function of the pulldown menus.
+
+The command information window is divided into three sections.  The user
+cannot directly modify any of the text in any section of the command info
+window.  These three sections are described below.
+
+
+"Command History" Section
+-------------------------
+Chronological list of the commands sent to the Logical Storage Manager or the 
+system for execution and their status.  The last ten commands are saved and
+displayed, with the most recent command to finish on the bottom.  If a
+command is too long then only the first few arguments of the command is
+shown.
+
+The command that is selected in this window will be shown in its entirety
+in the second section of this window (see below) along with its output.
+
+There are four conditions that a command can be in:
+
+    DONE          command successfully completed
+    BROWSE        command not executed, just displayed here
+    ERROR         command terminated with error condition
+    UNKNOWN       the Visual Administrator cannot determine status
+
+To the right of every command is the condition of that command.
+
+
+"Output of the Highlighted Command" Section
+-------------------------------------------
+When a command is highlighted in the Command History section information
+about that command will be displayed in this section.  If error messages
+resulted from the command, those will be displayed in the section first,
+and then a description of the success/failure of the command.  The entire
+content of the command will be shown at the end; this is especially useful
+information if the summary of the command shown in the "Command History"
+section did not display the complete command.
+
+
+"Commands Running" Section
+--------------------------
+This section displays what commands are currently running.  These commands
+have been sent to the system or the Logical Storage Manager, but have not yet
+terminated.
+
+
+
+
+There are four pulldown menus on the Command Information Window.  Here is
+a list of the functions that are under these pulldown menus.
+
+File: Close
+-----------
+Selecting Close from the File pulldown menu will pop down the command
+information window.  This does not affect running commands, completed
+commands, or the command history.
+
+
+Execute: Execute
+----------------
+This sends the command highlighted in the Command History section to the
+system or the Logical Storage Manager for execution.  This is useful for 
+executing a command again, re-executing a failed command that should now 
+succeed, or executing a command that was only shown before (BROWSE status).
+
+
+Execute: Execute with Force Option
+----------------------------------
+This is identical to the Execute operation above, but it adds a "-f"
+option after the command.  This tells the Logical Storage Manager to disregard 
+error checking and complete an operation anyway, regardless of possible outcome.
+
+    THIS IS A VERY DANGEROUS OPERATION.  INCORRECT USE OF THE
+    FORCE OPTION CAN RESULT IN IRREPARABLE LOSS OF DATA.
+
+With the "-f" option the user forces the Logical Storage Manager to complete an
+operation that is considered unsafe.  The Logical Storage Manager can be forced 
+to do something (remove an active volume) that will irretrievably destroy
+data.
+
+This operation is only valid for operations that involve the Volume 
+Manager.  A file system command that is executed with this option will
+probably fail due to an unrecognized command line option ("-f").
+
+This operation is useful when the user is sure that an operation should
+succeed, even though Logical Storage Manager error checking prevents it.

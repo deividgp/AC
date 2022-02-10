@@ -1,0 +1,5287 @@
+#!/bin/ksh
+#
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+#
+#
+# HISTORY
+#
+# btcreate. v4.0.0
+#
+# Updates : v4.0.1
+# Reason  : Error checks for -s flags.
+# 	  : Comments for functions.
+#	  : Incorporate function analysis and headers.
+#	  : Organize globals.
+#	  : Test and incorporate ADVFS checks to mflag
+#	  : Test and incorporate partition checks.
+#	  : Test and incorporate GENERIC kernel checks.
+#	  : Test on SVE. Export PATH otherwise too.
+#	  : Test on 32MB system.
+#	  : Test on TZK11/QIC tape drive.
+#	  : Noritake testing.
+#	  : newfs to be done before creating kernel.
+#	  : Restoration checks on ADVFS system.
+#	  : error_funcs function not to check for intflags anymore.
+#	  : Comments to standard comments.
+#	  : Extensive restoration tests.
+#	  : Addlist checks
+#
+#
+#	  
+# Date	  : 
+#	    v4.0.0	: 	10 June.1996.
+#	Last modified	:	28 June.1996.
+#
+#	    v4.0.1	:	28 June.1996.
+#	Last Modified 	:	22 July.1996.
+#
+#           v4.0.2      :       21 Aug 1996
+#       Shankar added mfs capability
+#           v4.0.3      :       23 Aug 1996
+#       MIK_0823:Added /proc mount code. 
+#       In between several modification history is missing from this section.
+#       July 1,1997     : (MIK): Added the following for qars:
+#                         1. No extra message coming out in interactive 
+#                             btcreate.
+#                         2. mounting of ufs filesystem automatically.
+#                         3. Changed overhead size from 3% to 3.25%.
+#
+# Authors : Mangala Kadaba.
+#	  : Sunil Bangad.
+#	  : Shankaran Narayanan.
+#
+# Tested on Machines.
+#
+#	Sable		:	Single CPU.
+#			:	TLZ07 Tape Drive.
+#			:	4mm DAT Tape.
+#			: 	AdvFS Filesystem.
+#			:	UFS Filesystem.
+#			: 	OS : Digital Unix. V4.0 SSB.
+#
+#	Flamingo	: 	Single CPU.
+#			:	TLZ06 Tape Drive.
+#			:	4mm DAT Tape.
+#			:	UFS Filesystem.
+#			:	AdvFS Partitions present.
+#			: 	OS : Digital UNIX. X4.0 r 384.
+#
+#	Noritaki	:       Single CPU.
+#			:	TLZ11 Tape Drive. Internal.
+#			:     	External SCSI cable length limited to 1/2 m.
+#			:	AdvFS FileSystem.
+#			:	UFS Filesystem.
+#			:	OS : Digital UNIX. V4.0 SSB.
+#			:	OS : Digital UNIX. V4.0A SSB.
+#
+#	Rawhide		:       Single CPU.
+#			:	TLZ11 Tape Drive.
+#			:	AdvFS FileSystem.
+#			:	UFS Filesystem.
+#			:	OS : Digital UNIX. V4.0 SSB.
+#			:	OS : Digital UNIX. V4.0A SSB.
+#
+#
+# Features tested for	:
+#
+#
+#	SVE environments.
+#
+#	32 MB Memory Requirements.
+#
+#
+#
+# Files outside which are called here.
+# 
+# 	1. mktape
+#
+#		-- A part of bootable tape creation utility, which
+#		creates the miniroot filesystem on the tape.
+#
+#	
+# Files created by this utility.
+#
+#	1. /usr/lib/sabt/etc/fs_info
+#
+#		-- File contains required information for btextract process.
+#
+#	2. /var/adm/btcreate.log
+#
+#		-- Files contains a log of the btcreate run.
+#
+#	3. /usr/lib/sabt/etc/swap_file
+#
+#		-- File contains swap information.
+#
+#	4. /usr/lib/sabt/etc/swap_lines
+#
+#		-- File contains swap lines information.
+#
+#	5. /usr/lib/sabt/etc/disklabel_info
+#
+#		-- File contains disklabel info.
+#
+#	6. /usr/lib/sabt/etc/disklabel_lines
+#
+#		-- File contains disklabel lines information.
+#
+#	7. /usr/lib/sabt/etc/number_dumps
+#
+#		-- File contains number of dumps.
+#
+#	8. /usr/lib/sabt/etc/advfs_info
+#
+#		-- File contains advfs_info
+#
+#	9. /usr/lib/sabt/etc/disk_lbl
+#
+#		-- File contains disklabel path information.
+#      10. /usr/lib/sabt/etc/root_swap_info
+#              --  File contains the root disk, mount point and type
+#
+#
+# Global variables.
+#
+#       1. Arrays. 
+#		Place holders for Devices, Mount-points & FS type.
+#				  dev_arr,   mnt_arr    & fs_arr
+#
+#       2. FS_FILE variable pointing to user supplied file containing
+#	   all file system information to be backed up.
+#
+#       3. FS_BACKED variable that indicates whether anything was 
+#	   backed or not. Not in use right now. Future support.
+#
+#       4. All parameters to mktape made global.
+#	   mktape takes 6 parametes.
+#		- KERNEL, NEW_ROOT, SIZE, FS, TAPE, NEW_CONF_FILE
+#
+#       5. Counting line numbers in FS_FILE made global.
+#	   	- A part of error checking. Indicates line-numbers that 
+#		  point to the line in the file supplied for -s flag.
+#
+#       6. Marking QNUMs made global.
+#
+#       7. All flags from the command line made global.
+#		- fflag,sflag,mflag,tflag,kflag,aflag.
+#		- All flag options of the form OPT_<FLAG_TYPE>_FLAG. 
+#		  FLAG_TYPE can be k, s, m, t, a or f.
+#
+#       8. INTER and NON-INTER are 2 variables that do the interactive and
+#          non-interactive indications.
+#
+#	9. MORE_FILESLIST , MORE_DIRSLIST
+#	   INTER , NON-INTER.
+# 	   OPT_F_FLAG, OPT_K_FLAG, OPT_M_FLAG, OPT_T_FLAG, 
+#	   OPT_D_FLAG, OPT_S_FLAG, OPT_A_FLAG, OPT_A_INT_FLAG
+#          ADP_0797: OPT_B_FLAG
+#	   MKTAPE_CALLER and NON_INTER_F_FLAG
+#	   PATH and CMD_ENV
+#
+#	   All the above parameters are exported to mktape &/or btextract.
+#
+#
+
+
+# ************************************************************************************
+#
+# function Global_Settings.
+#
+# Declare all the variables necessary for the code.
+# Checks to ensure that mktape collects all the proper stuff.
+#
+#
+# ************************************************************************************
+function Global_Settings
+{
+
+QNUM=0		# Number for prompt questions.
+# Set it to 0 again for repeat questionaire.
+CONF_FILE=
+FS_FILE=
+
+MFS=0
+MFS_CHECK=0
+OPT_D_FLAG=0    # ADPECP_0898
+OPT_K_FLAG=0
+OPT_M_FLAG=0
+OPT_T_FLAG=0
+OPT_F_FLAG=0
+OPT_A_FLAG=0
+OPT_S_FLAG=0
+OPT_B_FLAG=0  #ADP_0797
+
+NEWFS_CHECKER=0
+FS_INFO=/usr/lib/sabt/etc/fs_info
+NUMBER_DUMPS=/usr/lib/sabt/etc/number_dumps
+ADVFS_INFO=/usr/lib/sabt/etc/advfs_info
+DISKLABEL_INFO=/usr/lib/sabt/etc/disklabel_info
+DISKLABEL_LINES=/usr/lib/sabt/etc/disklabel_lines
+PATH_DSKLBL=/usr/lib/sabt/etc/disk_lbl
+NEW_CONF_FILE=
+DUMPS=0
+TMP_FSINFO=/usr/lib/sabt/etc/tmpFSINFO
+ROOT_SWAP_INFO=/usr/lib/sabt/etc/root_swap_info
+
+# Initialize variables to nothing
+INFO_DEV=
+INFO_MNT=
+INFO_TYPE=
+FS_USED_SIZE=
+SIZE=30720
+INFO_CDEV=
+INFO_NUM=
+INFO_LABEL=
+# For advfs
+ADVFS_DISK=
+ADVFS_DOM_DIR=/etc/fdmns
+ADVFS_DOM_NAME1=
+ADVFS_DOM_NAME2=
+ADVFS_DNUM=
+ADVFS_RAWDEVICE=
+ADVFS_BDEVICE=
+ADVFS_DISK_NUM=
+ADVFS_ROOT="no"
+ADVFS_SLICE=
+ADVFS_VOL_NUM=
+FS_BACKED=0
+FS_ROOT=no
+MORE_FILESLIST=
+MORE_DIRSLIST=
+
+# Usage
+# Initialization
+NEEDED_DISK_SPACE=156000     # ADPECP_0898
+DISK_TMP_SPACE=/usr/sys/bin  # ADPECP_0898
+CREATED_TMP_DIR=0            # ADPECP_0898	
+WORK=/usr/lib/sabt/etc
+SABTSBIN=/usr/lib/sabt/sbin
+SYSBIN=/usr/sys/bin
+TMP="/tmp"
+PATH=/sbin:/usr/sbin:/usr/bin:/usr/ccs/bin:/usr/bin/X11:/usr/local:/usr/sys/bin:/etc:
+export PATH
+NULL="/dev/null"
+GOAHEAD="yes"
+MORE_FILESLIST=""
+MORE_DIRSLIST=""
+lmffile=/usr/lib/sabt/etc/lmf_file
+
+# Some variables related to size checks 
+#
+SIZE=${SIZE:-30720}
+
+# The limit of the available space on the miniroot filesystem 
+# is presently limited to 360 kilobytes. 
+NEWFLS_LIMIT_SIZE=${NEWFLS_LIMIT_SIZE:-360}
+NEWFLS_THRESH_SIZE=${NEWFLS_THRESH_SIZE:-358}
+part_message=
+QNUM_NEW=1
+
+# disk filesystem size 15MB (15 * 2048)
+FORCE_FLAG=0
+MEMORY_SIZE=30720 # mfs size (should be equal or more than SIZE)
+KERNEL=
+NUM_AT_MESSAGE=0
+NEW_CONF_FILE=
+FS=
+NAME=
+CONF_FILE=
+TAPE="nrmt0h"
+NEW_ROOT=/ 
+
+# miniroot to be mounted as / in memory
+
+# File listing the commands to be added to mktape utility
+ADDLIST=
+
+# File listing the filesystems to be backed-up in non-intercative mode 
+FSLIST=
+
+# MKTAPE_CALLER is set to "btcreate" here 
+# and exported, before we call mktape; in mktape
+# it will be used for addlist processing
+MKTAPE_CALLER="btcreate"
+export MKTAPE_CALLER
+
+
+NUM_AT_MESSAGE=9
+NON_INTER=
+NON_INTER_F_FLAG=0
+SWAP_FILE=/usr/lib/sabt/etc/swap_file
+SWAP_LINES=/usr/lib/sabt/etc/swap_lines
+
+set -A dev_arr
+set -A mnt_pt
+set -A fs_type
+integer check_empty=0
+
+typeset -R1 rhs_single_char
+returned_request=0
+REQUEST=
+MOUNTED=0
+
+dot="."
+
+### Added [-d disk_tmp_space] to USAGE - ADPECP_0898
+
+USAGE="usage: btcreate [-f] [-k config_file] [-m disk_partition] [-t tape_dev] [-s fslist] [-a addlist] [-d disk_tmp_space]"  
+
+# ADP_0797
+#USAGE=" \n usage: btcreate [-f] [-k config_file] [-m disk_partition] \t \t [-t tape_dev] [-s fslist] [-a addlist] \n \n usage: btcreate [-b file ] [-k config_file] \n \n usage: btcreate [-f] [-k config_file] [-m disk_partition] \t \t [-t tape_dev] [-s fslist] [-a addlist] [-b file ] [-d disk_tmp_space]"
+
+
+
+count_option=0
+
+> $FS_INFO
+VARADM=/var/adm
+[ ! -d $VARADM ] && mkdir -p $VARADM
+[ -d $PATH_DSKLBL ] &&
+	rm -rf $PATH_DSKLBL
+[ ! -d $PATH_DSKLBL ] && mkdir -p $PATH_DSKLBL
+> $FS_INFO
+> $NUMBER_DUMPS
+> $ADVFS_INFO
+> $DISKLABEL_INFO
+> $DISKLABEL_LINES
+> $SWAP_FILE
+> $SWAP_LINES
+> $TMP_FSINFO
+> $ROOT_SWAP_INFO
+CONF_FILE=
+ADDANS="no"
+SCRATCH=
+
+kflag=
+mflag=
+tflag=
+dflag=
+bflag=      # ADP_0797
+OPT_F_FLAG=0; OPT_K_FLAG=0; OPT_M_FLAG=0; OPT_T_FLAG=0; OPT_D_FLAG=0
+OPT_S_FLAG=0; OPT_A_FLAG=0; OPT_A_INT_FLAG=0
+OPT_B_FLAG=0   # ADP_0797
+
+# All variables declared global
+# Assuming all global variables are set.
+}
+
+# ********************************************************************************
+#
+# function cleanall
+# Global cleanup function
+# This function removes all created files before exiting btcreate.
+# Author : Mangala Kadaba.
+#
+# ********************************************************************************
+function cleanall
+{
+  cd /usr/sys/bin
+  [ -f $FS_INFO ] &&
+    rm -f $FS_INFO
+  [ -f $ADVFS_INFO ] &&
+    rm -f $ADVFS_INFO
+  [ -f $DISKLABEL_INFO ] &&
+    rm -f $DISKLABEL_INFO
+  [ -f $DISKLABEL_LINES ] &&
+    rm -f $DISKLABEL_LINES
+  [ -d $PATH_DSKLBL ] &&
+    rm -rf $PATH_DSKLBL
+  [ -f $NUMBER_DUMPS ] &&
+    rm -f $NUMBER_DUMPS
+  [ -f $SWAP_FILE ] &&
+    rm -f $SWAP_FILE
+  [ -f $SWAP_LINES ] &&
+    rm -f $SWAP_LINES
+  [ -f $lmffile ] &&
+    rm -f $lmffile
+  [ -f $TMP_FSINFO ] &&
+    rm -f $TMP_FSINFO
+  [ -f $ROOT_SWAP_INFO ] &&
+    rm -f $ROOT_SWAP_INFO
+  [ -f /tmp/PaDdInG ] &&
+    rm -f /tmp/PaDdInG
+  [ -f /usr/sys/bin/vmunix* ] &&
+    rm -f /usr/sys/bin/vmunix*
+
+### Removing temporary directories created - ADPECP_0898
+
+  if [ $CREATED_TMP_DIR -eq 1 ] && [[ ${DISK_TMP_SPACE} != `dirname ${bflag}` ]]
+  then
+        rm -rf $DISK_TMP_SPACE
+  else
+    if [ $OPT_D_FLAG -eq 1 ]
+    then
+        file /usr/sys/* | grep directory | cut -f1 -d: | xargs -i basename {} | xargs -i rm -f $DISK_TMP_SPACE/{} 2> /dev/null
+        if [[ ${NEW_CONF_FILE} != "" ]]
+        then
+                rm -rf ${DISK_TMP_SPACE}/$NEW_CONF_FILE 2> /dev/null
+        fi
+    fi
+
+    if [[ ${bflag} != "" ]] && [[ ${bflag} = ${DISK_TMP_SPACE}/`basename ${bflag}` ]]
+    then
+      ls ${DISK_TMP_SPACE}/vmunix* 2> /dev/null | grep -v ${bflag} | xargs rm -f 2> /dev/null
+    else
+      rm -f ${DISK_TMP_SPACE}/vmunix*
+    fi
+  fi
+
+  cd /usr/sys
+  if test X"$NEW_CONF_FILE" !=  X
+  then
+    [ -d $NEW_CONF_FILE ] &&
+       rm -rf $NEW_CONF_FILE 2> /dev/null
+  fi
+
+  mount -t fdfs /dev/fd $mpoint_fdfs > /dev/null 2>&1
+
+  [ -d /var/tmp/procprod ] &&
+  {
+     df | grep procprod > /dev/null
+     if [ $? = 0 ]
+     then
+         umount /var/tmp/procprod
+     fi
+     rm -fr /var/tmp/procprod
+  }
+
+  2>&1;print "btcreate.log file has been created on /var/adm directory."
+return
+}
+
+# ********************************************************************************
+#
+# Function to work on error routines.
+#
+# ********************************************************************************
+function error_funcs
+{
+
+### Added 50 and 51 for ADPECP_0898
+
+case "$1" in 
+	"31")	echo " $2 in `dirname $2` directory missing."| tee -a $LOG
+		echo " Exiting BTCREATE " | tee -a $LOG  
+		exit $1
+		;;
+	"32")	echo " $2 is not a regular file." | tee -a $LOG
+		echo " Exiting BTCREATE " | tee -a $LOG   
+		exit $1
+		;;
+	"33")	echo " $2 requires 3 parameters. " | tee -a $LOG
+		echo " Exiting BTCREATE " | tee -a $LOG   
+		exit $1
+		;;
+	"34")	echo " $2 has 2 similar entries. " | tee -a $LOG
+		echo " Exiting BTCREATE " | tee -a $LOG   
+		exit $1
+		;;
+	"35")	echo " $2 has 2 same mount points. " | tee -a $LOG
+		echo " Exiting BTCREATE " | tee -a $LOG   
+		exit $1
+		;;
+	"36")	echo " $2 has 2 same device entries. " | tee -a $LOG
+		echo " Exiting BTCREATE " | tee -a $LOG   
+		exit $1
+		;;
+	"37") 	echo " $2 has wrong entry in fstype (3rd field) " | tee -a $LOG
+		echo " Exiting BTCREATE " | tee -a $LOG   
+		exit $1
+		;;
+	"40")	echo "$2 not readable by current process." | tee -a $LOG
+		echo " Exiting BTCREATE " | tee -a $LOG   
+		exit $1
+		;;
+	"45")	echo "$2 file is not in the required format." | tee -a $LOG
+		echo " Exiting BTCREATE " | tee -a $LOG   
+		exit $1
+		;;
+	"47")	echo "Passed wrong array name for third field." | tee -a $LOG
+		echo " Exiting BTCREATE " | tee -a $LOG   
+		exit $1
+		;;
+	"48")	echo "$2 file does not contain proper information." | tee -a $LOG
+		echo " Number of fields less than desired. " | tee -a $LOG
+		# Just to let u know that this is an early check.
+		echo " Exiting BTCREATE " | tee -a $LOG   
+		exit $1
+		;;
+	"49")	echo "Unknown array name passed to function check_consistency." | tee -a $LOG
+		echo " Exiting BTCREATE " | tee -a $LOG   
+		exit $1
+		;;
+        "50")   if [ $OPT_K_FLAG -eq 1 ]
+                then
+                        TMP_FILE_SYS=`/bin/df ${dflag} | grep -v File | awk '{print $6}`
+                else
+                        TMP_FILE_SYS=`/bin/df /usr/sys/bin | grep -v File | awk '{print $6}`
+                fi
+                echo "There is not enough disk space available in the ${TMP_FILE_SYS} file system." | tee -a $LOG
+                echo "Please free some space or specify a different file system and rerun the command" | tee -a $LOG
+                echo " Exiting BTCREATE " | tee -a $LOG
+                exit $1
+                ;;
+        "51")   echo "Could not create tmp space directory." | tee -a $LOG
+                echo " Exiting BTCREATE " | tee -a $LOG
+                exit $1
+                ;;
+	   *) 	echo " Unrecognised error" | tee -a $LOG
+		# check_intflag
+		# if [ $? -eq 1 ] 
+		# then 
+		# 	return $1
+		# fi
+		echo " Exiting BTCREATE " | tee -a $LOG   
+		exit $1
+		;;
+esac
+}
+
+
+# ********************************************************************************
+#
+# function chop_last_slash() 
+# -SRB. 
+#
+# This function is called by -a option (or addlist) processing functions,
+# in both, interactive and non-interactive modes.
+# The command output return parameter $(...) is from the last print
+# statement of the function and is the pathname with the trailing
+# slash ( / ) removed, if any. 
+#
+# ********************************************************************************
+function chop_last_slash
+{
+typeset pth
+
+pth="${1}"
+
+if [ -d "${pth}" ] && [[  "${pth}" != "/"  && "${pth}" = /*/ ]]
+then
+            last_pth=${pth##*/}
+            if [[ "${last_pth}" = "" ]]
+            then
+                    pth="${pth%/}"
+            fi
+fi
+
+print "${pth}"
+}
+
+# ********************************************************************************
+#
+# function check_rhs_file_duplication()
+# -SRB.
+#
+# This function is called by -a option (or addlist) processing 
+# functions, in both, interactive and non-interactive modes.
+# It checks if the RHS file is duplicated in the utility names 
+# to be backed-up.
+#
+# ********************************************************************************
+
+function check_rhs_file_duplication 
+{
+no_elements=$1
+
+icount1=0
+let icount2=icount1+1
+let icount3=no_elements
+# print $icount1; print $icount2;print $icount3
+
+while [ "$icount1" -lt "$icount3" ]
+do
+  while [ "$icount2" -lt "$icount3" ]
+  do
+       str1=${rhs_files_arr[icount1]}
+       str2=${rhs_files_arr[icount2]}
+       # print "str1 is $str1  and str2 is $str2 in rhs_files_arr"
+       if [[ "$str1" = "$str2" ]]
+       then
+            return 1
+       fi
+
+  let icount2=icount2+1
+  done
+let icount1=icount1+1
+let icount2=icount1+1
+done
+
+return 0
+
+} # End function check_rhs_file_duplication
+
+
+# ********************************************************************************
+#
+# function check_lhsbs_rhsdr_duplication()
+# -SRB.
+#
+# This function is called by -a option (or addlist) processing 
+# functions, in both, interactive and non-interactive modes.
+# It checks if the entry of the form "basename dirname" is duplicated 
+# in the input of utility names to be backed-up.
+#
+# ********************************************************************************
+
+function check_lhsbs_rhsdr_duplication
+{
+no_elements=$1
+lhsbs_name="${2}"
+rhsdr_name="${3}"
+
+tcount1=0
+let tcount2=tcount1+1
+let tcount3=no_elements
+
+while [ "$tcount2" -lt "$tcount3" ]
+do
+       str1=${bs_dr_arr[tcount1]}
+       str2=${bs_dr_arr[tcount2]}
+       if [[ "$str1" = "$lhsbs_name" ]]
+       then
+           if [[ "$str2" = "$rhsdr_name" ]]
+           then
+                return 1
+           fi
+       fi
+
+
+let tcount1=tcount1+2
+let tcount2=tcount1+1
+done
+
+return 0
+
+} # End function check_lhsbs_rhsdr_duplication
+
+
+# ********************************************************************************
+#
+# function print_addlist_input()
+# - SRB.
+# 
+# This function is called by -a option (or addlist) processing 
+# functions, in both, interactive and non-interactive modes.
+# It prints out the validated input for the additional 
+# utilities to be backed-up.
+# ********************************************************************************
+
+function print_addlist_input
+{
+
+integer len_lhs=25 len_rhs=24 len_litem=0 len_ritem=0  
+integer NLMARK=0 blnk_cnt=0 noof_lblnks=0 noof_rblnks=0
+
+print "" 
+print "\tfile\t\t\t  destination"
+print "" 
+
+for item in ${MORE_FILESLIST}
+do
+
+	if [[ ${NLMARK} = 0 ]]
+	then
+		len_litem=${#item}  # len_litem=`expr "${item}" : ".*"`
+		if ((len_lhs >= len_litem)) 
+		then 
+			lblnk_cnt=`expr ${len_lhs} "-" ${len_litem}`
+		else 
+			lblnk_cnt=0
+		fi
+
+		print "\t$item\c"
+
+		until (( noof_lblnks > lblnk_cnt ))
+		do      
+			print " \c"
+			((noof_lblnks = noof_lblnks + 1))
+		done
+
+		NLMARK=1
+		lblnk_cnt=0 ; noof_lblnks=0
+
+	else
+
+		len_ritem=${#item}  # len_ritem=`expr "${item}" : ".*"`
+
+		if ((len_rhs >= len_ritem)) 
+		then
+			rblnk_cnt=`expr ${len_rhs} "-" ${len_ritem}`
+		else 
+			rblnk_cnt=0
+		fi
+
+		print "$item \c"
+
+		until ((noof_rblnks > rblnk_cnt))
+		do      
+			print " \c"
+			((noof_rblnks = noof_rblnks + 1))
+		done
+
+		print ""
+		NLMARK=0
+		len_litem=0 ; len_ritem=0 ; rblnk_cnt=0 ; noof_rblnks=0
+
+	fi
+done
+
+} # end-of print_addlist_input 
+
+
+# ********************************************************************************
+#
+# function check_rhsdir_cnflct()
+# -SRB.
+#
+# This function is called by -a option (or addlist) processing functions,
+# in both, interactive and non-interactive modes.
+# It checks if the dirname of the rhs path has some component for the
+# directory name which was used earlier as filename. If yes, the conflicting
+# name is output. It uses the rhs_files_arr array and its iarrind index to
+# lookup the saved entries of the rhs filenames for comparing.
+#
+# ********************************************************************************
+
+function check_rhsdir_cnflct
+{
+
+typeset -i cnt=0
+typeset pth
+
+pth="${1}"
+
+ while [[ "${pth}" != "/" ]]
+ do
+ basecmp=`basename ${pth}`
+
+ if ((iarrind > 0))
+ then
+
+     let cnt=iarrind-1
+     while ((cnt >= 0))
+     do
+       rhs_file_pth=${rhs_files_arr[cnt]}
+       base_rhs_file=`basename $rhs_file_pth`
+        if test "$basecmp" = "$base_rhs_file"
+        then
+           print "${basecmp}"
+           return
+        fi
+
+     let cnt=cnt-1
+     done
+ fi
+
+ pth=`dirname "${pth}"`
+ done
+}
+
+
+# ********************************************************************************
+#
+# function process_add_files() 
+# -SRB. 
+#
+# This function is called in the non-interactive mode only.
+# It gets all the utility files to be added to the miniroot 
+# file system from the $ADDLIST file.
+# It processes the $ADDLIST file. The $ADDLIST entries are validated  
+# for format, size, duplication.
+# If the $ADDLIST is checked to be OK, then it exports
+# MORE_FILESLIST and MORE_DIRSLIST lists, to be used
+# by the mktape utility for backing-up the additional utilities.
+# 
+# $ADDLIST is checked for:
+# (1) Line field-numbers (2) Duplicate lines
+# (3) Absolute pathnames of LHS and RHS entries
+# (4) Overwriting old RHS entries (5) file/directory name conflicts 
+#
+# ********************************************************************************
+
+function process_add_files
+{
+
+# Variables used by process_add_files and 
+# check_rhs_file_duplication functions 
+typeset -L1 lhs_first_char
+typeset -L1 rhs_first_char
+set -A rhs_files_arr
+set -A bs_dr_arr
+integer ilinectr=1 dlinectr=1 iarrind=0 darrind=0
+integer itot_elements=0
+integer tot_bsdr_elements=0
+
+DIR_TO_ADD=
+rhs_bfile=  
+rhs_bdir=  
+lhs_bsdir_nosl=
+fl_dir_cnflct_nm=
+integer DIRADD 
+integer RHS_DUPLICATE=0 
+integer RHSDR_DUPLICATE=0 
+
+# This list is created from reading $ADDLIST file entries.
+# This name is exported, so that it can be used by mktape utility.
+MORE_FILESLIST=""
+
+# This list holds the names of directories, obtained from $ADDLIST,
+# which must be created on the miniroot file system. 
+# Each RHS directory must exist on the currently running system.
+# This name is exported, so that it can be used by mktape utility.
+MORE_DIRSLIST=""
+
+# Holds size usage of the ADDLIST utilities 
+NEWSIZE_SOFAR=0
+UPTOLASTBUT1SIZE=0
+SIZE_LEFT=0
+
+COUNT_ADDED=0
+
+hash="#"
+
+exec 6< $ADDLIST
+while read -u6 line
+do
+
+      rhs_bfile=
+      rhs_bdir=  
+      lhs_bsdir_nosl=
+      fl_dir_cnflct_nm=
+      let RHS_DUPLICATE=0
+      let RHSDR_DUPLICATE=0
+      
+      print " $line " >> $LOG
+
+	word1st=`echo "$line" | awk '{print $1}' | cut -c -1`
+	if [[ "$word1st" = "$hash" ]] || test X"$line" = X
+        then
+		continue
+	else
+		word2nd=`echo "$line" | awk '{print $2}' | cut -c -1`
+		if [[ "$word2nd" = "$hash" ]]
+		then
+			print "\n$ADDLIST entry has less than 2 fields." | tee -a $LOG
+			print "btcreate exiting..." | tee -a $LOG
+			exit 11
+		fi
+	fi
+	
+	if [[ "$line" != "" ]]
+	then
+		set $line
+		field_nos=`echo $line |  awk '{print NF}'`
+
+		if [[ $field_nos -gt 2  ]]
+		then 
+			print "\n$ADDLIST entry has more than 2 fields." | tee -a $LOG
+			print "btcreate exiting..." | tee -a $LOG
+			exit 12
+		fi
+
+		if [[ $field_nos -lt 2  ]]
+		then 
+			print "\n$ADDLIST entry has less than 2 fields." | tee -a $LOG
+			print "btcreate exiting..." | tee -a $LOG
+			exit 13
+		fi
+
+		i=$1
+		j=$2
+
+                if [[ "${i}" = *//*  || "${j}" = *//* ]]
+                then
+                    print "\n ""//"" (two consecutive slashes) not valid in" | tee -a $LOG
+                    print "         in $ADDLIST filenames." | tee -a $LOG
+                    print "btcreate exiting..." | tee -a $LOG
+                    exit 14 
+                fi
+     
+                 lhs_basename=`basename "${i}"`
+                 lhs_dirname=`dirname "${i}"`
+                 if [[ "$lhs_basename" = "/" && "$lhs_dirname" = "/"  ]] 
+                 then
+                         i="/"
+                 fi
+
+                 rhs_basename=`basename "${j}"`
+                 rhs_dirname=`dirname "${j}"`
+                 if [[ "$rhs_basename" = "/" && "$rhs_dirname" = "/"  ]] 
+                 then
+                         j="/"
+                 fi
+     	fi
+     
+     	lhs_first_char=$i
+
+	if [[ "$lhs_first_char" != "/" ]]
+	then
+		print "\nUse absolute pathnames for the $ADDLIST entries." | tee -a $LOG
+		# correct_i=`print -n $i|sed -e 's@\(.*\)@/\1@'`
+                # print "For utility-to-be-backed-up, use name:" | tee -a $LOG 
+                # print "         $correct_i  --instead of--  $i" | tee -a $LOG
+                print "In first field, $i is specified." | tee -a $LOG
+                print "btcreate exiting..." | tee -a $LOG
+		exit 15
+	fi
+
+	rhs_first_char=$j
+	
+	if [[ "$rhs_first_char" != "/" ]]
+	then
+              
+		print "\nUse absolute pathnames for the $ADDLIST entries." | tee -a $LOG
+		# correct_j=`print -n $j|sed -e 's@\(.*\)@/\1@'`
+		# print "For location-on-miniroot-filesystem, use name:" | tee -a $LOG
+		# print "         $correct_j  --instead of--  $j" | tee -a $LOG
+                print "In second field, $j is specified." | tee -a $LOG
+                print "btcreate exiting..." | tee -a $LOG
+		exit 16
+	fi
+
+	if [ ! -e "${i}" ]
+	then
+                print "\nThe file_or_directory in the first field must exist on the current system." | tee -a $LOG
+		print "\n '$i' specified in $ADDLIST does not exist." | tee -a $LOG
+                print "btcreate exiting..." | tee -a $LOG
+		exit 17
+	fi
+
+	if [ ! -f "${i}" ] && [ ! -d "${i}" ] 
+	then
+		print "\n '$i' specified in $ADDLIST is not a valid file" | tee -a $LOG 
+		print "        or a directory." | tee -a $LOG 
+                print "btcreate exiting..." | tee -a $LOG
+		exit 18
+	fi
+
+	if [ -f "${i}" ]
+	then
+            file_info=`ls -l ${i}`
+            file_size=`echo $file_info |  awk '{print $5}'`
+            if [[ "$file_size" != [0-9]* ]]
+            then
+                print "\nError in ls; can not obtain size for ${i} " | tee -a $LOG
+                print "btcreate exiting..." | tee -a $LOG
+		exit 19
+            fi 
+            file_size_in_kb=`expr ${file_size} "/" 1024`
+	    if [ "$NEWSIZE_SOFAR" -gt "$NEWFLS_THRESH_SIZE" ] && [ "$file_size_in_kb" -eq 0 ]
+	    then
+                print "\nThere is no space available to add $i to tape." | tee -a $LOG
+                print "The allowed size limit is = $NEWFLS_LIMIT_SIZE KB." | tee -a $LOG
+                print "Edit $ADDLIST, then restart the btcreate utility. " | tee -a $LOG
+                print "btcreate exiting..." | tee -a $LOG
+                exit 21
+            fi
+
+            NEWSIZE_SOFAR=`expr ${NEWSIZE_SOFAR} "+" ${file_size_in_kb}` 
+	else
+            dir_size_in_kb=`du -k -s ${i} | awk '{print $1}'`
+            if [[ "$dir_size_in_kb" != [0-9]* ]]
+            then
+                print "\nError in du; can not obtain size for ${i} " | tee -a $LOG
+                print "btcreate exiting..." | tee -a $LOG
+                exit 20
+            fi 
+            UPTOLASTBUT1SIZE=${NEWSIZE_SOFAR}
+            NEWSIZE_SOFAR=`expr ${NEWSIZE_SOFAR} "+" ${dir_size_in_kb}` 
+	fi
+
+	if [ "$NEWSIZE_SOFAR" -gt  "$NEWFLS_LIMIT_SIZE" ]
+	then
+                SIZE_LEFT=`expr ${NEWFLS_LIMIT_SIZE} "-" ${UPTOLASTBUT1SIZE}`
+
+		print "\nAdding $i to tape exceeds the allowed size limit." | tee -a $LOG  
+                print "\n \tThe space available = $SIZE_LEFT KB." | tee -a $LOG
+		print "The allowed size limit is = $NEWFLS_LIMIT_SIZE KB." | tee -a $LOG  
+		print "Edit $ADDLIST, then restart the btcreate utility. " | tee -a $LOG
+                print "btcreate exiting..." | tee -a $LOG
+		exit 21
+	fi 
+
+	if [[ ! -d "${j}" ]]
+	then
+		if [[ -d "${i}" ]]
+		then
+			print "\nInvalid entry. The first field, "${i}" is a directory and  " | tee -a $LOG
+			print "    the second field, "${j}" is recognized as a file" | tee -a $LOG
+                        print "       in the $ADDLIST file." | tee -a $LOG
+                        print "\n If ${j} is a directory, it must exist " | tee -a $LOG
+                        print "       on the current system." | tee -a $LOG
+                        print "btcreate exiting..." | tee -a $LOG
+			exit 22
+		fi
+	fi
+
+      j="$(chop_last_slash "${j}")" 
+      i="$(chop_last_slash "${i}")" 
+
+      rhs_dir_to_check=`dirname "${j}"`
+      fl_dir_cnflct_nm="$(check_rhsdir_cnflct "${rhs_dir_to_check}")"
+      if test X"$fl_dir_cnflct_nm" != X
+      then 
+          print "\nInvalid entry. Second field "${rhs_dir_to_check}" specifies directory" | tee -a $LOG
+          print " "${fl_dir_cnflct_nm}", previously used as a file name " | tee -a $LOG
+          print "       in the $ADDLIST file." | tee -a $LOG
+          print "btcreate exiting..." | tee -a $LOG
+          exit 23
+      fi
+          
+       if [[ -f "${i}" ]]
+       then
+           rhs_bfile_nosl=`basename "${i}"`  
+           if [[ "$rhs_bfile_nosl" != "/" ]]
+           then
+               if [[ -d "${j}" ]]
+               then
+                   if [[ "$j" = "/" ]]
+                   then
+                       rhs_bfile="/${rhs_bfile_nosl}"
+                   else
+                       rhs_bfile="${j}/${rhs_bfile_nosl}"
+                   fi
+                   rhs_files_arr[iarrind]="${rhs_bfile}"
+               else
+                   rhs_files_arr[iarrind]="${j}"
+               fi
+           fi
+
+           rhs_filename="${rhs_files_arr[iarrind]}"
+
+           ((itot_elements = iarrind + 1))
+
+           check_rhs_file_duplication $itot_elements
+           let RHS_DUPLICATE=$?
+
+           if ((RHS_DUPLICATE == 1))
+           then
+               print "\nDuplicated entry. The file "${rhs_filename}" in the second field " | tee -a $LOG
+               print "\nis duplicated in the $ADDLIST file. "  | tee -a $LOG
+               print "btcreate exiting..." | tee -a $LOG
+               exit 24
+           else
+                ((ilinectr=ilinectr+1))
+
+                ((iarrind=iarrind+1))
+           fi
+       fi
+
+       if [[ -d "${i}" ]]
+       then                                # here "$j" will be a directory
+           lhs_bsdir_nosl=`basename "${i}"`  
+           if [[ "lhs_bsdir_nosl" != "/" ]]
+           then
+               if [[ "$j" = "/" ]]
+               then
+                    rhs_bdir="/${lhs_bsdir_nosl}"
+               else
+                    rhs_bdir="${j}/${lhs_bsdir_nosl}"
+               fi
+               rhsdr_store="${rhs_bdir}"
+               rhs_drname="${rhs_bdir}"
+           else
+               rhsdr_store="${j}"
+               rhs_drname="${j}"
+           fi
+
+          check_lhsbs_rhsdr_duplication $tot_bsdr_elements "${lhs_bsdir_nosl}" "${rhsdr_store}" 
+          let RHSDR_DUPLICATE=$?
+
+          if ((RHSDR_DUPLICATE == 1))
+          then
+              print "\nDuplicated entry. The object "${lhs_bsdir_nosl}" in the first field " | tee -a $LOG
+              print " and the directory "${rhs_drname}" in the second field" | tee -a $LOG
+              print " is duplicated in the $ADDLIST file."  | tee -a $LOG
+              print "btcreate exiting..." | tee -a $LOG
+              exit 25
+          else
+              bs_dr_arr[darrind]="${lhs_bsdir_nosl}"
+              ((darrind=darrind+1))
+              bs_dr_arr[darrind]="${rhsdr_store}"
+              ((darrind=darrind+1))
+
+              ((tot_bsdr_elements = darrind + 1))
+              ((dlinectr=dlinectr+1))
+
+          fi
+       fi
+
+       if [[ "$j" != "/" ]]
+       then
+           if [ -d "${j}" ]
+           then 
+               if [ -d "${i}" ]
+               then
+                   bs_dir_in_i=`basename $i`
+                   rhs_dir_to_add="${j}/${bs_dir_in_i}"
+               else
+                   rhs_dir_to_add="${j}"
+               fi
+               MORE_DIRSLIST="$MORE_DIRSLIST ${rhs_dir_to_add}"
+           else
+               if [[ "$j" = /*/* ]]
+               then
+                   bs_dir_in_j=`dirname $j`
+                   MORE_DIRSLIST="$MORE_DIRSLIST ${bs_dir_in_j}"
+               fi
+           fi
+       else
+           if [ -d "${i}" ]  
+           then
+                 dir_in_i=`basename $i`
+                 MORE_DIRSLIST="$MORE_DIRSLIST ${dir_in_i}"
+           fi
+       fi
+  
+       APPEND_ENTRY="$i $j
+"
+       MORE_FILESLIST="$MORE_FILESLIST$APPEND_ENTRY"
+            
+       let COUNT_ADDED=COUNT_ADDED+1
+       ADDANS="yes"
+done
+exec 6<&-
+
+if [ $COUNT_ADDED -eq 0 ]
+then
+	echo "" | tee -a $LOG
+       	echo "No files will be added to the miniroot file system." | tee -a $LOG
+       	echo "" | tee -a $LOG
+else
+       	echo "" | tee -a $LOG
+        echo "You chose to add the following files to the" | tee -a $LOG
+        echo "miniroot file system." | tee -a $LOG
+        print_addlist_input  | tee -a $LOG
+
+fi
+
+#
+export MORE_FILESLIST MORE_DIRSLIST
+return
+
+}   # end of function process_add_files 
+
+
+
+# ********************************************************************************
+#
+# function print_iprompt()
+# -SRB.
+#
+# This function is called by get_add_commands_inter_info function
+# to print the interactive mode prompt. 
+#
+# ********************************************************************************
+
+function print_iprompt
+{
+print  | tee -a $LOG 
+print "$ADDPROMPT \c" | tee -a $LOG  
+}
+
+# ********************************************************************************
+#
+# function get_add_commands_inter_info()
+# - SRB.
+# 
+# This function is called in the interactive mode only.
+# It is for processing additional utilities which are input in the 
+# interactive mode. These additional utilities will be backed-up to the
+# miniroot file system by mktape utility.
+# It is called by interactive_add_commands. 
+#
+# It processes the user input. The input entries are validated  
+# for format, size, duplication.
+# If the input is checked to be OK and accepted by the user for addition, 
+# then it exports MORE_FILESLIST and MORE_DIRSLIST lists, to be used
+# by the mktape utility for backing-up the user-given utilities.
+# 
+# User input is checked for:
+# (1) Line field-numbers (2) Duplicate lines
+# (3) Absolute pathnames of LHS and RHS entries
+# (4) Overwriting old RHS entries (5) file/directory name conflicts 
+#
+# ********************************************************************************
+function get_add_commands_inter_info 
+{
+# Variables used by get_add_commands_inter_info and 
+# check_rhs_file_duplication functions 
+typeset -L1 lhs_first_char
+typeset -L1 rhs_first_char
+set -A rhs_files_arr
+set -A bs_dr_arr
+integer ilinectr=1 dlinectr=1 iarrind=0 darrind=0
+integer itot_elements=0
+integer tot_bsdr_elements=0
+
+DIR_TO_ADD=
+rhs_bfile=  
+rhs_bdir=  
+lhs_bsdir_nosl=
+fl_dir_cnflct_nm=
+integer DIRADD 
+integer RHS_DUPLICATE=0 
+integer RHSDR_DUPLICATE=0 
+
+# This list is created after reading and validating user's input. 
+# This name is exported, so that it can be used by mktape utility.
+MORE_FILESLIST=""
+
+# This list holds the names of directories, obtained from user input,
+# which must be created on the miniroot file system. 
+# Each RHS directory must exist on the currently running system.
+# This name is exported, so that it can be used by mktape utility.
+MORE_DIRSLIST=""
+
+# Holds size usage of the utilities to be backed-up 
+NEWSIZE_SOFAR=0
+UPTOLASTBUT1SIZE=0
+SIZE_LEFT=0
+
+COUNT_ADDED=0
+YES_TO_FILES=0
+
+ADDPROMPT="Enter your selection: "
+while :
+do
+      print "" | tee -a $LOG
+      print "$ADDPROMPT \c" | tee -a $LOG 
+      while read line
+      do
+
+      rhs_bfile=
+      rhs_bdir=  
+      lhs_bsdir_nosl=
+      fl_dir_cnflct_nm=
+      let RHS_DUPLICATE=0
+      let RHSDR_DUPLICATE=0
+      
+      print " $line " >> $LOG
+      if test X"$line" != X
+      then
+           set $line
+	   case $line in
+		[qQ]|[qQ][uU][iI][tT] ) echo "" | tee -a $LOG
+					echo "Exiting btcreate." | tee -a $LOG
+					cleanall
+					exit 0
+					;;
+	   esac
+           field_nos=`echo $line |  awk '{print NF}'`
+           if [[ $field_nos -gt 2  ]]
+           then 
+                 print "\nInvalid entry. Found more than 2 fields on the input line" | tee -a $LOG 
+                 print_iprompt
+                 continue 
+           fi
+
+           if [[ $field_nos -lt 2  ]]
+           then 
+		print "\nInvalid entry. Found less than 2 fields on the input line" | tee -a $LOG 
+		print_iprompt
+                continue 
+           fi
+
+           i=$1
+           j=$2
+
+
+           if [[ "${i}" = *//*  || "${j}" = *//* ]]
+           then
+               print "\nInvalid entry. Found ""//"" (two consecutive slashes) in your input." | tee -a $LOG
+               print_iprompt
+               continue 
+           fi
+
+            lhs_basename=`basename "${i}"`
+            lhs_dirname=`dirname "${i}"`
+            if [[ "$lhs_basename" = "/" && "$lhs_dirname" = "/"  ]] 
+            then
+                    i="/"
+            fi
+
+            rhs_basename=`basename "${j}"`
+            rhs_dirname=`dirname "${j}"`
+            if [[ "$rhs_basename" = "/" && "$rhs_dirname" = "/"  ]] 
+            then
+                    j="/"
+            fi
+
+      else 
+		if [ $COUNT_ADDED -eq 0 ]
+		then
+	   		ADDANS="no"
+		fi
+		break
+      fi
+ 
+      lhs_first_char=$i
+      if [[ "$lhs_first_char" != "/" ]]
+      then
+          print "\nInvalid entry. Use absolute pathnames in your input." | tee -a $LOG 
+          # correct_i=`print -n $i|sed -e 's@\(.*\)@/\1@'`
+          # print "For utility-to-be-backed-up, use name:" | tee -a $LOG 
+          # print "         $correct_i  --instead of--  $i" | tee -a $LOG 
+
+          print_iprompt
+          continue 
+      fi
+
+      rhs_first_char=$j
+      if [[ "$rhs_first_char" != "/" ]]
+      then
+          print "\nInvalid entry. Use absolute pathnames in your input." | tee -a $LOG 
+          # correct_j=`print -n $j|sed -e 's@\(.*\)@/\1@'`
+          # print "For location-on-miniroot-filesystem, use name:" | tee -a $LOG 
+          # print "         $correct_j  --instead of--  $j" | tee -a $LOG 
+
+          print_iprompt
+          continue 
+      fi
+
+      if [ ! -e "${i}" ]
+      then
+          print "\nInvalid entry. The file_or_directory in the first field " | tee -a $LOG 
+          print "\n   must exist on the current system. '$i' specified does not exist." | tee -a $LOG 
+          print_iprompt
+          continue 
+      fi
+  
+      if [ ! -f "${i}" ] && [ ! -d "${i}" ] 
+      then
+          print "\nInvalid entry. '$i' specified in the first field is " | tee -a $LOG  
+          print "     not a valid file or a directory." | tee -a $LOG  
+          print_iprompt
+          continue 
+      fi
+
+      if [ -f "${i}" ]
+      then
+          file_info=`ls -l ${i}`
+          file_size=`echo $file_info |  awk '{print $5}'`
+          if [[ "$file_size" != [0-9]* ]]
+          then
+               print "\nError in ls; can not obtain size for ${i} " | tee -a $LOG
+               print_iprompt
+               continue
+          fi 
+          file_size_in_kb=`expr ${file_size} "/" 1024`
+          UPTOLASTBUT1SIZE=${NEWSIZE_SOFAR}
+          NEWSIZE_SOFAR=`expr ${NEWSIZE_SOFAR} "+" ${file_size_in_kb}`
+	  if [ "$NEWSIZE_SOFAR" -gt "$NEWFLS_THRESH_SIZE" ] && [ "$file_size_in_kb" -eq 0 ]
+	  then
+                print "\nThere is no space available to add $i to tape." | tee -a $LOG
+                print "The allowed size limit is = $NEWFLS_LIMIT_SIZE KB." | tee -a $LOG
+                NEWSIZE_SOFAR=${UPTOLASTBUT1SIZE}
+                print "\nPress Return Key to end input." | tee -a $LOG
+                print_iprompt
+                continue
+          fi
+      else
+          dir_size_in_kb=`du -k -s ${i} | awk '{print $1}'`
+          if [[ "$dir_size_in_kb" != [0-9]* ]]
+          then
+               print "\nError in du; can not obtain size for ${i} " | tee -a $LOG
+               print_iprompt
+               continue
+          fi 
+          UPTOLASTBUT1SIZE=${NEWSIZE_SOFAR}
+          NEWSIZE_SOFAR=`expr ${NEWSIZE_SOFAR} "+" ${dir_size_in_kb}` 
+      fi
+  
+      if [ "$NEWSIZE_SOFAR" -gt  "$NEWFLS_LIMIT_SIZE" ]
+      then
+           SIZE_LEFT=`expr ${NEWFLS_LIMIT_SIZE} "-" ${UPTOLASTBUT1SIZE}`
+           NEWSIZE_SOFAR=${UPTOLASTBUT1SIZE}
+
+           print "\nInvalid entry. Adding $i to tape exceeds the allowed size limit." | tee -a $LOG   
+           print "The allowed size limit is = $NEWFLS_LIMIT_SIZE KB." | tee -a $LOG   
+           if [ "$SIZE_LEFT" -gt 0 ]
+           then
+                print "\n\tThe space remaining is = $SIZE_LEFT KB." | tee -a $LOG  
+           fi
+           print "\nSelect another utility, or press Return to end input." | tee -a $LOG  
+           print_iprompt
+           continue 
+      fi 
+
+          if [[ ! -d "${j}" ]]
+          then
+              if [[ -d "${i}" ]]
+              then
+                     print "\nInvalid entry. The first field, "${i}" is a directory and  " | tee -a $LOG
+                     print "    the second field, "${j}" is recognized as a file." | tee -a $LOG
+                     print "\n If ${j} is a directory, it must exist " | tee -a $LOG
+                     print "       on the current system." | tee -a $LOG
+                     print_iprompt
+                     continue
+              fi
+          fi
+
+      j="$(chop_last_slash "${j}")" 
+      i="$(chop_last_slash "${i}")" 
+
+      rhs_dir_to_check=`dirname "${j}"`
+      fl_dir_cnflct_nm="$(check_rhsdir_cnflct "${rhs_dir_to_check}")"
+      if test X"$fl_dir_cnflct_nm" != X
+      then 
+
+          print "\nInvalid entry. Second field "${rhs_dir_to_check}" specifies directory" | tee -a $LOG
+          print " "${fl_dir_cnflct_nm}", previously used as a file name. " | tee -a $LOG
+          print_iprompt
+          continue
+      fi
+          
+       if [[ -f "${i}" ]]
+       then
+           rhs_bfile_nosl=`basename "${i}"`  
+           if [[ "$rhs_bfile_nosl" != "/" ]]
+           then
+               if [[ -d "${j}" ]]
+               then
+                   if [[ "$j" = "/" ]]
+                   then
+                       rhs_bfile="/${rhs_bfile_nosl}"
+                   else
+                       rhs_bfile="${j}/${rhs_bfile_nosl}"
+                   fi
+                   rhs_files_arr[iarrind]="${rhs_bfile}"
+               else
+                   rhs_files_arr[iarrind]="${j}"
+               fi
+           fi
+
+           rhs_filename="${rhs_files_arr[iarrind]}"
+
+           ((itot_elements = iarrind + 1))
+
+           check_rhs_file_duplication $itot_elements
+           let RHS_DUPLICATE=$?
+
+           if ((RHS_DUPLICATE == 1))
+           then
+               print "\nDuplicated entry. The file "${rhs_filename}" in the second field " | tee -a $LOG
+               print "\nis already given earlier. "  | tee -a $LOG
+               print_iprompt
+               continue 
+           else
+                ((ilinectr=ilinectr+1))
+
+                ((iarrind=iarrind+1))
+           fi
+       fi
+
+       if [[ -d "${i}" ]]
+       then                                # here "$j" will be a directory
+           lhs_bsdir_nosl=`basename "${i}"`  
+           if [[ "lhs_bsdir_nosl" != "/" ]]
+           then
+               if [[ "$j" = "/" ]]
+               then
+                    rhs_bdir="/${lhs_bsdir_nosl}"
+               else
+                    rhs_bdir="${j}/${lhs_bsdir_nosl}"
+               fi
+               rhsdr_store="${rhs_bdir}"
+               rhs_drname="${rhs_bdir}"
+           else
+               rhsdr_store="${j}"
+               rhs_drname="${j}"
+           fi
+
+          check_lhsbs_rhsdr_duplication $tot_bsdr_elements "${lhs_bsdir_nosl}" "${rhsdr_store}" 
+          let RHSDR_DUPLICATE=$?
+
+          if ((RHSDR_DUPLICATE == 1))
+          then
+              print "\nDuplicated entry. The object "${lhs_bsdir_nosl}" in the first field " | tee -a $LOG
+              print "\nand the directory "${rhs_drname}" in the second field" | tee -a $LOG
+              print "\nis already given earlier."  | tee -a $LOG
+              print_iprompt
+              continue 
+          else
+              bs_dr_arr[darrind]="${lhs_bsdir_nosl}"
+              ((darrind=darrind+1))
+              bs_dr_arr[darrind]="${rhsdr_store}"
+              ((darrind=darrind+1))
+
+              ((tot_bsdr_elements = darrind + 1))
+              ((dlinectr=dlinectr+1))
+
+          fi
+       fi
+
+       if [[ "$j" != "/" ]]
+       then
+           if [ -d "${j}" ]
+           then 
+               if [ -d "${i}" ]
+               then
+                   bs_dir_in_i=`basename $i`
+                   rhs_dir_to_add="${j}/${bs_dir_in_i}"
+               else
+                   rhs_dir_to_add="${j}"
+               fi
+               MORE_DIRSLIST="$MORE_DIRSLIST ${rhs_dir_to_add}"
+           else
+               if [[ "$j" = /*/* ]]
+               then
+                   bs_dir_in_j=`dirname $j`
+                   MORE_DIRSLIST="$MORE_DIRSLIST ${bs_dir_in_j}"
+               fi
+           fi
+       else
+           if [ -d "${i}" ]  
+           then
+                 dir_in_i=`basename $i`
+                 MORE_DIRSLIST="$MORE_DIRSLIST ${dir_in_i}"
+           fi
+       fi
+  
+       APPEND_ENTRY="$i $j
+"
+       MORE_FILESLIST="$MORE_FILESLIST$APPEND_ENTRY"
+            
+       let COUNT_ADDED=COUNT_ADDED+1
+       ADDANS="yes"
+       print "" | tee -a $LOG
+       print "$ADDPROMPT \c" | tee -a $LOG   
+       done
+#
+
+# if [ $COUNT_ADDED -gt 0 ]
+# then 
+	while :
+	do
+		2>&1;print |tee -a $LOG
+		if [ $COUNT_ADDED -gt 0 ]
+		then 
+       			2>&1;print "Have you completed your selection? (y/n) [y]: \c"|tee -a $LOG
+		else
+			2>&1;print "You did not select a file or directory to back up." | tee -a $LOG
+			2>&1;print "Is this correct (y/n) [y]: \c"|tee -a $LOG
+		fi	
+       		read ANS
+        	echo "" >> $LOG
+		echo $ANS >> $LOG
+        	case "$ANS" in
+		[yY]|[yY][eE][sS]|"") if [ $COUNT_ADDED -eq 0 ]
+				      then
+					      2>&1;print "\nNo files will be added to the miniroot file system."|tee -a $LOG
+				      else
+					      2>&1;print "\nAll requested files will be added to the miniroot file system."|tee -a $LOG
+				      fi
+				      YES_TO_FILES=0
+             		              break
+	                              ;;
+	               [nN]|[nN][oO]) YES_TO_FILES=1
+                    	              break
+	                              ;;
+                            ['*']*|*) print | tee -a $LOG
+					print "Please specify either \"y\" or \"n\" only." | tee -a $LOG  
+	                              continue
+	                              ;;
+		esac
+	done # End of Do you accept the list of utilities  
+
+	if [ $YES_TO_FILES -eq 0 ]
+	then
+		break
+	else
+		continue
+	fi
+
+done
+
+export MORE_FILESLIST MORE_DIRSLIST
+
+}   # end of get_add_commands_inter_info 
+
+
+# ********************************************************************************
+#
+# Function interactive_add_commands.
+#
+# If the -a flag is missing and we are in the interactive mode,
+# then this function, interactive_add_commands, gets called.
+#
+# ********************************************************************************
+function interactive_add_commands 
+{
+
+if [[ $OPT_A_FLAG -eq 0 ]] && [[ $INTER = 1 ]]
+then 
+	2>&1;print|tee -a $LOG
+	2>&1;print|tee -a $LOG
+	2>&1;print "\t\tCUSTOMIZING THE MINIROOT FILE SYSTEM
+
+You have the option of adding files and directories to the miniroot 
+file system.  Each entry consists of two fields separated by a space 
+or tab as follows.  
+
+			file 		destination 
+
+The first field specifies the absolute pathname of the file or directory 
+on the currently running system.  The second column specifies absolute 
+pathname on the miniroot file system.  
+
+Press the Return Key after each entry or at the prompt to end input."|tee -a $LOG
+get_add_commands_inter_info
+fi
+return
+} # end of interactive_add_commands function
+
+
+
+# ***************************************************************************
+# FUNCTION : modify_config_file
+# ***************************************************************************
+
+function modify_config_file 
+{
+# ****************************************************************************
+# HISTORY:
+# ****************************************************************************
+# File Name: modify_config_file
+# 
+# This function modifies the config file name supplied by the system 
+# administrator and creates a kernel. 
+#
+# If invoked by super-user, then program tells the user that it would be using
+# the host config file as its config file and allows the user to either provide
+# one or go with the default. If the user provides one, then it gets copied
+# /usr/sys/conf directory and is modified. A kernel is created with "doconfig" 
+# command. The kernel if built successfully is placed in /sys/filename/vmunix.
+# It copies the vmunix to the work area from where you would invoke "mktape".
+# ****************************************************************************
+
+# Declare variables
+CONF_DIR="/usr/sys/conf"
+SYS_DIR="/sys"
+CONF_FILE1=
+PATH_CONF_FILE=
+NEW_CONF_FILE=
+KERNEL=
+INPUT=
+
+case "$CONF_FILE" in
+	"$NAME")
+           cp $NAME $NAME.BOOTABLE
+	   chown root:bin $NAME.BOOTABLE
+	   chmod 644 $NAME.BOOTABLE
+           NEW_CONF_FILE=$NAME.BOOTABLE
+		;;
+	*) cp $CONF_FILE $CONF_FILE.BOOTABLE
+	   chown root:bin $CONF_FILE.BOOTABLE
+	   chmod 644 $CONF_FILE.BOOTABLE
+           NEW_CONF_FILE=$CONF_FILE.BOOTABLE
+	   ;;
+esac
+
+# Process the BOOTABLE file.
+
+grep "^ident" $NEW_CONF_FILE > $NULL 2> $NULL 
+if [ $? = 0 ]
+then
+	sed "/^ident/d" $NEW_CONF_FILE > $TMP/temp1.lis
+	echo "ident		SAS_GENERIC" > $TMP/temp_ident_file
+	cat $TMP/temp_ident_file $TMP/temp1.lis > $NEW_CONF_FILE
+	rm $TMP/temp_ident_file $TMP/temp1.lis
+fi
+
+#grep "^config" $NEW_CONF_FILE > $NULL 2> $NULL 
+
+# MIK_072397 Changed config to vmunix as there were more than one
+# config entries in the /usr/sys/conf/KERNEL file.
+#
+
+grep "vmunix" $NEW_CONF_FILE > $NULL 2> $NULL 
+if [ $? = 0 ]
+then
+	sed "/vmunix/d" $NEW_CONF_FILE > $TMP/temp1.lis
+	mv $TMP/temp1.lis $NEW_CONF_FILE
+fi
+
+
+echo "config	vmunix 	root on	md" >> $NEW_CONF_FILE
+echo "pseudo-device 	memd 	$MEMORY_SIZE" >> $NEW_CONF_FILE
+
+# Create a new kernel
+2>&1;print "\nCreating a new kernel..." |tee -a $LOG
+
+NEW_CONF_FILE=`basename $NEW_CONF_FILE`
+
+### Creating temporary area for -d option -  ADPECP_0898
+
+if [ $OPT_D_FLAG -eq 1 ]
+then
+        2>&1;print "\nPreparing for kernel build in tmp space..." |tee -a $LOG
+        2>&1;print "\nCreating a new kernel directory ${DISK_TMP_SPACE}/${NEW_CONF_FILE}..." |tee -a $LOG
+        mkdir ${DISK_TMP_SPACE}/${NEW_CONF_FILE}
+        2>&1;print "\nCreating links to /sys/bin directories..." |tee -a $LOG
+        file /usr/sys/* | grep directory | cut -f1 -d: | xargs -i basename {} | xargs -i ln -s /usr/sys/{} $DISK_TMP_SPACE/{} 2> $NULL
+        2>&1;print "\nCreating link to the tmp space..." |tee -a $LOG
+        ln -s ${DISK_TMP_SPACE}/${NEW_CONF_FILE} /usr/sys/${NEW_CONF_FILE} 2>$NULL
+fi
+
+echo n | doconfig -s -c $NEW_CONF_FILE 2>&1 |tee -a $LOG > /dev/null
+KERNEL=vmunix
+if [ ! -s /usr/sys/$NEW_CONF_FILE/$KERNEL ]
+then
+	2>&1;print "$KERNEL has not been built successfully, exiting btcreate.\n" |tee -a $LOG
+        #Cleanup
+        cleanall
+        exit 4
+fi # if doconfig failed 
+
+# ADP_0797
+# destination filename
+[[ -n "${bflag}" ]] &&
+        DEST="${bflag}" ||
+        DEST="${DISK_TMP_SPACE}/${KERNEL}"   # ADPECP_0898
+
+
+#2>&1;print "\n\nMoving the new kernel to /usr/sys/bin directory."|tee -a $LOG
+#mv /usr/sys/$NEW_CONF_FILE/$KERNEL /usr/sys/bin/$KERNEL
+
+# ADP_0797
+2>&1;print "\n\nMoving the new kernel to ${DEST}."|tee -a $LOG
+if ! mv /usr/sys/$NEW_CONF_FILE/$KERNEL ${DEST}
+then
+    2>&1;print "unable to move /usr/sys/$NEW_CONF_FILE/$KERNEL to \"${DEST}\"" | tee -a $LOG
+    cleanall
+    exit 4
+fi
+
+
+WORKDIR=`pwd`
+cd /usr/sys
+[ -d $NEW_CONF_FILE ] &&
+	rm -r $NEW_CONF_FILE 2> /dev/null
+cd $WORKDIR
+
+} # end of modify_config_file function
+
+
+# ***************************************************************************
+# FUNCTION : dump_filesystems
+# ***************************************************************************
+
+function dump_filesystems
+{
+# ****************************************************************************
+# HISTORY:
+# ****************************************************************************
+# Name of the procedure: dump_filesystems
+# Invoked by main program.
+# This procedure dumps the filesystems on the new tape. 
+# The filesystems can be any number and can span any
+# number of tapes. Once that is done, the script btcreate ends.
+# The filesystems are dumped by reading the /usr/lib/sabt/etc/fs_info file. 
+# If the file does not exist then user is prompted for that information.
+# ****************************************************************************
+
+DUMP=/sbin/dump
+VDUMP=/sbin/vdump
+FINAL_DEV=
+FINAL_MNT=
+FINAL_TYPE=
+FINAL_SIZE=
+FINAL_CDEV=
+FINAL_NUM=
+FINAL_LABEL=
+FINAL_OVERHEAD_SIZE=
+# Additional for advfs
+FINAL_DISK=
+FINAL_DOMAIN1=
+FINAL_DOMAIN2=
+FINAL_BDEV=
+FINAL_ROOT=
+FINAL_VOL_NUM=
+
+#Check to see if the /usr/lib/sabt/etc/fs_info exits ?
+if [ ! -s $FS_INFO ]
+then
+2>&1;print "No file systems were found in fs_info file to be dumped."|tee -a $LOG
+	return 
+fi
+
+
+INDEX=1
+NUM=$DUMPS
+
+while [ "$INDEX" -le "$NUM" ]
+do
+        echo "${INDEX}p" | /sbin/ed -s $FS_INFO > FILE1
+read FINAL_DEV FINAL_MNT FINAL_TYPE FINAL_SIZE FINAL_CDEV FINAL_NUM FINAL_LABEL FINAL_OVERHEAD_SIZE FINAL_ROOT FINAL_DISK FINAL_DOMAIN1 FINAL_DOMAIN2 FINAL_BDEV FINAL_VOL_NUM < FILE1
+
+rm FILE1
+case "$FINAL_TYPE" 
+in
+	ufs)    2>&1;print "\n\nDumping the file system $FINAL_DEV of type $FINAL_TYPE"|tee -a $LOG
+# qar 48990 - removed the log file for dump and vdump
+		$DUMP 0uf /dev/$TAPE $FINAL_DEV  
+		if [ $? -ne 0 ]
+		then
+			echo "dump failed for file system $FINAL_DEV." | tee -a $LOG
+		else
+			sleep 10
+			2>&1;print "Dump finished."|tee -a $LOG
+			if [ $FINAL_MNT = "/" ]
+			then
+				echo "$FINAL_NUM $FINAL_MNT $FINAL_TYPE" >> $ROOT_SWAP_INFO
+                        fi
+		fi
+#
+		;;
+ 	advfs)	2>&1;print "\nDumping the file system $FINAL_DEV of type $FINAL_TYPE"|tee -a $LOG
+		$VDUMP -0uf /dev/$TAPE $FINAL_MNT  
+		if [ $? -ne 0 ]
+		then
+			echo "vdump failed for file system $FINAL_DEV." | tee -a $LOG
+		else
+			sleep 10
+			2>&1;print "Dump finished."|tee -a $LOG
+			if [ $FINAL_MNT = "/" ]
+			then
+				echo "$FINAL_NUM $FINAL_MNT $FINAL_TYPE" >> $ROOT_SWAP_INFO
+                        fi
+		fi
+		;;
+	*)	2>&1;print "\nType unknown; a dump will not be performed on $FINAL_DEV device."|tee -a $LOG
+		;;
+esac
+
+INDEX=`expr $INDEX + 1`
+
+done # end of while read content
+
+} # end of the dump_filesystems function.
+
+# ***************************************************************************
+# check_opts
+# ***************************************************************************
+
+function check_opts
+{
+# function to check correct usage
+OPT_VAR=$1
+
+if test "$OPT_VAR" = "-k" || test "$OPT_VAR" = "-t" || test "$OPT_VAR" = "-d"  || test "$OPT_VAR" = "-s" || test "$OPT_VAR" = "-f" || test "$OPT_VAR" = "-a" || test "$OPT_VAR" = "-m" 
+then
+	print
+        print $USAGE
+        exit 51
+fi
+}
+
+
+# ********************************************************************************
+#
+# function check_consistency
+#
+# Check for correct device names and mount points. 
+# Checks for duplicates only.
+# All verification is done by disklabel_checks.
+#
+# ********************************************************************************
+function check_consistency
+{
+# Checks consistency of the device variables and mount variables.
+ARR_NAME=$1
+NUM_ELEMENTS=$2
+# Now we proceed with this function.
+# Need 2 local variables.
+# i and j  for control.
+
+count1=0
+let count2=count1+1
+let count3=NUM_ELEMENTS
+
+while [ "$count1" -lt "$count3" ] 
+do
+while [ "$count2" -lt "$count3" ]
+do
+	case "$ARR_NAME" in 
+		"dev_arr") str1=${dev_arr[count1]}
+			   str2=${dev_arr[count2]}
+			   if [ "$str1" = "$str2" ] 
+			   then
+                        	 error_funcs 36 $FS_FILE
+			   fi
+			   ;;
+		"mnt_arr") 
+			   str1=${mnt_arr[count1]}
+			   str2=${mnt_arr[count2]}
+			   if [ "$str1" = "$str2" ]
+			   then 
+				 error_funcs 35 $FS_FILE
+			   fi	
+			   ;;
+			*) error_funcs 49 $FS_FILE
+			   ;;
+	esac
+        let count2=count2+1
+done
+        let count1=count1+1
+        let count2=count1+1
+done
+return
+
+} # End function check_consistency.
+
+# ********************************************************************************
+#
+# function check_consistency
+#
+# Check for correct file system types.
+# Checks for duplicates only.
+# All verification is done by disklabel_checks.
+#
+# ********************************************************************************
+
+function check_fstype
+{
+# Checking fs_type specified.
+fsvar=0
+FSTYPE=$1
+FSNUMS=$2
+str2="ufs"
+str3="advfs"
+
+while [ "$fsvar" -lt "$FSNUMS" ]
+do
+	case "$FSTYPE" in 
+		"fs_arr") str1=${fs_arr[fsvar]}
+			  if [ $str1 = $str2 ] 
+			  then 
+				print "\c" | tee -a $LOG  
+			  else 
+			  	if [ $str1 = $str3 ]
+			  	then
+					print "\c" | tee -a $LOG  
+				else
+					error_funcs 37 $FS_FILE
+			 	fi
+			  fi
+			  ;;
+		       *) error_funcs 47 $FS_FILE
+			  ;;
+	esac
+	let fsvar=fsvar+1
+done
+return
+} # Function end check_fstype
+
+# ********************************************************************************
+#
+# Calculates necessary overhead size we adopt for optimal use.
+#
+# ********************************************************************************
+
+function calculate_overhead
+{
+	# Add the 3.25% overhead size in the fs_info file.Originally it was 3%
+        # QAR 48546
+	echo "$1 * 3.25/100 + $1" > bc_input_file
+	echo "quit" >> bc_input_file
+	bc bc_input_file > fs_overhead
+	FS_OVERHEAD_SIZE=`cat fs_overhead`
+	rm bc_input_file fs_overhead
+	return
+}
+
+# ********************************************************************************
+#
+# Calculates the df sizes for the partition and other stuff to be backed up.
+#
+# ********************************************************************************
+function df_sizes
+{
+INFO_DEV=$1
+INFO_MNT=$2
+INFO_TYPE=$3
+FS_ROOT="no"
+
+#df $INFO_DEV > /dev/null 2>&1
+df $INFO_MNT > /dev/null 2>&1
+if [ $? -eq 0 ]
+then
+	# calculate the used size of the filesystem
+	
+	FS_USED_SIZE=`df $INFO_DEV | sed "1d" | awk '{print $3}'`
+	calculate_overhead $FS_USED_SIZE
+	if test "$INFO_MNT" = "/" 
+	then 
+		FS_ROOT="yes"
+	fi
+	if test "$INFO_TYPE" = "advfs" 
+	then
+		echo "$INFO_DEV $INFO_MNT $INFO_TYPE $FS_USED_SIZE $ADVFS_CDEV $ADVFS_DNUM $ADVFS_LABEL $FS_OVERHEAD_SIZE $ADVFS_ROOT $ADVFS_DISK $ADVFS_DOM_NAME1 $ADVFS_DOM_NAME2 $ADVFS_BDEV $ADVFS_VOL_NUM" >> $FS_INFO
+	else
+               echo "$INFO_DEV $INFO_MNT $INFO_TYPE $FS_USED_SIZE $INFO_CDEV $INFO_NUM $INFO_LABEL $FS_OVERHEAD_SIZE $FS_ROOT" >> $FS_INFO
+	fi
+else
+        if [ ! -d $INFO_MNT ]
+        then
+                mkdir -p $INFO_MNT >/dev/null 2>&1
+        fi
+        mount $INFO_DEV $INFO_MNT >/dev/null 2>&1
+        if [ $? = 0 ]
+        then
+                FS_USED_SIZE=`df $INFO_DEV | sed "1d" | awk '{print $2}'`
+	        calculate_overhead $FS_USED_SIZE
+		if test "$INFO_MNT" = "/" 
+		then 
+			FS_ROOT="yes"
+		fi
+		if test "$INFO_TYPE" = "advfs" 
+		then
+			echo "$INFO_DEV $INFO_MNT $INFO_TYPE $FS_USED_SIZE $ADVFS_CDEV $ADVFS_DNUM $ADVFS_LABEL $FS_OVERHEAD_SIZE $ADVFS_ROOT $ADVFS_DISK $ADVFS_DOM_NAME1 $ADVFS_DOM_NAME2 $ADVFS_BDEV $ADVFS_VOL_NUM" >> $FS_INFO
+		else 
+                	echo "$INFO_DEV $INFO_MNT $INFO_TYPE $FS_USED_SIZE $INFO_CDEV $INFO_NUM $INFO_LABEL $FS_OVERHEAD_SIZE $FS_ROOT" >> $FS_INFO
+		fi
+        else
+                2>&1;print "Error in mounting $INFO_DEV on $INFO_MNT."|tee -a $LOG
+		echo "$INFO_DEV $INFO_MNT $FS_TYPE is invalid." | tee -a $LOG  
+                2>&1;print |tee -a $LOG
+                return 1
+        fi # if mount
+fi # for df calculation
+return 0
+}
+
+# ********************************************************************************
+#
+# function disklabel_details.
+#
+# This is called by both the non-interactive and the interactive function.
+# After obtaining the verifications from the disklabel_checks, this function
+# is called upon to obtain all the details. If the disklabel checks works
+# fine, then we have all the required material at hand.
+#
+# ********************************************************************************
+
+function disklabel_details
+{
+INFO_DEV=$1
+INFO_MNT=$2
+INFO_TYPE=$3
+INDEX=1
+
+if [ $INFO_TYPE = "ufs" ]
+then
+	#Calculate the INFO_CDEV, INFO_NUM and INFO_LABEL right now:
+	#
+	# For INFO_CDEV
+	DEV=`echo $INFO_DEV | cut -c 1-5` 
+	BLOCK=`echo $INFO_DEV | cut -c 6-` 
+	INFO_CDEV=$DEV"r"$BLOCK
+	# For INFO_NUM
+	NUM=`echo $BLOCK | wc -m | awk '{print $1}'` 
+	let NUM=NUM-2
+	INFO_NUM=`echo $BLOCK | cut -c 1-$NUM` 
+	# For INFO_LABEL
+	INFO_LABEL=`disklabel -r $INFO_NUM | grep "disk:" | awk '{print $2}' | tr "[a-z]" "[A-Z]"`
+#
+# Add code to include the disklabel in /usr/lib/sabt/etc/disklabel_info file.
+# 
+	if [ -s $DISKLABEL_INFO ]
+	then
+		grep "$INFO_NUM" "$DISKLABEL_INFO" > $NULL 2>&1 
+		if [ $? != 0 ]
+		then
+			disklabel -r $INFO_NUM >> $DISKLABEL_INFO
+			disklabel $INFO_NUM > $PATH_DSKLBL/disklabel_$INFO_NUM
+		fi
+	else # It is the first time
+		disklabel -r $INFO_NUM >> $DISKLABEL_INFO
+		disklabel $INFO_NUM > $PATH_DSKLBL/disklabel_$INFO_NUM
+	fi
+#
+# End of disklabel_info code
+#
+	let INDEX=INDEX+1
+fi # for ufs filesystems
+
+if [ $INFO_TYPE = "advfs" ]
+then
+# For ADVFS_DOM_NAME1, ADVFS_DOM_NAME2, e.g: standards_domain, standards
+	WORKDIR="/usr/sys/bin"
+	cd $ADVFS_DOM_DIR
+	ADVFS_DOM_NAME1=`echo $INFO_DEV | cut -d# -f1`
+	ADVFS_DOM_NAME2=`echo $INFO_DEV | cut -d# -f2`
+#
+# For rest of the information
+#
+	cd $ADVFS_DOM_NAME1
+	unalias ls
+#	ls -al | grep ">" | awk '{print $9}' > $WORKDIR/tem30
+#	exec 5< $WORKDIR/tem30
+#	while read -u5 temp
+#	do
+#		disklabel $temp > /dev/null 2>&1
+#		if [ $? -eq 0 ]
+#		then
+#			echo $temp >> $WORKDIR/tem1		
+#		fi
+#	done
+#        exec 5<&-
+#	rm $WORKDIR/tem30
+#
+#	ls -al | grep ">" > $WORKDIR/tem1
+# ADVFS_VOL_NUM=`awk '{print $1}' $WORKDIR/tem1 | wc -l | awk '{print $1}'`
+#	ADVFS_VOL_NUM=`awk '{print $1}' $WORKDIR/tem1 | wc -l | awk '{print $1}'`
+	ADVFS_VOL_NUM=`showfdmn $ADVFS_DOM_NAME1 | grep "/" | wc -l | awk '{print $1}'`
+	if [ "$ADVFS_VOL_NUM" = "1" ]
+	then
+#
+# ADVFS_DISK is rz9a, ADVFS_BDEV is: /dev/rz9a, ADVFS_CDEV is: /dev/rrz9a
+# ADVFS_LABEL is rz73, ADVFS_DNUM is: rz9, ADVFS_SLICE is a
+# 
+		ADVFS_BDEV=`showfdmn $ADVFS_DOM_NAME1 | grep "/" | awk '{print $8}'`
+		ADVFS_DISK=`echo $ADVFS_BDEV | sed 's/\/dev\///'`
+#		ADVFS_DISK=`awk '{print $1}' $WORKDIR/tem1`
+		ADVFS_BDEV="/dev/$ADVFS_DISK"
+		ADVFS_CDEV="/dev/r$ADVFS_DISK"
+		NUM=`echo $ADVFS_DISK | wc -m | awk '{print $1}'`
+		let NUM1=NUM-2
+		let NUM2=NUM-1
+		ADVFS_DNUM=`echo $ADVFS_DISK | cut -c1-$NUM1`
+		ADVFS_SLICE=`echo $ADVFS_DISK | cut -c$NUM2-`
+		if [ "$INFO_MNT" = "/" ]
+		then
+			ADVFS_ROOT="yes"
+		fi
+# For disklabel
+		ADVFS_LABEL=`disklabel -r $ADVFS_DNUM | grep "disk:" | awk '{print $2}'|tr "[a-z]" "[A-Z]"`
+#
+# Add code to include the disklabel in /usr/lib/sabt/etc/disklabel_info file.
+# 
+		if [ -s $DISKLABEL_INFO ]
+		then
+			grep "$ADVFS_DNUM" "$DISKLABEL_INFO" > $NULL 2>&1 
+			if [ $? != 0 ]
+			then
+				disklabel -r $ADVFS_DNUM >> $DISKLABEL_INFO
+				disklabel $ADVFS_DNUM > $PATH_DSKLBL/disklabel_$ADVFS_DNUM
+			fi
+		else # It is the first time
+			disklabel -r $ADVFS_DNUM >> $DISKLABEL_INFO
+			disklabel $ADVFS_DNUM > $PATH_DSKLBL/disklabel_$ADVFS_DNUM
+		fi
+#
+# End of disklabel_info code
+#
+	else
+		showfdmn $ADVFS_DOM_NAME1 > $WORKDIR/tem1 2>/dev/null
+		if [ $? != 0 ]
+		then
+			if [ ! -d $INFO_MNT ]
+			then
+				mkdir -p $INFO_MNT
+			fi
+			mount -t advfs $INFO_DEV $INFO_MNT > /dev/null 2>&1
+			if [ $? = 0 ]
+			then
+				showfdmn $ADVFS_DOM_NAME1 > $WORKDIR/tem1
+			else
+				2>&1;print "Error in mounting $ADVFS_DOM_NAME1 on $INFO_MNT."|tee -a $LOG
+				2>&1;print "Please mount the file system and rerun the script."|tee -a $LOG
+				2>&1;print "" | tee -a $LOG
+				return 
+			fi # if mount succeeded	
+		fi # if showfdmn fails
+EDSTRING="
+1,5d
+w
+q
+"
+		echo "${EDSTRING}" | ed -s $WORKDIR/tem1 > /dev/null
+		NUM=`cat $WORKDIR/tem1 | wc -l | awk '{print $1}'`
+		let NUM=NUM-2
+		INDEX=1
+# Do the first volume here
+		echo "${INDEX}p" | ed -s $WORKDIR/tem1 > $WORKDIR/tem2
+		read a b c d e f g DEV_FILE < $WORKDIR/tem2
+# ADVFS_DISK is: rz9a
+		ADVFS_DISK=`echo $DEV_FILE | cut -c6-`
+	# Find the disklabel for this disk
+
+		NUMA=${#ADVFS_DISK}
+		let NUMA=NUMA-1
+
+# ADVFS_DNUM is rz9
+		ADVFS_DNUM=`echo $ADVFS_DISK | cut -c1-$NUMA`
+		ADVFS_BDEV="/dev/$ADVFS_DISK"
+		ADVFS_CDEV="/dev/r$ADVFS_DISK"
+		let NUMB=NUMA
+#ADVFS_SLICE is a
+		ADVFS_SLICE=`echo $ADVFS_DISK | cut -c$NUMB`
+		if [ "$INFO_MNT" = "/" ]
+		then
+			ADVFS_ROOT="yes"
+		fi
+#disklabel
+		cd /dev
+#ADVFS_LABEL is rz73
+		ADVFS_LABEL=`disklabel -r $ADVFS_DNUM | grep "disk:" | awk '{print $2}'|tr "[a-z]" "[A-Z]"`
+#
+# Add code to include the disklabel in /usr/lib/sabt/etc/disklabel_info file.
+# 
+		if [ -s $DISKLABEL_INFO ]
+		then
+			grep "$ADVFS_DNUM" "$DISKLABEL_INFO" > $NULL 2>&1 
+			if [ $? != 0 ]
+			then
+				disklabel -r $ADVFS_DNUM >> $DISKLABEL_INFO
+				disklabel $ADVFS_DNUM > $PATH_DSKLBL/disklabel_$ADVFS_DNUM
+			fi
+		else # It is the first time
+			disklabel -r $ADVFS_DNUM >> $DISKLABEL_INFO
+			disklabel $ADVFS_DNUM > $PATH_DSKLBL/disklabel_$ADVFS_DNUM
+		fi
+#
+# End of disklabel_info code
+#
+# Now do the other volumes
+# Delete the first line since it was the first volume
+		EDSTRING="
+1d
+w
+q
+"
+		echo "${EDSTRING}" | ed -s $WORKDIR/tem1 > /dev/null
+		NUM=`wc -l $WORKDIR/tem1 | awk '{print $1}'`
+		let NUM=NUM-2	
+		INDEX=1
+		VOL1=
+		while [ "$INDEX" -le "$NUM" ]
+		do
+			echo "${INDEX}p" | ed -s $WORKDIR/tem1 > $WORKDIR/tem3
+			read a b c d e f g DEV_FILE < $WORKDIR/tem3
+			VOL1=`echo "$DEV_FILE" | cut -c6-` 
+			# Find the disklabel for this disk
+#			NUMA=`echo $VOL1 | wc -c | awk '{print $1}'`
+			let NUMA=${#VOL1}
+			let NUMA=NUMA-1
+			DNUM=`echo $VOL1 | cut -c1-$NUMA`
+			RAW="/dev/r"
+			CSLICE="c"
+			cd /dev
+			LABEL=`disklabel -r $DNUM | grep "disk:" | awk '{print $2}' |tr "[a-z]" "[A-Z]"`
+			echo "$VOL1 $DNUM $LABEL" >> $ADVFS_INFO
+#
+# Add code to include the disklabel in /usr/lib/sabt/etc/disklabel_info file.
+# 
+			if [ -s $DISKLABEL_INFO ]
+			then
+				grep "$DNUM" "$DISKLABEL_INFO" > $NULL 2>&1 
+				if [ $? != 0 ]
+				then
+					disklabel -r $DNUM >> $DISKLABEL_INFO
+					disklabel $DNUM > $PATH_DSKLBL/disklabel_$DNUM
+				fi
+			else # It is the first time
+				disklabel -r $DNUM >> $DISKLABEL_INFO
+				disklabel $DNUM > $PATH_DSKLBL/disklabel_$DNUM
+			fi
+#
+# End of disklabel_info code
+#
+			let INDEX=INDEX+1
+		done
+	fi
+	#Calculate the used size of the filesystem
+	#Use the showfdmn domain command.
+	df_sizes $INFO_DEV $INFO_MNT $INFO_TYPE
+fi #end of advfs
+
+if test "$INFO_TYPE" = "ufs" 
+then
+	# calculate the used size of the filesystem 
+	df_sizes $INFO_DEV $INFO_MNT $INFO_TYPE
+fi # for ufs
+
+# delete the... temporary files.
+rm $WORKDIR/tem* > /dev/null 2>&1 
+return 0
+} 
+#
+
+# ********************************************************************************
+#
+# function disklabel_checks.
+# This is called by both the non-interactive and the interactive function.
+# This function involves the verification of the entries in the file supplied
+# or at the user input level.
+#
+# ********************************************************************************
+function disklabel_checks
+{
+DEVICE_NAMES=$1
+MOUNT_POINTS=$2
+FILE_SYSTEMS=$3
+
+# First check to ensure he has not specified the same device for backup.
+# Advfs checks must be correct.
+# 
+if test $FILE_SYSTEMS = "ufs"
+then
+	DEVICE_NAMER=`echo $DEVICE_NAMES | sed 's/\/dev\///'`
+	if  test "$DEVICE_NAMER" = "$FS" 
+	then
+		echo "" | tee -a $LOG
+#		echo "$DEVICE_NAMES was specified as the partition on which the " | tee -a $LOG
+#		echo "miniroot file system is to reside. " | tee -a $LOG
+		echo "$DEVICE_NAMES was specified as partition for miniroot." | tee -a $LOG
+		echo "$DEVICE_NAMES $MOUNT_POINTS $FILE_SYSTEMS is invalid. " | tee -a $LOG
+		return 1
+	fi
+else
+	if  test "$FILE_SYSTEMS" = "advfs"
+	then
+		DEVICE_NAMER=`echo $DEVICE_NAMES | cut -d# -f1`
+		ls -al /etc/fdmns/$DEVICE_NAMER >/dev/null 2>&1
+		if [ $? -ne 0 ]
+		then
+			echo "" | tee -a $LOG
+			DEVICE_NAMER=`echo $DEVICE_NAMES | sed 's/\/dev\///'`
+			disklabel $DEVICE_NAMER > /dev/null 2>&1
+			if [ $? -eq 0 ]
+			then
+				echo "Invalid file system type for $DEVICE_NAMES." | tee -a $LOG
+				echo "$DEVICE_NAMES $MOUNT_POINTS $FILE_SYSTEMS is invalid. "|tee -a $LOG
+				return 1
+			else
+				echo "No such device name - $DEVICE_NAMES" | tee -a $LOG
+				echo "$DEVICE_NAMES $MOUNT_POINTS $FILE_SYSTEMS is invalid. "|tee -a $LOG
+				return 1
+			fi
+		fi
+		ls -al /etc/fdmns/$DEVICE_NAMER | grep ">" | grep -w $FS > /dev/null 2>&1
+		if [ $? -eq 0 ]
+		then
+			echo "" | tee -a $LOG
+#			echo "$DEVICE_NAMES was specified as the partition on which the " | tee -a $LOG
+#			echo "miniroot file system is to reside. " | tee -a $LOG
+			echo "$DEVICE_NAMES was specified as partition for miniroot." | tee -a $LOG
+			echo "$DEVICE_NAMES $MOUNT_POINTS $FILE_SYSTEMS is invalid. " | tee -a $LOG
+			return 1
+		fi
+	fi
+fi
+
+echo $DEVICE_NAMES | grep "#" > /dev/null 2>&1
+x=$?
+if [ $x -eq 0 ]
+then
+	if test "$FILE_SYSTEMS" = "ufs"
+	then
+		echo "" | tee -a $LOG
+		echo "Invalid File system type specified." | tee -a $LOG
+		echo "$DEVICE_NAMES $MOUNT_POINTS $FILE_SYSTEMS is invalid. " | tee -a $LOG  
+		return 1
+	fi
+else
+	if test "$FILE_SYSTEMS" != "ufs"
+	then
+		echo "" | tee -a $LOG
+		echo "Invalid File system type specified." | tee -a $LOG
+		echo "$DEVICE_NAMES $MOUNT_POINTS $FILE_SYSTEMS is invalid. " | tee -a $LOG  
+                return 1
+        fi
+fi
+
+# Mount point checks to be entered.
+# We decide to mount the device. If unsuccesful.. we return.
+# Mounted point can be busy too. So what do we do. Return value is always 1.
+#
+# Check to ensure we are not checking for anything that is already
+# available. Only for fresh entries that are not already mounted.
+# Results may vary. Check if the mount point is the mount point for
+# our entry. 
+mount_p=`df | grep -w $MOUNT_POINTS | awk '{print $6}'`
+if test "$mount_p" = "$MOUNT_POINTS"
+then
+	# We have the mount point in the list.
+	# check if the entry of the other fields match this entry.
+	mount_x=`df | grep -w $MOUNT_POINTS | awk '{print $1}'`
+	if test "$FILE_SYSTEMS" = "advfs" 
+	then
+		if test "$mount_x" != "$DEVICE_NAMES"
+		then
+			echo "" | tee -a $LOG
+			echo "Invalid Mount point specified." | tee -a $LOG
+			echo "$DEVICE_NAMES $MOUNT_POINTS $FILE_SYSTEMS is invalid. " | tee -a $LOG  
+			return 1
+		fi
+		# Include check to ensure correct mount point for correct device name if 
+		# it exists in the df lists.	
+		mount_q=`df | grep -w $mount_x | awk '{print $6}'`
+		if test $mount_q != $MOUNT_POINTS 
+		then
+			# Invalid mount point was specified.
+			echo "" | tee -a $LOG
+			echo "Invalid Mount point specified." | tee -a $LOG
+			echo "$DEVICE_NAMES $MOUNT_POINTS $FILE_SYSTEMS is invalid. " | tee -a $LOG  
+			return 1
+		fi	
+	else
+		mount_x=`df | grep -w $MOUNT_POINTS | awk '{print $1}'`
+		if test "$mount_x" = "$DEVICE_NAMES"
+		then
+			#fine by us
+			already_mounted=1
+		else
+			echo "" | tee -a $LOG
+			echo "Invalid Mount point specified." | tee -a $LOG
+			echo "$DEVICE_NAMES $MOUNT_POINTS $FILE_SYSTEMS is invalid. " | tee -a $LOG  
+			return 1
+                fi
+		# Include check to ensure correct mount point for correct device name if 
+		# it exists in the df lists.	
+		mount_q=`df | grep -w $mount_x | awk '{print $6}'`
+		if test $mount_q != $MOUNT_POINTS 
+		then
+			# Invalid mount point was specified.
+			echo "" | tee -a $LOG
+			echo "Invalid Mount point specified." | tee -a $LOG
+			echo "$DEVICE_NAMES $MOUNT_POINTS $FILE_SYSTEMS is invalid. " | tee -a $LOG  
+			return 1
+		fi	
+	fi
+else
+	mount_x=`df | grep -w "$DEVICE_NAMES" | awk '{print $6}'`
+	if test X"$mount_x" != X
+	then
+		if test "$MOUNT_POINTS" != "$mount_x"
+		then
+			echo "" | tee -a $LOG
+			echo "Invalid Mount point specified." | tee -a $LOG
+			echo "$DEVICE_NAMES is mounted on $mount_x."
+			echo "$DEVICE_NAMES $MOUNT_POINTS $FILE_SYSTEMS is invalid. " | tee -a $LOG  
+			return 1
+		fi			
+	fi
+	
+	mount_x=`df | grep $MOUNT_POINTS | awk '{print $1}'`
+	if test "$mount_x" = "$MOUNT_POINTS" 
+	then
+		echo "" | tee -a $LOG
+		echo "Invalid Mount point specified." | tee -a $LOG
+		echo "$DEVICE_NAMES $MOUNT_POINTS $FILE_SYSTEMS is invalid. " | tee -a $LOG  
+		return 1
+	else
+		mount -t $FILE_SYSTEMS $DEVICE_NAMES $MOUNT_POINTS > /dev/null 2>&1
+		if [ $? -eq 0 ]
+		then
+			# mount was successful.
+			# QAR 51036; Removed the umount statement here. 
+			echo "mount successfull" > /dev/null
+		else
+			ls $MOUNT_POINTS > /dev/null 2>&1
+			if [ $? -ne 0 ]
+			then
+				echo "" | tee -a $LOG
+				echo "Invalid Mount point specified." | tee -a $LOG
+				echo "$DEVICE_NAMES $MOUNT_POINTS $FILE_SYSTEMS is invalid. " | tee -a $LOG  
+				return 1
+			else
+				# let the rest be deiced.
+				# Directory is present but we are not able to mount.
+				# Device can be busy.
+				echo "" >> $LOG
+			fi
+		fi
+	fi
+fi	
+#
+
+if test "$FILE_SYSTEMS" = "ufs" 
+then
+	
+        DEVICE_NAMER=`echo $DEVICE_NAMES | sed 's/\/dev\///'`
+	disklabel $DEVICE_NAMER > /dev/null 2>&1
+	if [ $? -ne 0 ]
+	then 
+		echo "" | tee -a $LOG
+		echo "Invalid device name - $DEVICE_NAMES." | tee -a $LOG  
+		echo "$DEVICE_NAMES $MOUNT_POINTS $FILE_SYSTEMS is invalid. " | tee -a $LOG  
+		return 1	
+	fi
+        DEVICE_NAMES=`echo $DEVICE_NAMES | sed 's/\/dev\///'`
+	# Usually we can get root and other stuff in the fstab file.
+	# But all the same .. we want to make sure of this.
+	x=`grep -w "$DEVICE_NAMES" /etc/fstab`
+	grep -w "$DEVICE_NAMES" /etc/fstab >/dev/null 2>&1
+	if [ $? -eq 0 ]
+	then
+		# we found it.. 
+		y=`echo $x | awk '{print $2}'`
+		if [ "$y" = "$MOUNT_POINTS" ]
+		then
+			# we have to check for file system field.
+			y=`echo $x | awk '{print $3}'`
+			if [ "$y" = "$FILE_SYSTEMS" ]
+			then
+				return 0
+			else 
+				if [ $OPT_S_FLAG = 1 ]
+				then
+					echo "" | tee -a $LOG
+					echo "This file system cannot be mounted. " | tee -a $LOG  
+					echo "$DEVICE_NAMES $MOUNT_POINTS $FILE_SYSTEMS is invalid. " | tee -a $LOG  
+					return 1
+				fi
+			fi
+		else
+			mount -t $FILE_SYSTEMS /dev/$DEVICE_NAMES $MOUNT_POINTS > /dev/null 2>&1
+			if [ $? -eq 0 ]
+			then 
+				umount $MOUNT_POINTS > /dev/null 2>&1
+				echo "" | tee -a $LOG
+!				echo "Required mount was successful." | tee -a $LOG  
+				return 0
+			else
+				echo "" | tee -a $LOG
+				echo "Unable to mount device specified " | tee -a $LOG  
+				echo "$DEVICE_NAMES $MOUNT_POINTS $FILE_SYSTEMS is invalid. " | tee -a $LOG  
+				return 1
+			fi
+		fi
+	else 
+		# it is not there in /etc/fstab.
+		# check if it already mounted 
+		mountx=`df | grep "$DEVICE_NAMES" | awk '{print $6}'`
+		if test "$mountx" = "$MOUNT_POINTS"
+		then
+			already_mounted=1
+		else	
+			mount -t $FILE_SYSTEMS /dev/$DEVICE_NAMES $MOUNT_POINTS > /dev/null 2>&1
+			if [ $? -eq 0 ]
+			then 
+				umount $MOUNT_POINTS > /dev/null 2>&1
+			else
+				echo "" | tee -a $LOG
+				echo "Unable to mount device specified " | tee -a $LOG  
+				echo "$DEVICE_NAMES $MOUNT_POINTS $FILE_SYSTEMS is invalid. " | tee -a $LOG  
+				return 1
+			fi
+		fi
+	fi	
+else
+	if test $FILE_SYSTEMS = "advfs" 
+	then 
+		x=`cat /etc/fstab | grep $DEVICE_NAMES`
+		if [ $? -eq 0 ]
+		then 
+                        y=`echo $DEVICE_NAMES | cut -d# -f1`
+                        z=`echo $DEVICE_NAMES | cut -d# -f2`
+			unalias ls
+                        ls -al /etc/fdmns/$y | grep ">" | awk '{print $9}' > /tmp/test.whole_advfs
+			exec 7< /tmp/test.whole_advfs	 # open descriptor and read line by line
+			while read -u7 temp 
+                        do
+				disklabel $temp > /dev/null 2>&1
+	       		        if [ $? -eq 0 ]
+		                then
+		                	continue
+       			        else
+					echo "" | tee -a $LOG
+					echo "$temp in /etc/fdmns/$y is invalid." | tee -a $LOG
+					echo "$DEVICE_NAMES $MOUNT_POINTS $FILE_SYSTEMS is invalid. " | tee -a $LOG  
+		       	        	return 1
+       		                fi
+			done
+                        exec 7<&-
+                        rm /tmp/test.whole_advfs
+                else
+                        # we will have to mount and test it out.
+			mountx=`df | grep "$DEVICE_NAMES" | awk '{print $6}'`
+			if test X"$mountx" != X 
+			then
+				if test $mountx = $MOUNT_POINTS
+				then
+					already_mounted=1
+				else	
+		       	                mount -t $FILE_SYSTEMS /dev/$DEVICE_NAMES $MOUNT_POINTS > /dev/null 2>&1
+       			                if [ $? -eq 0 ]
+       			                then
+       			                        umount $MOUNT_POINTS > /dev/null 2>&1
+       			                else
+						echo "" | tee -a $LOG
+#						echo "Unable to mount device specified " | tee -a $LOG  
+						echo "$DEVICE_NAMES $MOUNT_POINTS $FILE_SYSTEMS is invalid. " | tee -a $LOG  
+       			                        return 1
+       			                fi
+				fi
+			else
+		       		mount -t $FILE_SYSTEMS /dev/$DEVICE_NAMES $MOUNT_POINTS > /dev/null 2>&1
+       			        if [ $? -eq 0 ]
+       			        then
+       			                umount $MOUNT_POINTS > /dev/null 2>&1
+       			        else
+					echo "" | tee -a $LOG
+#					echo "Unable to mount device specified " | tee -a $LOG  
+					echo "$DEVICE_NAMES $MOUNT_POINTS $FILE_SYSTEMS is invalid. " | tee -a $LOG  
+       			                return 1
+       			        fi
+				
+			fi
+		fi
+	else
+		echo "" | tee -a $LOG
+		echo "$DEVICE_NAMES $MOUNT_POINTS $FILE_SYSTEMS is invalid. " | tee -a $LOG  
+		return 1
+	fi
+	
+fi
+return 0
+}
+
+
+
+# ********************************************************************************
+#
+# function collect_fs.
+#
+# This is the primary function to collect all the input of the user 
+# which he has entered in the file FSLIST.
+# All the disklabel_checks and disklabel_details are done and obtained 
+# here. Main function that does non-interactive collect_filesystem_information. 
+#
+# ********************************************************************************
+function collect_fs
+{
+integer count_line=1
+i=0			# count variable to dump in array.
+
+# Open the addlist file that has been specified.
+#
+exec 9<$FS_FILE 	# open descriptor and read line by line
+while read -u9 INFO_DEV MNT_PT FS_TYPE JUNK
+do
+
+# Check also to ensure that "#" is not present
+# in dev field first variable.
+
+INFO_DEV_TEST=`echo $INFO_DEV | cut -c -1`
+hash="#"
+if [[ $INFO_DEV_TEST = "$hash" ]]
+then
+        continue        # ignore this line.
+fi
+
+hash_start=`echo $JUNK | cut -c -1`
+if [[ "$hash_start" = "$hash" ]] || test X"$JUNK" = X
+then
+        print "\c" | tee -a $LOG  
+else
+        hash_test=`echo $MNT_PT | cut -c -1`
+        if [ $hash_test != $hash ]
+        then
+                hash_test=`echo $FS_TYPE | cut -c -1`
+                if [ $hash_test != $hash ]
+                then
+                        print "\c" | tee -a $LOG  
+                else
+                        echo "Line cannot contain less than 3 fields." | tee -a $LOG  
+                        echo "" | tee -a $LOG  
+                        echo "$INFO_DEV $MNT_PT $FS_TYPE." | tee -a $LOG  
+                        echo "Exiting btcreate." | tee -a $LOG  
+                        exit 97
+                fi
+        else
+                echo "" | tee -a $LOG  
+                echo "Line cannot contain less than 3 fields." | tee -a $LOG  
+                echo "$INFO_DEV $MNT_PT $FS_TYPE." | tee -a $LOG  
+                echo "" | tee -a $LOG  
+                echo "Exiting btcreate." | tee -a $LOG  
+                exit 91
+        fi
+        echo "No more than 3 parameters allowed. " | tee -a $LOG  
+        echo "Invalid input in entry $count_line of $FS_FILE" | tee -a $LOG  
+        echo "" | tee -a $LOG  
+        echo "$INFO_DEV $MNT_PT $FS_TYPE $JUNK." | tee -a $LOG  
+        echo "Exiting btcreate." | tee -a $LOG  
+        exit 97
+fi
+
+# if fields are less than 3.. problem...
+if test X"$FS_TYPE" = X  
+then
+	if test X"$MNT_PT" = X
+	then 
+		if test X"$INFO_DEV" = X
+		then
+			continue
+		else 
+			echo "" | tee -a $LOG
+			echo "Invalid input in entry $count_line of $FS_FILE" | tee -a $LOG  
+			error_funcs 33 $FS_FILE
+		fi
+	else
+		echo "" | tee -a $LOG
+		echo "Invalid input in entry $count_line of $FS_FILE" | tee -a $LOG  
+                error_funcs 33 $FS_FILE
+	fi
+else
+	#
+	# check for cases for `Unlawful Entry`.
+	# This can be caused by "*" being present in the entries.
+	#
+	case $INFO_DEV in
+		['*']* )  echo "Invalid input in entry $count_line of $FS_FILE" | tee -a $LOG
+			  echo "\"*\" cannot be present in a field. "| tee -a $LOG
+			  exit 88
+			;;
+		"" )	;;
+	esac
+
+	case $MNT_PT in
+                ['*']* )  echo "Invalid input in entry $count_line of $FS_FILE" | tee -a $LOG    
+			  echo "\"*\" cannot be present in a field. "| tee -a $LOG
+			  exit 88
+                        ;;
+		swap*) 	  echo "" | tee -a $LOG
+	  	       	  echo "swap partitions cannot be specified." | tee -a $LOG  
+		       	  echo "Invalid input in entry $count_line of $FS_FILE." | tee -a $LOG  
+		       	  exit 98
+			;;
+                "" )    echo "Here? ";;
+        esac
+
+	case $FS_TYPE in
+                ['*']* )  echo "Invalid input in entry $count_line of $FS_FILE" | tee -a $LOG    
+			  echo "\"*\" cannot be present in a field. "| tee -a $LOG
+			  exit 88
+                        ;;
+                "" )    ;;
+        esac
+
+
+
+	# read all info.. into array. 
+
+	dev_arr[i]=$INFO_DEV
+	mnt_arr[i]=$MNT_PT
+	fs_arr[i]=$FS_TYPE
+
+	# Line number and array index updated.
+
+	let count_line=count_line+1
+	let i=i+1
+fi
+done
+
+exec 9<&-		# close descriptor to fs_info file.
+
+# After everything has been read from the file ..
+# then we will match the list to check for duplicates.
+# We will then exit indicating the line numbers where it
+# matched. It will have to be a complete match. No halfway
+# matches.
+#
+# check_consistency function can be a generic one.
+# It will take the array name and number of elements
+# the array contains. The names of the arrays are fixed throughout
+#
+
+check_consistency dev_arr $i
+
+check_consistency mnt_arr $i
+
+check_fstype fs_arr $i
+
+# What we do now is to make the check to ensure that the files
+# Have been checked for and verified. So if it is succesful
+# We calculate the disklabel and other stuff and put it in 
+# the fs_info file.
+
+> $TMP_FSINFO
+exec 9<$FS_FILE 	# open descriptor and read line by line
+while read -u9 INFO_DEV MNT_PT FS_TYPE 
+do
+        # Get all info into some file..
+        # Check done previously for swap. Don't bother about that 
+	# now. Check also to ensure that "#" is not present
+        # in dev field first variable.
+
+        INFO_DEV_TEST=`echo $INFO_DEV | cut -c -1`
+
+        if [[ $INFO_DEV_TEST = "$hash" ]]
+        then
+                continue        # ignore this line.
+        fi
+
+	# Ignore blank lines too. 
+        if test X"$FS_TYPE" = X
+        then
+                if test X"$MNT_PT" = X
+                then
+                        if test X"$INFO_DEV" = X
+                        then
+                                continue
+                        fi
+                fi
+        fi
+	count_line=1
+	disklabel_checks $INFO_DEV $MNT_PT $FS_TYPE
+	if [ $? -eq 0 ]
+	then
+		echo "" | tee -a $LOG  
+		echo "Entry : $INFO_DEV $MNT_PT $FS_TYPE " | tee -a $LOG
+		echo "" | tee -a $LOG  
+		echo "Disklabel checks verified. " | tee -a $LOG  
+	else
+		echo "" | tee -a $LOG  
+                echo "Invalid input : Entry $count_line in $FS_FILE" | tee -a $LOG 
+                echo "" | tee -a $LOG  
+                exit 99
+	fi
+
+	disklabel_details $INFO_DEV $MNT_PT $FS_TYPE
+	if [ $? -eq 0 ]
+	then
+		echo "" | tee -a $LOG  
+		echo "Entry : $INFO_DEV $MNT_PT $FS_TYPE " | tee -a $LOG
+		echo "" | tee -a $LOG  
+		echo "File system checks verified. " | tee -a $LOG  
+	else
+		echo "" | tee -a $LOG  
+                echo "Invalid input : Entry $count_line in $FS_FILE" | tee -a $LOG 
+                echo "" | tee -a $LOG  
+                exit 99
+	fi
+	echo "" | tee -a $LOG
+        echo "$INFO_DEV $MNT_PT $FS_TYPE selected for back up." | tee -a $LOG  
+	count_line=count_line+1
+        if [ ${#MNT_PT} -gt 7 ]
+        then
+            if [ ${#INFO_DEV} -gt 14 ]
+            then
+                echo "\t$INFO_DEV $MNT_PT   $FS_TYPE" | tee -a $TMP_FSINFO > /dev/null
+            else
+                echo "\t$INFO_DEV  $MNT_PT        $FS_TYPE" | tee -a $TMP_FSINFO > /dev/null
+            fi
+        else
+            if [ ${#INFO_DEV} -gt 14 ]
+            then
+                echo "\t$INFO_DEV $MNT_PT         $FS_TYPE" |tee -a $TMP_FSINFO > /dev/null
+            else
+                echo "\t$INFO_DEV  $MNT_PT        $FS_TYPE"  |tee -a $TMP_FSINFO > /dev/null
+            fi
+        fi
+done
+exec 9<&-		# close descriptor to fs_info file.
+
+# Calculate the number of dumps.
+DUMPS=`wc -l $FS_INFO | awk '{print $1}'` 
+wc -l $FS_INFO | awk '{print $1}' > $NUMBER_DUMPS
+
+# return to where it was called. 
+# Disklabel_checks has worked fine now.
+#
+return
+} # end collect_fs
+
+
+# ********************************************************************************
+#
+# function check_files. 
+#
+# A generic function that checks whether the file exists or if it is 
+# empty or if it readable and so on. Goes to error_funcs on error.
+# In case anyone is pulling this out. Please remember that 
+# error_funcs  is a function that computes error codes.
+# and exits/returns with that code. 
+#
+# ********************************************************************************
+function check_files
+{
+FS_CHECK=$1
+
+#Check for fsfile variable which will be set.
+# Check if file exists.
+if [ ! -e $FS_CHECK ]
+then 
+	# exit 31.
+	error_funcs 31 $FS_CHECK
+fi
+# If fsfile is not a regular file...
+if [ ! -f $FS_CHECK ]
+then
+	# exit 32.
+	echo " Exiting BTCREATE." | tee -a $LOG  
+	error_funcs 32 $FS_CHECK
+	# I am leaving this option open and not merging with next 
+	# message primarily... because..
+	# I want to.
+else 
+	if [ ! -r $FS_CHECK ]
+	then 
+		# exit 40.
+		# File not readable by current process.
+		# Maybe permissions have been altered.
+		echo " Exiting BTCREATE." | tee -a $LOG  
+		error_funcs 40 $FS_CHECK
+	else 
+		check_empty=`wc -w $FS_CHECK | awk '{print $1}'`
+		if [ $check_empty -eq 0 ] 
+		# if the file is there and nothing in it.
+		# He uses the file but nothing is in there.
+		then 	
+			echo "" | tee -a $LOG
+			echo "File is blank." | tee -a $LOG  
+			return 1
+		fi
+	fi
+fi
+return 0
+}
+#end generic check for files.
+
+
+
+# ********************************************************************************
+#
+# Function do_noninteractive_check
+# checks for the file given is good. 
+# Then proceeds with its collect_fs information.
+# Part of non-interactive check. Collect_fs is called from here.
+#
+#
+# ********************************************************************************
+function do_noninteractive_check
+{
+check_files $FS_FILE
+if [ $? -eq 1 ]
+then
+	FS_BACKED=0
+# qar 48992 - message was modified.
+	echo "$FS_FILE is empty hence backed up nothing." | tee -a $LOG  
+	return
+else
+	# either there is junk or something is
+	# definitely wrong somewhere.
+	file_out=`file $FS_FILE | grep -w "text"`
+	if [ $? -eq 0 ]
+	then 
+		echo "" | tee -a $LOG
+		echo "$FS_FILE is of correct file type." | tee -a $LOG  
+	else
+		echo "" | tee -a $LOG
+		echo " Bad file type error." | tee -a $LOG  
+		error_funcs 45 $FS_FILE
+	fi
+	check_empty=`wc -w $FS_FILE | awk '{print $1}'`
+	if  [ $check_empty -lt 3 ]
+	then
+		# wrong info given.
+		echo "" | tee -a $LOG	
+		echo "Exiting BTCREATE" | tee -a $LOG  
+		error_funcs 48 $FS_FILE
+		#if there is something we want, We grab it.
+		#
+	else
+			collect_fs
+			# We do all error checking in collect_fs.
+	fi
+fi
+return
+} # end do_noninteractive check.
+
+# ***************************************************************************
+# FUNCTION : collect_filesystem_information
+# ***************************************************************************
+function collect_filesystem_information
+{
+VAR=
+ERROR=0
+
+if [ $OPT_S_FLAG -eq 1 ]
+then 
+	do_noninteractive_check
+	# This will either exit or do whatever it is supposed to do.
+	return
+fi
+
+# Interactive checks.
+
+FSTAB_FILE=/etc/fstab
+let QNUM=QNUM+1
+
+	2>&1;print "" | tee -a $LOG
+	2>&1;print "" | tee -a $LOG
+	2>&1;print "\t\tSELECTING FILE SYSTEMS
+
+You must specify which file systems you want to include on the tape 
+device.  Each entry consists of the device name, mount point, and 
+file system type separated by a space or tab as follows.
+
+	  device_name\t\tmount_point\t\tfs_type 
+
+To help with your selections, information about your local file 
+systems follows.
+" | tee -a $LOG
+
+#2>&1;print "\tDevice_Name\t\tMount_Point\t\tFS_Type" | tee -a $LOG
+exec 8<$FSTAB_FILE	# open /etc/fstab
+while read -u8 dev mnt fs junk
+do
+comments="#"
+commented=`echo $dev | cut -c -1`
+if [[ $commented = $comments ]]
+then 
+	continue
+fi
+echo $mnt | grep swap > /dev/null 2>&1
+if [ $? -eq 0 ] 
+then
+	continue	
+else
+	if test "$fs" = "ufs" || test "$fs" = "advfs"  
+	then
+		if [ ${#mnt} -gt 7 ]
+		then
+			if [ ${#dev} -gt 14 ] 
+			then
+				echo "\t$dev	$mnt		$fs" | tee -a $LOG
+			else
+				echo "\t$dev		$mnt		$fs" | tee -a $LOG
+			fi
+		else 
+			if [ ${#dev} -gt 14 ] 
+			then
+				echo "\t$dev	$mnt			$fs" | tee -a $LOG
+			else
+				echo "\t$dev		$mnt			$fs" | tee -a $LOG
+			fi
+		fi
+	fi
+fi
+done
+exec 8<&- 	# close /etc/fstab
+# 2>&1;cat /etc/fstab | grep -w advfs | awk '{print $1 "	""	" $2 "	""	" $3 "	"}' | tee -a $LOG
+
+# 2>&1;print ": \c" | tee -a $LOG
+2>&1;print "" | tee -a $LOG
+2>&1;print "Press the Return Key after each entry or at the prompt to end input." | tee -a $LOG
+while :
+do
+
+while :
+do
+2>&1;print "" | tee -a $LOG
+2>&1;print "Enter your selection: \c" | tee -a $LOG
+
+# Initialize variables to nothing
+total=0
+INFO_DEV=
+INFO_MNT=
+INFO_TYPE=
+FS_USED_SIZE=
+SIZE=30720
+INFO_CDEV=
+INFO_NUM=
+INFO_LABEL=
+# For advfs
+ADVFS_DISK=
+ADVFS_DOM_DIR=/etc/fdmns
+ADVFS_DOM_NAME1=
+ADVFS_DOM_NAME2=
+ADVFS_DNUM=
+ADVFS_RAWDEVICE=
+ADVFS_BDEVICE=
+ADVFS_DISK_NUM=
+ADVFS_ROOT="no"
+ADVFS_SLICE=
+ADVFS_VOL_NUM=
+SKIP="no"
+BLANK="no"
+FILE_ENTRY="full"
+INDEX=0
+
+read INFO_DEV INFO_MNT INFO_TYPE JUNK
+echo " $INFO_DEV $INFO_MNT $INFO_TYPE $JUNK "  >> $LOG
+echo "" >> $LOG
+
+if  test X"$JUNK" = X
+then
+	echo "" > /dev/null
+else 
+	echo "" | tee -a $LOG
+	echo "Incorrect entry.  Entry not to exceed the three fields specified. " |tee -a $LOG
+	continue
+fi
+    
+case "$INFO_DEV" in
+	"") BLANK="yes" 
+            break 
+	    ;;
+[qQ]|[qQ][uU][iI][tT])  if test X"$INFO_MNT" = X 
+			then
+				print | tee -a $LOG
+				2>&1;print "Exiting btcreate. "| tee -a $LOG
+				cleanall
+				exit 0
+			fi
+			;;
+	['*']*) if test X"$INFO_MNT" =  X
+	     then 
+		  echo "" | tee -a $LOG
+		  echo "Incorrect entry. Please specify all 3 fields. "
+	     else
+		  echo "" | tee -a $LOG
+		  echo "Incorrect entry. Please specify valid inputs."
+	     fi
+	    continue
+		;;
+	*) ;;
+esac
+
+case "$INFO_MNT" in
+	"") echo "" | tee -a $LOG 
+	    echo "Incorrect entry. Please specify all 3 fields. "
+	    continue
+	    ;;
+     swap*) echo "" | tee -a $LOG
+	    echo "Incorrect entry. \"swap\" cannot be specified to be backed up. "
+	    continue
+	    ;;
+    ['*']*) echo "" | tee -a $LOG
+	    echo "Incorrect entry. Please specify valid inputs."
+	    continue
+	    ;;
+	*) ;;
+esac
+case "$INFO_TYPE" in
+	"") 2>&1;print |tee -a $LOG
+	    echo "Incorrect entry. Please specify all 3 fields. "
+	    continue
+	   ;;
+    ['*']*) 2>&1;print |tee -a $LOG
+	    echo "Incorrect entry. Please specify valid inputs."
+	    continue
+		;;
+	*) ;;
+esac
+#
+if test "$BLANK" = "no" 
+then
+
+# If FS_INFO file is not empty then grep INFO_DEV in it, if it exists then
+# skip it, else add it.
+
+if [ -s $FS_INFO ]
+then
+	grep -w "$INFO_DEV" $FS_INFO > /dev/null 2>&1 
+	if [ $? = 0 ]
+	then
+		2>&1;print |tee -a $LOG
+		2>&1;print "$INFO_DEV already selected for backup."|tee -a $LOG
+		SKIP="yes"
+	else
+		SKIP="no"
+	fi     
+fi # 
+
+fi #
+
+if test "$SKIP" = "no"
+then
+	disklabel_checks $INFO_DEV $INFO_MNT $INFO_TYPE
+	if [ $? -ne 0 ]
+	then
+		ERROR=1
+	else
+		disklabel_details $INFO_DEV $INFO_MNT $INFO_TYPE
+		if [ $? -ne 0 ]
+		then
+			ERROR=1
+		fi
+	fi
+	if [ $ERROR -eq 1 ]
+	then
+		ERROR=0
+		continue
+	else
+		echo "" | tee -a $LOG
+        	echo "$INFO_DEV $INFO_MNT $INFO_TYPE selected for back up." | tee -a $LOG  
+	fi
+fi
+done
+
+while :
+do
+	2>&1;print |tee -a $LOG
+	if [ ! -s $FS_INFO ]
+	then
+		2>&1;print "   You chose not to include a file system on the tape device." | tee -a $LOG 
+		2>&1;print "   Is this correct (y/n) [y]:  \c"|tee -a $LOG
+	else
+		2>&1;print "   Have you completed you selections (y/n) [y]:  \c"|tee -a $LOG
+	fi
+	read ANS
+	echo "" >> $LOG
+	echo "$ANS" >> $LOG
+	case "$ANS" in
+			[yY]|[Yy][eE][sS]|"")	VAR="yes" 
+                     				break
+			  			;;
+		     		[nN]|[nN][oO]) 	VAR="no"
+			  			break
+			  			;;
+			[qQ]|[qQ][uU][iI][tT]) print | tee -a $LOG
+				 	   	 2>&1;print "Exiting btcreate. "| tee -a $LOG
+						 cleanall
+						 exit 0
+						 ;;
+				      ['*']*|*) echo "" | tee -a $LOG 
+						echo "Please specify either \"y\" or \"n\"" | tee -a $LOG  
+						continue
+						;;
+	esac
+done # do you want to enter
+
+case "$VAR" in
+	     no) ;;
+            yes) break
+		;;
+	      *) echo "Programmer erred. " | tee -a $LOG  
+		;;
+esac
+
+done # collect
+#Calculate the number_of_dumps
+DUMPS=`wc -l $FS_INFO | awk '{print $1}'`
+wc -l $FS_INFO | awk '{print $1}' > $NUMBER_DUMPS
+
+} 
+# end of collect_filesystem_information
+
+# ********************************************************************************
+#
+# function btcreate message.
+#
+# Prints the initial btcreate message on to the screen.
+#
+# ********************************************************************************
+function btcreate_message
+{
+if [ $INTER -eq 1 ]
+then
+	2>&1;print|tee -a $LOG	
+	2>&1;print "			BOOTABLE TAPE CREATION"|tee -a $LOG
+	2>&1;print|tee -a $LOG
+	2>&1;print "
+The btcreate utility creates a bootable Standalone System (SAS) 
+kernel on tape.  The SAS kernel has a built-in memory file 
+system (mfs), which contains the commands, files, and directories
+needed to restore the system image.  
+
+The btcreate utility prompts you for information.  Default answers,
+if applicable, are enclosed in square brackets ([]).  To select 
+a default answer, press the Return Key at the prompt.  Type q at 
+any prompt to exit the utility; any information you supplied up to 
+that point is ignored.
+
+The btcreate utility prompts you for the following:
+
+    -  name of the a kernel configuration file
+    -  disk partition to contain the SAS kernel
+    -  tape device to use for back up operations
+    -  list of file systems to back up
+    -  list of files and directories to back up
+
+" | tee -a $LOG
+
+	while :
+	do
+		print "Do you want to continue (y/n) [y]: \c" | tee -a $LOG
+		read PROCEED
+		echo $PROCEED >> $LOG
+		case $PROCEED in 
+			[yY]|[Yy][eE][sS]|"") break
+					      ;;
+			       [nN]|[nN][oO]) echo "" | tee -a $LOG 
+					      echo "Exiting btcreate." | tee -a $LOG	
+					      cleanall
+					      exit 0
+				  	      ;;
+			[qQ]|[qQ][uU][iI][tT])  print | tee -a $LOG
+					 	2>&1;print "Exiting btcreate. "| tee -a $LOG
+						cleanall
+						exit 0
+						;;
+				     ['*']*|*) echo "" | tee -a $LOG 
+					       echo "Please specify either \"y\" or \"n\"" | tee -a $LOG  
+						2>&1;print|tee -a $LOG	
+					       continue
+					       ;;
+		esac
+	done
+else
+	2>&1;print|tee -a $LOG	
+	2>&1;print "			BOOTABLE TAPE CREATION"|tee -a $LOG
+	2>&1;print|tee -a $LOG
+fi
+return
+}
+
+### Two functions added - ADPECP_0898
+
+# ******************************************************************************
+#
+# function collect_disk_space_info_interactive
+#
+# This function was added to provide the -d functionality in the
+# interactive mode of btcreate as well.
+#
+# ******************************************************************************
+
+function collect_disk_space_info_interactive
+{
+
+        echo "" | tee -a $LOG
+        print "\t\tSELECTING LOCATION FOR TEMPORARY FILES
+
+The btcreate utility requires 70120 (512 blocks) of disk in the
+/usr filesystem for the temporary files that are created during
+the process of bootable tape creation.
+If you have space constraints in the /usr file system then you
+can use disk space in filesystems other than the one /usr/sys is
+located on.
+When this flag is used all necessary temporary space needed by
+btcreate will be used in the specified directory.
+
+Answer yes if you want btcreate to use the space available in /usr/sys.
+Answer no if you want btcreate to use some other area for temp files.
+
+        " | tee -a $LOG
+
+        while :
+        do
+        print "Do you want temporary files to be created in /usr/sys ? (y/n) [y]: \c"
+        read READ_ANS
+        case $READ_ANS in
+                [yY]|[yY][eE][sS]|"") OPT_D_FLAG=0
+                                      return
+                                      ;;
+                       [nN]|[nN][oO]) OPT_D_FLAG=1
+                                     break
+                                     ;;
+                                  *) print "\n$READ_ANS is invalid \n"
+                                     continue
+                                     ;;
+        esac
+        done
+
+        while :
+        do
+        2>&1;print|tee -a $LOG
+        2>&1;print "Enter the location where you want the temporary
+            files to be created (for example /mnt/bt) []:  \c" | tee -a $LOG
+
+        TS=
+        read TS
+        echo "$TS" >> $LOG
+        case "$TS" in
+                   "") 2>&1;print|tee -a $LOG
+                       2>&1;print "You must specify a location before proceeding."|tee -a $LOG
+                       continue
+                       ;;
+           ['*']*|[.]) 2>&1;print|tee -a $LOG
+                       echo "\"$TS\" is invalid." | tee -a $LOG
+                       continue
+                       ;;
+[qQ]|[qQ][uU][iI][tT]) print | tee -a $LOG
+                       2>&1;print "Exiting btcreate. "| tee -a $LOG
+                       cleanall
+                       exit 0
+                       ;;
+                    *) break
+                       ;;
+        esac
+        done
+
+        if [ ! -e $TS ]
+        then
+                mkdir $TS > /dev/null 2>&1
+                if [ $? -ne 0 ]
+                then
+                        cleanall
+                        error_funcs 51
+                fi
+                CREATED_TMP_DIR=1
+        fi
+        USR_FILE_SYS=`/bin/df /usr/sys | grep -v File | awk '{print $6}'`
+        TMP_FILE_SYS=`/bin/df ${TS} | grep -v File | awk '{print $6}'`
+
+        if [ "$USR_FILE_SYS" = "$TMP_FILE_SYS" ]
+        then
+                2>&1;print "\n/usr/sys and $TS are in the same filesystem." |tee -a $LOG
+                2>&1;print "Using /usr/sys for temporary files." |tee -a $LOG
+                OPT_D_FLAG=0
+                TS=""
+                TMP_FILE_SYS=`/bin/df ${SYSBIN} | grep -v File | awk '{print $6}'`
+                DISK_TMP_SPACE=${SYSBIN}
+        else
+                DISK_TMP_SPACE=${TS}
+        fi
+
+}
+
+### Added for ADP ECP
+
+# ******************************************************************************
+#
+# function collect_disk_space_info.
+#
+# Check to make sure there is at least NEEDED_DISK_SPACE available
+# in the specified or default area.
+#
+# ******************************************************************************
+
+function collect_disk_space_info
+{
+
+        if [ $OPT_D_FLAG -eq 1 ]
+        then
+                if [ ! -e $dflag ]
+                then
+                        mkdir $dflag > /dev/null 2>&1
+                        if [ $? -ne 0 ]
+                        then
+                                cleanall
+                                error_funcs 51
+                        fi
+                        CREATED_TMP_DIR=1
+                fi
+
+                USR_FILE_SYS=`/bin/df /usr/sys | grep -v File | awk '{print $6}'`
+                TMP_FILE_SYS=`/bin/df ${dflag} | grep -v File | awk '{print $6}'`
+
+                if [ "$USR_FILE_SYS" = "$TMP_FILE_SYS" ]
+                then
+                        2>&1;print "\n/usr/sys and $dflag are in the same filesystem." |tee -a $LOG
+                        2>&1;print "Ignoring -d flag" |tee -a $LOG
+                        OPT_D_FLAG=0
+                        dflag=""
+                        TMP_FILE_SYS=`/bin/df ${SYSBIN} | grep -v File | awk '{print $6}'`
+                        DISK_TMP_SPACE=${SYSBIN}
+                else
+                        DISK_TMP_SPACE=${dflag}
+                fi
+        else
+                collect_disk_space_info_interactive
+        fi
+        AVAILABLE_DISK_SPACE=`/bin/df $DISK_TMP_SPACE | grep -v File | awk '{print $4}'`
+
+        if [ $AVAILABLE_DISK_SPACE -lt $NEEDED_DISK_SPACE ]
+        then
+                cleanall
+                error_funcs 50
+        fi
+        return
+}
+
+
+# ********************************************************************************
+#
+# function collect_sysname_info.
+#
+# Outputs the config file name and accepts if correct.
+# If the config file name is absent then it proceeds to ask
+# for more information.
+#
+# Non-interactive as well as interactive coded here.
+#
+# ********************************************************************************
+function collect_sysname_info
+{
+#
+# Get the hostname without the suffix and translate it to upper case.
+# 
+currents="."
+NAME=`uname -n | cut -d. -f1 | tr "[a-z]" "[A-Z]"`
+if [ $OPT_K_FLAG -eq 1 ]
+then 
+	dirx="/usr/sys/conf"
+	if [[ $kflag = *\** ]]
+	then 
+		echo "" | tee -a $LOG
+		echo "\"$kflag\" is invalid." | tee -a $LOG  
+                echo "Exiting btcreate." | tee -a $LOG  
+                exit 43
+	fi
+	SYSNAME=$kflag		# whatever came with the kflag
+				# and was set.
+
+	# check if it has the whole path set there.
+	SYSNAME1=$SYSNAME
+	dirname $SYSNAME1 > /dev/null 2>&1
+	if [ $? -ne 0 ]
+	then
+		echo "" | tee -a $LOG
+		echo "\"$kflag\" is invalid." | tee -a $LOG
+                echo "Exiting btcreate." | tee -a $LOG  
+		exit 43
+	else
+		echo $SYSNAME | grep "/" > /dev/null 2>&1
+		if [ $? -ne 0 ]
+		then
+			SYSNAME="$dirx/$SYSNAME"
+		fi
+	fi
+		
+	# check for validity
+	if [ -f $SYSNAME ] 
+	then 
+		if [ -r $SYSNAME ]
+		then 
+#			CONF_FILE=`basename $SYSNAME`
+			CONF_FILE=$SYSNAME
+			echo "" | tee -a $LOG
+			echo "" | tee -a $LOG
+			echo "Veryfying Kernel Configuration file... Done" | tee -a $LOG
+			return
+		else
+			echo "" | tee -a $LOG
+			echo "$SYSNAME not readable by current process." | tee -a $LOG  
+			exit 60
+		fi
+	else
+		echo "" | tee -a $LOG
+        	echo "\"$SYSNAME\" is invalid." | tee -a $LOG
+		echo "Exiting btcreate." | tee -a $LOG  	
+		exit 43
+	fi
+#	CONF_FILE=`basename $SYSNAME`
+	echo "Veryfying Kernel Configuration file... Done" | tee -a $LOG
+fi	
+#
+# if u are modifying the GENERIC, then save it to GENERIC.NEW and use that.
+#
+ls /usr/sys/conf/$NAME > /dev/null 2>&1
+if [ $? -ne 0 ]
+then
+	NAME=GENERIC
+else
+	tempx=`cat /usr/sys/conf/$NAME | grep -w ident | awk '{print $2}' | sed 's/"//g'`
+	if test "$tempx" != "$NAME"
+	then
+		NAME=GENERIC
+	fi
+fi	
+
+	
+# CONF_FILE is supposed be a global.
+CONF_FILE=$NAME
+SET_DIR=0
+xdir="/usr/sys/conf"
+CONF_FILE=$xdir/$NAME
+
+2>&1;print|tee -a $LOG
+2>&1;print|tee -a $LOG
+2>&1;print "\t\tSELECTING A KERNEL CONFIGURATION FILE 
+
+The kernel configuration file, located in the /usr/sys/conf directory, 
+defines the run-time behavior of the kernel.  The btcreate utility 
+uses this file to build the SAS kernel.  You must specify which kernel 
+configuration file to use. " | tee -a $LOG
+while :
+do
+2>&1;print|tee -a $LOG
+2>&1;print "Enter the name of the kernel configuration file [$NAME]:  \c" | tee -a $LOG
+
+	read CONF_FILE JUNK
+	CONF_FILE1=$CONF_FILE1
+	echo "$CONF_FILE $JUNK" >> $LOG
+	if test X"$JUNK" = X
+	then
+	case "$CONF_FILE" in
+		 $NAME|"") CONF_FILE=$xdir/$NAME
+		    break
+			;;
+     ['*']*|['.'])  echo "" | tee -a $LOG
+		    echo " \"$xdir/$CONF_FILE\" is invalid." | tee -a $LOG
+		    continue
+		    ;;
+[qQ]|[qQ][uU][iI][tT]) echo "" | tee -a $LOG
+		       echo "Exiting btcreate." | tee -a $LOG
+		       exit 0
+			;;
+		*)  dirname $CONF_FILE > /dev/null 2>&1
+		    if [ $? -ne 0 ]
+		    then
+		    	echo "" | tee -a $LOG
+		    	echo "\"$CONF_FILE\" is invalid." | tee -a $LOG
+		    	continue
+		    else
+		    	echo $CONF_FILE | grep "/" > /dev/null 2>&1
+		    	if [ $? -ne 0 ]
+		    	then
+		    		CONF_FILE="$xdir/$CONF_FILE"
+		    	fi
+		    fi
+		    
+		    if [ -f $CONF_FILE ]
+		    then 
+			if [ -r $CONF_FILE ]
+       		         then    
+				tempx=`cat $CONF_FILE | grep -w ident | awk '{print $2}' | sed 's/"//g'`
+				CONF_FILE=`basename $CONF_FILE`
+				if test "$tempx" != "$CONF_FILE" 
+				then
+					echo "" | tee -a $LOG
+					echo "\"$CONF_FILE\" is invalid." | tee -a $LOG
+				else 
+					CONF_FILE=$xdir/$CONF_FILE
+					break
+				fi
+       		         else
+				echo "" | tee -a $LOG
+				echo "A configuration file specified exists in $xdir directory," | tee -a $LOG  
+				echo "but is not readable by current process. " | tee -a $LOG  
+				continue
+			fi
+		    else
+				echo "" | tee -a $LOG
+				echo "\"$CONF_FILE\" is invalid." | tee -a $LOG
+				continue
+		    fi
+			;;
+	esac
+	else
+		echo "" | tee -a $LOG
+		echo "" | tee -a $LOG
+		echo "\"$CONF_FILE\" is invalid." | tee -a $LOG
+		# echo "Invalid Input. More than one word present. " | tee -a $LOG
+	fi
+done
+#
+# ------------ DONE ...... QUESTION 1 --------------
+# return to caller.
+# Nothing more to add.
+return
+}
+
+# ********************************************************************************
+#
+# function newfs_proceed
+#
+# Newfs is called after the summary. If there is a problem it returns
+# to Question 2.
+# If a sucess. Just proceed.
+# Non-interactive as well as interactive coded here.
+#
+# ********************************************************************************
+function newfs_proceed
+{
+MOUNTED=0
+if [ $OPT_M_FLAG -eq 1 ] 
+then
+	SCRATCH=$1
+	newfs_check $SCRATCH
+	if [ $NEWFS_CHECKER -eq 2 ]
+	then
+		echo "" | tee -a $LOG
+		if [ $MOUNTED -eq 1 ]
+		then
+			echo "$SCRATCH is invalid. " | tee -a $LOG
+		else
+			echo "$SCRATCH or an overlapping partition is open. " | tee -a $LOG
+			echo "$SCRATCH is invalid. " | tee -a $LOG
+		fi
+		exit 95
+	fi
+	return 0
+else
+	FS1=$1
+	newfs_check $FS1
+	if [ $NEWFS_CHECKER -eq 2 ]
+	then
+		if [ $MOUNTED -eq 1 ]
+		then
+			echo "$FS1 is invalid. " | tee -a $LOG
+			echo "Check the disklabel. " | tee -a $LOG
+		else 
+			echo "" | tee -a $LOG
+			echo "$FS1 or an overlapping partition is open. " | tee -a $LOG
+			echo "$FS1 is invalid. " | tee -a $LOG
+		fi
+		return 1
+	else 
+		return 0
+	fi	
+fi
+} #end code for newfs. This comes after summary.
+
+
+# ********************************************************************************
+#
+# function newfs_check 
+#
+# Checks to ensure whether newfs works on that particular partition specified
+# Overlapping may occur. Check before kernel is built
+#
+# ********************************************************************************
+function newfs_check 
+{
+part_newfs_check=$1
+#
+# disklabel will be able to get an error for open partition and others.
+# We will anyway have to set that to ufs and proceed.
+# Only in the case of interactive newfs, we will restore it back
+# if user sez no.
+#
+length_part=${#part_newfs_check}
+part_info=`echo $part_newfs_check | cut -c $length_part-`
+old_set=`disklabel $part_newfs_check | grep -w "$part_info:" | awk '{print $4}'`
+disklabel -F -s $part_newfs_check ufs > /dev/null 2>&1
+if [ $? -eq 0 ]
+then
+	NEWFS_CHECKER=0
+	disklabel -F -s $part_newfs_check $old_set > /dev/null 2>&1
+else
+	# restore old set back
+	disklabel -F -s $part_newfs_check $old_set > /dev/null 2>&1
+	# check if the filesystem specified is mounted.
+	if test "$old_set" = "AdvFS"
+	then
+		ls -aRl /etc/fdmns | grep $part_newfs_check > /dev/null 2>&1
+		if [ $? -eq 0 ]
+		then
+			echo "" | tee -a $LOG
+			echo "$part_newfs_check is mounted."
+			echo "If you want to use the device, please unmount it."
+			MOUNTED=1
+		else 
+			MOUNTED=0
+		fi
+	else
+		if test "$old_set" = "ufs"
+		then
+			df $part_newfs_check > /dev/null 2>&1
+			if [ $? -ne 0 ]
+			then
+				echo "" | tee -a $LOG
+				echo "$part_newfs_check is mounted."
+				echo "If you want to use the device, please unmount it."
+				MOUNTED=1
+			else 
+				MOUNTED=0
+			fi
+		else
+			# it is unused or swap.
+			MOUNTED=0
+		fi
+	fi
+	NEWFS_CHECKER=2
+	return 
+fi
+}
+
+# ********************************************************************************
+#
+# function newfs_creations.
+#
+# Does the newfs after all the work has been complete. And hoping for no
+# more errors.
+#
+# ********************************************************************************
+function newfs_creations
+{
+BM_BPI=16384            # bytes/inode on filesystem
+BM_FRAGSIZ=1024
+BM_CYL=16
+
+if [ $OPT_F_FLAG -eq 1 ]
+then
+        /sbin/newfs -F -i $BM_BPI -c $BM_CYL -s $SIZE -f $BM_FRAGSIZ $part_newfs_check
+	if [ $? -eq 0 ]
+	then
+		NEWFS_CHECKER=0
+		return
+	else
+		NEWFS_CHECKER=1
+		return
+	fi
+else
+        /sbin/newfs -i $BM_BPI -c $BM_CYL -s $SIZE -f $BM_FRAGSIZ $part_newfs_check
+	if [ $? -eq 0 ]
+	then
+		NEWFS_CHECKER=0
+		return
+	else
+		NEWFS_CHECKER=1
+		return
+	fi
+fi
+}
+
+
+# ********************************************************************************
+#
+# function size_check
+#
+# Calculation of the size of the partition required for bootable tape to work
+# ********************************************************************************
+function size_check
+{
+part_check=$1
+typeset -i block_size
+typeset -i min_size
+min_size=$SIZE
+part_section=
+
+length_part=${#part_check}
+part_section=`echo $part_check | cut -c $length_part-`
+block_size=`disklabel $part_check | grep -w "$part_section" | awk '{print $2}'`
+if [ $block_size -lt $min_size ]
+then
+	echo "" | tee -a $LOG
+	echo "Partition size is lesser than required. " | tee -a $LOG
+	return 1
+else
+	part_message="Partition size is sufficient."
+	return 0
+fi
+}
+
+# ********************************************************************************
+#
+# function collect_scratch_part_info
+#
+# No default to specify for the scratch partition.
+# Accepts the device specified for the scratch partition.
+# All this provided, the scratch partition is verified to be 
+# any partition other that root ( "/" ) , usr ( "/usr" ),
+# swap partitions and var ( "/var" ) .
+#
+# Non-interactive as well as interactive coded here.
+#
+# ********************************************************************************
+function collect_scratch_part_info
+{
+#
+# First check for MFS.
+#
+if [ $OPT_M_FLAG -eq 1 ]
+then
+case $mflag in
+	    [mM][fF][sS]) MFS_CHECK=1
+		    	  FS="mfs"
+			  echo " MFS checking in progress."
+			  return;
+			;;
+	 	       *) MFS_CHECK=0
+	                  ;;
+esac
+else
+
+
+	echo "" | tee -a $LOG
+	print "\t\tSELECTING MFS FILE SYSTEM OPTION
+
+You can build the miniroot file system on a memory file system(mfs)
+to save space on disk. A mfs file system is a UFS file system in 
+virtual memory. 
+
+Answer yes if you want to create the miniroot file system in memory.
+Answer no if you want to create the miniroot file system on disk.
+	
+	" | tee -a $LOG
+
+	while :
+	do
+	print "Do you want to use a MFS file system? (y/n) [y]: \c"
+	read READ_ANS
+	case $READ_ANS in
+		[yY]|[yY][eE][sS]|"") MFS_CHECK=1
+				      FS="mfs"
+       		                      return
+               		              ;;
+		       [nN]|[nN][oO]) MFS_CHECK=0
+				     break
+				     ;;
+				  *) print "\n$READ_ANS is invalid \n"
+				     continue
+				     ;;
+	esac
+	done
+fi
+
+str_dummy="0"
+#
+# Obtain the scratch partition information from the user.
+# Check also for the cases where it is root and whatnot.
+# It should not be root/swap/usr/var. Other than this it is fine.
+# It should not overlap either.
+#
+#------------ QUESTION 2 --------------
+reserved_list="/ /usr /var /usr/var"
+ERR=0
+if [  $OPT_M_FLAG -eq 1 ] 
+then 
+	if [[ $mflag = *\** ]]
+	then
+		echo "" | tee -a $LOG
+                echo "\"$mflag\" is not a valid disk partition." | tee -a $LOG  
+                echo "Exiting btcreate." | tee -a $LOG  
+                exit 44
+	fi
+
+        SCRATCH=`echo $mflag | sed 's/\/dev\///'`
+
+	LENFS=${#SCRATCH}
+ 	SCRATCH1=`echo $SCRATCH | cut -c $LENFS-`
+
+        disklabel $SCRATCH > /dev/null 2>&1
+        if [ $? -ne 0 ]
+        then
+		echo "" | tee -a $LOG
+                echo "\"$mflag\" is not a valid disk partition." | tee -a $LOG  
+                echo "Exiting btcreate." | tee -a $LOG  
+                exit 44
+        fi
+
+	echo $SCRATCH1 | grep -w "[a-z]" > /dev/null 2>&1 
+	if [ $? -eq 1 ]
+	then
+		echo "" | tee -a $LOG
+		echo " Specify a partition of the disk. Not the whole disk."| tee -a $LOG
+		exit 44
+	fi
+
+        # Now do the check.
+        # First check for swap.
+        #
+	y=${#SCRATCH}
+        x=`echo $SCRATCH | cut -c$y-`
+        disklabel $SCRATCH | tail -8 | grep -w "$x:" | grep "swap" > /dev/null 2>&1
+        if [ $? -eq 0 ]
+        then
+		echo "" | tee -a $LOG
+                echo "Partition cannot be root,swap,usr or var. " | tee -a $LOG  
+                exit 62
+        else
+		for i in ${reserved_list}
+		do
+                df "$i"  | grep "$SCRATCH" > /dev/null 2>&1
+                if [ $? -eq 0 ]
+                then
+			echo "" | tee -a $LOG
+                        echo "Partition cannot be root,swap,usr or var. " | tee -a $LOG  
+                        exit 66
+		else 
+			check_advfs=`df -t advfs | grep -w "$i" | awk '{print $1}'`
+			if test X"$check_advfs" != X 
+			then
+				adv_s=`echo $check_advfs | sed 's/[#]/ /' | awk '{print $1}'`
+				showfdmn $adv_s | grep $SCRATCH > /dev/null 2>&1
+				if [ $? -eq 0 ]
+				then
+					echo "" | tee -a $LOG
+       	        	        	echo "Partition cannot be root,swap,usr or var. " | tee -a $LOG  
+					exit 66
+				fi
+			fi
+                fi
+		done
+        fi
+	FS=$SCRATCH
+	umount /dev/$SCRACTCH > /dev/null 2>&1
+	echo " Unmounting requested scratch partition." >> $LOG
+	size_check $SCRATCH
+	if [ $? -eq 1 ]
+	then
+		echo "" | tee -a $LOG
+		exit 93	
+	fi
+	newfs_proceed $SCRATCH
+	NEWFS_CHECKER=0
+	echo "" | tee -a $LOG
+	echo "Veryfying Partition... Done" | tee -a $LOG
+	return
+fi
+
+2>&1;print|tee -a $LOG
+2>&1;print|tee -a $LOG
+2>&1;print "\t\tSELECTING A DISK PARTITION
+
+The commands and devices required to restore the system image are 
+contained in the miniroot file system.  You must specify the disk 
+partition where the miniroot file system is to reside.  The minimum
+size required is 30720 blocks (512 bytes per block).  " | tee -a $LOG
+
+while :
+do
+2>&1;print|tee -a $LOG
+2>&1;print "Enter the disk partition (for example, rz2e) []:  \c" | tee -a $LOG
+
+FS=
+read FS
+echo "$FS" >> $LOG
+case "$FS" in
+	"") 2>&1;print|tee -a $LOG
+	    2>&1;print "You must specify a disk partition before proceeding."|tee -a $LOG
+	    continue
+	   ;; 
+	['*']*|[.]) 2>&1;print|tee -a $LOG
+		echo "\"$FS\" is invalid." | tee -a $LOG
+		continue
+		;;
+[qQ]|[qQ][uU][iI][tT]) print | tee -a $LOG
+ 	   	 2>&1;print "Exiting btcreate. "| tee -a $LOG
+		 cleanall
+		 exit 0
+		 ;;
+	*) FS1=`echo $FS | sed 's/\/dev\///'`
+	   # make check here to ensure that it is a partition.
+	   LENFS=${#FS1}
+ 	   FS2=`echo $FS1 | cut -c $LENFS-`
+	   
+	   disklabel $FS1 > /dev/null 2>&1
+           if [ $? -ne 0 ]
+           then
+		 echo "" | tee -a $LOG
+		 echo "\"$FS\" is invalid." | tee -a $LOG
+		 echo "Check disklabel." | tee -a $LOG
+		 continue
+           fi
+	   echo $FS2 | grep -w "[a-z]" > /dev/null 2>&1 
+	   if [ $? -eq 1 ]
+	   then
+		echo "" | tee -a $LOG
+		echo " Specify a partition of the disk. Not the whole disk."
+		continue
+	   fi
+	   y=${#FS1}
+       	   x=`echo $FS1 | cut -c$y-`
+       	   disklabel $FS1 | tail -8 | grep -w "$x:" | grep -w "swap"  > /dev/null 2>&1
+       	   if [ $? -eq 0 ]
+       	   then
+		  echo "" | tee -a $LOG
+       		  echo "The partition specified cannot be root,swap,usr or var. " | tee -a $LOG  
+		  continue
+       	   else
+		for y in ${reserved_list}
+		do
+			ERR=0             # mik_0910
+       	        	df "$y" | grep "$FS1" > /dev/null 2>&1
+       	         	if [ $? -eq 0 ]
+	       	        then
+				echo "" | tee -a $LOG
+       		                echo "The partition specified cannot be root,swap,usr or var. " | tee -a $LOG  
+				ERR=1
+				break
+			else
+				check_advfs=`df -t advfs | grep -w "$y" | awk '{print $1}'`
+				if test X"$check_advfs" != X 
+				then
+					adv_s=`echo $check_advfs | sed 's/[#]/ /' | awk '{print $1}'`
+					showfdmn $adv_s | grep $FS1 > /dev/null 2>&1
+					if [ $? -eq 0 ]
+					then
+						echo "" | tee -a $LOG
+       		                		echo "The partition specified cannot be root,swap,usr or var. " | tee -a $LOG  
+						ERR=1
+						break
+					else
+						ERR=0
+						continue
+					fi
+				else
+					continue
+				fi			
+       		        fi
+		done
+       	   fi
+	   if [ $ERR -eq 1 ]
+	   then
+		continue
+	   fi
+		;;	
+esac
+size_check $FS1
+if [ $? -eq 1 ]
+then
+	echo "" | tee -a $LOG
+	echo " Partition must have size greater than $SIZE blocks." | tee -a $LOG
+	continue
+fi
+newfs_proceed $FS1
+if [ $? -ne 0 ]
+then
+	NEWFS_CHECKER=0
+	continue
+else
+	NEWFS_CHECKER=0
+	break
+fi
+done
+#------------ DONE ..... QUESTION 2 --------------
+# return back..
+FS=$FS1
+return
+}
+
+# ********************************************************************************
+#
+# function collect_tape_info.
+#
+# Request for a tape device that is currently being used by the system
+# issuing the btcreate command.
+# If the device is absent then user has to abort the process or enter the right
+# device.
+#
+# Non-interactive as well as interactive coded here.
+#
+# ********************************************************************************
+function collect_tape_info
+{
+# This function gets the tape device that is attached to the system.
+#------------ QUESTION 3 --------------
+if [ $OPT_T_FLAG -eq 1 ]
+then 
+	if [[ $tflag = *\** ]]
+	then
+		echo "" | tee -a $LOG
+        	echo "Specified tape device \"$tflag\" is not available." | tee -a $LOG  
+		echo "Exiting btcreate." | tee -a $LOG  	
+		exit 61
+	fi
+	DEF_TAPE=`echo $tflag | sed 's/\/dev\///'`
+	echo "" | tee -a $LOG 
+	print "Verifying tape... \c" | tee -a $LOG  
+	/sbin/mt -f /dev/$DEF_TAPE rew
+	if [ $? -eq 0 ]
+	then 
+		print " Done. " | tee -a $LOG  
+		TAPE=$DEF_TAPE
+	else
+		echo "" | tee -a $LOG
+        	echo "Specified tape device \"$tflag\" is not available." | tee -a $LOG  
+		echo "Exiting btcreate." | tee -a $LOG  	
+		exit 61
+	fi
+	TAPE="$DEF_TAPE"
+	return
+fi
+
+2>&1; print "" | tee -a $LOG
+2>&1; print "" | tee -a $LOG
+2>&1; print "\t\tSELECTING A TAPE DEVICE
+
+The SAS kernel and file systems are backed up to a no rewind tape
+device.  You must specify which tape device is to contain the kernel
+and file systems.  " | tee -a $LOG
+
+while :
+do
+
+2>&1; print "" | tee -a $LOG
+2>&1;print "Enter the name of the tape device [nrmt0h]:  \c" | tee -a $LOG
+
+read TAPE1
+echo "$TAPE1" >> $LOG
+TAPE2=$TAPE1
+case "$TAPE1" in
+	""| "nrmt0h" | "rmt0h") TAPE1="nrmt0h"
+				TAPE=$TAPE1
+				TAPE2=$TAPE1
+				TAPE1=`echo $TAPE1 | sed 's/\/dev\///'`
+				echo "" | tee -a $LOG
+				print "Verifying tape... \c" | tee -a $LOG  
+			     	/sbin/mt -f /dev/$TAPE1 rew
+			     	if [ $? -eq 0 ]
+       			   	then
+					print " Done. " | tee -a $LOG  
+					TAPE=$TAPE1
+					break
+          			else
+					echo "" | tee -a $LOG
+               				echo "\"$TAPE2\" is invalid." | tee -a $LOG
+					continue
+           			fi
+				break
+				;;
+		  ['*']*|['.']*) 2>&1;print|tee -a $LOG
+               			echo "\"$TAPE2\" is invalid." | tee -a $LOG
+                                continue
+				;;			
+          [qQ]|[qQ][uU][iI][tT]) print | tee -a $LOG
+   		 	   	 2>&1;print "Exiting btcreate. "| tee -a $LOG
+				 cleanall
+				 exit 0
+				 ;;
+			     *) TAPE1=`echo $TAPE1 | sed 's/\/dev\///'`
+				echo "" | tee -a $LOG
+				print "Verifying tape... \c" | tee -a $LOG  
+			     	/sbin/mt -f /dev/$TAPE1 rew
+			     	if [ $? -eq 0 ]
+       			   	then
+					print " Done. " | tee -a $LOG  
+					TAPE=$TAPE1
+					break
+          			else
+					echo "" | tee -a $LOG
+               				echo "\"$TAPE2\" is invalid." | tee -a $LOG
+					continue
+           			fi
+				;;
+esac
+done
+#------------ QUESTION 3 --------------
+
+}
+
+
+# ********************************************************************************
+#
+# function collect_addfile_info.
+#
+# Checks for the integrety of the addlist file.
+# And calls process_add_files if non-interactive or interactive_add_commands
+# if interactive.
+# If the script is being run in a non-interactive mode and the addlist file
+# ( the a option ) is not specified, then no files are added to the miniroot
+# file system
+# Non-interactive as well as interactive coded here.
+#
+# ********************************************************************************
+function collect_addfile_info
+{
+if [ $OPT_A_FLAG -eq 1 ] 
+then 
+	check_files $ADDLIST
+	process_add_files
+	return
+else 
+	if [ $NON_INTER -eq 1 ]
+	then
+		echo "" | tee -a $LOG
+		echo "No files added to the miniroot file system." | tee -a $LOG  
+		echo "" | tee -a $LOG  
+		return
+	fi
+fi
+
+# call interactive_add_commands since that is supposed to take care of all our stuff.
+
+interactive_add_commands
+
+return
+}
+
+# ********************************************************************************
+#
+# function process_request.
+#
+# Validation of the question and calling the other functions.
+#
+# ********************************************************************************
+function process_request
+{
+return_request=0
+case $REQUEST in
+	[yY]|[yY][eE][sS]) if [ $OPT_K_FLAG -eq 1 ]
+                           then
+                                 OPT_K_FLAG=0
+                           fi 
+                           if [ $OPT_M_FLAG -eq 1 ]
+                           then
+                                 OPT_M_FLAG=0
+                           fi 
+                           if [ $OPT_T_FLAG -eq 1 ]
+                           then
+                                 OPT_T_FLAG=0
+                           fi 
+                           if [ $OPT_S_FLAG -eq 1 ]
+                           then
+                                 OPT_S_FLAG=0
+                           fi 
+                           if [ $OPT_A_FLAG -eq 1 ]
+                           then
+                                 OPT_A_FLAG=0
+                           fi 
+                           if [ $OPT_D_FLAG -eq 1 ]   # ADPECP_0898
+                           then
+                                 OPT_D_FLAG=0
+                           fi
+                           ;;
+	 [nN]|[nN][oO]|"") returned_request=0
+			   return
+			   ;;
+    [qQ]|[qQ][uU][iI][tT]) print | tee -a $LOG
+   		 	   2>&1;print "Exiting btcreate. "| tee -a $LOG
+			   cleanall
+			   exit 0
+			   ;;
+		 ['*']*|*) returned_request=1
+			   return
+			   ;;
+esac
+
+### Added dflag - ADPECP_0898
+case $1 in 
+        "dflag") collect_disk_space_info
+             ;;
+	"kflag") collect_sysname_info
+	     ;;
+	"mflag") collect_scratch_part_info
+	     ;;
+	"tflag") collect_tape_info
+	     ;;
+	"sflag") echo "" | tee -a $LOG
+	     if [ $DUMPS -gt 0 ]
+	     then
+		     echo "The list of file systems specified for back up discarded." | tee -a $LOG
+	     fi
+	     > $FS_INFO
+             > $ADVFS_INFO
+             > $DISKLABEL_INFO
+             > $DISKLABEL_LINES
+             > $TMP_FSINFO
+	     collect_filesystem_information
+	     ;;
+	"aflag") if [ $COUNT_ADDED -gt 0 ]
+	     then
+		    echo "The list of files & directories specified for backup discarded" | tee -a $LOG
+	     fi
+	     collect_addfile_info
+	     ;;
+[qQ]|[qQ][uU][iI][tT])  print | tee -a $LOG
+	     2>&1;print "Exiting btcreate. "| tee -a $LOG
+	     cleanall
+	     exit 0
+	     ;;
+	['*']*|*) echo "uncoded options"
+	     exit 1996	
+	     ;;
+esac
+return
+}
+	
+
+# ********************************************************************************
+#
+# function repeat_specifics.
+#
+# After the summary is thru', and the user has entered a "no" to the list.
+# He will be asked to re-enter what he wants to change.
+#
+# ********************************************************************************
+function repeat_specifics
+{
+
+	while :
+	do
+		2>&1;print | tee -a $LOG
+		2>&1;print "The kernel configuration file specified is $CONF_FILE" |tee -a $LOG
+		2>&1;print "Do you want to change the kernel configuration file (y/n) [n]: \c" |tee -a $LOG
+		read REQUEST
+		echo $REQUEST >> $LOG
+		process_request kflag
+		if [ $returned_request -eq 1 ]
+		then
+			continue
+		else
+			break
+		fi
+	done
+
+	while :
+	do
+		2>&1;print | tee -a $LOG
+                if [ $FS = "mfs" ]
+                then
+		 2>&1;print "The file system for miniroot is $FS" |tee -a $LOG
+                else
+		 2>&1;print "The disk partition specified is $FS" |tee -a $LOG
+                fi
+
+                if [ $FS = "mfs" ]
+                then
+		  2>&1;print "Do you want to change the file system for the miniroot (y/n) [n]: \c" |tee -a $LOG
+                else
+		  2>&1;print "Do you want to change the disk partition (y/n) [n]: \c" |tee -a $LOG
+                fi
+
+		read REQUEST
+		echo $REQUEST >> $LOG
+		process_request mflag
+		if [ $returned_request -eq 1 ]
+		then
+			continue
+		else
+			break
+		fi
+	done
+
+### Added for ADPECP_0898
+
+        while :
+        do
+                2>&1;print | tee -a $LOG
+                2>&1;print "The directory specified for temporary files is $DISK_TMP_SPACE" |tee -a $LOG
+                2>&1;print "Do you want to change the temporary file location (y/n) [n]: \c" |tee -a $LOG
+                read REQUEST
+                echo $REQUEST >> $LOG
+                process_request dflag
+                if [ $returned_request -eq 1 ]
+                then
+                        continue
+                else
+                        break
+                fi
+        done
+
+	while :
+	do
+		2>&1;print | tee -a $LOG
+		2>&1;print "The tape device specified is $TAPE" |tee -a $LOG
+		2>&1;print "Do you want to change the tape device (y/n) [n]: \c" |tee -a $LOG
+		read REQUEST
+		echo $REQUEST >> $LOG
+		process_request tflag
+		if [ $returned_request -eq 1 ]
+		then
+			continue
+		else
+			break
+		fi
+	done
+
+	while :
+	do
+		2>&1;print | tee -a $LOG
+		INDEX=1
+		NUM=$DUMPS
+		if [ $NUM -eq 0 ]
+		then
+			2>&1;print "File systems were not selected to be backed up." |tee -a $LOG
+		else
+			2>&1;print "The following lists the file systems to be backed up." |tee -a $LOG
+
+			while [ "$INDEX" -le "$NUM" ]
+			do
+				echo "${INDEX}p" | /sbin/ed -s $FS_INFO > FILE1
+			        read EX_DEV EX_MNT EX_TYPE EX_SIZE EX_CDEV < FILE1
+# Use the other format. Painful but this is it.
+                		if [ ${#EX_MNT} -gt 7 ]
+	                	then
+       		                	if [ ${#EX_DEV} -gt 14 ]
+       		                	then
+       		                       		echo "\t$EX_DEV	$EX_MNT	$EX_TYPE	$EX_SIZE" | tee -a $LOG
+       		                 	else
+       		                        	echo "\t$EX_DEV		$EX_MNT		$EX_TYPE	$EX_SIZE" | tee -a $LOG
+       		                 	fi
+       		         	else
+       		                 	if [ ${#EX_DEV} -gt 14 ]
+       		                 	then
+       		                        	echo "\t$EX_DEV	$EX_MNT		$EX_TYPE	$EX_SIZE" | tee -a $LOG
+       		                 	else
+       		                        	echo "\t$EX_DEV		$EX_MNT		$EX_TYPE	$EX_SIZE" | tee -a $LOG
+       		                 	fi
+       		         	fi
+			        rm FILE1
+			        let INDEX=INDEX+1
+			done
+		fi
+		if [ $NUM -eq 0 ]
+		then 
+			2>&1;print "Do you want to add file systems (y/n) [n]: \c" |tee -a $LOG
+		else
+			2>&1;print "" | tee -a $LOG
+			2>&1;print "Do you want to change this list (y/n) [n]: \c" |tee -a $LOG
+		fi
+		read REQUEST
+		echo $REQUEST >> $LOG
+		process_request sflag
+		if [ $returned_request -eq 1 ]
+		then
+			continue
+		else
+			break
+		fi
+	done
+
+	while :
+	do
+		2>&1;print | tee -a $LOG
+		if test $ADDANS = "no"
+		then
+			2>&1;print "No files or directories were specified to be backed up." |tee -a $LOG
+			2>&1;print "Do you want to add files or directories to the miniroot" | tee -a $LOG
+			2>&1;print "file system (y/n) [n]: \c"
+		else
+			2>&1;print "The following lists the files & directories to include on the " |tee -a $LOG
+			2>&1;print "miniroot file system." |tee -a $LOG
+			print_addlist_input | tee -a $LOG
+			echo "" | tee -a $LOG
+			2>&1;print "Do you want to change this list (y/n) [n]: \c"
+		fi
+		read REQUEST
+		echo $REQUEST >> $LOG
+		process_request aflag
+		if [ $returned_request -eq 1 ]
+		then
+			continue
+		else
+			break
+		fi
+	done
+
+return
+}
+
+
+# ********************************************************************************
+#
+# function Set_Inter.
+#
+# The ball starts rolling from here. 
+# Calls all the functions one by one.
+#
+# The summary portion is done here.  This process of user inputs or whatever
+# is done until the user sez yes to the summary or if it is in the 
+# non-interactive mode
+#
+# ********************************************************************************
+function Set_Inter 
+{
+# Both the Interactive and non-interactive stuff are 
+# sparked off from this function.
+# Checks have to be made in the required functions only.
+#
+Finished_Queries=1
+
+if [ $NON_INTER -eq 1 ]
+then
+	# We are now running in Non interactive mode.
+	btcreate_message
+fi
+
+if [ $NUM_AT_MESSAGE -eq 0 ] 
+then 
+	btcreate_message
+fi
+collect_sysname_info	
+if [ $NUM_AT_MESSAGE -eq 1 ] 
+then 
+	btcreate_message
+fi
+collect_scratch_part_info
+
+### Added for ADPECP_0898
+if [ $NUM_AT_MESSAGE -eq 5 ]
+then
+        btcreate_message
+fi
+collect_disk_space_info
+
+if [ $NUM_AT_MESSAGE -eq 2 ] 
+then 
+	btcreate_message
+fi
+collect_tape_info
+if [ $NUM_AT_MESSAGE -eq 3 ] 
+then 
+	btcreate_message
+fi
+collect_filesystem_information
+if [ $NUM_AT_MESSAGE -eq 4 ] && [ $NON_INTER -eq 0 ] 
+then 
+	btcreate_message
+fi
+collect_addfile_info
+
+if [ $INTER = 1 ]
+then
+	while :
+	do
+
+	if [ $DUMPS -eq 0 ] 
+	then
+		FILEANS="no"
+	else
+		FILEANS="yes"
+	fi
+	2>&1;print|tee -a $LOG
+	2>&1;print|tee -a $LOG
+	2>&1;print "\t\tVERIFYING USER INPUT"|tee -a $LOG
+	2>&1;print "
+
+This section summarizes your selections.  You have the option 
+of accepting or modifying any selection.  If you want to exit
+the utility discarding all information gathered, type a q at
+the prompt.
+
+" |tee -a $LOG
+	2>&1;print "\tKernel Configuration File specified	: $CONF_FILE"|tee -a $LOG
+	2>&1;print "\tDisk Partition 				: $FS" | tee -a $LOG
+	2>&1;print "\tTape Drive 				: $TAPE"|tee -a $LOG
+        2>&1;print "\tFile systems included			: $FILEANS" |tee -a $LOG
+	2>&1;print "\tMiniroot customizations			: $ADDANS"|tee -a $LOG
+        INDEX=1
+        NUM=$DUMPS
+	if [ $DUMPS -gt 0 ]
+	then
+        	2>&1;print|tee -a $LOG
+        2>&1;print "\tThe following file systems were specified for back up:" |tee -a $LOG
+	print "" | tee -a $LOG
+	print "\tDevice_Name\t     Mount_Point     File_Type   Size" | tee -a $LOG
+        > $TMP_FSINFO
+	while [ "$INDEX" -le "$NUM" ]
+	do
+        	echo "${INDEX}p" | /sbin/ed -s $FS_INFO > FILE1
+		read EX_DEV EX_MNT EX_TYPE EX_SIZE EX_CDEV < FILE1
+                if [ ${#EX_MNT} -gt 7 ]
+                then
+                        if [ ${#EX_DEV} -gt 14 ]
+                        then
+                                echo "\t$EX_DEV $EX_MNT   $EX_TYPE      $EX_SIZE" | tee -a $LOG
+                                echo "\t$EX_DEV $EX_MNT   $EX_TYPE" | tee -a $TMP_FSINFO > /dev/null
+                        else
+                                echo "\t$EX_DEV  $EX_MNT        $EX_TYPE        $EX_SIZE" | tee -a $LOG
+                                echo "\t$EX_DEV  $EX_MNT        $EX_TYPE" |tee -a $TMP_FSINFO > /dev/null
+                        fi
+                else
+                        if [ ${#EX_DEV} -gt 14 ]
+                        then
+                                echo "\t$EX_DEV $EX_MNT         $EX_TYPE        $EX_SIZE" | tee -a $LOG
+                                echo "\t$EX_DEV $EX_MNT         $EX_TYPE" |tee -a $TMP_FSINFO > /dev/null
+                        else
+                                echo "\t$EX_DEV  $EX_MNT                $EX_TYPE        $EX_SIZE" | tee -a $LOG
+                                echo "\t$EX_DEV  $EX_MNT        $EX_TYPE"  |tee -a $TMP_FSINFO > /dev/null
+                        fi
+                fi
+		rm FILE1
+		let INDEX=INDEX+1
+	done
+	INDEX=1
+	fi
+        if test $ADDANS = "yes"
+        then
+        	2>&1;print|tee -a $LOG
+        	2>&1;print "\tThe following files will be available on miniroot:" | tee -a $LOG
+                print_addlist_input | tee -a $LOG
+        fi
+
+	while :
+	do
+	2>&1;print|tee -a $LOG
+	2>&1;print "\tAre the answers correct? (y/n) [y]:  \c"|tee -a $LOG
+	read ANS
+	echo $ANS >> $LOG
+        case "$ANS" in
+	[yY]|[yY][eE][sS]|"")	Finished_Queries=1
+				break
+               			;;
+               [nN]|[nN][oO]) 	2>&1;print "" | tee -a $LOG  
+				2>&1;print "" | tee -a $LOG   
+        			Finished_Queries=0
+				QNUM=0
+				break
+               			;;
+	[qQ]|[qQ][uU][iI][tT])  print | tee -a $LOG
+				2>&1;print "Exiting btcreate. "| tee -a $LOG
+				cleanall
+				exit 0
+				;;
+        	   ['*']*|*)   	2>&1;print | tee -a $LOG 
+				2>&1;print "\tValid answers are y or n."|tee -a $LOG
+				continue
+                		;;
+        esac
+	done # answers while loop
+	if [ $Finished_Queries -eq 0 ] 
+	then
+		repeat_specifics
+		continue
+	else
+		2>&1; print "\n\n\tProceeding to create Bootable tape..."
+		2>&1; print | tee -a $LOG
+		if [  $MFS_CHECK -eq 0 ]
+		then
+		newfs_proceed $FS
+		newfs_creations $FS
+		if [ $NEWFS_CHECKER -eq 1 ]
+		then
+			if [ $OPT_F_FLAG -eq 1 ]
+			then
+				echo "" | tee -a $LOG
+				echo "$FS input is invalid. " | tee -a $LOG
+				echo "Specify another partition. " | tee -a $LOG
+				continue
+			else
+				echo "" | tee -a $LOG
+				#echo "$FS will not be used. " | tee -a $LOG
+				echo "User did not proceed with the newfs operation. ">> $LOG
+				continue
+			fi
+		else
+			echo "" | tee -a $LOG
+			echo "Successful completion of newfs operation on $FS. " | tee -a $LOG
+			FS1=$FS
+			return 0
+		fi
+		else
+			return 0
+		fi 
+	fi
+	done #answers summary loop.
+else
+# enter the newfs work here too. Non-interactive.
+# Will have to exit.	
+	2>&1; print | tee -a $LOG
+	if [ $MFS_CHECK -eq 0 ]
+	then
+	newfs_proceed $FS
+	newfs_creations $FS
+	if [ $NEWFS_CHECKER -eq 1 ]
+	then
+		echo "" | tee -a $LOG
+		echo "$FS input is invalid. " | tee -a $LOG
+		echo "Specify another partition. " | tee -a $LOG
+		exit 81
+	else
+		echo "" | tee -a $LOG
+		echo "Successful completion of newfs operation on $FS. " | tee -a $LOG
+		FS1=FS
+	fi
+	fi 
+fi
+#
+return
+}
+
+
+# ***************************************************************************
+#
+# Main Program
+#
+# Pre-Conditions needed before invoking the script
+# 1. To be executed as root.
+# 2. config file name to create a kernel.
+# 3. At least 120000(512-blocks) size available on /usr on this system.
+# 4. Tape drive connected to this system.
+# 5. Filesystems to be backed up on the tape.
+#
+# ***************************************************************************
+
+# Standard digital UNIX PATH is set if SVE is present.
+#set -x
+LOG=/var/adm/btcreate.log
+mpoint_fdfs="/dev/fd"
+
+if test "$CMD_ENV" = "svr4"
+then
+	export CMD_ENV=
+	PATH=/sbin:/usr/sbin:/usr/bin:/usr/ccs/bin:/usr/bin/X11:/usr/local:/usr/sys/bin:/etc:
+else
+	# am setting PATH otherwise too. 
+	PATH=/sbin:/usr/sbin:/usr/bin:/usr/ccs/bin:/usr/bin/X11:/usr/local:/usr/sys/bin:/etc:
+fi
+
+# unmount /dev/fd
+mpoint_fdfs=`df | grep /dev/fd | awk '{print $6}'`
+if test X"$mpoint_fdfs" != X
+then
+	umount $mpoint_fdfs > /dev/null 2>&1
+fi
+
+echo "" > $LOG 
+# Require it to be run by root
+case "`whoami`" in
+"root") ;;
+*)	echo "btcreate:You must have root privileges to execute this program." 
+        exit 1
+	;;
+esac
+
+# MIK_0823
+#Check to see if /proc is mounted. If not mounted then mount it.
+/sbin/df |grep /proc 2>&1 > /dev/null
+if [ $? != 0 ]
+then
+	[ ! -d /proc ] &&
+	      mkdir /proc > /dev/null
+	/sbin/mount -t procfs /proc /proc  # QAR 49839
+	if [ $? != 0 ]
+	then
+		echo "Please mount /proc with:" 
+		echo "mount -t procfs /proc /proc" # QAR 49839
+		echo "command and rerun btcreate utility."
+		echo "exiting btcreate.."
+		exit 1
+	fi
+fi
+
+Global_Settings
+
+# trap
+trap ' echo "";echo"";echo "" >> $LOG; 
+echo "" >> $LOG;
+echo "Interrupt... Exiting btcreate" | tee -a $LOG
+#Cleanup
+2>&1;print "One of these trap condition occured. (HUP,TERM,QUIT,KILL)"|tee -a $LOG 
+cleanall
+exit 2' HUP TERM QUIT KILL
+
+# trap CTRL-C
+trap ' echo "" | tee -a $LOG
+echo "" | tee -a $LOG
+echo "User terminated btcreate process." >> $LOG
+echo "Exiting btcreate." | tee -a $LOG
+cleanall
+exit 3' INT
+
+# end trap CTRL-C
+
+echo " You have started btcreate as follows :" >> $LOG
+echo "" >> $LOG
+echo " $0 $@" >> $LOG
+echo "" >> $LOG
+
+#while getopts :fk:m:t:s:a: options
+### Added "d" for ADPECP_0898
+
+while getopts :fk:d:b:m:t:s:a:v options    #ADP_0797
+do
+	case "$options" 
+	in
+                "v") set -x              # ADP_0797
+                                for i in $( typeset +f )
+                                do
+                                        typeset -ft ${i}
+                                done
+                ;;
+
+		"f") OPT_F_FLAG=1 
+                   let count_option=count_option+1 ;;
+		"b") OPT_B_FLAG=1          # ADP_0797
+                   bflag=$OPTARG 
+		   check_opts $OPTARG
+                   let count_option=count_option+1 ;;
+		"k") OPT_K_FLAG=1
+                   kflag=$OPTARG 
+		   check_opts $OPTARG
+                   let count_option=count_option+1 ;;
+                "d") OPT_D_FLAG=1
+                   dflag=$OPTARG
+                   check_opts $OPTARG
+                   let count_option=count_option+1 ;;
+		"m") OPT_M_FLAG=1
+                   mflag=$OPTARG 
+		   check_opts $OPTARG
+                   let count_option=count_option+1 ;;
+		"t") OPT_T_FLAG=1
+                   tflag=$OPTARG 
+		   check_opts $OPTARG
+                   let count_option=count_option+1 ;;
+		"s") OPT_S_FLAG=1 
+			sflag=$OPTARG
+			FS_FILE=$sflag
+			echo $FS_FILE | grep "/" > /dev/null 2>&1
+			if [ $? -eq 0 ]
+			then
+				a_check=`echo $FS_FILE | cut -c -1`
+	                        if test "$a_check" = "$dot"
+	                        then
+	                                FS_FILE=`pwd`/$FS_FILE
+					#echo $FS_FILE # QAR 50962
+	                        else
+	                                if test "$a_check" = "/"
+	                                then
+	                                        print "\c" | tee -a $LOG
+	                                else
+	                                        FS_FILE=`pwd`/$FS_FILE
+						#echo $FS_FILE # QAR 50962
+	                                fi
+	                        fi
+			fi
+		     check_opts $OPTARG
+                     let count_option=count_option+1 ;;
+		"a") OPT_A_FLAG=1 
+			aflag=$OPTARG
+			ADDLIST=$aflag
+			echo $ADDLIST | grep "/" > /dev/null 2>&1
+			if [ $? -eq 0 ] 
+			then
+		     		a_check=`echo $ADDLIST | cut -c -1`
+			        if test "$a_check" = "$dot"
+				then
+				        ADDLIST=`pwd`/$ADDLIST
+				else
+				        if test "$a_check" = "/"
+				        then
+						print "\c" | tee -a $LOG
+				        else
+				                ADDLIST=`pwd`/$ADDLIST
+				        fi
+				fi
+			fi
+			check_opts $OPTARG
+                     let count_option=count_option+1 ;;
+		":") print 
+		    print $USAGE
+		    exit 2 ;;
+		\?) print $USAGE
+		    exit 2 ;;
+	esac
+done
+
+if [ $# -ge $OPTIND ] 
+then
+        print $USAGE
+        exit 2
+fi
+
+#if test $count_option -ge 5 && test $OPT_K_FLAG = 1 && test $OPT_M_FLAG = 1 && test $OPT_S_FLAG = 1 && test $OPT_F_FLAG = 1 && test $OPT_T_FLAG = 1
+#then
+#	NON_INTER=1; export NON_INTER
+#	INTER=0; export INTER
+#else
+#	NON_INTER=0; export NON_INTER
+#	INTER=1; export INTER
+#fi
+
+# ADP_0797!
+if [[ $count_option -ge 5 ]] &&
+        [[ $OPT_B_FLAG = 1 || $OPT_K_FLAG = 1 ]] &&
+        [[ $OPT_M_FLAG = 1 ]] &&
+        [[ $OPT_S_FLAG = 1 ]] &&
+        [[ $OPT_F_FLAG = 1 ]] &&
+        [[ $OPT_T_FLAG = 1 ]]
+then
+        NON_INTER=1; export NON_INTER
+        INTER=0; export INTER
+elif    [[ ${count_option} -eq 2 ]] &&
+                [[ -n "${kflag}" ]] &&
+                [[ -n "${bflag}" ]]
+then
+        print "\n\nCreating tape boot kernel only.\n"
+
+        NON_INTER=1; export NON_INTER
+        INTER=0; export INTER
+
+        # check available disk space   # ADPECP_0898
+        collect_disk_space_info
+	
+        # sysname info
+        collect_sysname_info
+
+        # create tape boot kernel
+        modify_config_file
+
+        exit 0
+
+### Added for ADPECP_0898
+
+elif    [[ ${count_option} -eq 3 ]] &&
+                [[ -n "${kflag}" ]] &&
+                [[ -n "${dflag}" ]] &&
+                [[ -n "${bflag}" ]]
+then
+        print "\n\nCreating tape boot kernel only.\n"
+
+        NON_INTER=1; export NON_INTER
+        INTER=0; export INTER
+
+        # check available disk space
+        collect_disk_space_info
+
+        # sysname info
+        collect_sysname_info
+
+        # create tape boot kernel
+        modify_config_file
+
+print "\nCleaning up after kernel build...\n"
+
+        cleanall
+
+        exit 0
+else
+        NON_INTER=0; export NON_INTER
+        INTER=1; export INTER
+fi
+# !ADP_0797
+
+if test $OPT_F_FLAG = 0
+then
+        NON_INTER_F_FLAG=0; export NON_INTER_F_FLAG
+else
+        NON_INTER_F_FLAG=1; export NON_INTER_F_FLAG
+fi
+
+
+if [[ $kflag = "" ]]
+then 
+	NUM_AT_MESSAGE=0
+fi
+if [[ $kflag != "" ]] && [[ $mflag = "" ]]
+then 
+	NUM_AT_MESSAGE=1
+fi
+if [[ $kflag != "" ]] && [[ $mflag != "" ]] && [[ $tflag = "" ]] 
+then 
+	NUM_AT_MESSAGE=2
+fi
+if [[ $kflag != "" ]] && [[ $mflag != "" ]] && [[ $tflag != "" ]] && [[ $sflag = "" ]] 
+then 
+	NUM_AT_MESSAGE=3
+fi
+if [[ $kflag != "" ]] && [[ $mflag != "" ]] && [[ $tflag != "" ]] && [[ $sflag != "" ]] && [[ $aflag = "" ]]
+then 
+	NUM_AT_MESSAGE=4
+fi
+### Added for ADPECP_0898
+if [[ $kflag != "" ]] && [[ $mflag != "" ]] && [[ $tflag != "" ]] && [[ $sflag != "" ]] && [[ $aflag != "" ]] && [[ $dflag = "" ]]
+then
+        NUM_AT_MESSAGE=5
+fi
+
+Set_Inter
+
+temp_char=`echo $TAPE |cut -c -1` 
+
+if [[ "$temp_char" != "n" ]]
+then
+	TAPE=`echo "n$TAPE"`
+fi
+
+
+# Save the License's in lmffile=/usr/lib/sabt/etc/lmf_file
+lmfcom=/usr/sbin/lmf
+lmffile=/usr/lib/sabt/etc/lmf_file
+$lmfcom list | awk '{print $1}' > ./file1
+lmfcom=/sbin/lmf
+print "#!/sbin/sh" > $lmffile
+
+exec 9< ./file1
+while read -u9 lmf_set
+do
+if test "$lmf_set" = "Product"  || test X"$lmf_set" =  X
+then
+        continue
+else
+        echo $lmfcom enable $lmf_set >> $lmffile
+fi
+done
+echo $lmfcom reset >> $lmffile
+exec 9<&-
+chmod +x $lmffile
+rm ./file1
+
+
+# Get the swap devices and partitions and save it
+# in swap_file and the no. of swap entries in swap_lines
+
+SWAPDEV= SWAPPRT= SWAPDISK= SWAPTYPE=
+typeset -R1 rhs_single_char
+exec 7< /etc/fstab
+
+comments="#"
+
+  while read -u7 fstab_line
+  do
+
+    commented=`echo $fstab_line | cut -c -1`
+    if [[ $commented != $comments ]]
+    then
+        if [[ "$fstab_line" = *swap* ]]
+        then
+            SWAPDEV=`print $fstab_line | awk '{print $1}' | awk -F/ '{print $3
+}'`
+            rhs_single_char=$SWAPDEV
+            SWAPPRT=$rhs_single_char
+            echo "$SWAPDEV" > /tmp/temp_file1
+	    NUM_CHAR=`wc -c /tmp/temp_file1 | awk '{print $1}` 
+	    let NUM_CHAR=NUM_CHAR-1
+	    let NUM_CHAR=NUM_CHAR-1
+	    SWAPDISK=`cut -c1-$NUM_CHAR /tmp/temp_file1` 
+            disklabel -r $SWAPDISK 2>&1 > /dev/null 2>&1
+            if [ $? = 0 ]
+            then
+	       SWAPTYPE=`disklabel -r $SWAPDISK|grep disk:|awk '{print$2}'`
+            fi
+            if test X"$SWAPDEV" != X && test X"$SWAPPRT" != X && test X"$SWAPDISK" != X && test X"$SWAPTYPE" != X 
+	    then
+               echo "$SWAPDEV  $SWAPPRT $SWAPDISK $SWAPTYPE" >> $SWAP_FILE
+	       SWAPDEV= SWAPPRT= SWAPDISK= SWAPTYPE=
+            fi
+            rm /tmp/temp_file1
+        fi
+    fi
+  done
+
+exec 7<&-
+
+wc -l "$SWAP_FILE" | awk '{print $1}' > $SWAP_LINES
+
+# ADP_0797 added OPT_B_FLAG
+export OPT_F_FLAG OPT_K_FLAG OPT_M_FLAG OPT_T_FLAG OPT_D_FLAG OPT_S_FLAG OPT_A_FLAG OPT_A_INT_FLAG OPT_B_FLAG
+
+# ADP_0797
+
+if [[ -n "${bflag}" ]]
+then
+	KERNEL=`basename ${bflag}`   # ADPECP_0898
+        # use specified kernel
+        if [ ! -s "${bflag}" ]
+        then
+        print "specified kernel \"${bflag}\" does not exist" 1>&2 | tee -a $LOG
+                cleanall
+                exit 4
+        fi
+
+### Changed appropriately for ADPECP_0898
+        KERNEL_DIRECTORY=`dirname ${bflag}`
+        if [[ ${KERNEL_DIRECTORY} != ${DISK_TMP_SPACE} ]]
+        then
+                print "Copying kernel, $bflag, to $DISK_TMP_SPACE." 1>&2 | tee -a $LOG
+                if ! cp ${bflag} ${DISK_TMP_SPACE}/${KERNEL}
+                then
+                print "unable to copy \"${bflag}\" to ${DISK_TMP_SPACE}/${KERNEL}" 1>&2 | tee -a $LOG
+                        cleanall
+                        exit 4
+                fi
+        else
+                print "Using kernel, $KERNEL, located in $DISK_TMP_SPACE." 1>&2 | tee -a $LOG
+
+        fi
+
+        NEW_CONF_FILE=${bflag##*/}
+
+else
+
+# Call modify_config_file function
+modify_config_file
+
+fi
+
+#Calculate the disklabel_info lines
+wc -l $DISKLABEL_INFO | awk '{print $1}' > $DISKLABEL_LINES
+
+# Execute the mktape script
+### Added additional argument for ADPECP_0898
+2>&1;echo $KERNEL $NEW_ROOT $SIZE $FS $TAPE $NEW_CONF_FILE $DISK_TMP_SPACE | tee -a $LOG > /dev/null
+2>&1;/usr/sys/bin/mktape $KERNEL $NEW_ROOT $SIZE $FS $TAPE $NEW_CONF_FILE $DISK_TMP_SPACE
+if [ $? != 0 ]
+then
+	2>&1;echo "/usr/sys/bin/mktape exited abnormally, exiting btcreate."|tee -a $LOG
+	#Cleanup
+        cleanall
+	exit 4
+fi
+
+# Now cleanup the /usr/lib/sabt/etc and /usr/sys/bin directory for
+# files and vmunix.
+
+#Cleanup
+cd /usr/sys/bin
+[ -f $ADVFS_INFO ] &&
+	rm -f $ADVFS_INFO
+[ -f $DISKLABEL_INFO ] &&
+	rm -f $DISKLABEL_INFO
+[ -f $DISKLABEL_LINES ] &&
+	rm -f $DISKLABEL_LINES
+[ -d $PATH_DSKLBL ] && 
+	rm -rf $PATH_DSKLBL
+[ -f $SWAP_FILE ] &&
+    rm -f $SWAP_FILE
+[ -f $SWAP_LINES ] &&
+    rm -f $SWAP_LINES
+[ -f $lmffile ] &&
+    rm -f $lmffile
+[ -f $TMP_FSINFO ] &&
+    rm -f $TMP_FSINFO
+[ -f $ROOT_SWAP_INFO ] &&
+    rm -f $ROOT_SWAP_INFO
+[ -f /tmp/PaDdInG ] &&
+	rm -f /tmp/PaDdInG
+
+### Cleaning temporary space - ADPECP_0898
+if [ $OPT_D_FLAG -eq 1 ] && [ $OPT_B_FLAG -eq 0 ]
+then
+  file /usr/sys/* | grep directory | cut -f1 -d: | xargs -i basename {} | xargs -i rm -f $DISK_TMP_SPACE/{}
+  rm -rf ${DISK_TMP_SPACE}/$NEW_CONF_FILE 2> /dev/null
+fi
+
+if [ $CREATED_TMP_DIR -eq 1 ]
+then
+  rm -rf $DISK_TMP_SPACE
+fi
+
+if [[ ${bflag} != "" ]] && [[ ${bflag} = ${DISK_TMP_SPACE}/`basename ${bflag}` ]]
+then
+  rm -f ${DISK_TMP_SPACE}/vmunix.*
+else
+  rm -f ${DISK_TMP_SPACE}/vmunix*
+fi
+
+cd /usr/sys
+[ -d $NEW_CONF_FILE ] &&
+	rm -rf $NEW_CONF_FILE 2> /dev/null
+
+[ -d /var/tmp/procprod ] &&
+{
+     df | grep procprod > /dev/null
+     if [ $? = 0 ]
+     then
+         umount /var/tmp/procprod
+     fi
+     rm -fr /var/tmp/procprod
+}
+
+# Now to dump filesystems
+
+dump_filesystems
+
+#Cleanup
+cd /usr/sys/bin
+[ -f $FS_INFO ] &&
+	rm $FS_INFO
+[ -f $NUMBER_DUMPS ] &&
+	rm $NUMBER_DUMPS
+
+# Unload the tape
+
+2>&1;print "Rewinding the tape."|tee -a $LOG
+/sbin/mt -f /dev/$TAPE rewind 2>&1 > $NULL
+
+2>&1;print "btcreate.log file has been created on /var/adm directory."|tee -a $LOG 
+2>&1;print |tee -a $LOG
+2>&1;print |tee -a $LOG
+2>&1;print "\tEnd of system image creation on tape."|tee -a $LOG
+
+
+exit 0
+#end of main program

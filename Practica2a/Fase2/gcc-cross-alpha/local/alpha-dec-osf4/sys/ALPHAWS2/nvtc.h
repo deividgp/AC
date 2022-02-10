@@ -1,0 +1,1 @@
+#define NNVTC 0

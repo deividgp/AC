@@ -1,0 +1,22 @@
+#/* @(#)@(#)help/vdiskOnln.hlp	2.1 11 May 1993 19:06:30 -  */
+#ident  "@(#)va11:help/vdiskOnln.hlp   2.1"
+#
+#
+Logical Storage Manager Disk, vdisk.hlp
+Physical Disk, pdisk.hlp
+#########################################
+LOGICAL STORAGE MANAGER DISK ONLINE FORM HELP
+
+This function allows the Logical Storage Manager to use a disk access record 
+for reading and writing.  When a disk is off-line the Logical Storage Manager 
+cannot use that disk, providing a way to protect disks from unintentional use.
+
+
+Fields
+----------
+
+Device name:
+	The name of the disk access record, usually in the form rzN or raN, 
+	were N is the disk unit number. 
+	Only the disk access record name should be specified, not a path to
+	a device node.

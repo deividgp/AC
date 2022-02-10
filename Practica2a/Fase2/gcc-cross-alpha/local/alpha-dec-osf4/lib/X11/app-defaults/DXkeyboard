@@ -1,0 +1,37 @@
+DXkeyboard.keyboard_keymap:     NULL
+DXkeyboard.lock_state:		caps
+DXkeyboard.keyboard_dialect:	System Default
+DXkeyboard.keyboard_language:   NULL
+*load_resources_only:    	False
+*digital_uk_labelString:	UK-English
+*digital_turkish_f_labelString:	Turkish F
+*digital_french_labelString:	French
+*digital_greek_labelString:	Greek
+*digital_japanese_labelString:	Japanese
+*digital_hungarian_labelString:	Hungarian
+*digital_belgian_labelString:	Belgian
+*digital_canadian_french_labelString:	Canadian French
+*digital_finnish_labelString:	Finnish
+*digital_danish_labelString:	Danish
+*digital_polish_labelString:	Polish
+*digital_spanish_labelString:	Spanish
+*digital_scs_labelString:	Serbo/Croat/Slovene
+*digital_swiss_french_labelString:	Swiss French
+*digital_thai_labelString:	Thai
+*digital_flemish_labelString:	Flemish
+*digital_turkish_q_labelString:	Turkish Q
+*digital_german_labelString:	German
+*digital_hebrew_labelString:	Hebrew
+*digital_italian_labelString:	Italian
+*digital_us_labelString:	US-English
+*digital_canadian_english_labelString:	Canadian English
+*digital_dutch_labelString:	Dutch
+*digital_czech_labelString:	Czech
+*digital_norwegian_labelString:	Norwegian
+*digital_portuguese_labelString:	Portuguese
+*digital_slovak_labelString:	Slovak
+*digital_russian_labelString:	Russian
+*digital_swedish_labelString:	Swedish
+*digital_swiss_german_labelString:	Swiss German
+*digital_lithuanian_labelString:  Lithuanian
+

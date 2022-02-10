@@ -1,0 +1,97 @@
+!
+! *****************************************************************
+! *                                                               *
+! *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+! *                                                               *
+! *   All Rights Reserved.  Unpublished rights  reserved  under   *
+! *   the copyright laws of the United States.                    *
+! *                                                               *
+! *   The software contained on this media  is  proprietary  to   *
+! *   and  embodies  the  confidential  technology  of  Digital   *
+! *   Equipment Corporation.  Possession, use,  duplication  or   *
+! *   dissemination of the software and media is authorized only  *
+! *   pursuant to a valid written license from Digital Equipment  *
+! *   Corporation.                                                *
+! *                                                               *
+! *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+! *   by the U.S. Government is subject to restrictions  as  set  *
+! *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+! *   or  in  FAR 52.227-19, as applicable.                       *
+! *                                                               *
+! *****************************************************************
+!
+! HISTORY
+!
+! @(#)$RCSfile: DXaudit.res,v $ $Revision: 1.1.2.4 $ (DEC) $Date: 1995/08/22 21:09:52 $
+!
+
+!
+! This resource changes the list of events loaded into all list boxes
+! with the "Base/Site Events" heading.  Setting the value to True
+! will use only security relevant audit events (the set found in
+! /var/tcb/audit/base_events).  Setting the value
+! to False will make dxaudit use all events on the system.  This includes
+! all system calls, no-sys events, etc.  It will slightly impact
+! performance on screen mapping of those screens containing the event
+! list boxes.  It is recommended that security relevant events be used.
+!
+! NB: If during execution, dxaudit queries an event mask which contains
+!     an unrecognized event, it will query the user to switch into 
+!     full event mode if not already in that mode.
+!
+*auditUseSecEvents:	True
+
+!
+! This resource changes the display of the Active Process List from
+! dxaudit->Collection->Modify Active Process Mask.  See the ps(1) reference
+! page for all the details.
+!
+!
+*auditPsOptions:	ppid,args
+
+!
+! This resource changes the sorted order of the ps(1) output in 
+! dxaudit->Collection->Modify Active Process Mask.
+!
+! Valid options are:
+!
+!	 ps    for ps(1) native order
+!	 name  for alphabetic ordering by user name
+!
+!
+*auditPsSortOrder:	name
+
+!
+! The following resource tells dxaudit how many 256K chunks of memory
+! it can allocate when receiving audit report data from audit_tool.  When
+! the length of the report exceeds this amount of memory, the oldest
+! 256K chunk of data is discarded as long as the user is not viewing it
+! at the moment.  This discarded chunk cannot be accessed again unless
+! the report is re-generated.
+!
+*auditMaxReportSections:	20
+
+!
+! This resource pertains to the storage of audit report data in the
+! 256K chunks mentioned above.  When "Brief Record" format is selected,
+! dxaudit actually stores both full and brief records so that it can
+! blow up an brief record into a full record.  Both formats are stored
+! within the 256K chunk, but they are segregated.  This resource 
+! specifies the start of the full record bucket.  As a report is
+! generating, dxaudit adjusts this split for future chunks according
+! to how efficiently the memory is being used.  This resource represents
+! a starting value for each time a report is generated.
+!
+! This is commented out because the code sets a good value on its own
+! which is different between MLS+ and vanilla OSF/1
+!
+!*auditRecordSplit:	49152
+
+
+! The following resource (mostly) corrects a pathological problem with the
+! audit report scale widget.  When the load of the text widget takes longer
+! than the initialDelay of the scale widget, it repeatedly acts as if the
+! scale were being moved.  This can cause loss of audit report data.  This
+! only occurs when lots of data is stacked up from the audit_tool.
+!
+*XmScale*initialDelay:  1250

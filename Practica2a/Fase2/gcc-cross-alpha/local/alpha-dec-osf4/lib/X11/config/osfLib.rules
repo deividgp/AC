@@ -1,0 +1,177 @@
+XCOMM 
+XCOMM *****************************************************************
+XCOMM *                                                               *
+XCOMM *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+XCOMM *                                                               *
+XCOMM *   All Rights Reserved.  Unpublished rights  reserved  under   *
+XCOMM *   the copyright laws of the United States.                    *
+XCOMM *                                                               *
+XCOMM *   The software contained on this media  is  proprietary  to   *
+XCOMM *   and  embodies  the  confidential  technology  of  Digital   *
+XCOMM *   Equipment Corporation.  Possession, use,  duplication  or   *
+XCOMM *   dissemination of the software and media is authorized only  *
+XCOMM *   pursuant to a valid written license from Digital Equipment  *
+XCOMM *   Corporation.                                                *
+XCOMM *                                                               *
+XCOMM *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+XCOMM *   by the U.S. Government is subject to restrictions  as  set  *
+XCOMM *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+XCOMM *   or  in  FAR 52.227-19, as applicable.                       *
+XCOMM *                                                               *
+XCOMM *****************************************************************
+XCOMM
+XCOMM HISTORY
+XCOMM 
+XCOMM $XConsortium: osfLib.rules,v 1.9 94/01/18 14:58:49 rws Exp $
+
+/*
+ * OSF/1 shared library rules
+ */
+
+#ifndef HasSharedLibraries
+#define HasSharedLibraries YES
+#endif
+#ifndef SeparateSharedCompile
+#define SeparateSharedCompile NO
+#endif
+#ifndef SharedDataSeparation
+#define SharedDataSeparation NO
+#endif
+#ifndef SharedCodeDef
+#define SharedCodeDef /**/
+#endif
+#ifndef SharedLibraryDef
+#define SharedLibraryDef /**/
+#endif
+#ifndef ShLibIncludeFile
+#define ShLibIncludeFile <osfLib.tmpl>
+#endif
+#ifndef SharedLibraryRpath
+#define SharedLibraryRpath -rpath $(SHLIBDIR)
+#endif
+#ifndef SharedLibraryLoadFlags
+#if ModernOSF1
+#define SharedLibraryLoadFlags -shared -no_archive SharedLibraryRpath
+#else
+#define SharedLibraryLoadFlags -shared -no_archive
+#endif
+#endif
+#ifndef PositionIndependentCFlags
+#define PositionIndependentCFlags /**/
+#endif
+
+/*
+ * InstallSharedLibrary - generate rules to install the shared library.
+ */
+#ifndef InstallSharedLibrary
+#define	InstallSharedLibrary(libname,rev,dest)				@@\
+install:: Concat(lib,libname.so) 					@@\
+	MakeDir($(DESTDIR)dest)						@@\
+	$(INSTALL) $(INSTALLFLAGS) $(INSTLIBFLAGS) Concat(lib,libname.so) $(DESTDIR)dest
+
+#endif /* InstallSharedLibrary */
+
+/*
+ * InstallSharedLibraryData - generate rules to install the shared library data
+ */
+#ifndef InstallSharedLibraryData
+#define	InstallSharedLibraryData(libname,rev,dest)
+#endif /* InstallSharedLibraryData */
+
+#ifndef PackageName(libname)
+#if ModernOSF1
+#define PackageName(libname) /**/
+#else
+#define PackageName(libname) -package libname
+#endif
+#endif
+#if ThreadedX && ModernOSF1
+#define BaseShLibReqs -lc
+#else
+#define BaseShLibReqs -lc
+#endif
+
+/*
+ * SharedLibraryTarget - generate rules to create a shared library;
+ * build it into a different name so that we do not hose people by having
+ * the library gone for long periods.
+ */
+#ifndef SharedLibraryTarget
+#if SeparateSharedCompile
+#define SharedLibraryTarget(libname,rev,solist,down,up)			@@\
+AllTarget(Concat(lib,libname.so))					@@\
+									@@\
+Concat(lib,libname.so):  solist						@@\
+	$(RM) $@~ so_locations						@@\
+	(cd down; $(LD) -o up/$@~ $(SHLIBLDFLAGS) -set_version rev \	@@\
+		-soname Concat(lib,libname.so) -all solist \		@@\
+		-none $(REQUIREDLIBS) BaseShLibReqs) 			@@\
+	$(RM) $@ 							@@\
+	$(MV) $@~ $@							@@\
+	LinkBuildLibrary($@)						@@\
+									@@\
+clean::									@@\
+	$(RM) Concat(lib,libname.so)
+#else
+#define SharedLibraryTarget(libname,rev,solist,down,up)			@@\
+AllTarget(Concat(lib,libname.so))					@@\
+									@@\
+Concat(lib,libname.so):  solist						@@\
+	$(RM) $@~ so_locations						@@\
+	$(LD) -o $@~ $(SHLIBLDFLAGS) -set_version rev \			@@\
+		-soname Concat(lib,libname.so) -all solist \		@@\
+		-none $(REQUIREDLIBS) BaseShLibReqs			@@\
+	$(RM) $@ 							@@\
+	$(MV) $@~ $@							@@\
+	LinkBuildLibrary($@)						@@\
+									@@\
+clean::									@@\
+	$(RM) Concat(lib,libname.so)
+#endif /* SeparateSharedCompile */
+#endif /* SharedLibraryTarget */
+
+
+/*
+ * SharedDebugLibraryTarget - generate rules to create a shared library;
+ * build it into a different name so that we do not hose people by having
+ * the library gone for long periods.
+ */
+#ifndef SharedDebuggedLibraryTarget
+#define SharedDebuggedLibraryTarget(libname,rev,solist,down,up)		@@\
+AllTarget(Concat(debugger/lib,libname.so))				@@\
+									@@\
+Concat(debugger/lib,libname.so):  solist				@@\
+	$(RM) Concat(debugger/lib,libname.so)				@@\
+	$(LD) -o Concat(debugger/lib,libname.so) $(SHLIBLDFLAGS) \	@@\
+		-set_version rev \ 					@@\
+		-soname Concat(lib,libname.so) -all \			@@\
+		`for file in solist; do echo "debugger/$$file \c"; done` \ @@\
+		-none $(REQUIREDLIBS) BaseShLibReqs 			@@\
+									@@\
+clean::									@@\
+	$(RM) Concat(debugger/lib,libname.so)
+#endif /* SharedDebuggedLibraryTarget */
+
+
+/*
+ * InstallSharedDebuggedLibrary - 
+ *   generate rules to install the shared debugged library.
+ */
+#ifndef InstallSharedDebuggedLibrary
+#define	InstallSharedDebuggedLibrary(libname,rev,dest)			@@\
+									@@\
+install:: Concat(debugger/lib,libname.so)				@@\
+	MakeDir($(DESTDIR)/usr/debugshlib)				@@\
+	$(INSTALL) -c $(INSTLIBFLAGS) Concat(debugger/lib,libname.so) \	@@\
+		$(DESTDIR)/usr/debugshlib
+
+#endif /* InstallSharedDebuggedLibrary */
+
+
+
+/*
+ * SharedLibraryDataTarget - generate rules to create shlib data file;
+ */
+#ifndef SharedLibraryDataTarget
+#define SharedLibraryDataTarget(libname,rev,salist)
+#endif /* SharedLibraryTarget */

@@ -1,0 +1,30 @@
+#/* @(#)@(#)help/stripe.hlp	2.1 11 May 1993 19:06:18 -  */
+#ident  "@(#)va11:help/stripe.hlp   2.1"
+#
+#
+Volume, volume.hlp
+Plex, plex.hlp
+Subdisk, subdisk.hlp
+#########################################
+STRIPING HELP
+
+Striping is a method of improving disk performance by distributing
+sequential volume access across two or more disks.  If these disks are
+configured such that I/O can be done in parallel (on separate controllers
+that support parallel I/O, for example) then read and write performance may
+be significantly improved.
+
+A striped plex is a plex that scatters data evenly across each of its
+associated subdisks.  A plex has a characteristic number of stripe
+columns, represented by the number of associated subdisks, and a
+characteristic stripe width.  The stripe width defines how data with a
+particular address is allocated to one of the associated subdisks.  Given a
+stripe width of 128 sectors, and two stripe columns, the first group of 128
+sectors would be allocated to the first subdisk, the second group of 128
+sectors would be allocated to the second subdisk, the third group to the
+first subdisk, again, and so on.
+
+This option may only be specified for a plex when the plex is created.
+
+For more information about striped plexes, consult the Logical Storage Manager
+documentation.

@@ -1,0 +1,122 @@
+// **************************************************************
+// *                                                            *
+// * Keymaps for Serbo/Croat/Slovene formerlly known as 	*
+// * Yugoslavia.						*
+// *                                                            *
+// **************************************************************
+
+// **************************************************************
+// *								*
+// * NOTES:  There isn't a VT105 (i.e. LK201) keyboard for	*
+// *	     SCS.  In addition, there aren't any TW/DP keys 	*
+// *	     for the VT108.  The Group Shift (i.e. Mode_switch)	*
+// *	     takes care of this.				*
+// *								*
+// **************************************************************
+
+xkb_keymap "lk401" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_scs(vt108)"		};
+    xkb_geometry	{ description = "Digital SCS LK401";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_scs(vt108)"		};
+    xkb_geometry	{ description = "Digital SCS LK411";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_scs(vt108)"		};
+    xkb_geometry	{ description = "Digital SCS LK461";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "pcxalhy" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_scs(pcxalhy)"	};
+    xkb_geometry	{ description = "Digital SCS PCXAL-HY";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxalpy" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)"          };
+    xkb_types           { include "types/default"                       };
+    xkb_compatibility   { include "compat/default"                      };
+    xkb_symbols         { include "symbols/digital_scs(pcxalpy)"        };
+    xkb_geometry        { description = "Digital SCS PCXAL-PY";
+                          include "geometry/digital_pc(pc102)"
+                          include "geometry/digital_pc(leds_alone)"     };
+};
+
+xkb_keymap "pcxalsy" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_scs(pcxalsy)"	};
+    xkb_geometry	{ description = "Digital SCS PCXAL-SY";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxal" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_scs(pcxal)"		};
+    xkb_geometry	{ description = "Digital SCS PCXAL";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471by" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_scs(lk471by)"	};
+    xkb_geometry	{ description = "Digital SCS LK471-BY";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_scs(lk471)"	};
+    xkb_geometry	{ description = "Digital SCS LK471";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97wby" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_scs(lk471by)"	};
+    xkb_geometry	{ description = "Digital SCS LK97W-BY";
+			  include "geometry/digital_pc(pc105)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97w" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_scs(lk471)"	};
+    xkb_geometry	{ description = "Digital SCS LK97W";
+			  include "geometry/digital_pc(pc105)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};

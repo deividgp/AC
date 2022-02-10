@@ -1,0 +1,1 @@
+#define NSCSNET 0

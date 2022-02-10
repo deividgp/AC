@@ -1,0 +1,25 @@
+#/* @(#)@(#)help/mirror.hlp	2.1 11 May 1993 19:05:22 -  */
+#ident  "@(#)va11:help/mirror.hlp   2.1"
+#
+#
+Volume, volume.hlp
+Plex, plex.hlp
+Subdisk, subdisk.hlp
+Striping, stripe.hlp
+Concatenated, concat.hlp
+#########################################
+MIRRORING HELP
+
+A mirrored volume is a volume that contains two or more plexes where data
+is replicated.  The Logical Storage Manager maintains consistent copies of the
+plexes (also called mirrors) so that, if a disk failure occurs, no data
+will be lost.  Disk read performance may also be improved as several disk
+reads may be scheduled for several valid plexes, distributing the read
+volume over several disks.  Write performance, however, will usually suffer
+from some degradation.
+
+Mirroring is especially useful when data integrity is a high priority.
+
+For more information about mirrored volumes, consult the Logical Storage Manager
+documentation.
+

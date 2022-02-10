@@ -1,0 +1,53 @@
+#/* @(#)@(#)help/iconProj.hlp	2.1 11 May 1993 19:05:09 -  */
+#ident  "@(#)va11:help/iconProj.hlp   2.1"
+#
+#
+Projection Menu, projM.hlp
+Show Free Subdisks, freeSd.hlp
+Colors, colors.hlp
+Volume, volume.hlp
+Plex, plex.hlp
+Subdisk, subdisk.hlp
+Analysis, analysis.hlp
+#########################################
+ICON PROJECTION HELP
+
+Icon projection allows you to see more information about icon properties
+and their associations.  One or more icons may be selected, but partition
+or physical disk icons may not be selected.
+
+The icon projection rules are as follows.  The first column shows what has
+been selected to begin projecting, and the second column shows what icons
+will be highlighted with the projection color/bitmap.
+
+	Selected	Highlighted
+	--------	-----------
+	Volume		All associated subdisks in any plex associated with
+			the volume
+	Plex		All associated subdisks in the plex
+	Subdisk		Associated plex and volume, and all other subdisks
+			that are associated with the plex or volume
+	Disk		Any plexes with associated subdisks that reside on 
+			the disk
+
+If an icon is colored because of projection then all icons representing
+that object are highlighted, regardless of associations or views.
+
+Icons may be individually or multipally added or removed from the projected
+list at any time.
+
+
+Start
+-----
+Begin icon projection for the selected icon(s).  If an icon is already
+projecting, no error will result.
+
+Stop
+----
+End icon projection for the selected icon(s).  If an selected icon is not
+already projecting, an error will result.
+
+Stop All
+--------
+This stops projection on all icons in all views.  No icons should be
+selected for this operation.

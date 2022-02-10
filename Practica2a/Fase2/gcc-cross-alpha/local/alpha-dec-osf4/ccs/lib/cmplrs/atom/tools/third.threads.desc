@@ -1,0 +1,34 @@
+# 
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+# 
+# HISTORY
+# 
+# @(#)$RCSfile: third.threads.desc,v $ $Revision: 1.1.6.2 $ (DEC) $Date: 1998/10/22 18:19:46 $
+#  third.threads.desc -	Description file for the Third Degree -env threads
+# 
+
+INST_FILE	third.threads.inst.o
+ANAL_FILE	third.threads.anal.o
+INST_LDFLAGS	-lmld
+ANAL_LDFLAGS	-lst -lmld
+ATOM_DEF	-A1 -heapbase progend -w2
+ATOM_REQ	-Xthreads

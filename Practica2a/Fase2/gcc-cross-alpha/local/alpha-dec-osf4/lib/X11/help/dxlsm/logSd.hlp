@@ -1,0 +1,33 @@
+#/* @(#)@(#)help/logSd.hlp	2.1 11 May 1993 19:05:16 -  */
+#ident  "@(#)va11:help/logSd.hlp   2.1"
+#
+#
+Subdisk, subdisk.hlp
+Subdisk Proprties Form, sdProp.hlp
+Volume, volume.hlp
+Plex, plex.hlp
+Disk Group, diskGrp.hlp
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+#########################################
+LOG SUBDISK HELP
+
+A log subdisk (also called BCL subdisk) is room set aside on a disk for
+Logical Storage Manager support of Block Change Logging.  When data is written 
+to a volume, ranges of sector numbers are written to the log subdisk so that a
+record is kept of recent disk activity.  When the system is restarted
+after a crash, these ranges of block numbers are used to limit the amount
+of data copying that is required to recover plex consistency for the
+volume.
+
+One log subdisk may be associated with each plex to greatly speed recovery
+of the volume, but the presence of a BCL subdisk degrades volume
+performance under normal conditions due to the writing of the log entries.
+Only one log subdisk may be associated with a plex at a time.
+
+Log subdisks are displayed in the Visual Administrator as regular subdisks 
+with double borders.  Both the subdisk icon that appears within the 
+associated plex and the icon within the LSM disk will have double borders.  
+Since a log subdisk does not make up part of the plex where data can be
+written to, it does not have a valid plex offset and is always displayed
+at the top of all subdisks residing in a plex.

@@ -1,0 +1,35 @@
+#/* @(#)@(#)help/pulldown.hlp	2.1 11 May 1993 19:05:47 -  */
+#ident  "@(#)va11:help/pulldown.hlp   2.1"
+#
+#
+Views Menu, viewM.hlp
+Basic Operations Menu, simpleOps.hlp
+Advanced Operations Menu, advOps.hlp
+Analyze Menu, analysis.hlp
+Projection Menu, projM.hlp
+Options Menu, optionsM.hlp
+Icon Menu, icons.hlp
+Help, help.hlp
+DXlsm Root Window, rootWin.hlp
+Command Info Window, cmdInfo.hlp
+Views, views.hlp
+#########################################
+PULLDOWN MENU HELP
+
+Pulldown menus are primary ways of initiating operations in the Visual
+Administrator.  There are pulldown menus on the DXlsm root window, the
+command information window, the help window, and all views.
+
+Many pulldown menus are cascading menus, where there is an arrow to the
+right of the menu choice.  By clicking on this arrow you get another level
+of pulldown sub-menus.
+
+On all pulldown menus choices there is one letter that is underlined.  That
+marks the quick key for that choice.  If the choice is on a pulldown menu
+that is already being displayed, then just pushing they key that
+corresponds to that letter (not case sensitive) will select that choice.
+If the choice is on the menu bar itself, then you have top use the <ALT>
+key with the quick key to bring up the pulldown menu.
+
+Once the pulldown menus have been activated, the user can use the arrow
+keys to scroll through the various pulldown menus on the window.

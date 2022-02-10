@@ -1,0 +1,593 @@
+     
+     
+     
+     
+     
+     PowerStorm 300/350 UNIX Graphics Support
+     Release Notes
+     
+     
+     July 1999
+     
+     
+     
+     
+     
+     
+     
+     Operating System and Version: Tru64 UNIX 4.0E/F
+     
+     Software Version:             Product Version 1.2
+     
+
+
+
+
+
+Compaq Computer Corporation
+Houston, Texas
+July 1999
+
+The information in this publication is subject to change without
+notice.
+
+COMPAQ COMPUTER CORPORATION SHALL NOT BE LIABLE FOR TECHNICAL OR
+EDITORIAL ERRORS OR OMISSIONS CONTAINED HEREIN, NOR FOR
+INCIDENTAL OR CONSEQUENTIAL DAMAGES RESULTING FROM THE
+FURNISHING, PERFORMANCE, OR USE OF THIS MATERIAL.  THIS
+INFORMATION IS PROVIDED "AS IS" AND COMPAQ COMPUTER CORPORATION
+DISCLAIMS ANY WARRANTIES, EXPRESS, IMPLIED, OR STATUTORY, AND
+EXPRESSLY DISCLAIMS THE IMPLIED WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR PARTICULAR PURPOSE, GOOD TITLE, AND AGAINST
+INFRINGEMENT.
+
+This publication contains information protected by copyright.  No
+part of this publication may be photocopied or reproduced in any
+form without prior written consent from Compaq Computer
+Corporation.
+
+© 1999 Digital Equipment Corporation.  All rights reserved.
+
+
+The software described in this guide is furnished under a license
+agreement or nondisclosure agreement.  The software may be used
+or copied only in accordance with the terms of the agreement.
+
+Compaq, the Compaq logo, the Digital logo, and PowerStorm are
+registered in the U.S. Patent and Trademark Office.
+
+DEC, DIGITAL, DIGITAL Open3D and Tru64 are trademarks of Compaq
+Computer Corporation.
+
+Motif and UNIX are registered trademarks and the "X" device and X
+Window System are trademarks of The Open Group in the United
+States and other countries.
+OpenGL is a registered trademark of Silicon Graphics Inc.
+PostScript is a registered trademark of Adobe Systems
+Incorporated.
+
+Other product names mentioned herein may be trademarks and/or
+registered trademarks of their respective companies.
+
+
+                                                                 
+                                                                 
+                                                                 
+                                                                 
+                                                                 
+                                                                 
+                                                                 
+                                                                 
+                                                                 
+                                                Table of Contents
+                                                                 
+
+Preface
+
+1 Release Information for PowerStorm 300/350
+  1.1 Product Summary
+  1.2 Overlay Support
+     1.2.1 Technical Background
+     1.2.2 Window Managers for Overlays
+  1.3 Multiple Colormaps
+  1.4 Multihead Support
+  1.5 Supported Video Modes
+  1.6 Synchronizing Flips with Vertical Retrace
+  1.7 Default Texel Size
+  1.8 Known Restrictions
+     1.8.1 PEX and PHIGS Unsupported
+     1.8.2 PCI Slot Limitations
+     1.8.3 VGA Colors when Booting genvmunix Kernel
+     1.8.4 Diskless Management System (DMS) Support
+     1.8.5 Slow Moving of Opaque Windows
+     1.8.6 Backing Store and Save Unders are Disabled
+     1.8.7 OpenGL Restrictions
+       1.8.7.1 Stereo Unsupported on PowerStorm 300
+       1.8.7.2 Destination Alpha Unsupported
+       1.8.7.3 Single Stencil Plane
+       1.8.7.4 Requesting Indirect Rendering
+       1.8.7.5 GLX Pixmap Support
+       1.8.7.6 4D Vertex Handling
+       1.8.7.7 Antialiasing in Color Index Mode
+       1.8.7.8 Texture Mapping and Performance
+
+Tables
+  Table 2-1   Supported Video Modes
+  
+
+                                                                 
+                                                                 
+                                                                 
+                                                                 
+                                                                 
+                                                                 
+                                                                 
+                                                                 
+                                                                 
+                                                          Preface
+                                                                 
+                                                                 
+                                                                 
+Purpose of This Guide
+
+     This document contains the release notes for PowerStorm
+     300/350 UNIX Graphics Support for Tru64 UNIX.  Release
+     notes are supplied in both ASCII and PostScript® format and
+     are located, respectively, in the following locations:
+
+       /usr/lib/OPEN3D/open3d495.release_notes
+       /usr/lib/OPEN3D/open3d495.release_notes.PS
+
+
+Who Should Use This Guide
+
+     This guide is intended for anyone who has purchased the
+     Compaq PowerStorm 300/350 option.  A knowledge of Tru64 UNIX
+     installation is recommended.
+
+
+Related Documents
+
+     The following documents are referenced in this manual:
+
+     X Window System
+     DIGITAL UNIX Software License Management
+                                                                 
+                                                                 
+                                                                1
+                       Release Information for PowerStorm 300/350
+                                                                 
+                                                                 
+                                                                 
+1.1  Product Summary
+
+     PowerStorm 300/350 UNIX Graphics Support contains the
+     following components:
+       ·  Device Dependent Code for the X server 2D (Xlib) graphics
+          support.
+       ·  OpenGL Direct Rendered graphics support libraries.  These
+          libraries are used by applications written to the OpenGL V1.1 and
+          GLX V1.2 standards.
+       ·  Kernel device driver for the PowerStorm 300 and PowerStorm
+          350 devices.
+
+
+1.2  Overlay Support
+
+     The PowerStorm 300 and PowerStorm 350 support 8-bit double-
+     buffered overlays.  The following section describes this
+     overlay support and how to use it.
+
+
+1.2.1     Technical Background
+
+     An overlay window is an 8-plane PseudoColor visual. A
+     colormap created with that visual would have 255 entries
+     available to the user.  Entry 0 is always the transparent
+     pixel.
+
+     To get the visualIDs of the overlay visuals, you need to get
+     the SERVER_OVERLAY_VISUALS property from the root window.
+     To retrieve the property and interpret the data associated
+     with it, consider the following example:
+
+       property_name: SERVER_OVERLAY_VISUALS
+       property_type: SERVER_OVERLAY_VISUALS
+       format: 32
+
+     The contents of the property is a LIST of the following data
+     structure:
+
+       SERVER_OVERLAY_VISUALS {
+               overlay_visual: VISUALID
+               transparent_type: {None, TransparentPixel, TransparentMask}
+               value: CARD32
+               layer: CARD32
+       }
+
+     The PowerStorm 300 server returns a list that contains three
+     elements, one for each overlay visual.  The PowerStorm 350
+     returns five.  The elements consist of four long-words, as
+     described above.
+
+     You would typically receive the following information:
+
+       0x00000027  /* VisualID */
+       0x00000001  /* Indicates that the transparent_type is TransparentPixel */
+       0x00000000  /* The transparent pixel’s value is 0 */
+       0x00000001  /* The layer is 1 */
+
+     Once you have a visualID, you can retrieve the rest of the
+     information about the overlay visual and colormap by calling
+     the routine XGetVisualInfo.
+
+     Overlay windows and regular windows are in different layers,
+     so drawing in an overlay window will not disturb the pixels
+     of the regular window, and vice versa.  If you draw an
+     invisible pixel into an overlay window, the pixel of the non-
+     overlay window beneath that window will show through.
+
+
+1.2.2     Window Managers for Overlays
+
+     PowerStorm 300/350 UNIX Graphics Support supplies a version
+     of the dtwm window manager that provides an option to
+     support overlays.  The executable is installed as
+     /usr/dt/bin/dtwm_overlay.  Use the Overlay command line
+     option (dtwm_overlay -Overlay) to allow the window manager
+     to take advantage of the overlay planes.  When the window
+     manager overlay option is enabled, the borders of windows in
+     the overlay planes are created in the overlays as well.
+     This reduces the need for expose events for applications
+     that create menus or other windows in the overlays.  Borders
+     of windows in the image planes still reside in the image
+     planes.
+
+     At some point in the future, the overlay capabilities of
+     dtwm_overlay will be merged into the dtwm window manager
+     provided with Tru64 UNIX, and dtwm_overlay will be retired.
+
+     Tru64 UNIX supplies a Motif window manager with an option to
+     support overlays. This is located in /usr/bin/X11.  However,
+     this window manager option (mwm -Overlay) has numerous
+     problems and is not recommended or supported.
+
+     It is strongly suggested that you share colormaps with the
+     window manager, as the hardware supports only one colormap
+     for the overlay planes.  This can be achieved by querying
+     the server property name SERVER_OVERLAY_COLORMAPS.  This
+     property will return the 32-bit value that is the overlay
+     colormap ID.  If you create and install your own colormap,
+     you will have overlay colormaps alternating on the screen,
+     which will have the effect of changing the colors of the
+     window manager’s borders and banners.
+
+
+1.3  Multiple Colormaps
+
+     The PowerStorm 300 and PowerStorm 350 support multiple,
+     simultaneously installed colormaps.
+
+     Applications should not install or deinstall colormaps
+     themselves.  The window manager should perform these
+     actions.  However, the application is responsible for
+     providing the window manager with hints as to which
+     colormaps to install or deinstall.  You provide this
+     information using the Xlib function XSetWMColormapWindows().
+     This function sets the WM_COLORMAP_WINDOWS property for a
+     given window.
+
+     For information on how to use this function and how the
+     window manager interprets the property, see X Window System
+     by Scheifler and Gettys, 3rd Edition (Section 14.1.11,
+     Setting and Reading the WM_COLORMAP_WINDOWS Property, pages
+     425-426, and Section 4.1.8, Colormaps, page 649-651).
+
+     Applications written and debugged on systems with only one
+     colormap may appear incorrect on a system with multiple
+     colormaps.  There are several application errors that can
+     cause this, but the most prevalent is not having the correct
+     colormap associated with all the windows that require it.
+     To correct this problem, use XChangeWindowAttributes to set
+     the colormap for all windows in the application that require
+     the colormap.
+
+
+1.4  Multihead Support
+       
+                      Note
+       
+       Multihead configurations are not
+       officially supported with this release.
+       The information provided below may apply
+       to a future release.
+       
+     Two PowerStorm 300 or PowerStorm 350 boards may reside in
+     the same system.  Only one will be used for the VGA console.
+     This board must have its VGA jumper (J8) set to enable, and
+     must be in a lower numbered slot than the other board.  The
+     other board must have its VGA jumper set to disable.  See
+     your workstation’s user manual to determine slot numbering.
+
+     A PowerStorm 300 and a PowerStorm 350 in the same system is
+     not supported.  Such a heterogeneous combination may work,
+     but this is not a supported configuration.
+
+     Note that both boards must be on the primary PCI bus, as
+     mentioned in Section 1.8.2.
+
+     An excess of two PowerStorm 300/350 boards in a single
+     system is not currently supported, although in some cases
+     this configuration may work if more than two slots are
+     available on the primary PCI bus.
+
+     The PowerStorm 300/350 is also not supported in conjunction
+     with any other non-PowerStorm 300/350 graphics board
+     residing in the system.
+
+
+1.5  Supported Video Modes
+
+     The PowerStorm 300 and PowerStorm 350 each support a variety
+     of video modes.  The PowerStorm 350, with twice as much
+     framebuffer memory, supports a few additional modes.  Refer
+     to the following table to see which modes are supported by
+     each board:
+          
+          Table 2-1:  Supported Video Modes
+
+       Resolution   PowerStorm 350               PowerStorm 300
+            (WxH)
+
+         1024x768   85Hz                         85Hz
+         1152x864   118, 120Hz                   N/A
+        1280x1024   75, 85, 90, 100, 100, 120HZ  75, 85Hz
+        1600x1200   75, 85Hz                     N/A
+        1920x1200   60, 75Hz                     N/A
+     
+     The default video mode is 1280x1024 at 75Hz.  To change the
+     default video mode, you must edit the X server’s
+     configuration file which is located at
+     /var/X11/Xserver.conf.  Before attempting to change your
+     resolution, make sure that the attached monitor will support
+     this new video mode.
+
+     As an example, to switch to 1280x1024 at 85Hz:
+
+       ! PowerStorm 300/350 Server args start
+              -pn -bs -su -nice -2 -screen 1280x1024 -vsync 85
+       ! PowerStorm 300/350 Server args end
+
+     You then need to restart the X server:
+
+       /usr/sbin/init.d/xlogin restart
+
+
+1.6  Synchronizing Flips with Vertical Retrace
+
+     By default, for performance reasons, double-buffered window
+     flips are not synchronized with vertical retrace.  This
+     results in visual artifacts when a buffer flip occurs during
+     vertical retrace.
+
+     To enable this synchronization, add the following device-
+     dependent arguments to the X server command-line arguments
+     discussed above:
+
+       ! PowerStorm 300/350 Server args start
+              -pn -bs -su -nice -2 -I -riFlipVSync
+       ! PowerStorm 300/350 Server args end
+
+     The -I marks the beginning of device-dependent arguments.
+     The -riFlipVSync enables synchronization of buffer flips
+     with vertical retrace.
+       
+                      Note
+       
+       This synchronization will reduce
+       performance on benchmarks which would
+       otherwise have a frame-rate that exceeds
+       the refresh rate, in effect limiting the
+       frame-rate to the refresh rate (in  other
+       words, a 75 Hz refresh rate will limit a
+       benchmark to roughly 75 frames per
+       second).
+       
+       
+1.7  Default Texel Size
+
+     When specifying a texture in OpenGL, the application may
+     request the use of a particular internal format for GL_RGB
+     format textures.  If the generic internal format of GL_RGB
+     is used for GL_RGB format textures, the implementation
+     chooses which internal format to use.  The default behavior
+     for our implementation is to use 16-bit texels, as this will
+     effectively double the number of textures that will fit in
+     the texture cache.  In order to make 32-bit texels the
+     default for GL_RGB format textures, you must set a device-
+     dependent command-line argument when invoking the X Server:
+
+       ! PowerStorm 300/350 Server args start
+              -pn -bs -su -nice -2 -I -riDefaultTexel32
+       ! PowerStorm 300/350 Server args end
+
+     See Sections 1.5 and 1.6 above for more information about
+     setting command-line arguments for the X Server.
+
+
+1.8  Known Restrictions
+
+     This section of the document contains known restrictions
+     with the PowerStorm 300/350 hardware and software.
+
+
+1.8.1     PEX and PHIGS Unsupported
+
+     PEX and PHIGS subsets are distributed with the PowerStorm
+     300/350 UNIX Graphics Support kit.  However, this software
+     is provided as a convenience to legacy customers and is not
+     supported.
+
+
+1.8.2     PCI Slot Limitations
+
+     The PowerStorm 300/350 must be installed in a slot on the
+     primary PCI bus.  Refer to your workstation’s user manual to
+     determine which slots correspond to the primary PCI bus
+     versus the secondary PCI bus.
+
+
+1.8.3     VGA Colors when Booting genvmunix Kernel
+
+     An incompatibility between the PowerStorm 300/350 hardware
+     and Tru64 UNIX V4.0E will cause random colors to appear when
+     the user boots the generic kernel (genvmunix).  This has
+     been fixed in Tru64 UNIX V4.0F.
+
+
+1.8.4     Diskless Management System (DMS) Support
+
+     The PowerStorm 300/350 UNIX Graphics Support software
+     installs files in directories that are considered "write
+     only" by the Diskless Management System (DMS) standards.
+     Operation of PowerStorm 300/350 UNIX Graphics Support
+     devices in a DMS environment may not be correct.  This is
+     under review for a change in a future release.
+
+
+1.8.5     Slow Moving of Opaque Windows
+
+     Moving opaque windows on PowerStorm 300/350 might be
+     considered slow.  This is a hardware limitation and can only
+     be improved by changing your window manager’s window move
+     policy to disable showing window contents during window move
+     operations.
+
+
+1.8.6     Backing Store and Save Unders are Disabled
+
+     Backing store and save unders are disabled by default.  Some
+     applications may benefit from the use of these mechanisms.
+     Beware that these features when used in conjunction with
+     OpenGL windows may yield unexpected results.  For example,
+     depth and stencil planes are not included among the saved
+     window contents.
+
+     2D-only installations may prefer to enable backing store and
+     save unders.  To do this, you need to edit the server
+     configuration file /usr/var/X11/Xserver.conf to remove the
+     options disabling these features.  Search for the following
+     lines in this file:
+
+       ! PowerStorm 300/350 Server args start
+              -pn -su -bs -nice -2
+       ! PowerStorm 300/350 Server args end
+
+     and remove the options that disable backing store and save
+     under:
+
+       ! PowerStorm 300/350 Server args start
+              -pn -nice -2
+       ! PowerStorm 300/350 Server args end
+
+     You then need to restart the X server:
+
+       /usr/sbin/init.d/xlogin restart
+
+
+1.8.7     OpenGL Restrictions
+
+     This section describes restrictions in the OpenGL software
+     in this release.
+
+
+1.8.7.1   Stereo Unsupported on PowerStorm 300
+
+     Stereo GLX visual support is not a feature of the PowerStorm
+     300.
+
+
+1.8.7.2   Destination Alpha Unsupported
+
+     The PowerStorm 300/350’s framebuffer is composed of three
+     sets of chips.  These are referred to as the A-chip, the B-
+     chip, and the Z-chip.  The A- and B-chips are front and back
+     image planes, while the Z-chip contains the depth buffer and
+     other miscellaneous planes.  All chips contain 32-bits per
+     pixel.
+
+     The A- and B-chips accommodate 8-bit channels for red,
+     green, and blue.  The remaining 8-bit channel is used for 8-
+     bit overlay planes instead of a destination alpha channel.
+     Most blending techniques do not require destination alpha.
+
+
+1.8.7.3   Single Stencil Plane
+
+     The Z-chip, mentioned above, accommodates a 24-bit depth
+     buffer.  Seven of the remaining eight bits are used for
+     pixel ownership, masking planes, and colormap tables.  This
+     leaves only one stencil plane.  You may notice that the
+     Windows NT software for the PowerStorm 300/350 offers four
+     stencil planes.  This is because the Windows NT window
+     system does not have the same high demands for window system
+     functionality.
+
+
+1.8.7.4   Requesting Indirect Rendering
+
+     The PowerStorm 300 and PowerStorm 350 graphics boards are
+     specifically optimized to run Direct Rendered OpenGL
+     applications.  Some applications have been coded to request
+     Indirect Rendered OpenGL rendering contexts.  Those
+     applications will not perform optimally on these graphics
+     boards.
+
+     By default OpenGL software for PowerStorm 300/350 returns a
+     Direct Rendered OpenGL rendering context whenever the
+     connection is "direct," for example, when DISPLAY is :0 or
+     direct:0.  If necessary, this behavior can be over-ridden by
+     defining this environment variable:
+
+       setenv ALLOWINDIRECT 1
+
+
+1.8.7.5   GLX Pixmap Support
+
+     The OpenGL specification precludes direct rendering to
+     pixmaps.  This limits the performance of drawing to GLX
+     pixmaps.  To use GLX pixmaps when running on a local (:0 or
+     direct:0) display, create an indirect rendering context and
+     set the following environment variable:
+
+       setenv  ALLOWINDIRECT  1
+
+     It is recommended that any application that extensively uses
+     GLX pixmap drawing be recoded to draw to the back buffer if
+     appropriate.  Performance will be significantly better on
+     this and most other OpenGL-based graphics options.
+
+     No GLX pixmap rendering is supported for contexts marked
+     direct.
+
+
+1.8.7.6   4D Vertex and Texture Coordinate Handling
+
+     There are several cases of 4D vertices that are not handled
+     correctly.  The same is true of 4D texture coordinates.
+
+
+1.8.7.7   Antialiasing in Color Index Mode
+
+     The antialiasing modes (GL_POINT_SMOOTH, GL_LINE_SMOOTH, and
+     GL_POLYGON_SMOOTH) are not supported in color-index mode.
+     Nothing will be drawn in these cases.
+
+
+1.8.7.8   Texture Mapping and Performance
+
+     Many applications use multiple texture maps.  It is
+     suggested that applications that require multiple textures
+     be written (or rewritten) to use the core OpenGL v1.1
+     texture object functionality or the texture object extension
+     to OpenGL v1.0.

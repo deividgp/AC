@@ -1,0 +1,59 @@
+!
+! *****************************************************************
+! *                                                               *
+! *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+! *                                                               *
+! *   All Rights Reserved.  Unpublished rights  reserved  under   *
+! *   the copyright laws of the United States.                    *
+! *                                                               *
+! *   The software contained on this media  is  proprietary  to   *
+! *   and  embodies  the  confidential  technology  of  Digital   *
+! *   Equipment Corporation.  Possession, use,  duplication  or   *
+! *   dissemination of the software and media is authorized only  *
+! *   pursuant to a valid written license from Digital Equipment  *
+! *   Corporation.                                                *
+! *                                                               *
+! *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+! *   by the U.S. Government is subject to restrictions  as  set  *
+! *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+! *   or  in  FAR 52.227-19, as applicable.                       *
+! *                                                               *
+! *****************************************************************
+!
+! HISTORY
+!
+! @(#)$RCSfile: Dxlicenses.ad,v $ $Revision: 1.1.2.3 $ (DEC) $Date: 1995/11/16 17:34:59 $
+!
+#include "/usr/dt/app-defaults/C/Dt"
+
+Dxlicenses*Shell000.iconName: License Manager
+Dxlicenses*info_dialog.title: Information
+Dxlicenses*warn_dialog.title: Warning
+Dxlicenses*error_dialog.title: Error
+!
+Dxlicenses*list_pak_dialog_popup.title: List A License
+Dxlicenses*list_pak_dialog*list_pak_dialog_ok_pb.labelString: OK
+Dxlicenses*list_pak_dialog*list_pak_dialog_help_pb.labelString: Help
+!
+Dxlicenses*list_pak_dialog*list_pak_rc.numColumns: 1
+Dxlicenses*list_pak_dialog*list_pak_rc.orientation: VERTICAL
+!
+Dxlicenses*list_pak_dialog*list_pak_rc*overall_rc.numColumns: 1
+Dxlicenses*list_pak_dialog*list_pak_rc*overall_rc.orientation: HORIZONTAL
+Dxlicenses*list_pak_dialog*list_pak_rc*overall_rc.packing: PACK_COLUMN
+!
+Dxlicenses*list_pak_dialog*list_lf_rc.numColumns: 1
+Dxlicenses*list_pak_dialog*list_lf_rc.orientation: VERTICAL
+Dxlicenses*list_pak_dialog*list_lf_rc.packing: PACK_COLUMN
+Dxlicenses*list_pak_dialog*list_lf_rc.entryAlignment: ALIGNMENT_END
+Dxlicenses*list_pak_dialog*list_lf_rc.isAligned: TRUE
+!
+Dxlicenses*list_pak_dialog*list_tf_rc.numColumns: 1
+Dxlicenses*list_pak_dialog*list_tf_rc.orientation: VERTICAL
+Dxlicenses*list_pak_dialog*list_tf_rc.packing: PACK_COLUMN
+Dxlicenses*list_pak_dialog*list_tf_rc.entryAlignment: ALIGNMENT_BEGINNING
+Dxlicenses*list_pak_dialog*list_tf_rc.isAligned: TRUE
+!
+Dxlicenses*error_dialog_popup*dialogTitle: License Manager Error
+Dxlicenses*info_dialog_popup*dialogTitle: License Manager Information
+Dxlicenses*warningDialog*dialogTitle: License Manager Warning

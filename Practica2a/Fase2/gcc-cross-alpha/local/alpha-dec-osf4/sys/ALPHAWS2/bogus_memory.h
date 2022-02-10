@@ -1,0 +1,1 @@
+#define BOGUS_MEMORY 0

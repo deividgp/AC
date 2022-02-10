@@ -1,0 +1,62 @@
+#/* @(#)@(#)help/vdiskDef.hlp	2.1 11 May 1993 19:06:26 -  */
+#ident  "@(#)va11:help/vdiskDef.hlp   2.1"
+#
+#
+Logical Storage Manager Disk, vdisk.hlp
+Physical Disk, pdisk.hlp
+Disk Group, diskGrp.hlp
+#########################################
+LOGICAL STORAGE MANAGER DISK DEFINE FORM HELP
+
+This operation defines a Logical Storage Manager disk access record, but does 
+not initialize it.  In order for the the Logical Storage Manager to scan a disk, 
+a disk access record must be defined for it.
+
+This utility is useful if you want to see what is on a new disk, or if you
+want to move a disk with a valid disk group from one system to another.
+
+
+Fields
+----------
+
+Public Device:
+        The name of the device node that represents a partition available
+	for use.  The name provided should be a entry in the /dev/rdsk
+	directory and be of the form c#t#d#s#.
+
+Device Type:
+	This field defines what type you want the disk to be.  A "nopriv"
+	disk has no private region, and log and configuration copies cannot
+	be written to the disk.  This type is especially useful where a
+	useful private region cannot be stored (a RAM disk, for example).
+	"Simple" disks presume that the public and private regions are
+	stored on the same disk partition, with the public region following
+	the private region.  "Sliced" disks presume that the public and
+	private regions are stored on different disk partitions.
+
+Public Length (0 for whole disk):
+	This is the length of the private section of the disk.  If zero is
+	provided as the length, then the Logical Storage Manager computes a 
+	default value is computed from available partition table information.
+
+Offline:
+	This field specifies whether or not to initially place the disk in
+	offline state.
+
+Comment:
+	The user-specified comment for this LSM disk.  The maximum length of
+	the comment is 40 characters.
+
+
+Errors
+----------
+
+"Public device name is required."
+The Public Device field may not be blank.  Enter a valid pathname in this
+field.
+
+"Public length is required."
+The Public Length field may not be blank.  Enter a valid length in this
+field.
+
+

@@ -1,0 +1,41 @@
+#/* @(#)@(#)help/sdSplit.hlp	2.1 11 May 1993 19:06:00 -  */
+#ident  "@(#)va11:help/sdSplit.hlp   2.1"
+#
+#
+Forms, forms.hlp
+Advanced Operations, advOps.hlp
+Advanced Subdisk Operations, sdOps.hlp
+Subdisk, subdisk.hlp
+Log Subdisk, logSd.hlp
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+#########################################
+SUBDISK SPLIT INTO TWO FORM HELP
+
+This form is where you specify information on how a selected subdisk is to
+be split.  The selected subdisk will be split into two parts.  The name and
+size of the "second half" subdisk may be specified in this form.  The
+"first half" subdisk will retain the name of the original subdisk.
+
+The resulting two parts will occupy the same region on the disk that the
+previous subdisk occupied.  If the subdisk was associated with a plex, then
+the resulting two subdisks will both be associated with the plex in the
+same place as the original subdisk.
+
+
+Fields
+----------
+
+Present Size:
+	This is the size of the selected subdisk, in sectors.  The user
+	cannot change this field.
+
+Name of new Subdisk:
+	This is the name that you want to give to the subdisk that you are
+	about to create.  This must be a valid name and must not be used by
+	anything else in this disk group. 
+
+Size of new Subdisk:
+	This is what you want the size of the newly-created subdisk to be.
+	This must be a valid number, greater than zero and less than than
+	the Present Size, minus one.

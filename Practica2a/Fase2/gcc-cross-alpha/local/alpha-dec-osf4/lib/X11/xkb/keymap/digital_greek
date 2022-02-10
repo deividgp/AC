@@ -1,0 +1,127 @@
+// **************************************************************
+// *								*
+// * Keymaps for el_GR.ISO8859-7 - Greek for Greece		*
+// *								*
+// * NOTES:  There isn't a VT105 (i.e. LK201) keyboard for	*
+// *	     el_GR.  In addition, there aren't any TW/DP keys 	*
+// *	     for the VT108.  The Group Shift (i.e. Mode_switch)	*
+// *	     takes care of this.				*
+// *								*
+// **************************************************************
+
+xkb_keymap "lk401" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_greek(vt108)"	};
+    xkb_geometry	{ description = "Digital Greek LK401";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_greek(vt108)"	};
+    xkb_geometry	{ description = "Digital Greek LK411";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_greek(vt108)"	};
+    xkb_geometry	{ description = "Digital Greek LK461";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk444" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk443)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_greek(lk44x)"	};
+    xkb_geometry	{ description = "Digital Greek LK444";
+			  include "geometry/digital_pc(pc101)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk44x" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk443)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_greek(lk44x)"	};
+    xkb_geometry	{ description = "Digital Greek LK444";
+			  include "geometry/digital_pc(pc101)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxalhh" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_greek(pcxalhh)"	};
+    xkb_geometry	{ description = "Digital Greek PCXAL-HH";
+			  include "geometry/digital_pc(pc101)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxallh" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_greek(pcxallh)"	};
+    xkb_geometry	{ description = "Digital Greek PCXAL-LH";
+			  include "geometry/digital_pc(pc101)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxal" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_greek(pcxal)"	};
+    xkb_geometry	{ description = "Digital Greek PCXAL";
+			  include "geometry/digital_pc(pc101)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471bh" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_greek(lk471bh)"	};
+    xkb_geometry	{ description = "Digital Greek LK471-BH";
+			  include "geometry/digital_pc(pc101)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_greek(lk471)"	};
+    xkb_geometry	{ description = "Digital Greek LK471";
+			  include "geometry/digital_pc(pc101)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97wbh" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_greek(lk471bh)"	};
+    xkb_geometry	{ description = "Digital Greek LK97W-BH";
+			  include "geometry/digital_pc(pc105)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97w" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_greek(lk471)"	};
+    xkb_geometry	{ description = "Digital Greek LK97W";
+			  include "geometry/digital_pc(pc105)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};

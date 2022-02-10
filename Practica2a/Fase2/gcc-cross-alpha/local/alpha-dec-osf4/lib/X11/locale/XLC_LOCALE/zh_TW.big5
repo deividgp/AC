@@ -1,0 +1,170 @@
+# Locale : zh_TW.big5 
+ 
+# 
+# 	XLC_FONTSET category
+# 
+XLC_FONTSET
+# 
+# Base font sets 
+# 	fs0 class (7 bit ASCII)
+fs0	{
+	charset		ISO8859-1:GL;CNS11643.1986-0:GL
+	font		ISO8859-1:GL;CNS11643.1986-0:GL
+}
+# 	fs1 class
+fs1	{
+	charset		BIG5-0
+# 	font		BIG5-0:GL;REMAP-0;BIG5.HKU-0:GL;REMAP-1
+	font		BIG5-0:GLGR;BIG5.HKU-0:GLGR;REMAP-0;REMAP-1 
+}
+
+# Optional font sets 
+#	fs2 class
+fs2	{
+	optional	True
+	udc_font	True
+	charset		BIG5-UDC
+	font		BIG5-UDC:GLGR;BIG5.HKU-UDC:GLGR;REMAP-2
+}
+ 
+# 	fs3 class
+fs3	{
+	optional	True 
+	charset		CNS11643.1986-1:GL
+	font		CNS11643.1986-1:GL;DEC.CNS11643.1986-2:GR;\
+			CNS11643.1986.1-2:GL
+}
+ 
+# 	fs4 class
+fs4	{
+	optional	True  
+	charset		CNS11643.1986-2:GL
+	font		CNS11643.1986-2:GL;DEC.CNS11643.1986-2:Q10;\
+			CNS11643.1986.2-2:GL
+}
+
+#	fs5 class
+fs5	{
+	optional	True
+	charset		GB2312.1980-0:GL
+	font		GB2312.1980-1:GR;GB2312.1980-0:GL
+}
+
+#   fs6 class
+fs6     {
+	optional	True  
+	charset		HANYU_UDC-1
+	font		CNS11643.1986.1-UDC:GR;DEC.CNS11643.1986-UDC:GR;\
+                        CNS11643.1986-1:GL;DEC.CNS11643.1986-2:GR
+}
+
+#   fs7 class
+fs7	{
+	optional	True  
+	charset		HANYU_UDC-2
+        font		CNS11643.1986.2-UDC:GR;DEC.CNS11643.1986-UDC:Q10;\
+                        CNS11643.1986-2:GR;DEC.CNS11643.1986-2:Q10
+}
+
+# Remapping font sets  
+#	charset remap class 1
+REMAP-0  {
+	locale		zh_TW.dechanyu
+	charset		CNS11643.1986-1:GL;CNS11643.1986-2:GL
+} 
+#	charset remap class 2
+REMAP-1  {
+	locale		zh_CN.dechanzi
+	charset		GB2312.1980-0:GL
+} 
+# 
+#	charset remap class 3
+REMAP-2  {
+	locale		zh_TW.dechanyu
+	charset		HANYU_UDC-1;HANYU_UDC-2
+} 
+# 
+END XLC_FONTSET
+
+# 
+# 	XLC_XLOCALE category
+# 
+XLC_XLOCALE
+
+encoding_name		big5
+mb_cur_max		4
+state_depend_encoding	False
+wc_encoding_mask	\x3fffc000
+wc_shift_bits		7
+use_stdc_env		True
+force_convert_to_mb	True 
+
+# 	cs0 class
+cs0	{
+	side		GL:Default
+	length		1
+	wc_encoding	\x00000000
+	ct_encoding	ISO8859-1:GL;CNS11643.1986-0:GL
+}
+
+# 	cs1 class
+cs1	{
+	side		GLGR:Default
+	length		2
+	wc_encoding	\x30000000
+	ct_encoding	BIG5-0
+	region		A1A1-F9FE;A140-F97E
+}
+
+#   cs2 class	
+cs2     {
+        side            GLGR
+        length          2
+        wc_encoding     \0x0000000
+        ct_encoding     BIG5-UDC
+        region          8140-A07E;81A1-A0FE;FA40-FE7E;FAA1-FEFE
+}
+
+#
+# 	Associated locales 
+# 	Functions : 
+#	1) Backward compatibility in CT exchange 
+#	2) Font remapping
+#
+#	associated locale 0 
+#   for using dechanyu fonts 
+assoc_locale0	{	
+	locale		zh_TW.dechanyu
+	conversion	big5-dechanyu
+}
+
+#   for handling CT conversions 
+#	associated locale 1 
+assoc_locale1	{	
+	locale		zh_TW.dechanyu_r5
+	conversion	big5-dechanyu
+} 
+
+#   for using dechanzi fonts 
+#   associated locale 2
+assoc_locale2	{
+	locale		zh_CN.dechanzi 
+	conversion	big5-dechanzi
+}  
+
+#
+# Comment out ct_charset_remap0 if you do not want private tag
+# CT segments to be generated for this locale.
+#
+
+# 
+#  	CT Charset remapping
+# 
+ct_charset_remap0 {
+	charset			BIG5-0
+# 	using R5 dechanyu's CT charset encoding
+	assoc_locale_index	1
+} 
+END XLC_XLOCALE
+
+

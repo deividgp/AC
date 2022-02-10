@@ -1,0 +1,1 @@
+#define NATA 2

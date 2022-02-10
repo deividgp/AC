@@ -1,0 +1,156 @@
+// **************************************************************
+// *								*
+// * Symbols for th_TH - Thai					*
+// *								*
+// **************************************************************
+
+xkb_symbols "thai" {
+    name[Group2]= "thai";
+    key <AE01> {        [], [            plus, ssharp       ]       };
+    key <AE02> {        [], [           slash, ntilde       ]       };
+    key <AE03> {        [], [      underscore, ograve       ]       };
+    key <AE04> {        [], [          Agrave, oacute       ]       };
+    key <AE05> {        [], [       paragraph, ocircumflex  ]       };
+    key <AE06> {        [], [        Ooblique, Ugrave       ]       };
+    key <AE07> {        [], [      Odiaeresis, thorn        ]       };
+    key <AE08> {        [], [        currency, otilde       ]       };
+    key <AE09> {        [], [              mu, odiaeresis   ]       };
+    key <AE10> {        [], [       diaeresis,  division    ]       };
+    key <AE11> {        [], [            cent, oslash       ]       };
+    key <AE12> {        [], [     ordfeminine, ugrave       ]       };
+
+    key <AD01> {        [], [              ae, eth          ]       };
+    key <AD02> {        [], [      adiaeresis, quotedbl     ]       };
+    key <AD03> {        [], [          Oacute, registered   ]       };
+    key <AD04> {        [], [   threequarters, plusminus    ]       };
+    key <AD05> {        [], [             ETH, cedilla      ]       };
+    key <AD06> {        [], [          Ntilde, iacute       ]       };
+    key <AD07> {        [], [          Otilde, ecircumflex  ]       };
+    key <AD08> {        [], [          Atilde, threesuperior]       };
+    key <AD09> {        [], [     onesuperior, Idiaeresis   ]       };
+    key <AD10> {        [], [     Acircumflex, hyphen       ]       };
+    key <AD11> {        [], [       masculine, degree       ]       };
+    key <AD12> {        [], [           Aring, comma        ]       };
+    key <BKSL> {        [], [           minus, percent      ]       };
+
+    key <AC01> {        [], [    questiondown, Adiaeresis   ]       };
+    key <AC02> {        [], [      Ediaeresis, brokenbar    ]       };
+    key <AC03> {        [], [      exclamdown, macron       ]       };
+    key <AC04> {        [], [           acute, acircumflex  ]       };
+    key <AC05> {        [], [          agrave, notsign      ]       };
+    key <AC06> {        [], [          eacute, ccedilla     ]       };
+    key <AC07> {        [], [          egrave, ediaeresis   ]       };
+    key <AC08> {        [], [          Ograve, Eacute       ]       };
+    key <AC09> {        [], [     Ecircumflex, Egrave       ]       };
+    key <AC10> {        [], [        Ccedilla, guillemotleft]       };
+    key <AC11> {        [], [         section, period       ]       };
+
+    key <AB01> {        [], [      onequarter, parenleft    ]       };
+    key <AB02> {        [], [  guillemotright, parenright   ]       };
+    key <AB03> {        [], [          aacute, copyright    ]       };
+    key <AB04> {        [], [          Iacute, Icircumflex  ]       };
+    key <AB05> {        [], [     Ocircumflex, Uacute       ]       };
+    key <AB06> {        [], [        multiply, igrave       ]       };
+    key <AB07> {        [], [  periodcentered, question     ]       };
+    key <AB08> {        [], [          Aacute, twosuperior  ]       };
+    key <AB09> {        [], [          atilde, Igrave       ]       };
+    key <AB10> {        [], [         onehalf, AE           ]       };
+};
+
+xkb_symbols "lk201t" {
+    include "symbols/digital_us(us)"
+    include "symbols/digital_vt(vt105)"
+    include "symbols/digital_thai(thai)"
+    replace key <FK11> { [ F11                             ] };
+    replace key <LCMP> { [ Mode_switch                     ] };
+             key <AE00> { [], [ equal, asterisk ] };
+             key <AB00> { [], [ colon, numbersign ] };
+};
+
+xkb_symbols "lk201wtt" {
+    include "symbols/digital_us(us)"
+    include "symbols/digital_vt(vt105)"
+    include "symbols/digital_thai(thai)"
+    replace key <FK11> { [ F11                             ] };
+    override key <AE01> { [], [ aring, plus ] };
+    override key <AE07> { [], [ Odiaeresis, ssharp ] };
+    override key <BKSL> { [], [ sterling, yen ] };
+    replace key <LCMP> { [ Mode_switch                     ] };
+             key <AE00> { [], [ underscore, percent ] };
+             key <AB00> { [], [ colon, numbersign ] };
+};
+
+xkb_symbols "lk401t" {
+    include "symbols/digital_us(vt108)"
+    include "symbols/digital_thai(thai)"
+    replace key <FK11> { [ F11 ] };
+    replace key <LCMP> { [ Mode_switch                     ] };
+             key <AE00> { [], [ equal, asterisk ] };
+             key <AB00> { [], [ colon, numbersign ] };
+};
+
+xkb_symbols "lk401wtt" {
+    include "symbols/digital_us(vt108)"
+    include "symbols/digital_thai(thai)"
+    replace key <FK11> { [ F11 ] };
+    replace key <LCMP> { [ Mode_switch                     ] };
+             key <AE00> { [], [ equal, asterisk ] };
+             key <AB00> { [], [ colon, numbersign ] };
+};
+
+xkb_symbols "lk443t" {
+    include "symbols/digital_us(lk44x)"
+    include "symbols/digital_thai(thai)"
+    replace key <RCTL> { [ Mode_switch                     ] };
+             key <AE00> { [], [ equal, asterisk ] };
+};
+
+xkb_symbols "lk443wtt" {
+    include "symbols/digital_us(lk44x)"
+    include "symbols/digital_thai(thai)"
+             key <AE00> { [], [ underscore, percent ] };
+    override key <AE01> { [], [ aring, plus ] };
+    override key <AE07> { [], [ Odiaeresis, ssharp ] };
+    override key <BKSL> { [], [ sterling, yen ] };
+    replace key <RCTL> { [ Mode_switch                     ] };
+};
+
+xkb_symbols "pcxalt" {
+    include "symbols/digital_us(pcxal)"
+    include "symbols/digital_thai(thai)"
+             key <AE00> { [], [ equal, asterisk ] };
+    override key <AB10> { [], [ NoSymbol, NoSymbol ] };
+    replace key <RCTL> { [ Mode_switch                     ] };
+};
+
+xkb_symbols "pcxalwtt" {
+    include "symbols/digital_us(pcxal)"
+    include "symbols/digital_thai(thai)"
+             key <AE00> { [], [ underscore, percent ] };
+    override key <AE01> { [], [ aring, plus ] };
+    override key <AE07> { [], [ Odiaeresis, ssharp ] };
+    override key <BKSL> { [], [ sterling, yen ] };
+    override key <AB10> { [], [ NoSymbol, NoSymbol ] };
+    replace key <RCTL> { [ Mode_switch                     ] };
+};
+
+xkb_symbols "lk471cb" {
+    include "symbols/digital_thai(pcxalwtt)"
+    replace key <AE00> { [], [ NoSymbol, percent ] };
+    override key <AE01> { [], [ NoSymbol, NoSymbol] };
+    override key <BKSL> { [], [ NoSymbol, NoSymbol] };
+    replace key <AE00> {
+        symbols[Group1]= [           grave,          asciitilde ],
+        symbols[Group2]= [         percent                      ]
+    };
+    replace key <AE01> {
+        symbols[Group1]= [               1,              exclam ]
+    };
+    replace key <BKSL> {
+        symbols[Group1]= [       backslash,                 bar ]
+    };
+};
+
+xkb_symbols "lk471"   { include "symbols/digital_thai(lk471cb)" };
+xkb_symbols "lk97wcb" { include "symbols/digital_thai(lk471)"   };
+xkb_symbols "lk97w"   { include "symbols/digital_thai(lk97wcb)" };

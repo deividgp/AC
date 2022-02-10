@@ -1,0 +1,27 @@
+#/* @(#)@(#)help/volume.hlp	2.1 11 May 1993 19:06:58 -  */
+#ident  "@(#)va11:help/volume.hlp   2.1"
+#
+#
+Plex, plex.hlp
+Subdisk, subdisk.hlp
+Disk Group, diskGrp.hlp
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+#########################################
+VOLUME HELP
+
+A volume is a device that looks to applications and file systems like
+regular disk partition device.  Volumes present block and raw device
+interfaces that are compatible with disk partition devices.  However, a
+volume is a virtual device that can be mirrored, spanned across disk
+drives, moved to use different storage, and striped using administrative
+commands.  Also, the configuration of a volume can be changed, using the
+Logical Storage Manager utilities, without causing disruption to applications 
+or file systems that are using the volume.
+
+Volumes are graphically represented in the Visual Administrator as
+cylinders with double-dark borders and a "V" at the top.  They normally
+contain one or more rectangles that represent plexes.
+
+For more information about volumes, consult the Logical Storage Manager
+documentation.

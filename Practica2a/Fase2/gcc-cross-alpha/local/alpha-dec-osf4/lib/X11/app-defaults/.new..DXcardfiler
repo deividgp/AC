@@ -1,0 +1,78 @@
+! 
+! DECwindows Cardfiler
+! 
+! Copyright © Digital Equipment Corporation. 1989,1994. All rights reserved.
+! 
+! Set the initial postion
+!
+Cardfiler.y:			100
+Cardfiler.x:			100
+!
+! Set the minimum size of the card and the index
+!
+Cardfiler.minWidth:		150
+Cardfiler.minHeight:		175
+CardfilerCard.minWidth:		170
+CardfilerCard.minHeight:	170
+!
+! Set the initial size of the index and the card
+!
+Cardfiler.width:		275
+Cardfiler.height:		300
+CardfilerCard.width:		330
+CardfilerCard.height:		200
+!
+! Set the initial size of the image inside a card
+CardfilerCard*card_drawing.height	100
+!
+! Set how the icon titles will look like
+! 0 = just file name, 1 = fullpathname
+!
+Cardfiler.fullPathnames:	0
+!
+! Tear off menus
+!
+*tearOffModel:  XmTEAR_OFF_ENABLED
+!
+! Color Settings
+!
+!*foreground:		Turquoise
+!*background:		DarkSlateGrey
+!Cardfiler*indexmainwindow.index_workarea*foreground:	DarkSlateGrey
+!Cardfiler*indexmainwindow.index_workarea*background:	White
+!CardfilerCard*cardmainwindow.card_workarea*foreground:	DarkSlateGrey
+!CardfilerCard*cardmainwindow.card_workarea*background:	Turquoise
+!
+! Accerlerators
+!
+CardfilerCard*deletecard.acceleratorText:	Ctrl+D	
+CardfilerCard*deletecard.accelerator:		Ctrl<Key>d
+CardfilerCard*cardfindnext.acceleratorText:	Ctrl+Next
+CardfilerCard*cardfindnext.accelerator:		Ctrl<Key>Next
+CardfilerCard*readbitmapfile.acceleratorText:	Ctrl+O
+CardfilerCard*readbitmapfile.accelerator:	Ctrl<Key>o
+CardfilerCard*pulldown_close.acceleratorText:	Ctrl+Q
+CardfilerCard*pulldown_close.accelerator:	Ctrl<Key>q
+CardfilerCard*undo.acceleratorText:	Ctrl+Z
+CardfilerCard*undo.accelerator:		Ctrl<Key>z
+CardfilerCard*cut.acceleratorText:	Ctrl+X
+CardfilerCard*cut.accelerator:		Ctrl<Key>x
+CardfilerCard*copy.acceleratorText:	Ctrl+C
+CardfilerCard*copy.accelerator:		Ctrl<Key>c
+CardfilerCard*paste.acceleratorText:	Ctrl+V
+CardfilerCard*paste.accelerator:	Ctrl<Key>v
+CardfilerCard*card_newcard.acceleratorText:	Ctrl+B
+CardfilerCard*card_newcard.accelerator:		Ctrl<Key>b
+CardfilerCard*rename.acceleratorText:		Ctrl+R
+CardfilerCard*rename.accelerator:		Ctrl<Key>r
+CardfilerCard*pulldown_previous.acceleratorText:	Ctrl+P
+CardfilerCard*pulldown_previous.accelerator:		Ctrl<Key>p
+CardfilerCard*pulldown_next.acceleratorText:	Ctrl+N
+CardfilerCard*pulldown_next.accelerator:	Ctrl<Key>n
+!
+Cardfiler*indexfindnext.acceleratorText:	Ctrl+Next
+Cardfiler*indexfindnext.accelerator:		Ctrl<Key>Next
+Cardfiler*newcard.acceleratorText:		Ctrl+B
+Cardfiler*newcard.accelerator:			Ctrl<Key>b
+!
+*DXmfitToScreenPolicy:	AS_NEEDED

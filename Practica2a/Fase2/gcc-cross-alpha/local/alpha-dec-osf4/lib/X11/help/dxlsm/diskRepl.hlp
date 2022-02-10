@@ -1,0 +1,32 @@
+#/* @(#)@(#)help/diskRepl.hlp	2.1 11 May 1993 19:04:22 -  */
+#ident  "@(#)va11:help/diskReplace.hlp   2.1"
+#
+#
+Partition, part.hlp
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+#########################################
+BASIC DISK REPLACE HELP
+
+This form allows you to replace a disconnected disk with another disk.  The
+disk to be replaced must already be "disconnected," meaning that the disk
+media record (DMR) that represents the LSM disk does not reference a disk
+access record (DAR).
+
+
+Fields
+----------
+
+Old LSM disk name:
+	This is the name of the LSM disk that you want to replace with
+	the new physical disk.  This field reflects the LSM disk that was
+	selected and cannot be changed.
+
+New physical disk name:
+	This is the name of the physical disk that you want to use to
+	replace this disk.  This disk name must be of the form rz3 or ra3.
+
+Analyze disk:
+	This field tells the Logical Storage Manager whether or not you wish to
+	analyze the new disk before doing the replace operation.  If
+	selected, this operation may take some time.

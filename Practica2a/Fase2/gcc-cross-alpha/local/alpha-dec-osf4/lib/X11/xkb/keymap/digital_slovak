@@ -1,0 +1,157 @@
+// **************************************************************
+// *								*
+// * Keymaps for sk_SK.ISO8859-2 - Slovak for Slovakia		*
+// *								*
+// * NOTES:  There isn't a VT105 (i.e. LK201) keyboard for	*
+// *	     sk_SK.  In addition, there aren't any TW/DP keys 	*
+// *	     for the VT108.  The Group Shift (i.e. Mode_switch)	*
+// *	     takes care of this.				*
+// *								*
+// **************************************************************
+
+xkb_keymap "lk401" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_slovak(vt108)"	};
+    xkb_geometry	{ description = "Digital Slovak LK401";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_slovak(vt108)"	};
+    xkb_geometry	{ description = "Digital Slovak LK411";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_slovak(vt108)"	};
+    xkb_geometry	{ description = "Digital Slovak LK461";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk442" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk444)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_slovak(lk44x)"	};
+    xkb_geometry	{ description = "Digital Slovak LK442";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk444" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk444)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_slovak(lk44x)"	};
+    xkb_geometry	{ description = "Digital Slovak LK444";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk44x" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk444)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_slovak(lk44x)"	};
+    xkb_geometry	{ description = "Digital Slovak LK444";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxaljz" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_slovak(pcxaljz)"	};
+    xkb_geometry	{ description = "Digital Slovak PCXAL-JZ";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxalmz" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_slovak(pcxalmz)"	};
+    xkb_geometry	{ description = "Digital Slovak PCXAL-MZ";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxalqz" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)"          };
+    xkb_types           { include "types/default"                       };
+    xkb_compatibility   { include "compat/default"                      };
+    xkb_symbols         { include "symbols/digital_slovak(pcxalqz)"     };
+    xkb_geometry        { description = "Digital Slovak PCXAL-QZ";
+                          include "geometry/digital_pc(pc102)"
+                          include "geometry/digital_pc(leds_alone)"     };
+};
+
+xkb_keymap "pcxaltz" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_slovak(pcxaltz)"	};
+    xkb_geometry	{ description = "Digital Slovak PCXAL-TZ";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxal" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_slovak(pcxal)"	};
+    xkb_geometry	{ description = "Digital Slovak PCXAL";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471cz" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_slovak(lk471cz)"	};
+    xkb_geometry	{ description = "Digital Slovak LK471-CZ";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_slovak(lk471)"	};
+    xkb_geometry	{ description = "Digital Slovak LK471";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97wcz" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_slovak(lk97wcz)"	};
+    xkb_geometry	{ description = "Digital Slovak LK97W-CZ";
+			  include "geometry/digital_pc(pc105)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97w" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_slovak(lk97w)"	};
+    xkb_geometry	{ description = "Digital Slovak LK97W";
+			  include "geometry/digital_pc(pc105)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};

@@ -1,0 +1,29 @@
+#/* @(#)@(#)help/loggingM.hlp	2.1 11 May 1993 19:05:21 -  */
+#ident  "@(#)va11:help/loggingM.hlp   2.1"
+#
+#
+Options Menu, optionsM.hlp
+Logging Start Form, logStartF.hlp
+#########################################
+LOGGING MENU HELP
+
+Logging lets you keep a record on disk of all commands sent to the Logical 
+Storage Manager or the system by the Visual Administrator.  This is useful if
+you want to audit a Visual Administrator session.  Logging can be started or
+stopped at any time.
+
+The filename specified for the log file must reside under a directory path
+that you have write permissions to.  If the specified file exists, the log
+information will be appended to the end of that file.
+
+
+Start
+-----
+Begin saving record of commands to log file.  You must specify a file to
+write to.
+
+Stop
+----
+Discontinue writing record of commands to log file.  If you want to restart
+logging at a later time, remember this file name as the Visual
+Administrator does not retain this information for you.

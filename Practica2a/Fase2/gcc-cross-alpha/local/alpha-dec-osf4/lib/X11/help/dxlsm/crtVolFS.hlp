@@ -1,0 +1,23 @@
+#/* @(#)@(#)help/crtVolFS.hlp	2.1 11 May 1993 19:03:59 -  */
+#ident  "@(#)va11:help/crtVolFS.hlp   2.1"
+#
+#
+Striping, stripe.hlp
+Mirroring, mirror.hlp
+Concatenated, concat.hlp
+Volume, volume.hlp
+#########################################
+BASIC VOLUME AND FILE SYSTEM CREATE PULLDOWN MENU
+
+This pulldown menu allows you to choose the type of volume you want to
+create from a list of standard options.  Not all possible types of volume
+configurations are listed here, just the most common configurations.
+
+For example, if you wanted to created a disk with two mirrors, each of
+which is to be striped, use this menu to create a volume with a striped
+plex, and then use the Basic: Volume: Add Mirror: Striped pulldown menu to
+attach a striped mirror.
+
+For more information on the different types of volume and plex
+configurations, see the Striping, Mirroring, and Concatenated help
+sections.

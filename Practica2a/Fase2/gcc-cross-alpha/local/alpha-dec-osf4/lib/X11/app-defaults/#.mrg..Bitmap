@@ -1,0 +1,63 @@
+#!/sbin/sh
+# 
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+#
+# HISTORY
+# 
+# @(#)$RCSfile: Bitmap.mrg.sh,v $ $Revision: 1.1.2.4 $ (DEC) $Date: 1995/09/27 19:25:17 $
+# 
+
+# specify name of your merge routine here if you are not using 3-way merge. 
+
+MERGE_ROUTINE=DRI_Merge
+
+DRI_Merge()
+{
+	egrep -q "[ 	]+<BtnDown>:[ 	]+reset.*fix-menu.*PopupMenu.*" $_FILE&& 
+	{
+		MRG_Echo "modifying *MenuButton.translations"
+		ed - $_FILE << EOF 1>/dev/null
+			/reset() fix-menu() PopupMenu()/
+				s/</Any</
+w
+q
+EOF
+		[ $? = 0 ] ||
+		{
+			MRG_Echo "\tfailed to modify *MenuButton.translations"
+			RET=1
+		}
+	
+	}
+	
+	return $RET
+} 
+
+SHELL_LIB=${SHELL_LIB:-/usr/share/lib/shell}
+. $SHELL_LIB/libmrg
+
+# define your merge routine here. 
+
+# OPTIONAL: for 3-way merge, make MRG_SetCheck calls here.
+
+[ "$CHECK_SYNTAX" ] || MRG_Merge "$@" 
+

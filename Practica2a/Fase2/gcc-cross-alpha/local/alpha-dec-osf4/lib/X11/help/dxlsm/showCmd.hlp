@@ -1,0 +1,23 @@
+#/* @(#)@(#)help/showCmd.hlp	2.1 11 May 1993 19:06:08 -  */
+#ident  "@(#)va11:help/showCmd.hlp   2.1"
+#
+#
+Options Menu, optionsM.hlp
+#########################################
+SHOW COMMAND INFO HELP
+
+Here you specify when you want the command window to be shown, either
+before every command is executed, or only when a command fails.
+
+
+Show on Error
+-------------
+Pop up the command window when a Logical Storage Manager or system command has
+failed.  This is the default behavior.
+
+Show at Start
+-------------
+Pop up the command window any time a Logical Storage Manager or system command is
+ready to be sent.  This is useful for users trying to learn the Logical Storage
+Manager command line interface.  Commands in the command window may be
+executed manually from the command window.

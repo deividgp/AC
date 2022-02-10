@@ -1,0 +1,29 @@
+#/* @(#)@(#)help/subdisk.hlp	2.1 11 May 1993 19:06:20 -  */
+#ident  "@(#)va11:help/subdisk.hlp   2.1"
+#
+#
+Log Subdisk, logSd.hlp
+Volume, volume.hlp
+Plex, plex.hlp
+Disk Group, diskGrp.hlp
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+Striping, stripe.hlp
+Concatenated, concat.hlp
+Colors, colors.hlp
+#########################################
+SUBDISK HELP
+
+A subdisk is a region of storage allocated on a disk for use with a volume.
+Subdisks are associated to volumes through plexes.  Subdisks are organized
+to form plexes based on the plex organization: striped or concatenated.
+Subdisks are defined relative to Logical Storage Manager Disks 
+(Disk Media Records).
+
+Subdisks are graphically represented in the Visual Administrator as
+rectangles with single-dark outlines.  Subdisk icons reside with the LSM
+disk that they were created on, and/or the plex icon they are associated
+with.  If Free Subdisk projection is turned on, then an unassociated
+subdisk will appear shaded with the Free Subdisk color or bitmap.
+
+For more information consult the Logical Storage Manager documentation.

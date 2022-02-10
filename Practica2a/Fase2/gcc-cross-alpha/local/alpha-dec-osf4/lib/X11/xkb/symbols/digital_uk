@@ -1,0 +1,118 @@
+// **************************************************************
+// *								*
+// * Symbols for en_GB.ISO8859-1 - English for Great Britain	*
+// *								*
+// **************************************************************
+
+// **************************************************************
+// *								*
+// * The VT105 layouts - based upon the LK201-EE		*
+// *								*
+// **************************************************************
+xkb_symbols "vt105-tw" {
+    include "digital_us(vt105)"
+    replace key <AE03> { 
+	symbols[Group1]= [ 3, sterling ],
+	symbols[Group2]= [ numbersign ]
+    };
+    replace key <AE04> {
+        symbols[Group1]= [ 4, dollar ],
+        symbols[Group2]= [ EuroSign ]
+    };
+};
+
+xkb_symbols "vt105-dp" { 
+    include "digital_us(vt105-tw)" 
+    replace key <AE04> {
+        symbols[Group1]= [ 4, dollar ],
+        symbols[Group2]= [ EuroSign ]
+    };
+};
+
+xkb_symbols "vt105"    { include "digital_uk(vt105-tw)" };
+
+// **************************************************************
+// *								*
+// * The VT108 layouts - based upon the LK401-AA		*
+// *								*
+// **************************************************************
+xkb_symbols "vt108-tw" {
+    include "digital_us(vt108)"
+    replace key <AE03> { 
+	symbols[Group1]= [ 3, sterling ],
+	symbols[Group2]= [ numbersign ]
+    };
+    replace key <AE04> {
+        symbols[Group1]= [ 4, dollar ],
+        symbols[Group2]= [ EuroSign ]
+    };
+    replace key <LCMP> { [ Mode_switch ] };
+};
+
+xkb_symbols "vt108-dp" { 
+    include "digital_us(vt108-tw)" 
+    replace key <AE04> {
+        symbols[Group1]= [ 4, dollar ],
+        symbols[Group2]= [ EuroSign ]
+    };
+    replace key <LCMP> { [ Mode_switch ] };
+};
+
+xkb_symbols "vt108"    { include "digital_uk(vt108-tw)" };
+
+// **************************************************************
+// *								*
+// * The "unix" layouts	- based upon the LK421-AA		*
+// *								*
+// * NOTES: The "unix" keyboard emits the same keycodes as the	*
+// *	    LK401, but is a shorter keyboard that uses an	*
+// *	    "extend" key.  To make life easier, we map <AE00>	*
+// *	    to Escape so users do not have to press Extend+F11	*
+// *	    to get Escape.					*
+// *								*
+// **************************************************************
+xkb_symbols "unix" {
+    include "digital_us(unix)"
+    replace key <AE03> { 
+	symbols[Group1]= [ 3, sterling ],
+	symbols[Group2]= [ numbersign ]
+    };
+    replace key <AE04> {
+        symbols[Group1]= [ 4, dollar ],
+        symbols[Group2]= [ EuroSign ]
+    };
+    replace key <LCMP> { [ Mode_switch ] };
+};
+
+// **************************************************************
+// *								*
+// * The "pcxal" layouts					*
+// *								*
+// * NOTES: The pcxal layouts are pretty much standardized for	*
+// *	    the UK and use a 102-key keyboard.			*
+// *								*
+// **************************************************************
+xkb_symbols "pcxalge" {
+    include "digital_us(pcxal)"
+    key <AC12> { [ numbersign, asciitilde] };
+    replace key <AE00>	{ 
+	symbols[Group1]= [ grave, notsign ],
+	symbols[Group2]= [ brokenbar ] 
+    };
+    replace key <AE02>	{ [ 2, quotedbl ] };
+    replace key <AE03>	{ [ 3, sterling ] };
+    replace key <AE04> {
+        symbols[Group1]= [ 4, dollar ],
+        symbols[Group2]= [ EuroSign ]
+    };
+    replace key <AC11>	{ [ apostrophe,	at ] };
+    replace  key <RALT> { [ Mode_switch ] };
+};
+
+xkb_symbols "pcxal"   { include "digital_uk(pcxalge)" };
+xkb_symbols "pcxalae" { include "digital_uk(pcxalge)" };
+xkb_symbols "pcxalfe" { include "digital_uk(pcxalge)" };
+xkb_symbols "lk44x"   { include "digital_uk(pcxalge)" };
+
+xkb_symbols "lk471ae" { include "digital_uk(pcxalge)" };
+xkb_symbols "lk471"   { include "digital_uk(lk471ae)" };

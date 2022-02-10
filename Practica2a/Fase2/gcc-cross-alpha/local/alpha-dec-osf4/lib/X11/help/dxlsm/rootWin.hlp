@@ -1,0 +1,60 @@
+#/* @(#)@(#)help/rootWin.hlp	2.1 11 May 1993 19:05:51 -  */
+#ident  "@(#)va11:help/rootWin.hlp   2.1"
+#
+#
+Views, views.hlp
+Views Pulldown Menu, viewM.hlp
+Pulldown Menus, pulldown.hlp
+Options, optionsM.hlp
+Volume, volume.hlp
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+Disk Group, diskGrp.hlp
+#########################################
+DXlsm ROOT WINDOW HELP
+
+The DXlsm root window is the first interactive window presented to the 
+user when the Visual Administrator is started up.  It is titled "Visual
+Administrator" with an icon name "DXlsm."
+
+The window has three parts.  The pulldown menu section has four pulldown
+menus: File, Views, Options, and Help.  These are described below.  Next is
+the Views Subwindow where there are buttons representing the different
+views.  And, finally, there is the DIGITAL logo on the bottom.
+
+The buttons in the views subwindow represent the various views available to
+the user.  Included in this list are always four standard views, listed
+below.
+
+	View Name	Description
+	---------	-----------
+	Disks		All physical disks on the system
+	Volumes		All volumes on the system
+	World		Everything on the system (disks, volumes, etc.)
+	rootdg		View of the root disk group
+
+By clicking on one of these buttons the user pops up that view.  See help
+on Views for more information.
+
+
+The functions of the pulldown menus are as follows:
+
+
+File
+----
+The one option on this pulldown menu, CLOSE, allows the user to exit from
+the Visual Administrator.  All information about the views and preferences
+are saved for your next session.  It is important that the File pulldown
+menu (from the DXlsm root window or a view) is used to exit from the Visual
+Administrator so that the system can maintain correct information about
+your views and preferences.
+
+Views
+-----
+Add, Rename, or Remove user views to the system.  See help on Views and the
+Views Pulldown Menu for more information.
+
+Options
+-------
+Specify your preferences on how the Visual Administrator should operate.
+See help on Options for more information.

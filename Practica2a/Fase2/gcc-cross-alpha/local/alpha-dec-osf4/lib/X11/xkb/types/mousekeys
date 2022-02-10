@@ -1,0 +1,13 @@
+// $XConsortium: mousekeys,v 1.2 94/04/08 16:00:43 erik Exp $
+// 
+partial default xkb_types "default" {
+    virtual_modifiers Alt;
+
+    type "SHIFT+ALT" {
+   	modifiers = Shift+Alt;
+    	map[Shift+Alt] = Level2;
+    	level_name[Level1] = "Base";
+	level_name[Level2] = "Shift+Alt";
+    };
+};
+

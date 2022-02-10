@@ -1,0 +1,1 @@
+#define NTC 0

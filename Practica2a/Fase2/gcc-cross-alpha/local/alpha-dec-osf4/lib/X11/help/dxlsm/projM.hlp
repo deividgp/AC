@@ -1,0 +1,28 @@
+#/* @(#)@(#)help/projM.hlp	2.1 11 May 1993 19:05:45 -  */
+#ident  "@(#)va11:help/projM.hlp   2.1"
+#
+#
+Icons, icons.hlp
+Icon Projection, iconProj.hlp
+Show Free Subdisks, freeSd.hlp
+#########################################
+PROJECTION MENU HELP
+
+This menu allows you to turn icon projection on or off for one or more
+icons.  You may also choose to have the Visual Administrator display free
+subdisks.
+
+
+Icon Projection
+---------------
+Start or stop icon projection for the selected icons.  The operation must
+be valid for all icons selected.  You may also chose to stop all icon
+projection.  See the help on Icon Projection for more information.
+
+Show Free Subdisks
+------------------
+Start or stop show free subdisk projection for the entire Visual
+Administrator.  The state of your selection here is retained as a
+preference, so that next time you start up the Visual Administrator your
+preference will remain.  See the help on Show Free Subdisks for more
+information.

@@ -1,0 +1,141 @@
+// **************************************************************
+// *								*
+// * Keymaps for tr_TR.ISO8859-9 - Turkish for Turkey		*
+// *								*
+// * NOTES:  The "F" in Turkish F stands for <AD01> = [f,F].	*
+// *	     In addition, the Turkish F layout does not have	*
+// * 	     PCXAL or LK201 versions.				*
+// *								*
+// **************************************************************
+
+xkb_keymap "lk401-tw" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_turkish_f(vt108-tw)"	};
+    xkb_geometry	{ description = "Digital Turkish F LK401 - Typewriter Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk401-dp" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_turkish_f(vt108-dp)"	};
+    xkb_geometry	{ description = "Digital Turkish F LK401 - Data Processing Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk401" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_turkish_f(vt108)"	};
+    xkb_geometry	{ description = "Digital Turkish F LK401";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411-tw" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_turkish_f(vt108-tw)"	};
+    xkb_geometry	{ description = "Digital Turkish F LK411 - Typewriter Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411-dp" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_turkish_f(vt108-dp)"	};
+    xkb_geometry	{ description = "Digital Turkish F LK411 - Data Processing Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_turkish_f(vt108)"	};
+    xkb_geometry	{ description = "Digital Turkish F LK411";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461-tw" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_turkish_f(vt108-tw)"	};
+    xkb_geometry	{ description = "Digital Turkish F LK461 - Typewriter Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461-dp" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_turkish_f(vt108-dp)"	};
+    xkb_geometry	{ description = "Digital Turkish F LK461 - Data Processing Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_turkish_f(vt108)"	};
+    xkb_geometry	{ description = "Digital Turkish F LK461";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "pcxalmu" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_turkish_f(pcxalmu)"	};
+    xkb_geometry	{ description = "Digital Turkish-F PCXAL-MU";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471bw" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_turkish_f(lk471bw)"	};
+    xkb_geometry	{ description = "Digital Turkish-F LK471-BW";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_turkish_f(lk471)"	};
+    xkb_geometry	{ description = "Digital Turkish-F LK471";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97wbw" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_turkish_f(lk471bw)"	};
+    xkb_geometry	{ description = "Digital Turkish-F LK97W-BW";
+			  include "geometry/digital_pc(pc105)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97w" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_turkish_f(lk471)"	};
+    xkb_geometry	{ description = "Digital Turkish-F LK97W";
+			  include "geometry/digital_pc(pc105)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+

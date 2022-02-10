@@ -1,0 +1,1 @@
+#define NENVRAM 0

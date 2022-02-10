@@ -1,0 +1,223 @@
+## Modifications Copyright 1998 Digital Equipment Corporation
+# @(#)font.properties	1.5 97/11/25
+#
+#  Copyright (c) 1994-1996 by Sun Microsystems Inc
+#
+# AWT Font default Properties for Solaris
+#
+## DEC JAVA: cds - modifications for DU (as recommended by TJW):
+##       "-linotype-" -> "--"
+##       "lucida sans"            -> "lucida"
+##       "lucida sans typewriter" -> "lucidatypewriter"
+##       "sun-fontspecific" -> "adobe-fontspecific"
+##       "urw-itc zapfdingbats" -> "adobe-zapfdingbats"
+##
+## Modifications by BWM:
+## Replace font definitions that begin -- with -*- --- *should*
+## be the same thing, but it appears that the -- wildcarding
+## didn't work with the early JDK.
+## Also removed sans from Helvetica definitions, used 0 in place
+## of * wildcard for scaling.
+
+# Serif font definition
+#
+serif.plain.0=-adobe-times-medium-r-normal--0-%d-0-0-p-0-iso8859-1
+serif.1=-adobe-zapfdingbats-medium-r-normal--0-%d-0-0-p-0-adobe-fontspecific
+serif.2=-adobe-symbol-medium-r-normal--0-%d-0-0-p-0-adobe-fontspecific
+
+serif.italic.0=-adobe-times-medium-i-normal--0-%d-0-0-p-0-iso8859-1
+
+serif.bold.0=-adobe-times-bold-r-normal--0-%d-0-0-p-0-iso8859-1
+
+serif.bolditalic.0=-adobe-times-bold-i-normal--0-%d-0-0-p-0-iso8859-1
+
+# SansSerif font definition
+#
+sansserif.plain.0=-adobe-helvetica-medium-r-normal--0-%d-0-0-p-0-iso8859-1
+sansserif.1=-adobe-zapfdingbats-medium-r-normal--0-%d-0-0-p-0-adobe-fontspecific
+sansserif.2=-adobe-symbol-medium-r-normal--0-%d-0-0-p-0-adobe-fontspecific
+
+sansserif.italic.0=-adobe-helvetica-medium-i-normal-0-0-%d-0-0-p-0-iso8859-1
+
+sansserif.bold.0=-adobe-helvetica-bold-r-normal--0-%d-0-0-p-0-iso8859-1
+
+sansserif.bolditalic.0=-adobe-helvetica-bold-i-normal--0-%d-0-0-p-0-iso8859-1
+
+# Monospaced font definition
+#
+monospaced.plain.0=-adobe-courier-medium-r-normal--0-%d-0-0-m-0-iso8859-1
+monospaced.1=-adobe-zapfdingbats-medium-r-normal--0-%d-0-0-p-0-adobe-fontspecific
+monospaced.2=-adobe-symbol-medium-r-normal--*-%d-*-0-p-0-adobe-fontspecific
+
+monospaced.italic.0=-adobe-courier-medium-i-normal--0-%d-0-0-m-0-iso8859-1
+
+monospaced.bold.0=-adobe-courier-bold-r-normal--0-%d-0-0-m-0-iso8859-1
+
+monospaced.bolditalic.0=-adobe-courier-bold-i-normal--0-%d-0-0-m-0-iso8859-1
+
+# Dialog font definition
+#
+dialog.plain.0=-adobe-times-medium-r-normal--0-%d-0-0-p-0-iso8859-1
+dialog.1=-adobe-zapfdingbats-medium-r-normal--0-%d-0-0-p-0-adobe-fontspecific
+dialog.2=-adobe-symbol-medium-r-normal--0-%d-0-0-p-0-adobe-fontspecific
+
+dialog.italic.0=-adobe-times-medium-i-normal--0-%d-0-0-p-0-iso8859-1
+
+dialog.bold.0=-adobe-times-bold-r-normal--0-%d-0-0-p-0-iso8859-1
+
+dialog.bolditalic.0=-adobe-times-bold-i-normal--0-%d-0-0-p-0-iso8859-1
+
+# DialogInput font definition
+#
+dialoginput.plain.0=-adobe-helvetica-medium-r-normal--0-%d-0-0-p-0-iso8859-1
+dialoginput.1=-adobe-zapfdingbats-medium-r-normal--0-%d-0-0-p-0-adobe-fontspecific
+dialoginput.2=-adobe-symbol-medium-r-normal--0-%d-0-0-p-0-adobe-fontspecific
+
+dialoginput.italic.0=-adobe-helvetica-medium-i-normal--0-%d-0-0-p-0-iso8859-1
+
+dialoginput.bold.0=-adobe-helvetica-bold-r-normal--0-%d-0-0-p-0-iso8859-1
+
+dialoginput.bolditalic.0=-adobe-helvetica-bold-i-normal--0-%d-0-0-p-0-iso8859-1
+
+# Default font definition
+#
+default.char=274f
+
+# name aliases
+#
+# alias.timesroman=serif
+# alias.helvetica=sansserif
+# alias.courier=monospaced
+
+# for backward compatibility
+timesroman.plain.0=-adobe-times-medium-r-normal--0-%d-0-0-p-0-iso8859-1
+timesroman.italic.0=-adobe-times-medium-i-normal--0-%d-0-0-p-0-iso8859-1
+timesroman.bold.0=-adobe-times-bold-r-normal--0-%d-0-0-p-0-iso8859-1
+timesroman.bolditalic.0=-adobe-times-bold-i-normal--0-%d-0-0-p-0-iso8859-1
+#
+helvetica.plain.0=-adobe-helvetica-medium-r-normal--0-%d-0-0-p-0-iso8859-1
+helvetica.italic.0=-adobe-helvetica-medium-i-normal--0-%d-0-0-p-0-iso8859-1
+helvetica.bold.0=-adobe-helvetica-bold-r-normal--0-%d-0-0-p-0-iso8859-1
+helvetica.bolditalic.0=-adobe-helvetica-bold-i-normal--0-%d-0-0-p-0-iso8859-1
+#
+courier.plain.0=-adobe-courier-medium-r-normal--0-%d-0-0-m-0-iso8859-1
+courier.italic.0=-adobe-courier-medium-i-normal--0-%d-0-0-m-0-iso8859-1
+courier.bold.0=-adobe-courier-bold-r-normal--0-%d-0-0-m-0-iso8859-1
+courier.bolditalic.0=-adobe-courier-bold-i-normal--0-%d-0-0-m-0-iso8859-1
+#
+zapfdingbats.0=-adobe-zapfdingbats-medium-r-normal--0-%d-0-0-p-0-adobe-fontspecific
+
+# Static FontCharset info.
+#
+# This information is used by the font which is not indexed by Unicode.
+# Such fonts can use their own subclass of FontCharset.
+#
+# This information can be overriden by describing more specific style.
+# For example
+#
+#  fontcharset.serif.plain.3=SpecialSymbols
+#  means serif.plain.3 font's index can be retrieved with the convert() method
+#  of instance of SpecialSymbols and what kind of characters serif.plain.3 font
+#  has can be judged with the isCovered() method of instance of SpecialSymbols.
+#
+fontcharset.serif.0=sun.io.CharToByteISO8859_1 
+fontcharset.serif.1=sun.awt.motif.CharToByteX11Dingbats
+fontcharset.serif.2=sun.awt.CharToByteSymbol
+
+fontcharset.sansserif.0=sun.io.CharToByteISO8859_1
+fontcharset.sansserif.1=sun.awt.motif.CharToByteX11Dingbats
+fontcharset.sansserif.2=sun.awt.CharToByteSymbol
+
+fontcharset.monospaced.0=sun.io.CharToByteISO8859_1
+fontcharset.monospaced.1=sun.awt.motif.CharToByteX11Dingbats
+fontcharset.monospaced.2=sun.awt.CharToByteSymbol
+
+fontcharset.dialog.0=sun.io.CharToByteISO8859_1
+fontcharset.dialog.1=sun.awt.motif.CharToByteX11Dingbats
+fontcharset.dialog.2=sun.awt.CharToByteSymbol
+
+fontcharset.dialoginput.0=sun.io.CharToByteISO8859_1
+fontcharset.dialoginput.1=sun.awt.motif.CharToByteX11Dingbats
+fontcharset.dialoginput.2=sun.awt.CharToByteSymbol
+
+fontcharset.zapfdingbats.0=sun.io.CharToByteISO8859_1
+
+# exclusion info.
+#
+# This information describe exclusion ranges for each fonts.
+#
+# 'exclusion.serif.plain.0' overrides 'exclusion.serif.0', and
+# 'exclusion.serif.0' overrides exclusion.0, and so on.
+#
+
+# XFontSet string
+# X11 only properties
+#
+
+fontset.serif.plain=\
+-adobe-times-medium-r-normal--0-%d-0-0-p-0-iso8859-1
+
+fontset.serif.italic=\
+-adobe-times-medium-i-normal--0-%d-0-0-p-0-iso8859-1
+
+fontset.serif.bold=\
+-adobe-times-bold-r-normal--0-%d-0-0-p-0-iso8859-1
+
+fontset.serif.bolditalic=\
+-adobe-times-bold-i-normal--0-%d-0-0-p-0-iso8859-1
+
+fontset.sansserif.italic=\
+-adobe-helvetica-medium-i-normal--0-%d-0-0-p-0-iso8859-1
+ 
+fontset.sansserif.bold=\
+-adobe-helvetica-bold-r-normal--0-%d-0-0-p-0-iso8859-1
+ 
+fontset.sansserif.bolditalic=\
+-adobe-helvetica-bold-i-normal--0-%d-0-0-p-0-iso8859-1
+ 
+fontset.sansserif.plain=\
+-adobe-helvetica-medium-r-normal--0-%d-0-0-p-0-iso8859-1
+
+fontset.monospaced.italic=\
+-adobe-courier-medium-i-normal--0-%d-0-0-m-0-iso8859-1
+ 
+fontset.monospaced.bold=\
+-adobe-courier-bold-r-normal--0-%d-0-0-m-0-iso8859-1
+ 
+fontset.monospaced.bolditalic=\
+-adobe-courier-bold-i-normal--0-%d-0-0-m-0-iso8859-1
+ 
+fontset.monospaced.plain=\
+-adobe-courier-medium-r-normal--0-%d-0-0-m-0-iso8859-1
+ 
+fontset.dialog.italic=\
+-adobe-times-medium-i-normal--0-%d-0-0-p-0-iso8859-1
+ 
+fontset.dialog.bold=\
+-adobe-times-bold-r-normal--0-%d-0-0-p-0-iso8859-1
+ 
+fontset.dialog.bolditalic=\
+-adobe-times-bold-i-normal--0-%d-0-0-p-0-iso8859-1
+ 
+fontset.dialog.plain=\
+-adobe-times-medium-r-normal--0-%d-0-0-p-0-iso8859-1
+ 
+fontset.dialoginput.italic=\
+-adobe-helvetica-medium-i-normal--0-%d-0-0-p-0-iso8859-1
+ 
+fontset.dialoginput.bold=\
+-adobe-helvetica-bold-r-normal--0-%d-0-0-p-0-iso8859-1
+ 
+fontset.dialoginput.bolditalic=\
+-adobe-helvetica-bold-i-normal--0-%d-0-0-p-0-iso8859-1
+ 
+fontset.dialoginput.plain=\
+-adobe-helvetica-medium-r-normal--0-%d-0-0-p-0-iso8859-1
+
+fontset.zapfdingbats=\
+-adobe-zapfdingbats-medium-r-normal--0-%d-0-0-*-0-*-fontspecific
+
+#
+fontset.default=\
+-adobe-courier-medium-r-normal--0-%d-0-0-m-0-iso8859-1
+#

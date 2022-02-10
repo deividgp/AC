@@ -1,0 +1,139 @@
+// **************************************************************
+// *								*
+// * Keymaps for ru_RU.ISO8859-5 - Russian for Russia		*
+// *								*
+// * NOTES:  There isn't a VT105 (i.e. LK201) keyboard for	*
+// *	     ru_RU.  In addition, there aren't any TW/DP keys 	*
+// *	     for the VT108.  The Group Shift (i.e. Mode_switch)	*
+// *	     takes care of this.				*
+// *								*
+// **************************************************************
+
+xkb_keymap "lk401" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_russian(vt108)"	};
+    xkb_geometry	{ description = "Digital Russian LK401";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_russian(vt108)"	};
+    xkb_geometry	{ description = "Digital Russian LK411";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_russian(vt108)"	};
+    xkb_geometry	{ description = "Digital Russian LK461";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "pcxalht" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_russian(pcxalht)"	};
+    xkb_geometry	{ description = "Digital Russian PCXAL-HT";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxallt" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_russian(pcxallt)"	};
+    xkb_geometry	{ description = "Digital Russian PCXAL-LT";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxalpt" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)"          };
+    xkb_types           { include "types/default"                       };
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_russian(pcxalpt)"    };
+    xkb_geometry        { description = "Digital Russian PCXAL-PT";
+                          include "geometry/digital_pc(pc102)"
+                          include "geometry/digital_pc(leds_alone)"     };
+};
+
+xkb_keymap "pcxalqt" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_russian(pcxalqt)"	};
+    xkb_geometry	{ description = "Digital Russian PCXAL-QT";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxalst" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_russian(pcxalst)"	};
+    xkb_geometry	{ description = "Digital Russian PCXAL-ST";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxal" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_russian(pcxal)"	};
+    xkb_geometry	{ description = "Digital Russian PCXAL";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471bt" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_russian(lk471bt)"	};
+    xkb_geometry	{ description = "Digital Russian LK471-BT";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_russian(lk471)"	};
+    xkb_geometry	{ description = "Digital Russian LK471";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97wbt" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_russian(lk97wbt)"	};
+    xkb_geometry	{ description = "Digital Russian LK97W-BT";
+			  include "geometry/digital_pc(pc105)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97w" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_russian(lk97w)"	};
+    xkb_geometry	{ description = "Digital Russian LK97W";
+			  include "geometry/digital_pc(pc105)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+

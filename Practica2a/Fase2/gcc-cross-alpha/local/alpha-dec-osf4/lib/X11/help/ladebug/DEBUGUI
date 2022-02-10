@@ -1,0 +1,4352 @@
+1 debugui
+=Title Debugger Windows and Debugging Tasks
+ The debugger helps you locate run-time programming or logic errors,
+ also known as bugs.  You use the debugger with a program that has been
+ compiled and linked successfully but does not run correctly.  For
+ example, the program might give incorrect output, go into an infinite
+ loop, or terminate prematurely.
+
+ You locate errors with the debugger by observing and manipulating your
+ program interactively as it executes.
+
+ The debugger lets you do the following:
+
+  -  Display and edit the source code for your program, and browse
+     through other source code files.
+
+  -  Monitor, examine, and change program variable and data structure
+     values and examine their type.
+
+  -  Examine and manipulate the currently active functions on the call
+     stack.
+
+  -  Set breakpoints that suspend program execution or issue debugger
+     command sequences.
+
+  -  Step through execution one line of source code or machine
+     instruction at a time.
+
+  -  Disassemble and examine machine code; examine and modify
+     machine-register values.
+
+  -  Customize the debugging environment.
+
+ For information about debugger windows or debugging tasks, click on one
+ of the additional topics.
+
+2 on_mwindow_hlp
+=title Using the Main Window
+=include debugui on_owindow_hlp
+=include debugui on_iwindow_hlp
+=include debugui interfaces
+=include debugui windows_menus
+=include debugui run_new_hlp
+=include debugui src_display
+=include debugui execute
+=include debugui exam_deposit
+=include debugui stop
+=include debugui exit
+=include debugui rerun_same_hlp
+=include debugui custom
+=include debugui cmd_entry
+=include debugui ladbx_cmd
+=include debugui language_support
+=include debugui decwindows_basics
+=include debugui on_help_hlp
+ By default at start up, the debugger displays its Main Window, which
+ consists of the following components:
+
+  -  A banner identifying the debugger
+
+  -  A menu bar containing several pulldown menus
+
+  -  A Source View displaying the source code of the program you are
+     debugging
+
+  -  A Source View Context Panel containing pulldown menus for process,
+     thread, and call stack
+
+  -  A Push-Button Panel that includes default buttons for the most
+     common functions
+
+  -  A Command Message View that echoes your command input and shows the
+     results of debugger operations
+
+
+2 on_owindow_hlp
+=title Using the Optional Views Window
+=include debugui on_mwindow_hlp
+=include debugui on_iwindow_hlp
+=include debugui on_help_hlp
+=include debugui views
+=include debugui break
+=include debugui monitor
+=include debugui variable
+=include debugui register
+=include debugui instruction
+=include debugui close_views
+ The Optional Views Window appears when you choose Views:  Manage Views
+ on the Main Window and select an optional view from the Optional Views
+ dialog box.  As an alternative, you can choose a specific view from the
+ Views menu.
+
+ The Optional Views Window displays additional information about
+ breakpoints, monitored symbols, local variables, and registers.  This
+ window always displays the current process and thread ID in the area
+ below the menu bar.  An additional optional view, the Instruction View,
+ appears in its own Instruction Window.
+
+ To close an optional view, redisplay the Optional Views dialog box and
+ click on the toggle button next to that view name.
+
+2 on_iwindow_hlp
+=title Using the Instruction View Window
+=include debugui on_mwindow_hlp
+=include debugui on_owindow_hlp
+=include debugui on_help_hlp
+=include debugui instruction
+=include debugui break_identify
+=include debugui break_activ
+=include debugui break_instruction
+=include debugui break_cond
+=include debugui break_action
+ Use the Instruction Window to do the following:
+
+  -  Display the decoded instruction stream of your program
+
+  -  Set, activate, deactivate, or delete breakpoints on instructions
+
+ For information on tasks in the Instruction Window, see the Additional
+ Topics below.
+
+2 src_workarea_hlp
+=Title Source View on Main Window
+=include debugui popup_src
+=include debugui src_display
+=include debugui break
+=include debugui setscope
+=include debugui src_file_pd_menu_hlp
+=include debugui src_edit_pd_menu_hlp
+=include debugui src_views_pd_menu_hlp
+=include debugui src_commands_pd_menu_hlp
+=include debugui cnt_options_pd_menu_hlp
+=include debugui help_pd_menu_hlp
+=include debugui callstack_menu_hlp
+=include debugui on_mwindow_hlp
+ Use the Source View on the Main Window to do the following:
+
+ Area                 Function
+ ----                 ---------
+
+ Source-code display  Displays program source code, and, optionally,
+                      line numbers to the left of the code.
+
+ Source Annotation    Set breakpoints on specific source lines or
+   Area               routines in your program, check breakpoint
+                      status, and activate or deactivate breakpoints.
+
+ Current location     Identify the line of source code that will be
+   pointer            executed when program execution resumes.
+
+ Source View Context  Contains pull-down menus for attaching to a 
+   Panel              different process, thread, or routine.
+
+
+2 popup_src
+=Title Context-Sensitive Pop-up Menus in Source View
+=include debugui src_workarea_hlp
+ To use pop-up menus in the Source View, select text or position your
+ mouse pointer in the Main Window's Source View and press MB3.  The
+ debugger inserts the selected text or line number in the menu items of
+ the pop-up menu.
+
+ If you press MB3 while your mouse pointer rests on a source line in the
+ Source View, a pop-up menu with the following items appears:
+ Print [selection]      Evaluates the selected expression and prints 
+                        its value in the Command Message View.
+
+ Monitor [selection]    Inserts the selected expression in the monitor 
+                        list of the Monitor View.
+
+ .!QUESTION: incomplete
+ Assign [selection]     Provides the Assign/Deposit dialog box. 
+
+ Stop in Routine        Sets a breakpoint on a selected routine name.
+   [selection]
+
+ Toggle Breakpoint      Activates/deactivates a breakpoint at the mouse pointer.
+   at Line [line number]
+
+ Temporary Breakpoint   Sets a temporary breakpoint at the mouse pointer.
+   at Line [line number]
+
+ Go until Line          Sets a breakpoint and executes until [line number]
+   [line number]        is reached.
+
+ Go to Line             Branches to a specified line without executing source
+   [line number]        code between the line at which execution is suspended
+                        and the specified line.
+
+ Next                   Steps to the next line by stepping over routine calls.
+
+ Continue               Resumes execution of the program.
+
+
+ If you press MB3 while your mouse pointer rests in the Source
+ Annotation Area of the Source View, a pop-up menu with the following
+ items appears:
+ Set/Modify             Displays a dialog box you can use to activate
+   Breakpoints...       or deactivate a breakpoint and modify the breakpoint
+                        attributes (location, condition, or action).
+
+ Toggle Breakpoint      Activates/deactivates a breakpoint at the mouse pointer.
+   at Line [line number]
+
+ Temporary Breakpoint   Sets a temporary breakpoint at the mouse pointer.
+   at Line [line number]
+
+ Go until Line          Sets a temporary breakpoint and executes until
+   [line number]        [line number] is reached.
+
+ Go to Line             Branches to a specified line without executing
+   [line number]        source code between the line at which execution
+                        is suspended and the specified line.
+
+ Next                   Steps to the next line by stepping over routine calls.
+
+ Continue               Resumes execution of the program.
+
+
+2 callstack_menu_hlp
+=Title Source View Context Panel on Main Window
+=include debugui multi_proc_thread
+=include debugui debug_mp_applications
+=include debugui debug_multithread_app
+=include debugui setscope
+ Use the pull-down menus on this panel to change the process, thread, or
+ call stack routine.
+ Pull-Down Menu      Function
+ --------------      --------
+ Process             Identifies the current process; lets you 
+                     detach the Source View from the current 
+                     process and attach it to another process.
+
+ Thread              Identifies the current thread; lets you 
+                     detach the Source View from the current 
+                     thread and attach it to another thread.
+
+ Call Stack          Identifies the routine whose source code is 
+                     executing in the Source View; lets you set 
+                     the scope for source display and symbol 
+                     searches to any routine on the stack.
+
+2 cnt_button_hlp
+=Title Push-Button Panel on Main Window
+=include debugui stop_btn_hlp
+=include debugui examine
+=include debugui monitor
+=include debugui exam_deposit
+=include debugui execute
+=include debugui custom_button
+ The push-button panel on the Main Window contains push buttons that
+ correspond to debugger commands.  You can modify, add, remove, and
+ resequence push buttons and the commands associated with them.
+
+ Use the default push buttons to complete the following functions.
+
+  Push
+  Button      Function
+  ------      --------
+  Interrupt   Interrupts program execution or a debugger operation 
+              without ending the debugging session.  This is the only 
+              button that you cannot customize.
+
+  Monitor     Displays, in the Monitor View, a variable name
+              that you have selected in a window and the
+              current value of that variable. Whenever the
+              debugger regains control from your program, it
+              automatically checks the value and updates the
+              displayed value accordingly.
+
+  Print       Displays the current value of a variable whose name 
+              you have selected. 
+
+  Next        Executes the program one step unit of
+              execution. By default, this is one executable
+              line of source code. 
+
+  Step        When execution is suspended at a routine call
+              statement, moves execution into the called
+              routine, just past the start of the routine.
+              If not at a routine call statement, this push
+              button has the same behavior as the Next push
+              button.
+
+  Return      Executes the program directly to the end of
+              the routine. 
+
+  Continue    Starts or resumes execution from the current
+              program location. 
+
+
+2 stop_btn_hlp
+=Title Interrupt Button in Push-Button Panel of Main Window
+=include debugui stop
+=include debugui cnt_button_hlp
+ Use the Interrupt push button to interrupt program execution or a
+ debugger operation without ending the debugging session.
+
+2 msg_region_hlp
+=Title Command Message View on Main Window
+=include debugui popup_msgregion
+=include debugui cmd_entry
+=include debugui command_help
+=include debugui on_mwindow_hlp
+ The Command Message View on the Main Window accepts command-line entry
+ input, echoes graphical user interface actions (in a command-line
+ format), and displays debugger messages.
+
+ This view also displays input/output (I/O) associated with the
+ debugger.  As such, it should be distinguished from the Debugger I/O
+ Window which displays I/O generated by your program as it executes.
+
+2 popup_msgregion
+=Title Context-Sensitive Pop-up Menus in Command Message View
+=include debugui msg_region_hlp
+ To use the pop-up menu in the Command Message View, position your mouse
+ pointer in the message region, and press MB3.  The debugger
+ automatically inserts your last command in the [last command] menu item
+ of this pop-up menu.
+
+ Menu items are as follows:
+
+ Repeat Command         Reenters your last command.
+   'last command'       
+
+ Clear Command Line     Clears command line.
+
+ Next                   Step to next line, stepping over routine calls.
+
+ Continue               Resume execution of program.
+
+
+2 src_window_menubar_hlp
+=Title Menu Bar on Main Window
+=include debugui src_file_pd_menu_hlp
+=include debugui src_edit_pd_menu_hlp
+=include debugui src_views_pd_menu_hlp
+=include debugui src_commands_pd_menu_hlp
+=include debugui cnt_options_pd_menu_hlp
+=include debugui help_pd_menu_hlp
+=include debugui on_mwindow_hlp
+ Use the menus on the menu bar as explained in the Additional Topics.
+
+2 src_file_pd_menu_hlp
+=Title File Menu, Main Window
+=include debugui run_new_hlp
+=include debugui rerun_same_hlp
+=include debugui break_routine
+=include debugui src_display_module
+=include debugui browse_src_hlp
+=include debugui show_line_numb
+ Use the File menu on the Main Window as follows:
+
+ Run New Program...     Brings a program that you specify under 
+                        debugger control. 
+
+ Rerun Same Program...  Reruns the same program under debugger control.
+
+ Browse Source...       Lets you display source code from a different
+                        source file of your program (if your program
+                        uses more than one source file). 
+
+ Display Line Numbers   Displays or hides line numbers in the Source
+                        View of the Main Window. 
+
+ Exit Debugger          Upon confirmation, ends the debugging session
+                        and closes the debugger.
+
+2 src_edit_pd_menu_hlp
+=Title Edit Menu, Main Window
+=include debugui src_file_pd_menu_hlp
+=include debugui src_views_pd_menu_hlp
+=include debugui src_commands_pd_menu_hlp
+=include debugui cnt_options_pd_menu_hlp
+=include debugui help_pd_menu_hlp
+=include debugui on_mwindow_hlp
+ Use the Edit menu on the Main Window as follows:
+
+ Action      Function
+ ------      --------
+
+ Cut         Cuts (removes) selected text from the window and
+             copies it to the clipboard.
+
+ Copy        Copies selected text from the window to
+             the clipboard without removing it
+             from the window. 
+
+ Paste       Pastes (inserts) text from the clipboard to a
+             text-entry field or region. 
+
+
+ See the DECwindows Motif documentation for more information.
+
+2 src_views_pd_menu_hlp
+=Title Views Menu, Main Window
+=include debugui options_viewsel_hlp
+=include debugui breakpoint_disp_hlp
+=include debugui monitor_disp_hlp
+=include debugui var_view_hlp
+=include debugui inst_workarea_hlp
+=include debugui register_view_hlp
+ Use the Views menu on the Main Window or Optional Views Window as
+ follows:
+
+ Action            Function
+ ------            --------
+
+ Manage Views      Displays a dialog box from which you can open or close 
+                   any of the available views.
+
+ Breakpoint View   Lists all breakpoints that are currently set and
+                   identifies those that are activated, deactivated, or 
+                   qualified as conditional breakpoints.
+
+ Instruction View  Displays the decoded instruction stream of your
+                   program and lets you set breakpoints on instructions.
+
+ Register View     Displays the current contents of all machine registers.
+
+ Monitor View      Lists variables whose values you want to modify as
+                   your program executes.
+
+ Local Variables   Lists local variables and parameters passed to a
+ View              routine.
+
+
+2 src_commands_pd_menu_hlp
+=Title Commands Menu, Main Window
+=include debugui examine_hlp
+=include debugui examine
+=include debugui deposit_hlp
+=include debugui deposit
+=include debugui editor_hlp
+ Use the Commands menu on the Main Window as follows:
+
+ Action          Function
+ ------          --------
+
+ Print           Evaluates and prints the value of a variable or 
+                 expression in the Command Message View.
+
+ Assign...       Assigns a value to a variable in the output radix you
+                 select.
+
+ Edit File       Opens the editable source window with the current
+                 file displayed.
+
+ Attach to       Replaces the currently active process with a selected 
+ Process...      process.
+
+ Detach from     Lets you detach from a previously attached process.
+ Process...
+
+
+2 cnt_options_pd_menu_hlp
+=Title Options Menu, Main Window
+=include debugui custm_db_hlp
+=include debugui custom_button
+ Use the Options menu on the Main Window or the Optional View Window as
+ follows:
+
+ Action          Function
+ ------          --------
+
+ Customize...    Modifies, adds, removes, or resequences
+                 a push button in the push-button panel and 
+                 the associated debugger command. 
+                 
+ Save Options    Saves the current window configuration.  When you 
+                 later start the debugger, the new configuration is 
+                 automatically displayed.
+
+
+2 help_pd_menu_hlp
+=Title Help Menu, Main Window
+=include debugui on_context
+=include debugui on_window
+=include debugui on_help
+=include debugui on_version
+=include debugui on_command
+=include debugui cmd_entry
+=include debugui on_help_hlp
+=include debugui on_mwindow_hlp
+ The Help menu contains the following items that let you display online
+ help about the debugger:
+
+   On Context       
+   On Window        
+   On Help          
+   On Version       
+   On Commands      
+
+ For more information about using a Help menu item, double click on one
+ of the Additional Topics below.
+
+2 run_new_hlp
+=Title Bringing a Program Under Debugger Control
+=include debugui dsdbx_options
+=include debugui rerun_same_hlp
+=include debugui src_file_pd_menu_hlp
+=include debugui on_mwindow_hlp
+ The debugger is integrated with the common UNIX desktop user
+ environment, CDE (Common Desktop Environment).  For more information
+ about using CDE, see the CDE User's Guide.  This topic explains the
+ most common ways to start the debugger from within this environment.
+
+ To start the debugger and bring your program under debugger control, do
+ the following:
+
+ 1.  From the CDE Front Panel, click on the Application Manager icon.
+
+ 2.  From the CDE Application Manager group window, double click on the
+     Developer's Toolkit icon to open the Developer's Toolkit group.
+
+     You can move icons from the Developer's Toolkit group into another
+     group or to the front of the Control Panel depending on your
+     preference.  See the CDE User's Guide for more information.
+
+ 3.  From the Developer's Toolkit group, double click on the Ladebug
+     icon and a dialog box appears.
+
+     To access the Ladebug release notes, double click on the
+     README.Ladebug icon.
+
+ Continue with these steps:
+
+ 1.  Enter the name of the executable file you want to debug.  You can
+     drag an executable file from the CDE File Manager into the dialog
+     box space for file name.
+
+     Alternatively, you can drag an executable file from the CDE File
+     Manager onto the Ladebug icon in the Developer's Toolkit group to
+     start the debugger using that executable.  If you do not specify a
+     file to debug, click on OK and the debugger starts up.  The Main
+     Window remains empty until you bring a program under debugger
+     control.  Upon startup, the debugger executes any user-defined
+     initialization file.
+
+ 2.  Bring a specified program under debugger control by using the
+     following steps:
+
+ 3.  At the Main Window, choose File:  Run New Program...  The Run New
+     Program dialog box appears, which lists the files in your working
+     directory.
+
+ 4.  Click on Filter to display the programs available in the
+     subdirectory.  In the Programs list, click on the name of the
+     program file to be debugged.  The program field now shows the
+     program file name.
+
+ 5.  If applicable, enter any debugger options in the Debugger Options
+     field.  For more information, see the online help about Command
+     Options or the ladebug (1) reference page.
+
+ 6.  If applicable, enter any program arguments in the Program Arguments
+     field.
+
+ 7.  If applicable, enter the name of the program core dump file in the
+     Core File field.  This is the file that results from a previously
+     attempted execution of the program that was terminated because of,
+     for example, a segmentation violation.  If such a core file exists
+     in the current directory, you can use the debugger to look at the
+     state of the program when it failed.
+
+ 8.  If applicable, turn on the Set Initial Breakpoint and Run button.
+     The default position for this button is on, which loads the
+     program, sets the initial breakpoint on the program's main entry
+     point, and issues the run command to execute that breakpoint.
+
+     If the toggle is off, Ladebug loads the program without setting a
+     breakpoint or issuing the run command.
+
+     If you linked the program with the ald command or the amake command
+     (specific to Ada programs), the command line will be initially case
+     insensitive.
+
+     You must enter a run command or press the Continue button at the
+     prompt to execute the program.  This will cause the program to run
+     to completion, if you have not set any breakpoints.
+
+ 9.  Click on OK.
+
+ When the program is under debugger control and the Set Initial
+ Breakpoint and Run button is on, the debugger does the following:
+
+  -  Displays a terminal window if the debugger was invoked from within
+     CDE or a Debugger I/O Window if you specified the -iow option.
+
+  -  Displays a program's source code in the Source View.
+
+  -  Suspends execution at the program's entry point (the start of the
+     main program in most languages).  The current-location pointer, to
+     the left of the source code, shows the line whose code will be
+     executed next.
+
+ You can now debug your program.
+
+ Note that you cannot run a program under debugger control over a TCP/IP
+ or DECnet link.  Both the program to be debugged and the debugger must
+ reside on the same node.
+
+2 dsdbx_options
+=title dxladebug Command Options
+=include debugui cnt_file_pd_menu_hlp
+=include debugui on_mwindow_hlp
+ The dxladebug command invokes the Ladebug Debugger graphical user
+ interface.  The syntax is as follows:
+  
+ dxladebug [-P 'program-arguments'] [executablefile] [corefile] [-iow]
+
+ where:
+
+ -P 'program-arguments'
+      Specifies arguments used by the program you are debugging.
+
+ executablefile
+      Specifies the name of the target program executable file.
+      If the file is not in the current directory, specify the
+      full pathname.  For full source-level debugging capability,
+      compile the source code with the compiler option that
+      includes the symbol table information in the compiled
+      executable file.  Limited debugging capability is available
+      for executables that do not have symbol table information.
+
+ corefile
+      Specifies the name of the core file. If the core file is
+      not in the current directory, specify the full pathname.
+      To debug a core file, specify both the executable file and
+      the core file when you invoke the debugger.
+
+ -iow
+      Specifies that the Debugger I/O Window appear by default,
+      with the debugger Main Window, at debugger invocation.  This
+      window allows you to isolate user program input/output
+      (displayed in the window) from the debugger input/output
+      (displayed in the Command Message View).
+                                                                       
+
+2 rerun_same_hlp
+=title Rerunning the Same Program
+=include debugui break_activ
+=include debugui run_new_hlp
+=include debugui cnt_file_pd_menu_hlp
+=include debugui on_mwindow_hlp
+ You can rerun the program currently under debugger control at any time
+ during a debugging session.  If you modified the program (created a new
+ binary) during the debugging session, choosing File:Rerun Same Program
+ will bring the new binary under debugger control.  The Rerun Same
+ Program dialog box appears.
+
+ To rerun your program, do the following:
+
+ 1.  At the Main Window, choose File:  Rerun Same Program...  The Rerun
+     Same Program dialog box appears.
+
+ 2.  If applicable, enter any arguments to be passed to the program in
+     the Arguments field.
+
+ 3.  Choose whether or not to save the current state of any breakpoints
+     that you previously set, activated, or deactivated.
+
+ 4.  Click on OK to rerun the program.  An initial breakpoint will be
+     set unless you previously turned the Set Initial Breakpoint and Run
+     button off in the Run New Program dialog box.
+
+ When you rerun a program, it is in the same initial state as a program
+ that is initially brought under debugger control, except for any saved
+ breakpoints.  The source display and current location pointer are
+ updated accordingly.
+
+ If, after bringing a program under debugger control, you revise the
+ program and create another version of the program file, choosing
+ File:Rerun Same Program...  brings the new version under debugger
+ control.  In this case, the debugger might or might not save the state
+ of breakpoints, depending on the exact nature of the change to the
+ source code.
+
+2 browse_src_hlp
+=Title Browse Source Dialog Box
+=include debugui popup_browser
+=include debugui src_display_module
+=include debugui break_routine
+=include debugui src_file_pd_menu_hlp
+ Use the Browse Source dialog box to do the following:
+
+  -  Display the source code in any module of your program
+
+  -  Set breakpoints on routines
+
+
+2 popup_browser
+=Title Context-Sensitive Pop-up Menu in Source Browser
+=include debugui browse_src_hlp
+ To use the pop-up menu in the Source Browser dialog box, position your
+ mouse pointer in the dialog box and press MB3.  The following menu
+ appears:
+
+ Expand                 Expands the selected module or function to include its
+                        component modules or functions in the Source
+                        Browser display.
+
+ Collapse               Collapses an expanded module or function display.
+
+ Set Breakpoint         Sets a breakpoint on the selected function.
+
+ Next                   Steps to next line, stepping over routine calls.
+
+ Continue               Resumes execution of program.
+
+
+2 show_line_numb
+=Title Displaying or Hiding Line Numbers
+=include debugui breakpoint_disp_hlp
+=include debugui custom_lineno
+=include debugui src_file_pd_menu_hlp
+ Choose File:  Display Line Numbers to hide or display source line
+ numbers in the Main Window.
+
+ Line numbers help you identify breakpoints that are listed in the
+ Breakpoint View.  If you hide line numbers, more of the source code
+ shows through a window of a given width.
+
+2 exit_db_hlp
+=title Exit Debugger Confirmation Box
+=include debugui rerun_same_hlp
+=include debugui run_new_hlp
+ Choose File:  Exit Debugger to end the current debugging session and
+ close the debugger.
+
+ At the question box, click on Yes to exit (clicking on No returns you
+ to the current session).
+
+2 options_viewsel_hlp
+=Title Manage Views Dialog Box
+=include debugui breakpoint_disp_hlp
+=include debugui monitor_disp_hlp
+=include debugui var_view_hlp
+=include debugui inst_workarea_hlp
+=include debugui register_view_hlp
+=include debugui on_owindow_hlp
+ Use the Manage Views dialog box to open or close one of the available
+ views:
+
+ Breakpoint View   
+ Instruction View  
+ Register View     
+ Monitor View      
+ Local Variables View           
+                   
+
+2 optional_view_sel_hlp
+=Title Manage Views Dialog Box
+=include debugui breakpoint_disp_hlp
+=include debugui monitor_disp_hlp
+=include debugui var_view_hlp
+=include debugui inst_workarea_hlp
+=include debugui register_view_hlp
+=include debugui on_owindow_hlp
+ Use the Manage Views dialog box to open or close one of the available
+ views:
+
+ Breakpoint View   
+ Instruction View  
+ Register View     
+ Monitor View      
+ Local Variables View
+
+
+2 views
+=title Displaying Views in the Optional View Window
+=include debugui on_owindow_hlp
+ At startup, the debugger displays only one window, the Main Window.
+
+ To display additional information on your program in the Optional View
+ Window, perform the following steps:
+
+ 1.  At the Main Window or Optional View Window, choose Views:  Manage
+     Views to display the Optional Views dialog box.
+
+ 2.  Click on one or more of the following view names to open or close
+     that view:
+
+     Breakpoint View 
+     Instruction View
+     Register View   
+     Monitor View    
+     Local Variables View
+
+
+
+2 close_views
+=Title Closing the Optional View Window
+=include debugui on_owindow_hlp
+ To dismiss all views and close the Optional View Window, do the
+ following:
+
+  -  Choose Views:  Manage Views from either the Main Window or the
+     Optional View Window.
+
+  -  When the Manage Views dialog box appears, clear all the buttons
+     within the dialog box, and click on OK.
+
+
+ see CS Second Level optional views
+2 examine_hlp
+=Title Print Dialog Box
+=include debugui src_commands_pd_menu_hlp
+ The Print dialog box allows you to display the current value of a
+ variable or expression in the Command Message View.  If you choose, you
+ can change the type or output radix of the displayed value.
+
+ To use the Print dialog box, perform the following steps:
+
+ 1.  Do one of the following:
+
+      -  Select the variable name or expression symbols in a window and
+         choose Commands:  Print on the Main Window.  The Print dialog
+         box appears, with the name you selected in the
+         Variable/Expression field.
+
+      -  Choose Commands:  Print on the Main Window.  The Print dialog
+         box appears.  Enter the name of the variable or symbols of the
+         expression you are printing in the Variable/Expression field of
+         the dialog box.
+
+
+ 2.  If you are changing the output type, pull down the menu in the
+     Typecast entry box and click on the desired data type.
+
+ 3.  If you are changing the output radix, pull down the menu in the
+     Output Radix entry box and click on the desired radix.
+
+ 4.  Click on OK.
+
+ Your echoed command and the current value appear in the Command Message
+ View.
+
+2 deposit_hlp
+=Title Assign Dialog Box
+=include debugui src_commands_pd_menu_hlp
+ The Assign dialog box allows you to change the current value of a
+ variable.  If you choose, you can change the input radix of the
+ assigned value.
+
+ To use the Assign dialog box, perform the following steps:
+
+ 1.  Do one of the following:
+
+      -  Find and select the variable name in a window, and choose
+         Commands:  Assign on the Main Window.  The Assign dialog box
+         appears, with the name you selected in the Variable field.
+
+      -  Choose Commands:  Assign on the Main Window.  The Assign dialog
+         box appears.  Enter the name of the variable to which you are
+         assigning a value in the Variable field of the dialog box.
+
+
+ 2.  Enter the value you are assigning in the Value field of the dialog
+     box.
+
+ 3.  If you are changing the input radix, pull down the menu in the
+     Input Radix entry box and click on the desired radix.
+
+ 4.  Click on OK.
+
+ Your echoed command appears in the Command Message View, indicating
+ that the value is changed.
+
+2 attach_proc_hlp
+=Title Attach to Process Dialog Box
+=include debugui src_commands_pd_menu_hlp
+ The Attach to Process dialog box lets you replaces the currently active
+ process with a process that you select.
+
+ To use it, follow these steps:
+
+ 1.  At the Main Window, choose Commands:  Attach to Process.  This
+     displays the Attach to Process dialog box containing a list of
+     eligible processes.
+
+ 2.  Click on the process you want attached.  If the Optional Views
+     Window is open, it will be updated to show the selected process.
+
+
+2 detach_proc_hlp
+=Title Detach from Process Dialog Box
+=include debugui src_commands_pd_menu_hlp
+ The Detach from Process dialog box lets you detach from a previously
+ attached process.
+
+ To use it, follow these steps:
+
+ 1.  At the Main Window, choose Commands:  Detach from Process.  This
+     displays the Detach from Process dialog box containing a list of
+     eligible processes.
+
+ 2.  Click on the process you want detached.  This removes the process
+     from the Process menu (Source View Context Panel) and blanks out
+     the view of the process if it had been displayed in the Source View
+     and Optional View Window.
+
+
+2 editor_hlp
+=Title Editable Source Window
+=include debugui fill_buffer
+=include debugui search_text
+=include debugui recompile_edits
+=include debugui editor_pd_menu_hlp
+=include debugui editor_text_buffer_menu
+=include debugui src_commands_pd_menu_hlp
+ Use the editable source window to edit the source code of the program
+ you are currently debugging, or any other source code file.  Choose
+ Commands:  Edit to display that window.
+
+ Feature           Function
+ ---------         -----------
+
+ Buffer            Displays an empty text buffer for text entry,
+                   or a full text buffer containing the current source
+                   file.
+
+ Find field        Accepts a string for forward or backward searching.
+
+ Directional       Indicates the direction of a search.  
+   arrows          Down = forward, up = backward.
+
+ Replace button    Indicates whether the search string is to be replaced 
+                   when found.
+
+ Replace field     Accepts a string that replaces the specified
+                   search string.
+
+ Buffer menu       Provides a list of active buffers, any of which
+                   you can choose to display.
+
+2 editor_find_hlp
+=Title Find Field in Editor Window
+=include debugui src_commands_pd_menu_hlp
+ Use the Find field to search for a specific string.
+
+ The direction of the search is controlled in the following ways:
+
+  -  Press an arrow key to search text in the direction indicated by
+     that arrow.  This also sets the default search direction.
+
+  -  Press Ctrl/N to search forward (down) through the file, regardless
+     of the arrow indicator position.
+
+  -  Press Ctrl/P to search backwards (up) through the file, regardless
+     of the arrow indicator position.
+
+ If you click the "Replace with" button, the editor replaces each
+ instance of the search string with the text entered in the "Replace
+ with" field.
+
+2 editor_replace_hlp
+=Title Replace With Field in Editor Window
+=include debugui src_commands_pd_menu_hlp
+ Use the "Replace with" field to replace a specific string.
+
+ After you enter the search string in the Find field and indicate a
+ search direction, click the "Replace with" button and enter the
+ replacement string.  The editor replaces each instance of the search
+ string with the replacement string.
+
+2 editor_pd_menu_hlp
+=Title Menu Bar on Editable Source Window
+=include debugui editor_file_pd_menu_hlp
+=include debugui editor_edit_pd_menu_hlp
+=include debugui help_pd_menu_hlp
+ Use the menus on the menu bar as explained in the Additional Topics.
+
+2 fill_buffer
+=Title Editing Single and Multiple Text Buffers
+=include debugui editor_hlp
+ By default,the editor window displays an empty text buffer, called
+ dbg_editor_main.  If you are debugging a program at the time you invoke
+ the editor, however, the editor window does the following:
+
+  -  Displays this program
+
+  -  Names the filled text buffer with its specification
+
+  -  Places dbg_editor_main on the buffer menu as an alternative text
+     buffer.
+
+ The editor allows you to create any number of text buffers from the
+ Main Window by choosing File:  New (for empty text buffers) or File:
+ Open for existing files) from the File menu.  The name of each buffer
+ appears in the buffer menu.  You can cut, copy, and paste text across
+ buffers by choosing items from the Edit menu and selecting buffers from
+ the buffer menu.
+
+2 search_text
+=Title Searching and Replacing Text
+=include debugui editor_hlp
+ Forward and backward search and replace operations can be performed by
+ entering strings in the Find and Replace fields and clicking on a
+ directional arrow.
+
+ If you continue to click on a directional arrow, or if you continue to
+ press the Return key, a repeated search for the string occurs in the
+ direction you indicate.
+
+ You can also continue a search by choosing the Edit:  Find/Replace Next
+ or Edit:  Find/Replace Previous.
+
+2 recompile_edits
+=Title Recompiling and Relinking Edited Source Code
+=include debugui editor_hlp
+ When you complete your edits, and save these to your file by choosing
+ File:  Save or File:  Save As, you need to recompile and relink your
+ source file.
+
+ You do not need to exit the debugger to do this.
+
+ Enter the compile and link commands in another DECterm window, and when
+ you return to the debugger, choose the File:  Rerun Same Program on the
+ Main Window.  Your edited source code will appear in the debugger's
+ source display.
+
+2 editor_file_pd_menu_hlp
+=Title File Menu on Editor Window
+=include debugui editor_filesel_hlp
+=include debugui src_commands_pd_menu_hlp
+ Use the File menu on the editable source window as follows (note the
+ keyboard equivalents):
+
+ Action          Function
+ ------          --------
+
+ New             Opens a buffer for a new file. 
+
+ Open...         Opens a buffer for an existing file.
+
+ Save            Saves the current buffer using same file name.
+
+ Save As...      Saves the current buffer using specified file name.
+
+ Close Editor    Closes the editable source window.
+
+
+2 editor_filesel_hlp
+=Title Open/Save Dialog Box
+=include debugui editor_hlp
+=include debugui src_commands_pd_menu_hlp
+ Use the Open/Save dialog box to specify the file you are opening
+ (before editing) or the file you are saving to (after editing), as
+ follows:
+
+ 1.  If the default value (for your current directory) is not
+     acceptable, click on the name of another directory from the 
+     directory list.
+
+ 2.  In the list of files, click on the file name you are opening or
+     saving to.
+
+ 3.  Click on OK.
+
+
+2 editor_edit_pd_menu_hlp
+=Title Edit Menu on Editor Window
+=include debugui src_commands_pd_menu_hlp
+ Use the Edit menu on the editable source window as follows (note the
+ keyboard equivalents):
+
+ Action         Function
+ ------         --------
+
+ Cut            Cuts selected text from the window and
+                copies it to the clipboard.
+
+ Copy           Copies selected text from the window to
+                the clipboard without removing it
+                from the window. 
+
+ Paste          Pastes text from the clipboard to a
+                text-entry field or region. 
+
+ Clear          Clears the text selected (highlighted)
+                in the window.
+                 
+ Find/Replace   Finds and replaces the next instance.
+   Next 
+
+ Find/Replace   Finds and replace the previous instance.
+   Previous    
+
+
+2 editor_text_buffer_menu
+=Title Buffer Menu on Editor Window
+=include debugui src_commands_pd_menu_hlp
+ The Buffer menu appears on the editable source window as a button below
+ the Help menu.  The button contains the name of the current buffer.
+ Use the Buffer menu as follows:
+
+ Action             Function
+ ------             --------
+
+ Click on the menu  Identifies all other text buffers that 
+                    are currently active, including the empty 
+                    text buffer, dbg_editor_main.
+
+ Click on a         Allows you to switch from one active 
+ buffer in the      buffer to another.  You can cut, copy, 
+ pull-down menu     and paste text across buffers by choosing 
+                    items from the Edit menu and selecting buffers
+                    from the Buffer menu.
+
+
+2 custm_db_hlp
+=title Customize Dialog Box
+=include debugui custom_button
+=include debugui custm_add_hlp
+=include debugui custm_mod_hlp
+=include debugui custm_remove_hlp
+=include debugui custm_larrow_hlp
+=include debugui custm_rarrow_hlp
+=include debugui custom_resource
+=include debugui custom
+ Use the Customize dialog box to modify, add, remove, or resequence push
+ buttons and the associated debugger commands.
+
+ NOTE:  You cannot modify or remove the Interrupt push button.
+
+2 custm_add_hlp
+=title Add Button on Customize Dialog Box
+=include debugui custom_button
+=include debugui custm_db_hlp
+ Use the Add button to add a new push button to the push-button panel in
+ the Main Window.
+
+2 custm_mod_hlp
+=title Modify Button on Customize Dialog Box
+=include debugui custom_button
+=include debugui custm_db_hlp
+ Use the Modify push button to modify the label, icon, or debugger
+ command associated with a push button in the push-button panel.
+
+2 custm_remove_hlp
+=title Remove Button on Customize Dialog Box
+=include debugui custom_button
+=include debugui custm_db_hlp
+ Use the Remove button to remove a push button from the push-button
+ panel in the Main Window.
+
+2 custm_larrow_hlp
+=title Left Arrow Button on Customize Dialog Box
+=include debugui custom_button
+=include debugui custm_db_hlp
+ Use the Left Arrow button to move a push button one position to the
+ left in the push-button panel.
+
+2 custm_rarrow_hlp
+=title Right Arrow Button on Customize Dialog Box
+=include debugui custom_button
+=include debugui custm_db_hlp
+ Use the Right Arrow button to move a push button one position to the
+ right in the push-button panel.
+
+2 on_context_hlp
+=Title Help:  On Context
+=include debugui on_help_hlp
+=include debugui help_pd_menu_hlp
+=include debugui on_mwindow_hlp
+ Displays a ?  (question mark) pointer for context-sensitive help.
+ Click on any window object with the question mark to get help on using
+ that object.
+
+2 on_ewindow_hlp
+=title Using the Editable Source Window
+=include debugui on_help_hlp
+=include debugui fill_buffer
+=include debugui search_text
+=include debugui recompile_edits
+ Use the editable source window to edit the source code of the program
+ you are currently debugging, or any other source code file.  Choose
+ Commands:  Edit File to display this window.
+
+ For information on tasks in the editable source window, see the
+ Additional Topics below.
+
+2 on_help_hlp
+=title Using Debugger Online Help
+=include debugui context_sensitive_help
+=include debugui overview_help
+=include debugui command_help
+=include debugui help_pd_menu_hlp
+ Several kinds of online help about the debugger and debugging are
+ available during a debugging session:
+
+  -  Context-sensitive help, which is information about an area or
+     object in a window or dialog box
+
+  -  Task-oriented help, which consists of introductory help topics
+     describing the tasks that can be accomplished in each window of the
+     debugger and subtopics on specific debugging tasks
+
+  -  Help on debugger commands and various topics, such as language
+     support
+
+ Related context-sensitive and task-oriented topics are connected
+ through the list of Additional Topics in the Help windows.
+
+2 on_version_hlp
+=Title About the Debugger
+=include debugui trademarks
+=include debugui on_help_hlp
+=include debugui help_pd_menu_hlp
+=include debugui on_mwindow_hlp
+=include debugui on_owindow_hlp
+=include debugui on_ewindow_hlp
+=include debugui on_iwindow_hlp
+=include debugui new_changed_features
+ Ladebug Debugger
+
+ Product Version:  Ladebug Version 4.0
+
+ Operating System
+ Version:  Digital UNIX Version 4.0
+
+ © 1992-1997 by Digital Equipment Corporation.
+
+ All rights reserved.
+
+ For a summary of new features in Ladebug 4.0, click on New and Changed
+ Features below.
+
+2 on_command_hlp
+=Title Help:  On Commands
+=include debugui interfaces
+=include debugui cmd_entry
+=include debugui msg_region_hlp
+=include debugui ladbx_cmd
+=include debugui more_disabled_cmds
+=include debugui command_help
+=include debugui on_help_hlp
+=include debugui help_pd_menu_hlp
+=include debugui on_mwindow_hlp
+ Choose one of the Additional Topics for help on debugger commands.
+
+2 new_changed_features
+=title New and Changed Features
+=include debugui multiprocess_debugging_feature
+=include debugui multithread_debugging_feature
+=include debugui load_unload_process_feature
+=include debugui kernel_debugging_feature
+=include debugui multilanguage_support
+=include debugui window_interface_feature
+=include debugui international_user_feature
+=include debugui environment_manip_feature
+=include debugui pop_command_feature
+=include debugui on_help_hlp
+=include debugui on_mwindow_hlp
+ Select from Additional Topics for information about new and changed
+ features for Ladebug Version 4.0.
+
+2 multiprocess_debugging_feature
+=title Multiprocess Application Debugging
+=include debugui multithread_debugging_feature
+=include debugui load_unload_process_feature
+=include debugui new_changed_features
+=include debugui on_help_hlp
+=include debugui on_mwindow_hlp
+ You can have multiple processes (zero or more processes) under debugger
+ control.
+
+ You can keep track of the processes from the Process menu on the Main
+ Window and switch between them by clicking on a process.
+
+2 multithread_debugging_feature
+=title Multithreaded Debugging
+=include debugui multiprocess_debugging_feature
+=include debugui load_unload_process_feature
+=include debugui new_changed_features
+=include debugui on_help_hlp
+=include debugui on_mwindow_hlp
+ You can have multiple threads (zero or more threads) under debugger
+ control.  The debugger supports applications using DECthreads or native
+ threads.
+
+ You can keep track of the threads from the Thread menu on the Main
+ Window and switch between them by clicking on a thread.
+
+2 load_unload_process_feature
+=title Loading and Unloading a Process
+=include debugui multiprocess_debugging_feature
+=include debugui multithread_debugging_feature
+=include debugui new_changed_features
+=include debugui on_help_hlp
+=include debugui on_mwindow_hlp
+ The load command lets you load an image file or core file for
+ debugging.  The unload command removes the symbol table information
+ that the debugger had associated with the process being debugged.
+
+2 kernel_debugging_feature
+=title Kernel Debugging
+=include debugui multiprocess_debugging_feature
+=include debugui multithread_debugging_feature
+=include debugui load_unload_process_feature
+=include debugui new_changed_features
+=include debugui on_help_hlp
+=include debugui on_mwindow_hlp
+ Ladebug supports kernel debugging.  The functionality is equivalent to
+ kernel debugging using dbx.
+
+ When you have a problem with a process, you can debug the running
+ kernel or examine the values assigned to system parameters.  (It is
+ generally recommended that you avoid modifying the value of the
+ parameters, which can cause problems with the kernel.) Kernel debugging
+ requires superuser privilege.
+
+ To debug a kernel locally, invoke the debugger with the following
+ command:
+
+ # ladebug -k /vmunix /dev/mem
+
+ The -k flag maps virtual to physical addresses to enable local kernel
+ debugging.  The /vmunix and /dev/mem parameters cause the debugger to
+ operate on the running kernel.  Use Ladebug commands to display the
+ current process identification numbers (pid) and trace the execution of
+ processes.
+
+ To debug a remote kernel, invoke the debugger with the following
+ command:
+
+ # ladebug -remote /testdir/vmunix
+
+
+2 multilanguage_support
+=title Multilanguage Support
+=include debugui new_changed_features
+=include debugui on_help_hlp
+=include debugui on_mwindow_hlp
+ Ladebug Version 4.0 enhances language support as follows:
+
+ 1.  C/C++ --- Ladebug fully supports debugging ACC and DEC C programs,
+     and DEC C++ programs; DEC C++ now supports cfront compatibility and
+     the GEM compiler backend.
+
+     Ladebug's support for C++ includes the following:
+
+      -  C++ names and expressions, including template instantiations
+         and exception handling
+
+      -  Setting breakpoints in member functions, overloaded functions,
+         constructors and destructors, template instantiations, and
+         exception handlers.
+
+     You can change the current class scope to set breakpoints and
+     examine members of a class that are not currently in scope.  You
+     can debug mixed-language programs.
+
+ 2.  Fortran --- Ladebug provides the following support:
+
+      -  Debugging DEC Fortran 77 and DEC Fortran 90 programs
+
+      -  Specifying identifiers, program names, subroutine names, and
+         array sections to Ladebug with Fortran language syntax,
+         including case insensitivity
+
+      -  Displaying values of variables in a Fortran common block
+
+      -  Accessing Fortran derived-type, record, array, and complex
+         variables
+
+      -  Examining Fortran 77 and Fortran 90 data types (with some
+         limitations)
+
+      -  Debugging mixed-language programs
+
+
+
+2 window_interface_feature
+=title Graphical User Interface
+=include debugui new_changed_features
+=include debugui on_help_hlp
+=include debugui on_mwindow_hlp
+ Ladebug's graphical user interface supports the major Ladebug
+ command-line functionality.  Other features can be accessed within the
+ graphical user interface from a command window.
+
+ The graphical user interface includes a main window covering the basic
+ debugging and convenience features; optional views windows, various
+ pop-up menus and dialog boxes, and a command-entry prompt.
+
+2 international_user_feature
+=title Support for International Users
+=include debugui new_changed_features
+=include debugui on_help_hlp
+=include debugui on_mwindow_hlp
+ User programs may set different locales in order to interpret text
+ according to different language/culture-related criteria.  In addition,
+ locales may be switched inside a user program.
+
+ Ladebug can follow the debugged program so that its interpretation of
+ program data is identical to that of the debugged user program.
+
+ Your Digital UNIX system needs to have the worldwide (WW) subsets
+ installed.  This is standard procedure and the WW subsets are available
+ on the base system CD-ROM.  You can then set your locale to a special
+ locale (such as a Japanese locale) and input characters which are
+ multibytes.  These characters can come from a script or entered from a
+ VT terminal using compose sequences.
+
+ Wide characters (type wchar_t) and wide strings (type wchar_t *) are
+ used in international applications as run-time representation of
+ multibyte character data.  Ladebug supports input of multibyte
+ characters that are regarded as components of symbol literals, string
+ literals or wide character literals.  Ladebug's basic support for wide
+ characters (wchars) and wide strings (wstrings) is as follows:
+
+  -  Accept input of wide character literals and wide string literals
+     (for C and C++ programs).
+
+  -  Print out wide character/string data as the real characters they
+     represent.
+
+
+2 environment_manip_feature
+=title Environment-Manipulation Commands
+=include debugui new_changed_features
+=include debugui on_help_hlp
+=include debugui on_mwindow_hlp
+ Ladebug provides commands for manipulating the environment of
+ subsequent debuggees with environment variables.  With the setenv,
+ export, printenv, and unsetenv commands, used within the debugger, you
+ can set the value of an environment variable, display the values of
+ environment variables, and remove environment variables.
+
+2 pop_command_feature
+=title The pop Command
+=include debugui new_changed_features
+=include debugui on_help_hlp
+=include debugui on_mwindow_hlp
+ The pop command removes execution frames from the call stack.  It is
+ useful when execution has passed an error that needs to be corrected.
+
+2 manage_disp_hlp
+=Title Views:  Manage Views...
+=include debugui options_viewsel_hlp
+=include debugui breakpoint_disp_hlp
+=include debugui inst_view_hlp
+=include debugui register_view_hlp
+=include debugui monitor_disp_hlp
+=include debugui var_view_hlp
+ Select the Manage Views option to display a dialog box from which you
+ can open or close selected views.
+
+2 breakpoint_disp_hlp
+=Title Breakpoint View
+=include debugui popup_break
+=include debugui break
+=include debugui break_identify
+=include debugui break_activ
+=include debugui break_cond
+=include debugui cnt_options_pd_menu_hlp
+ Use the Breakpoint View to do the following:
+
+  -  Identify the breakpoints that are currently set in your program
+
+  -  Review or change breakpoint status
+
+  -  Display conditions or actions associated with breakpoints
+
+  -  Modify conditions or actions associated with breakpoints
+
+  -  Set new breakpoints
+
+ Breakpoints are listed in the Identification column of the view,
+ including the module name and line number for each breakpoint.
+
+  -  All breakpoints listed in the Breakpoint View have been previously
+     set.
+
+  -  A filled-in button in the State column indicates that the
+     breakpoint is set and active.
+
+  -  A cleared button indicates that the breakpoint has been
+     deactivated.  (If you delete a breakpoint, the breakpoint entry
+     disappears from the Breakpoint View.)
+
+ If you have set a conditional breakpoint, the button shape changes from
+ a square to a diamond.  You can also double-click on a breakpoint entry
+ to determine whether conditions or actions are associated with it.
+
+2 popup_break
+=Title Context-Sensitive Pop-up Menu in Breakpoint View
+=include debugui breakpoint_disp_hlp
+ To use the pop-up menu in the Breakpoint View, position your mouse
+ pointer in the breakpoint list or annotation area of the Breakpoint
+ View, and press MB3.
+
+ The following menu appears:
+
+ Toggle                 Activates or deactivates a selected breakpoint.
+
+ Set/Modify...          Provides the Set/Modify Breakpoint dialog box,
+                        which contains information about a selected
+                        breakpoint.          
+
+ Delete                 Deletes a selected breakpoint.
+
+ Next                   Steps to next line, stepping over routine calls.
+
+ Continue               Resumes execution of program.
+
+
+2 monitor_disp_hlp
+=Title Monitor View
+=include debugui popup_monitor
+=include debugui monitor
+=include debugui cnt_button_hlp
+=include debugui deposit
+=include debugui examine
+=include debugui exam_deposit
+=include debugui cnt_options_pd_menu_hlp
+ Use the Monitor View to do the following:
+
+  -  Monitor the value of a variable or an expression during the
+     execution of your program
+
+  -  Change the value of a variable
+
+ To add an entry to the monitor list, select a variable name or
+ expression in the source display and click on the Monitor push button.
+ The debugger displays the current value in the Monitor View and checks
+ and updates the displayed value whenever it regains control from your
+ program (for example, after a step or at a breakpoint).
+
+ Monitored variables and expressions are listed in the Monitor
+ Expression column.  Their values are listed in the Value/Deposit
+ column.
+
+2 popup_monitor
+=Title Context-Sensitive Pop-up Menus in Monitor View
+=include debugui monitor_disp_hlp
+ To use the pop-up menu in the Monitor View, position your mouse pointer
+ in the Monitor View, and press MB3.
+
+ A pop-up menu with the following items appears:
+
+ Monitor [selection]    Inserts the selected expression in the monitor 
+                        list of the Monitor View.
+
+ Expand                 Expands a monitored aggregate to show its members.
+
+ Collapse               Collapses an expanded aggregate.
+
+ Typecast ->            Provides the list of type choices for modifying values.
+
+ Change Radix ->        Provides the list of radix choices for modifying values.
+
+ Next                   Steps to next line, stepping over routine calls.
+
+ Continue               Resumes execution of program.
+
+
+2 var_view_hlp
+=Title Local Variables View
+=include debugui popup_variable
+=include debugui variable
+=include debugui cnt_options_pd_menu_hlp
+ Use the Local Variables View to do the following:
+
+  -  Monitor the values of all local variables and parameters passed to
+     a routine.  (Because local variables and parameters are allocated
+     on the call stack, and not in fixed addresses, addresses may change
+     between calls.)
+
+  -  Change the value of a selected local variable
+
+ You cannot add or remove an entry to the local variables and parameters
+ list.  The debugger automatically removes previous entries and adds new
+ entries when a new routine appears at the top of the call stack.
+
+ The debugger displays current value in the Local Variables View and
+ checks and updates the displayed value whenever it regains control from
+ your program (for example, after a step or at a breakpoint).
+
+ Each local variable or parameter is listed in the Monitor Expression
+ column.  The debugger displays variable and parameter names in
+ different fonts to distinguish one from the other.  Values appear in
+ the Value/Deposit column.
+
+2 popup_variable
+=Title Context-Sensitive Pop-up Menu in Local Variables View
+=include var_view_hlp
+ To use the pop-up menu in the Local Variables View, position your mouse
+ pointer in that view and press MB3.
+
+ The following menu appears:
+
+ Monitor [selection]    Inserts the selected expression in the monitor 
+                        list of the Monitor View.
+
+ Expand                 Expands a monitored aggregate to show its members.
+
+ Collapse               Collapses an expanded aggregate.
+
+ Typecast ->            Provides the list of type choices for modifying values.
+
+ Change Radix ->        Provides the list of radix choices for modifying values.
+
+ Next                   Steps to next line, stepping over routine calls.
+
+ Continue               Resumes execution of program.
+
+
+2 register_view_hlp
+=Title Register View
+=include debugui popup_register
+=include debugui register
+=include debugui cnt_options_pd_menu_hlp
+ Use the Register View to do the following:
+
+  -  Display the current values stored in the machine registers.
+
+  -  Modify the value stored in a register.
+
+ Any values that change as your program executes are highlighted
+ whenever the debugger regains control from your program.
+
+2 popup_register
+=Title Context-Sensitive Pop-up Menu in Register View
+=include debugui register_view_hlp
+ To use the pop-up menu in the Register View, position your mouse
+ pointer in that view and press MB3.
+
+ The following menu appears:
+
+ Change Radix ->        Provides the list of radix choices for modifying values.
+
+ Next                   Steps to next line, stepping over routine calls.
+
+ Continue               Resumes execution of program.
+
+
+2 inst_view_hlp
+=Title Instruction View
+=include debugui popup_instruction
+=include debugui instruction
+=include debugui cnt_options_pd_menu_hlp
+ Use the Instruction View to do the following:
+
+  -  Display the decoded instruction stream of your program.
+
+  -  Set, activate, deactivate, or delete breakpoints on instructions.
+
+
+2 inst_workarea_hlp
+=Title Instruction View
+=include debugui popup_instruction
+=include debugui instruction
+=include debugui cnt_options_pd_menu_hlp
+ Use the Instruction View to do the following:
+
+  -  Display the decoded instruction stream of your program.
+
+  -  Set, activate, deactivate, or delete breakpoints on instructions.
+
+
+2 popup_instruction
+=Title Context-Sensitive Pop-up Menus in Instruction View
+=include debugui inst_workarea_hlp
+=include debugui inst_view_hlp
+ To use pop-up menus in the Instruction Window, select text or position
+ your mouse pointer in that window, and press MB3.  The debugger inserts
+ the selected text or line number in the menu items of the pop-up menu.
+
+ If you press MB3 while your mouse pointer rests on an instruction
+ source line in the Instruction Window, a pop-up menu with the following
+ items appears:
+
+ Print [selection]      Evaluates the selected text and prints 
+                        its value in the Command Message View.
+
+ Toggle Breakpoint      Turns on or off the breakpoint at your mouse 
+   [line number]        pointer location.
+
+ Next                   Steps to next line, stepping over routine calls.
+
+ Continue               Resumes execution of the program.
+
+
+ If you press MB3 while your mouse pointer rests in the annotation area
+ of the Instruction Window, a pop-up menu with the following items
+ appears:
+
+ Toggle Breakpoint      Turns on or off the breakpoint at your mouse 
+                        pointer location.
+
+ Next                   Steps to next line, stepping over routine calls.
+
+ Continue               Resumes execution of the program.
+
+
+2 cnt_window_menubar_hlp
+=Title Menu Bar on Optional View Window
+=include debugui cnt_file_pd_menu_hlp
+=include debugui src_views_pd_menu_hlp
+=include debugui cnt_break_pd_menu_hlp
+=include debugui cnt_monitor_pd_menu_hlp
+=include debugui cnt_register_pd_menu_hlp
+=include debugui cnt_options_pd_menu_hlp
+=include debugui help_pd_menu_hlp
+=include debugui optional_view_sel_hlp
+ Use the menus on the menu bar as explained in the Additional Topics.
+
+2 cnt_file_pd_menu_hlp
+=Title File Menu on Optional View Window
+=include debugui close_views
+=include debugui exit
+ Use the File menu on the Optional View Window as follows:
+
+ Action              Function
+ ------              --------
+
+ Exit Debugger       Ends the debugging session, and
+                     exits the debugger. 
+
+2 cnt_break_pd_menu_hlp
+=Title Break Menu on Optional View Window
+=include debugui break_activ
+=include debugui break
+=include debugui breakpoint_set_show_hlp
+ Use the Break menu on the Optional View Window as follows:
+
+ Action           Function
+ ------           --------
+
+ Activate All     Activates any previously set
+                  breakpoints.
+
+ Deactivate All   Deactivates any previously set
+                  breakpoints. 
+
+ Delete All       Removes all breakpoints from the
+                  debugger's breakpoint list and
+                  from the Breakpoint View. 
+
+ Toggle           Turns on or off an individual breakpoint.
+
+ Set/Modify...    Sets or modifies an individual breakpoint. 
+
+ Delete           Deletes an individual breakpoint.
+
+2 cnt_monitor_pd_menu_hlp
+=Title Monitor Menu on Optional View Window
+=include debugui monitor
+ Use the Monitor menu on the Optional View Window as follows:
+
+ Action             Function
+ ------             --------
+
+ Assign...          Changes the value of variable.
+
+
+ Typecast ->        Typecasts a selected variable.
+
+ Change Radix ->    Changes the radix for a selected variable.
+
+ Change All 
+    Radix ->        Changes the default radix for all subsequent 
+                    monitor entries.
+                    
+ Remove             Removes the monitor entry from display.
+                    
+
+2 cnt_register_pd_menu_hlp
+=Title Register Menu on Optional View Window
+=include debugui register
+ Use the Register menu on the Optional View Window as follows:
+
+ Action             Function
+ ------             --------
+
+ Assign...          Modifies the selected register.
+
+ Change Radix ->    Changes the radix for a selected register.
+
+ Change All
+    Radix ->        Changes the radix for all registers.
+
+
+
+2 inst_window_menubar_hlp
+=Title Menubar on Instruction Window
+=include debugui inst_file_pd_menu_hlp
+=include debugui inst_edit_pd_menu_hlp
+=include debugui inst_break_pd_menu_hlp
+=include debugui help_pd_menu_hlp
+ Use the menus on the menu bar as explained in the Additional Topics.
+
+2 inst_file_pd_menu_hlp
+=Title File Menu on Instruction View
+=include debugui instruction
+=include debugui inst_workarea_hlp
+ Use the File menu on the Instruction View as follows:
+
+ Action               Function
+ ------               --------
+
+ Show Instruction     Displays the address associated
+    Addresses         with each instruction listed in
+                      the Instruction View.
+
+ Display Line         Displays the line number of your
+    Numbers           source-code program associated with 
+                      each instruction or set of instructions
+                      listed in the Instruction View.
+
+
+2 inst_edit_pd_menu_hlp
+=Title Edit Menu on Instruction View
+=include debugui instruction
+=include debugui inst_workarea_hlp
+ Use the Edit menu on the Instruction View as follows:
+
+ Action    Function
+ ------    --------
+
+ Copy      Copies text that you have selected in the 
+           window to the clipboard without removing it
+           from the window.
+
+           (To paste your text from the clipboard to
+           a text-entry field or region, choose the
+           Paste item from the Edit menu on the
+           Main Window.)
+
+
+2 inst_break_pd_menu_hlp
+=Title Break Menu on Instruction Window
+=include debugui break_activ
+=include debugui break
+ Use the Break menu on the Instruction Window as follows:
+
+ Action           Function
+ ------           --------
+
+ Activate All     Activates any previously set
+                  breakpoints.
+
+ Deactivate All   Deactivates any previously set
+                  breakpoints. 
+
+ Delete All       Removes all breakpoints from the
+                  debugger's breakpoint list and
+                  from the Instruction View. 
+
+ Set...           Sets an individual breakpoint.
+
+
+2 cancel_all_break_hlp
+=Title Delete All Breakpoints Confirmation Box
+=include debugui break
+=include debugui cnt_break_pd_menu_hlp
+ To delete all breakpoints, click on Yes, otherwise, click on No to
+ preserve all breakpoints.
+
+2 breakpoint_set_show_hlp
+=Title Set/Modify Breakpoint Dialog Box
+=include debugui break_cond
+=include debugui break_action
+=include debugui break
+ If you are displaying the Set/Modify Breakpoint dialog box from the
+ Set...  menu item in the Break menu on Instruction Window, use the
+ Set/Modify Breakpoint dialog box to SET a conditional breakpoint or an
+ action breakpoint.
+
+ If you are displaying the Set/Modify Breakpoint dialog box from the
+ Set/Modify...  menu item in the Break menu on the Optional View Window,
+ use the Set/Modify Breakpoint dialog box to SET OR MODIFY a conditional
+ breakpoint or an action breakpoint.
+
+ When the Set/Modify Breakpoint dialog box appears, complete the fields
+ as follows:
+
+ Field                      Action
+ -----                      ------
+
+ Process and Thread         Not available in this release of the
+ menu buttons               debugger.
+
+ Location field             If the dialog box does not display the 
+                            location of the breakpoint you are 
+                            setting, enter the location using one of
+                            the following forms:
+
+                            at line <line-number> in <file-name>
+                            in routine <routine-name>
+                            at address <numeric-address>
+  
+ Condition field            Optionally, enter a condition or edit
+                            an existing condition.  The relational
+                            expression must be valid for your
+                            source language.
+
+ Action field               Optionally, enter an action or edit
+                            an existing action by substituting
+                            one or more new debugger commands
+                            (separated by a semicolon).
+
+ Activate/Deactivate        Optionally, activate a deactivated
+   Breakpoint button        breakpoint by accepting the default,
+                            or deactivate an activated breakpoint
+                            by toggling this button.
+
+ Delete Breakpoint          Optionally, delete a breakpoint by
+   button                   clicking on this button.
+
+ OK button                  Click on OK. 
+
+
+
+2 interfaces
+=title Debugger User-Interface Options
+=include debugui windows_menus
+=include debugui cmd_entry
+=include debugui ladbx_cmd
+=include debugui custom_button
+=include debugui on_mwindow_hlp
+ The debugger has the following user-interface options to accommodate
+ different needs and debugging styles:
+
+  -  The debugger has a DECwindows Motif interface for workstations.
+     The default DECwindows Motif interface provides the basic debugging
+     and convenience features that you will probably need most of the
+     time.
+
+  -  The DECwindows Motif interface has a command-entry prompt (in the
+     Command Message View of the Main Window) that lets you enter
+     Ladebug commands for the following purposes:
+
+      +  As an alternative to using the DECwindows Motif interface for
+         certain operations
+
+      +  To do tasks not available through the DECwindows Motif
+         interface
+
+
+  -  You can customize the DECwindows Motif interface with many of the
+     special features of the debugger by modifying the push buttons in
+     the push-button panel (and their associated debugger commands) or
+     by adding new push buttons.
+
+
+2 windows_menus
+=title Debugger Main Window at Startup
+=include debugui src_workarea_hlp
+=include debugui run_new_hlp
+=include debugui on_mwindow_hlp
+ By default, the debugger starts up in the Main Window, which includes a
+ Source View, a Source View Context Panel, a push-button panel, and a
+ Command Message View.
+
+ When you start the debugger without specifying a program on the
+ debugger command line (at the shell), the Source View is initially
+ empty.  You can then bring a program under debugger control.
+
+2 cmd_entry
+=Title Entering Commands at the Prompt
+=include debugui command_help
+=include debugui ladbx_cmd
+=include debugui disabled_osf_cmds
+=include debugui more_disabled_cmds
+=include debugui custom_button
+=include debugui on_mwindow_hlp
+ The command-entry prompt (ladebug) is located in the Command Message
+ View.  The command-entry prompt provides the following:
+
+  -  Echoes the command equivalent for each mouse action you make in the
+     graphical user interface.
+
+  -  Accepts debugger commands that you may choose to enter, for the
+     following purposes:
+
+      -  As an alternative to using the graphical user interface.
+
+      -  Because command functionality has no graphical user interface
+         equivalent.
+
+
+ For more information on debugger commands, see the On Commands item in
+ the Help menu.
+
+ In addition to entering commands interactively at the prompt, you can:
+
+  -  Recall previously entered commands, using the Up and Down arrow
+     keys.
+
+  -  Execute commands in debugger initialization files and command files
+     for noninteractive execution.
+
+  -  Assign commands to new push buttons you define for the debugger's
+     push-button panel.  This option allows you to add debugger features
+     of your choice to the graphical user interface.
+
+
+2 disabled_osf_cmds
+=title Debugger Commands that Must be Entered at the Command Prompt
+=include debugui more_disabled_cmds
+=include debugui cmd_entry
+=include debugui msg_region_hlp
+=include debugui command_help
+ The following table lists the debugger commands that do not have a
+ mouse pointer equivalent.  You enter these commands at the command
+ prompt in the Command Message View.
+
+ #                   Causes debugger to ignore all input until 
+                     end of marked line.
+                     
+ !                   Without argument, repeats previous command line
+                     (use !! or !-1). With argument, repeats 
+                     specified command line.
+                     
+ /                   Invokes forward search in source program.
+                     
+ ?                   Invokes backward search in source program.
+                     
+ alias, unalias      Without argument, displays all aliases and 
+                     their definitions.
+                     With argument, displays definition for
+                     specified alias.
+                     
+ call                Executes specified function.
+                     
+ catch               Without argument, shows which operating system 
+                     signals debugger currently traps.
+                     With argument, traps specified operating 
+                     system signal.
+                     
+ catch unaligned     Traps program immediately after unaligned data 
+                     access occurs.
+                     
+ class               For C++ only.
+                     Without argument, displays current class scope.
+                     With argument, changes class scope.
+                     
+ delsharedobj        Removes symbol table information for specified 
+                     shared object.
+                     
+ export              Synonym for setenv.
+                     
+ history             Without argument, displays default number of 
+                     previously executed commands. (20).
+                     With argument, displays specified number of 
+                     previously executed commands.
+                     
+ ignore              With argument, shows which operating system 
+                     signals debugger currently ignores.
+                     With argument, ignores specified operating 
+                     system signal.
+                     
+ ignore unaligned    Instructs debugger not to stop when unaligned 
+                     access occurs (default).
+                     
+ kill                Terminates program process while leaving 
+                     debugger running.
+                     
+ kps                 Lists all system processes (valid for local 
+                     kernel debugging only).
+                     
+ patch               Corrects bad data or instructions in
+                     executable disk files.
+                     
+ playback input      Executes debugger commands contained in 
+                     a file.
+                     
+ pop                 Without argument, removes removes one execution
+                     frame from the call stack. 
+                     With argument, removes the specified number of 
+                     execution frames from the call stack.
+                     
+ printenv            Without argument, displays values of all 
+                     environment variables. 
+                     With argument, displays value of specified 
+                     environment variable.
+                     
+ readsharedobj       Reads in symbol table information for specified
+                     shared library or loadable kernel module.
+                     
+ record input        Saves all debugger commands to a file.
+                     
+ record io           Saves both debugger input and debugger output 
+                     to a file.
+                     
+ record output       Saves debugger output to a file.
+                     
+ set                 Without argument, examines definitions of all 
+                     debugger variables.
+                     With argument, defines specified debugger 
+                     variable.
+                     
+ setenv              Without argument, displays values of all 
+                     environment variables.
+                     With argument, sets value of specified
+                     environment variable.
+                     
+ sh                  Executes Bourne shell command.
+                     
+ show condition      For DECthreads only.
+                     Without argument, displays information about 
+                     all condition variables currently available.
+                     With argument, displays information about 
+                     condition variables specified.
+                     
+ show mutex          Lists information about currently available 
+                     mutexes.
+                     
+ source              Executes debugger commands contained within 
+                     a file.
+                     
+ stop                Without variable argument, suspends program 
+                     execution and returns to prompt.
+                     With variable argument, suspends program 
+                     execution when variable changes.
+                     
+ stopi               Suspends program execution when specified 
+                     variable value changes.
+                     
+ trace               Without argument, causes debugger to print 
+                     message when each function is entered, but 
+                     does not suspend program execution.
+                     With argument, causes debugger to print message
+                     when specified variable  value changes, but does
+                     not suspend  program execution.
+                     
+ tracei              Without argument, prints message but does not
+                     suspend program execution. 
+                     With argument, prints message when any of
+                     following occur, but does not suspend program
+                     execution:
+                     
+                     - Value of specified variable changes.
+                     
+                     - Specified expression evaluates to true.
+                     
+ unalias             Deletes specified alias.
+                     
+ unload              Removes all related symbol table information that
+                     debugger associates with process being debugged,
+                     specified by either a process ID or image file.
+                     
+ unset               Deletes debugger variable.
+                     
+ unsetenv            Without argument, removes all environment 
+                     variables.
+                     With argument, removes specified environment 
+                     variable.
+                     
+ unuse               Without argument, sets search list  to default,
+                     home directory, current directory, or directory
+                     containing  executable file.
+                     With argument, removes specified directory from
+                     search list.
+                     
+ use                 Without argument, lists directories searched 
+                     for source-code files.
+                     With argument, makes source-code files in 
+                     specified directory available.
+                     
+ whereis             Shows all declarations of the expression.
+                     
+ which               Shows fully qualified scope information when 
+                     instance of specified expression ours in the 
+                     current scope.
+                     
+
+2 more_disabled_cmds
+=title Debugger Commands Disabled in FUSE
+=include debugui cmd_entry
+=include debugui msg_region_hlp
+=include debugui command_help
+ The following list shows the Ladebug commands that do not have a FUSE
+ equivalent; these commands cannot be entered either with the mouse or
+ at the command prompt when using the debugger in the FUSE environment.
+
+  o  edit
+
+  o  load, unload
+
+
+2 ladbx_cmd
+=Title Ladebug Commands
+=include debugui cmd_entry
+=include debugui msg_region_hlp
+=include debugui command_help
+=include debugui dsdbx_options
+ Ladebug can be run from the command prompt using the Ladebug commands.
+
+ Most Ladebug features are available through the graphical user
+ interface, but a few can only be accessed by entering debugger commands
+ at the (ladebug) command-entry prompt.
+
+ To enter several debugger commands on the same line, separate each
+ command with a semicolon (;).
+
+ To enter multiple-line commands, type a backslash at the end of each
+ line.  The maximum command-line length is 255 characters.
+
+ The following table lists the Ladebug debugger commands, grouping them
+ in functionally related sets.  For complete information on these
+ commands, see Help:  On Commands on either the Main Window or Optional
+ Views Window.
+
+ Command                         Function
+ __________________________________________________________________
+
+ #                               Enter a comment.
+
+ alias, unalias                  Define, view, or delete a debugger
+                                 command alias.
+
+ assign                          Change value of a variable, memory address,
+                                 or expression.
+
+ attach, detach                  Attach or detach from a running
+                                 process.
+
+ catch, ignore                   Examine and change the list of
+                                 operating system signals trapped by
+                                 the debugger.
+
+ class                           Change or display the class scope.
+
+ history, !                      Repeat and list previously used commands.
+
+ file                            Set the file scope.
+
+ kps                             List all system processes; for kernel
+                                 debugging only.
+
+ list, use, unuse, /, ?          Select and view program source code.
+  
+ listobj                         List all loaded objects, including the
+                                 main image and shared libraries.
+
+ readsharedobj, delsharedobj     Read or delete symbol table information
+                                 for specified shared object.
+
+ load, unload                    Load an image file and optionally, a
+                                 core file; remove all related symbol
+                                 table information associated with the
+                                 process being debugged.
+
+ print, printf, dump, assign,    Examine program expressions and
+ whatis, which, whereis          change their values.
+
+ process, show process           Display information for current
+                                 process(es) and change the current
+                                 process.
+
+ pop                             Remove execution frame(s) from the
+                                 call stack.
+
+ quit, help                      Exit and get help about the debugger.
+                                 
+ run, rerun, cont, next, step,   Execute or terminate a program under
+ return, call, goto, kill        debugger control.
+
+ sh                              Execute a Bourne shell command.
+
+ set, unset                      Define, view, or delete a debugger
+                                 variable.
+
+ source, playback input,         Read in or save a file containing
+ record input, record output,    debugger input data or output data.
+ record io                        
+
+ stop, when, trace, status,      Set, list, delete, enable, and disable
+ delete, enable, disable         program breakpoints and tracepoints.
+
+ stopi, tracei, wheni,           Machine-code-level commands.
+ nexti, stepi, printregs
+
+ stop thread, when thread,       Control execution of one or more threads
+ wheni thread, trace thread,     in a process.
+ tracei thread
+
+ thread, show thread,            View information available from the 
+ show condition, show mutex      debugger about threads in your 
+                                 application.
+
+ where, where thread, up,        Examine the stack trace and change
+ down, func                      the function scope.
+
+ setenv, export, printenv,       Manipulate subsequent debuggee
+ unsetenv                        environments with environment variables.
+
+ __________________________________________________________________
+
+2 language_support
+=title Debugger Support for Languages
+=include debugui debug_cc
+=include debugui debug_multi
+=include debugui debug_ada
+=include debugui debug_cobol
+=include debugui debug_fortran
+=include debugui on_help_hlp
+=include debugui on_mwindow_hlp
+ The Ladebug Debugger supports C, C++, Ada, COBOL, and Fortran.  Pascal
+ is not supported but the debugger will step through a Pascal routine
+ called from a supported language and return to the calling routine.
+
+ NOTE:  For full source-level debugging capability, compile your source
+ code with the compiler option that includes symbol table information in
+ the compiled executable file.  Limited debugging capability is
+ available for executables that do not have symbol table information.
+
+ For more information on specific languages, see the Additional Topics
+ below.
+
+2 debug_multi
+=title Debugging Mixed-Language Programs
+=include debugui language_support
+ The debugger scans the executable file being debugged and automatically
+ sets the $lang variable to the language appropriate for the current
+ code segment.  When $lang is set to C, for example, the debugger
+ interprets all expressions using ANSI C syntax rules.  When $lang is
+ set to C++, the debugger interprets all expressions using C++ syntax
+ rules as defined in The Annotated C++ Reference Manual.
+
+2 debug_ada
+=Title Debugging Ada Programs
+=include debugui debug_cc
+=include debugui debug_cobol
+=include debugui debug_fortran
+=include debugui language_support
+ The debugger accepts the additional symbol table information needed to
+ debug Ada programs.
+
+ The debugger allows you to use case-insensitive commands and variable
+ names, print ISO Latin-1 characters, display the source code of generic
+ units, debug multiple units in one source file, debug elaboration code,
+ and access unconstrained array types.
+
+ For information on debugging DEC Ada programs, see the Ladebug Debugger
+ Manual.  Also see Developing Ada Programs in the Digital UNIX Systems
+ manual.
+
+ For information on debugging other languages (supported for the first
+ time in this release), see the Additional Topics below.
+
+2 debug_cc
+=Title Debugging C/C++ Programs
+=include debugui debug_ada
+=include debugui debug_cobol
+=include debugui debug_fortran
+=include debugui language_support
+ Ladebug fully supports debugging ACC and DEC C programs, and DEC C++
+ programs.  Features include support for cfront compatibility and the
+ GEM compiler backend.
+
+ C++ features include the following:
+
+  -  Support for C++ names and expressions, including template
+     instantiations and exception handling
+
+  -  Setting breakpoints in member functions, overloaded functions,
+     constructors and destructors, template instantiations, and
+     exception handlers.
+
+ You can also change the current scope to set breakpoints and examine
+ members of a class that are not currently in the scope.
+
+ For information on debugging C or C++ programs, see the Ladebug
+ Debugger Manual.
+
+ For information on debugging other languages (supported for the first
+ time in this release), see the Additional Topics below.
+
+2 debug_cobol
+=Title Debugging COBOL Programs
+=include debugui debug_cc
+=include debugui debug_ada
+=include debugui debug_fortran
+=include debugui language_support
+ Ladebug supports debugging COBOL programs using the COBOL language
+ syntax.  You can do the following:
+
+  -  Examine values of all COBOL data items
+
+  -  Assign new values
+
+  -  Perform arithmetic operations
+
+  -  Perform scoping and symbol lookup
+
+  -  Debug mixed-language programs.
+
+ To use the Ladebug to debug a COBOL program, invoke the COBOL compiler
+ with the appropriate flags.  For information on debugging COBOL
+ programs, see the Ladebug Debugger Manual.
+
+ For information debugging other languages, see the Additional Topics
+ below.
+
+2 debug_fortran
+=Title Debugging DEC FORTRAN Programs
+=include debugui debug_cc
+=include debugui debug_ada
+=include debugui debug_cobol
+=include debugui language_support
+ Ladebug lets you debug DEC Fortran and Fortran 90 programs.
+ Expressions in Ladebug use Fortran source language syntax for
+ operators, data types, and most expressions.  Ladebug uses its
+ knowledge of the Fortran language to determine the appropriate scoping
+ rules and how to evaluate and display values.
+
+ To control the amount of information that Ladebug places in the object
+ file for debugging a Fortran program, specify the -g, -g2, or -g3 flag.
+
+ For information on debugging Fortran programs, see the following:
+
+  -  The Ladebug Debugger Manual
+
+  -  The DEC Fortran 90 User Manual for Digital UNIX Systems
+
+ For information on debugging other languages (supported for the first
+ time in this release), see the Additional Topics below.
+
+2 trademarks
+=title Additional Trademark and Product Information
+=include debugui on_version_hlp
+ The information herein is subject to change without notice and should
+ not be construed as a commitment by Digital Equipment Corporation.
+ Digital Equipment Corporation assumes no responsibility for any errors
+ that may appear in this document.
+
+ The software described here is furnished under a license and may be
+ used or copied only in accordance with the terms of such license.
+
+ No responsibility is assumed for the use or reliability of software on
+ equipment that is not supplied by Digital Equipment Corporation or its
+ affiliated companies.
+
+ Restricted Rights:  Use, duplication, or disclosure by the U.S.
+ Government is subject to restrictions as set forth in subparagraph (c)
+ (1) (ii) of the Rights in Technical Data and Computer Software clause
+ at DFARS 252.227-7013.
+
+ The following are trademarks of Digital Equipment Corporation:
+ Bookreader, DEC, DECnet, DECset, DECthreads, DECwindows, Digital,
+ MicroVAX, VAX, VAXstation, the AXP logo, and the DIGITAL logo.
+
+ Motif is a registered trademark of the Open Software Foundation, Inc.
+
+ Open Software Foundation is a trademark of the Open Software
+ Foundation, Inc.
+
+2 compile
+=title Compiling and Linking Your Program for Debugging
+=include debugui language_support
+=include debugui run_new_hlp
+=include debugui on_mwindow_hlp
+ To bring a program under debugger control and take full advantage of
+ symbolic debugging, you must first compile and load the program as
+ explained here.
+
+ You can use the debugger with programs written in any of the source
+ languages that Ladebug supports.  The following example shows how to
+ compile and load a C program named eightqueens before using the
+ debugger.  The compiler is invoked from the C shell (%).  The program's
+ source code is in the file, eightqueens.c.
+
+   % cc -g eightqueens.c -o eightqueens
+
+ The cc command invokes both the compiler and the loader.  (For more
+ information about compiling that is specific to a particular language,
+ see the documentation furnished with that language.)
+
+ The -g option directs the compiler to write the symbol information
+ associated with eightqueens.c into the program file eightqueens, in
+ addition to the code and data for the program.  This symbol information
+ allows you to use the names of variables and other symbols declared in
+ eightqueens.c when using the debugger.  If your program's source code
+ is in several files, you must compile each file whose symbols you want
+ to reference with the -g option.
+
+ Some compilers optimize the object code to reduce the size of the
+ program or to make it run faster.  For example, some optimization
+ techniques eliminate certain variables.  In addition to building symbol
+ information, the -g option disables optimization of your program so
+ that you can debug it more easily.
+
+ Some systems provide variants of the -g option (-g1, -g2, and so on).
+ These give different levels of symbol information and optimization.
+ (For more information, see your compiler documentation.)
+
+2 stop
+=title Interrupting Program Execution and Debugger Operations
+=include debugui run_new_hlp
+=include debugui rerun_same_hlp
+=include debugui on_mwindow_hlp
+ To interrupt program execution during a debugging session, click on the
+ Interrupt push button on the push-button panel in the Main Window.
+ This is useful if, for example, the program is in an infinite loop.
+
+ To cancel a debugger operation in progress, click on Interrupt.  This
+ is useful if, for example, the debugger is displaying a long stream of
+ data.
+
+ Clicking on Interrupt does not end the debugging session.  Clicking on
+ Interrupt when the program is not running or when the debugger is not
+ doing an operation has no effect.
+
+2 exit
+=title Ending a Debugging Session
+=include debugui rerun_same_hlp
+=include debugui run_new_hlp
+=include debugui on_mwindow_hlp
+ To end a debugging session, which exits the debugger, choose File:
+ Exit Debugger on the Main Window.  This returns control to system
+ level.
+
+ To rerun your program from the current debugging session, see the
+ topic, Rerunning the Same Program.
+
+ To run another program from the current debugging session, see the
+ topic, Bringing a Program Under Debugger Control.
+
+2 src_display
+=title Displaying the Source Code of Your Program
+=include debugui break_identify
+=include debugui callstack_menu_hlp
+=include debugui src_display_module
+=include debugui src_display_nosrc
+=include debugui setscope
+=include debugui src_display_srcfile
+=include debugui compile
+=include debugui on_mwindow_hlp
+ By default, the debugger displays the source code of your program in
+ the Source View of the Main Window.
+
+ Whenever execution is suspended (for example, at a breakpoint), the
+ debugger updates the Source View, which displays the code surrounding
+ the point at which execution is paused.  The current-location pointer
+ to the left of the source code marks the line whose code will execute
+ next.  (A source line corresponds to one or more programming language
+ statements, depending on the language and coding style.)
+
+ By default, the debugger displays compiler-generated line numbers to
+ the left of the source code.  These numbers help you identify
+ breakpoints that are listed in the Breakpoint View.  You can choose to
+ not display line numbers so that more of the source code can show in
+ the window.  To hide or display line numbers, choose File:  Display
+ Line Numbers on the Main Window.
+
+ The Source View Context Panel, located beneath the Source View,
+ contains three menu buttons:
+
+  -  Process menu
+
+  -  Thread menu
+
+  -  Call Stack menu
+
+ The Process menu shows the current process ID.  To display the
+ available processes and their image names, press MB1.
+
+ The Thread menu shows the current thread ID.  To display the available
+ threads and their locations, press MB1.  If the current process has
+ only one thread, the thread menu button will not appear.
+
+ The Call Stack menu shows the names of routines currently on the call
+ stack.
+
+ The current-location pointer is normally filled in.  It is cleared if
+ the displayed code is not that of the routine in which execution is
+ paused (see the Making Source Code Available for Display and the
+ Setting the Current Scope Relative to the Call Stack topics).
+
+ You can use the scroll bars to show more of the source code.  However,
+ you can scroll vertically through only one module of your program at a
+ time.
+
+ After you navigate the Main Window, you can redisplay the location at
+ which execution is paused by clicking on the top item in the Call Stack
+ menu.
+
+ The Displaying Source Code in Another Module topic explains how to
+ display source code for other parts of your program so that you can set
+ breakpoints in various modules, and so on.
+
+ The Making Source Code Available for Display topic explains what to do
+ if the Debugger cannot find source code for display.
+
+ The Setting the Current Scope Relative to the Call Stack topic explains
+ how to display source code for routines that are currently active on
+ the call stack.
+
+ After navigating through the source display, you can redisplay the
+ location at which execution is paused by clicking on the Call Stack
+ menu.
+
+ If your program was optimized during compilation, the source code
+ displayed might not reflect the actual contents of some program
+ locations (see the Compiling and Linking Your Program for Debugging
+ topic).
+
+2 src_display_module
+=Title Displaying Source Code in Another Module
+=include debugui src_display
+ To display source code in another module:
+
+ 1.  Choose File:  Browse Source...  on the Main Window.  The Browse
+     Source dialog box appears, listing your program file.
+
+ 2.  Double click on the name of your program file.  The names of the
+     program's modules are displayed (indented) under the program name.
+
+ 3.  Click on the name of the module whose source code you want to
+     display.  The Display Source button is now highlighted.
+
+ 4.  Click on Display Source.  The Source View now displays that
+     module's source code.
+
+
+2 src_display_nosrc
+=Title Making Source Code Available for Display
+=include debugui step_return
+=include debugui src_display_srcfile
+=include debugui src_display
+ In certain cases, the debugger cannot display source code.  Possible
+ causes are:
+
+  -  Execution might be paused within a module of your program that was
+     compiled without the debug option.
+
+  -  Execution might be paused within a system or library routine for
+     which no symbolic information is intended to be available.  In such
+     cases you can quickly return execution to the calling routine by
+     clicking one or more times on the Return push button on the
+     push-button panel of the Main Window.
+
+  -  The source file might have been moved to a different directory
+     after it was compiled.  The Specifying the Location of Source Files
+     topic explains how to tell the debugger where to look for source
+     files.
+
+ If the debugger cannot find source code for display, it tries to
+ display the source code for the next routine down on the call stack for
+ which source code is available.  If the debugger can display source
+ code for such a routine, the current-location pointer is cleared and
+ marks the source line to which execution returns in the calling
+ routine.
+
+2 src_display_srcfile
+=Title Specifying the Location of Source Files
+=include debugui cmd_entry
+=include debugui src_display
+ Information about the characteristics and the location of source files
+ is embedded in the debug symbol table of your program.  If a source
+ file has been moved to a different directory since compile time, the
+ debugger might not find the file.  To direct the debugger to your
+ source files, use the Ladebug use command at the command-entry prompt.
+
+2 execute
+=title Executing Your Program
+=include debugui exec_paused
+=include debugui start_exec
+=include debugui step_one_line
+=include debugui step_in
+=include debugui step_return
+=include debugui rerun_same_hlp
+=include debugui run_new_hlp
+=include debugui on_mwindow_hlp
+ The Additional Topics explain techniques for executing your program.
+
+2 exec_paused
+=title Determining Where Execution is Currently Paused
+=include debugui src_display
+=include debugui callstack_menu_hlp
+=include debugui execute
+ To determine where execution is currently paused within your program,
+ do the following:
+
+ 1.  To list the sequence of routine calls that are currently active on
+     the call stack, click on the Call Stack menu.  Level 0 denotes the
+     routine in which execution is paused, level 1 denotes the calling
+     routine, and so on.
+
+ 2.  If the current-location pointer is not visible in the Source View,
+     select the top item in the Call Stack menu.  This will reset the
+     Source View to the location of the pointer.
+
+ 3.  Look at the current-location pointer:
+
+      -  If the pointer is filled in, it marks the source line whose
+         code will execute next.  The Call Stack menu always shows the
+         routine at level 0 (where execution is paused) when the pointer
+         is filled in.
+
+      -  If the pointer is visible but not filled, the source code
+         displayed is that of a calling routine, and the pointer marks
+         the source line to which execution returns in that routine as
+         follows:
+
+          +  If the Call Stack menu shows level 0 and no routine name is
+             displayed, source code is not available for display for the
+             routine in which execution is paused.
+
+          +  If the Call Stack menu shows a level other than 0, you are
+             displaying the source code for a calling routine.
+
+
+
+ To list the sequence of routine calls that are currently active on the
+ call stack, click on the Call Stack menu.  Level 0 denotes the routine
+ in which execution is paused, level 1 denotes the calling routine, and
+ so on.
+
+2 start_exec
+=title Starting or Resuming Program Execution
+=include debugui cnt_button_hlp
+=include debugui break
+=include debugui src_display
+=include debugui execute
+ To start program execution or resume execution from the current
+ location, click on the Continue push button on the push-button panel of
+ the Main Window.
+
+ Letting your program run freely without debugger intervention is useful
+ in situations such as the following:
+
+  -  To test for an infinite loop.  In this case, you start execution;
+     then, if your program does not terminate and you suspect that it is
+     looping, click on the Interrupt push button.  The source display
+     will show where you interrupted program execution, and the Call
+     Stack menu will identify the sequence of routine calls at that
+     point.
+
+  -  To execute your program directly to a particular location.  In this
+     case, you first set a breakpoint at the location and then start
+     execution.
+
+ Once started, program execution continues until one of the following
+ events occurs:
+
+  -  The program completes execution.
+
+  -  A breakpoint is reached (including a conditional breakpoint whose
+     condition is true).
+
+  -  A signal is caught.
+
+  -  You click on the Interrupt push button in the push-button panel on
+     the Main Window.
+
+ Whenever the debugger suspends execution of the program, the source
+ display is updated and the current-location pointer marks the line
+ whose code will execute next.
+
+2 step_one_line
+=title Executing Your Program One Source Line at a Time
+=include debugui cnt_button_hlp
+=include debugui src_display
+=include debugui compile
+=include debugui execute
+ To execute one source line of your program, click on the Next push
+ button on the push-button panel of the Main Window.  This debugging
+ technique (called stepping) is one of the most commonly used.
+
+ After the line executes, the source display is updated and the
+ current-location pointer marks the line whose code will execute next.
+
+ The following points apply to source lines and the stepping behavior:
+
+  -  A source line can consist of one or more programming language
+     elements, depending on the language and coding style used.
+
+  -  When you click on the Next push button, the debugger executes one
+     executable line and suspends execution at the start of the next
+     executable line, by skipping over any intervening nonexecutable
+     lines.
+
+  -  Executable lines are those for which instructions were generated by
+     the compiler (for example, lines with routine call or assignment
+     statements).  Executable lines have a toggle button to their left
+     in the Source View.
+
+  -  Examples of nonexecutable lines are comment lines or lines with
+     variable declarations without value assignments.  Nonexecutable
+     lines do not have a toggle button to their left in the Source View.
+
+ Keep in mind that if you optimized your code at compilation time, the
+ source code displayed might not reflect the code that is actually
+ executing.
+
+2 step_in
+=title Stepping into a Called Routine
+=include debugui break
+=include debugui cnt_button_hlp
+=include debugui src_display
+=include debugui setscope
+=include debugui execute
+ When program execution is paused at a routine call statement, clicking
+ on the Next push button typically executes the called routine in one
+ step (depending on the coding style used).
+
+ The debugger suspends execution at the next source line in the calling
+ routine (assuming no breakpoint was set within the called routine).
+ This lets you step through the code quickly without having to trace
+ execution through any called routines (some of which might be system or
+ library routines).  This is called stepping over called routines.
+
+ To step into a called routine so that you can execute it one line at a
+ time:
+
+ 1.  Suspend execution at the routine call statement, for example, by
+     setting a breakpoint (see the Suspending Execution with Breakpoints
+     topic) and then clicking on the Continue push button on the
+     push-button panel of the Main Window.
+
+ 2.  When execution is paused at the call statement, click on the Step
+     push button on the push-button panel of the Main Window.  This
+     moves execution just past the start of the called routine.
+
+ Once execution is within the called routine, use the Next push button
+ to execute the routine line by line.
+
+ Clicking on the Step push button when execution is not paused at a
+ routine call statement is the same as clicking on the Next push button.
+
+2 step_return
+=title Returning from a Called Routine
+=include debugui cnt_button_hlp
+=include debugui src_display
+=include debugui src_display_nosrc
+=include debugui setscope
+=include debugui execute
+ When execution is suspended within a called routine, you can execute
+ your program directly to the end of that routine by clicking on the
+ Return push button on the push-button panel of the Main Window.
+
+ On some systems, the debugger suspends execution just before the
+ routine's return instruction executes.  At that point, the routine's
+ call frame has not been deleted from the call stack, so you can still
+ get the values of variables local to that routine, and so on.
+
+ The Return push button is particularly useful if you have inadvertently
+ stepped into a system or library routine.
+
+2 break
+=title Suspending Execution with (Setting) Breakpoints
+=include debugui break_identify
+=include debugui break_activ
+=include debugui break_srclin
+=include debugui break_routine
+=include debugui break_cond
+=include debugui break_action
+=include debugui on_mwindow_hlp
+=include debugui on_owindow_hlp
+ A breakpoint is a location in your program at which you want execution
+ to stop so that you can check the current value of a variable, step
+ into a routine, and so on.
+
+ When using the debugger's DECwindows Motif interface, you can set
+ breakpoints on:
+
+  -  Specific source lines
+
+  -  Specific routines (functions, subprograms, and so on)
+
+  -  Specific instructions (displayed in the Instruction View)
+
+ The debugger provides two ways to qualify breakpoints:
+
+  -  You can set a conditional breakpoint.  It triggers only when a
+     specified relational expression is evaluated as true.
+
+  -  You can set an action breakpoint.  It executes one or more
+     specified system-specific commands when the breakpoint triggers.
+
+ You can set a breakpoint that is both a conditional and action
+ breakpoint.
+
+2 break_srclin
+=title Setting Breakpoints on Source Lines
+=include debugui src_display
+=include debugui break
+ You can set a breakpoint on any source line that has a toggle button to
+ its left in the Source View.  These are the lines for which the
+ compiler has generated executable code (routine declarations,
+ assignment statements, and so on).
+
+ To set a breakpoint on a source line:
+
+ 1.  Find the source line on which you want to set a breakpoint.
+
+ 2.  Click on the toggle button to the left of that line.  (The
+     breakpoint is set when the toggle button is filled in.) The
+     breakpoint is set at the start of the source line--that is, on the
+     first machine-code instruction associated with that line.
+
+
+2 break_routine
+=Title Setting Breakpoints on Routines
+=include debugui break
+ Setting a breakpoint on a routine lets you move execution directly to
+ the routine and inspect the local environment.
+
+ To set a breakpoint on a routine, do the following:
+
+ 1.  Choose File:  Browse Source...  on the Main Window.  The Browse
+     Source dialog box appears listing your program file.
+
+ 2.  Double click on the name of your program file.  The names of the
+     program's modules are displayed (indented) under the program name.
+
+ 3.  Double click on the name of the module whose source code you want
+     to display.  The names of the routines in that module are displayed
+     in the Routine column.
+
+ 4.  Do one of the following:
+
+      -  Double-click on the name of the routine on which you want to
+         set a breakpoint.
+
+      -  Click on the name of the routine and then on the Set Breakpoint
+         button.
+
+     Either of these actions sets a breakpoint at the start of the
+     routine (directly after any prolog code).  In the Source View, the
+     button to the left of the source line that contains the start of
+     the routine is now filled in, confirming that the breakpoint is
+     set.
+
+     If the Breakpoint View is open, the breakpoint will appear in the
+     breakpoint list.
+
+     If the Instruction Window is open, the breakpoint will also display
+     for the corresponding instruction.
+
+
+2 break_instruction
+=title Setting Breakpoints on Instructions
+=include debugui inst_workarea_hlp
+=include debugui on_iwindow_hlp
+ You can set a breakpoint on any instruction that has a button to its
+ left in the annotation area.  These are the lines for which the
+ compiler has generated executable code (routine declarations,
+ assignment statements, and so on).
+
+ To set a breakpoint on an instruction:
+
+ 1.  Find the instruction on which you want to set a breakpoint.
+
+ 2.  Click on the button to the left of that line.  (The breakpoint is
+     set when the button is filled in.)
+
+
+2 break_identify
+=title Identifying the Currently Set Breakpoints
+=include debugui break_activ
+=include debugui src_display
+=include debugui break
+ There are two ways to determine which breakpoints are currently set:
+
+  -  Scroll through your source or instruction code and note the lines
+     whose breakpoint button is filled in.  This method can be time
+     consuming and also does not show which breakpoints were set and
+     then deactivated.
+
+  -  Choose Views:  Manage Views...  on the Main Window or Optional View
+     Window.  When the Optional Views dialog box appears, click on
+     Breakpoint View.  Within the Breakpoint View display, breakpoints
+     are listed in the Identification column of the view, including the
+     module name and line number for each breakpoint.
+
+     A filled-in button in the State column indicates that the
+     breakpoint is set and active.  A cleared button indicates that the
+     breakpoint is deactivated.  (The Breakpoint View does not provide
+     information on breakpoints that have not been set or that have been
+     deleted.)
+
+
+2 break_activ
+=title Deactivating, Activating, Deleting Breakpoints
+=include debugui rerun_same_hlp
+=include debugui break_srclin
+=include debugui break_routine
+=include debugui break_instruction
+=include debugui ladbx_cmd
+=include debugui break
+ After a breakpoint is set, you can deactivate it, activate it, or
+ delete it.
+
+ Deactivating a breakpoint causes the debugger to ignore it during
+ program execution.  However, the debugger keeps the breakpoint listed
+ in the Breakpoint View so that you can activate it at a later time, for
+ example, when you rerun the program.  The following points apply:
+
+  -  To deactivate a specific breakpoint, clear the button for that
+     breakpoint in the source display, the instruction code display, or
+     in the Breakpoint View.
+
+     In the Breakpoint View, you can also choose Break:  Toggle, if the
+     breakpoint is currently activated.
+
+  -  To deactivate all breakpoints, choose Break:  Deactivate All on the
+     Instruction or Optional View Window.
+
+ Activating a breakpoint causes it to take effect during program
+ execution:
+
+  -  To activate a breakpoint, click on the button for that breakpoint
+     in the source display, instruction code display, or in the
+     Breakpoint View.
+
+     In the Breakpoint View, you can also choose Break:  Toggle if the
+     breakpoint is currently deactivated.
+
+  -  To activate all breakpoints, choose Break:  Activate All on the
+     Instruction View or Optional View Window.
+
+ When you delete a breakpoint, it is no longer listed in the Breakpoint
+ View so that later you cannot activate it from that list.  You would
+ have to reset the breakpoint.  The following points apply:
+
+  -  To delete a specific breakpoint, choose Break:  Delete on the
+     Optional View Window.
+
+  -  To delete all breakpoints, choose Break:  Delete All Breaks...  on
+     the Instruction View or Optional View Window.
+
+
+2 break_cond
+=Title Setting a Conditional Breakpoint
+=include debugui src_display
+=include debugui custom_key_breakdb
+=include debugui breakpoint_disp_hlp
+=include debugui break
+ A conditional breakpoint suspends execution only when a specified
+ expression is evaluated as true.  For example, you can specify that a
+ breakpoint is to take effect when the value of a variable in your
+ program is 4.  The breakpoint is ignored if the value is other than 4.
+
+ The debugger evaluates the conditional expression when the breakpoint
+ triggers during execution of your program.
+
+ The following procedure sets a conditional breakpoint:
+
+ 1.  Display the source or instruction line on which you want to set the
+     conditional breakpoint.
+
+ 2.  Display the Set/Modify Breakpoint dialog box in one of the
+     following ways:
+
+      -  Press Ctrl/MB1 on the button to the left of a source line, an
+         instruction line, or a breakpoint entry in the Breakpoint View.
+         This causes the Set/Modify Breakpoint dialog box to display,
+         showing the line you selected in the Location:  field.
+
+      -  Choose the Break:  Set (Instruction Window) or Break:
+         Set/Modify (Optional View Window).  When the Set/Modify dialog
+         box appears, enter the line in the Location:  field.
+
+
+ 3.  Enter a relational expression in the Condition:  field of the
+     dialog box.  The expression must be valid in the source language.
+     For example, a[3] == 0 is a valid relational expression in the C
+     language.
+
+ 4.  Click on OK.  The conditional breakpoint is now set.  The debugger
+     indicates that a breakpoint is conditional by changing the shape of
+     the breakpoint's button from a square to a diamond.
+
+ The following procedure modifies a conditional breakpoint; that is, it
+ can be used to change the condition associated with an existing
+ conditional breakpoint, or to change an unqualified breakpoint into a
+ conditional breakpoint:
+
+ 1.  Do one of the following:
+
+      -  Press Ctrl/MB1 on the button to the left of a source line, an
+         instruction code line, or a breakpoint entry in the Breakpoint
+         View.
+
+      -  Click on a breakpoint entry in the Breakpoint View, and choose
+         the Break:  Set/Modify.
+
+
+ 2.  Follow steps 3 and 4 of the previous procedure, as appropriate.
+
+
+2 break_action
+=Title Setting an Action Breakpoint
+=include debugui src_display
+=include debugui custom_key_breakdb
+=include debugui breakpoint_disp_hlp
+=include debugui command_help
+=include debugui break
+ When an action breakpoint triggers, the debugger suspends execution and
+ then executes a specified list of commands.
+
+ The following procedure sets an action breakpoint:
+
+ 1.  Display the source or instruction line on which you want to set the
+     action breakpoint.
+
+ 2.  Display the Set/Modify Breakpoint dialog box in one of the
+     following ways:
+
+      -  Press Ctrl/MB1 on the button to the left of a source line, an
+         instruction line, or a breakpoint entry in the Breakpoint View.
+         This causes the Set/Modify Breakpoint dialog box to display,
+         showing the source line you selected in the Location:  field.
+
+      -  Choose the Break:  Set/Modify (Optional View Window).  When the
+         Set/Modify dialog box appears, enter the source line in the
+         Location:  field.
+
+
+ 3.  Enter one or more Ladebug commands in the Action:  field of the
+     dialog box.  For example:
+
+       assign x[j] = 3; next; print a
+
+ 4.  Click on OK.  The action breakpoint is now set.
+
+ The following procedure modifies an action breakpoint; that is, it can
+ be used to change the command associated with an existing action
+ breakpoint, or to change an unqualified breakpoint into an action
+ breakpoint:
+
+ 1.  Do one of the following:
+
+      -  Press Ctrl/MB1 on the button to the left of a source line, an
+         instruction code line, or a breakpoint entry in the Breakpoint
+         View.
+
+      -  Click on a breakpoint entry in the Breakpoint View, and choose
+         Break:  Set/Modify.
+
+
+ 2.  Follow steps 3 and 4 of the previous procedure, as appropriate.
+
+
+2 exam_deposit
+=title Examining and Manipulating Variables or Expressions
+=include debugui select
+=include debugui examine
+=include debugui monitor
+=include debugui deposit
+=include debugui access_var
+=include debugui on_mwindow_hlp
+ The Additional Topics explain how to do various operations to display
+ and modify the values of variables declared in your program.
+
+2 select
+=title Selecting Variable Names from Windows
+=include debugui src_display
+=include debugui custom_key_select
+=include debugui examine
+=include debugui monitor
+=include debugui deposit
+=include debugui exam_deposit
+ Use the following techniques to select variable names from windows for
+ the operations described in the Additional Topics.
+
+ When selecting names, follow the syntax of the source programming
+ language:
+
+  -  To specify a scalar (nonaggregate) variable, such as an integer,
+     real, Boolean, or enumeration type, select the variable's name.
+
+  -  To specify an entire aggregate, such as array or structure
+     (record), select the variable's name.
+
+  -  To specify a single element of an aggregate variable, select the
+     entity using the language syntax.  For example:
+
+      +  The string arr2[7] specifies element 7 of array arr2 in the C
+         language.
+
+      +  The string employee.address specifies the component address of
+         record (structure) employee in the Pascal language.
+
+
+  -  To specify the object designated by a pointer variable, select the
+     entity following the language syntax.  For example, the string
+     *int_point specifies the object designated by pointer int_point in
+     the C language.
+
+ To select character strings from windows, you have the following
+ options:
+
+  -  In any window, to select a string delimited by blank spaces, use
+     the standard DECwindows Motif word-selection technique:  position
+     the mouse pointer on that string and then double click MB1.
+
+  -  In any window, to select an arbitrary character string, use the
+     standard DECwindows Motif text-selection technique:  position the
+     mouse pointer on the first character, press and hold MB1 while
+     dragging the mouse pointer over the string, and then release MB1.
+
+  -  In the debugger source display, you also have the option of using
+     language-sensitive text selection.  To select a string delimited by
+     language-dependent identifier boundaries, position the mouse
+     pointer on that string and press Ctrl/MB1.
+
+     For example, suppose the Source View contains the character string
+     arr2[m], then:
+
+      +  To select arr2, position the mouse pointer on arr2 and press
+         Ctrl/MB1.
+
+      +  To select m, position the mouse pointer on m and press
+         Ctrl/MB1.
+
+     You can change the key sequence for language-sensitive text
+     selection as explained in the Defining the Key Sequence for
+     Language-Sensitive Text Selection topic.
+
+
+2 examine
+=title Displaying the Current Value of a Variable or Expression
+=include debugui src_display
+=include debugui select
+=include debugui cnt_button_hlp
+=include debugui monitor
+=include debugui exam_deposit
+ You can display the current value of a variable or expression in the
+ following ways:
+
+  -  Using the Print push button in the push-button panel
+
+  -  Using the Print dialog box, accessed through the Command menu on
+     the Main Window
+
+ The Print push button displays a current value most quickly, but the
+ Print dialog box allows you to request typecasting or an altered output
+ radix in the displayed result.
+
+ To display the current value using the Print push button, do the
+ following:
+
+ 1.  Find and select the variable name or expression in a window.
+
+ 2.  Click on the Print push button on the push-button panel of the Main
+     Window.  The debugger displays the variable or expression and its
+     current value in the Command Message View.  This is the value of
+     the variable or expression in the current scope, which might not be
+     the same as the source location where you selected the variable
+     name or expression.
+
+ To display the current value using the Print dialog box, perform the
+ following steps:
+
+ 1.  Do one of the following:
+
+      -  Find and select the variable name or expression symbols in a
+         window, and choose the Print menu item from the Commands menu
+         on the Main Window.  The Print dialog box appears, with the
+         name you selected in the Variable/Expression field.
+
+      -  Choose Commands:  Print on the Main Window.  The Print dialog
+         box appears.  Enter the name of the variable or symbols of the
+         expression you are printing in the Variable/Expression field of
+         the dialog box.
+
+
+ 2.  If you are changing the output type, pull down the menu in the
+     Typecast entry box and click on the desired data type.
+
+ 3.  If you are changing the output radix, pull down the menu in the
+     Output Radix entry box and click on the desired radix.
+
+ 4.  Click on OK.
+
+ Your echoed command and the current value appear in the Command Message
+ View.
+
+2 monitor
+=Title Monitoring a Variable or Expression
+=include debugui monitor_aggregate
+=include debugui monitor_pointer
+=include debugui src_display
+=include debugui select
+=include debugui cnt_button_hlp
+=include debugui examine
+=include debugui exam_deposit
+ When you monitor a variable or expression, the debugger displays the
+ value in the Monitor View and checks and updates the displayed value
+ whenever the debugger regains control from your program (for example,
+ after a step or at a breakpoint).
+
+ To monitor a variable or expression:
+
+ 1.  Choose Views:  Manage Views...  on either the Main Window or
+     Optional Views Window.  The Optional Views dialog box appears.
+
+ 2.  Click on Monitor View within the dialog box.  The Monitor View
+     appears in the Optional View Window.
+
+ 3.  Find and select the variable name or expression in a window.
+
+ 4.  Click on the Monitor push button on the push-button panel of the
+     Main Window.
+
+     The debugger does the following:
+
+      -  Puts the selected variable name or expression, along with its
+         qualifying path name, in the Monitor Expression column
+
+      -  Puts the current value of the variable in the Value/Deposit
+         column
+
+
+
+2 monitor_aggregate
+=Title Monitoring an Aggregate (Array, Structure) Variable
+=include debugui monitor
+ If you select the name of an aggregate variable, such as an array or
+ structure (record) and click on the Monitor push button, the debugger
+ displays the word Aggregate in the Value/Deposit column of the Monitor
+ View.
+
+ To display the values of all elements (components) of an aggregate
+ variable, double click on the variable name in the Monitor Expression
+ column.  The displayed element names are indented relative to the
+ parent name.
+
+ If an element is also an aggregate, you can double click on its name to
+ display its elements, and so on.
+
+ To contract an expanded display so that only the aggregate parent name
+ is shown in the Monitor View, double click on the name in the Monitor
+ Expression column.
+
+ If you have selected a component of an aggregate variable, and the
+ component expression is itself a variable, the debugger monitors the
+ component that was active when you made the selection.  For example, if
+ you select the array component arr[i] and the current value of i is 9,
+ the debugger monitors arr[9] even if the value of i subsequently
+ changes to 10.
+
+2 monitor_pointer
+=Title Monitoring a Pointer (Access) Variable
+=include debugui monitor
+=include debugui custom_button_add
+ If you select the name of a pointer (access) variable and click on the
+ Monitor push button, the debugger displays the address of the
+ referenced object in the Value/Deposit column of the Monitor View.
+
+ To monitor the value of the referenced object (to dereference the
+ pointer variable), double click on the pointer name in the Monitor
+ Expression column.  This adds an entry for the referenced object in the
+ Monitor View, which is indented under the pointer entry.  If a
+ referenced object is an aggregate, you can double click on its name to
+ display its elements, and so on.
+
+ If you are debugging programs written in C or C++, you may want to add
+ a new push button to the push button pane, one that monitors a
+ dereferenced value.  If so, you enter the following command in the
+ Command field of the Customize dialog box:
+  
+        monitor *%s
+
+ For more information, see the Adding a New Push Button and Associated
+ Command help topic.
+
+2 deposit
+=title Changing the Value of a Variable
+=include debugui monitor
+=include debugui monitor_aggregate
+=include debugui examine
+=include debugui exam_deposit
+ You can change the value of a variable in the following ways:
+
+  -  Choose Commands:  Assign on the Main Window to display the Assign
+     dialog box.
+
+  -  Click on a monitored value within the Monitor View.
+
+ To change the value of a variable using the Assign dialog box, do the
+ following:
+
+ 1.  Do one of the following steps:
+
+      -  Find and select the variable name in a window, and choose
+         Commands:  Assign on the Main Window.  The Assign dialog box
+         appears, with the name you selected in the Variable field.
+
+      -  Choose Commands:  Assign on the Main Window.  The Assign dialog
+         box appears.  Enter the name of the variable to which you are
+         assigning a value in the Variable field of the dialog box.
+
+
+ 2.  Enter the value you are assigning in the Value field of the dialog
+     box.
+
+ 3.  If you are changing the input radix, pull down the menu in the
+     Input Radix entry box and click on the desired radix.
+
+ 4.  Click on OK.
+
+ Your echoed command appears in the Command Message View, indicating
+ that the value is changed.
+
+ To change the value of a monitored value within the Monitor View:
+
+ 1.  Monitor the variable as explained in the Monitoring a Variable
+     topic.
+
+ 2.  Click on the variable's value in the Value/Deposit column of the
+     Monitor View.  A small dialog box appears over that value, which
+     you can now edit.
+
+ 3.  Enter the new value in the dialog box.
+
+ 4.  Click on the check mark (OK) in the dialog box.  The dialog box is
+     removed and replaced by the new value, which indicates that the
+     variable now has that value.  The debugger notifies you if you try
+     to enter a value that is incompatible with the variable's type,
+     range, and so on.
+
+ To cancel a text entry and dismiss the dialog box, click on X (Cancel).
+
+ You can change the value of only one component of an aggregate variable
+ (such as an array or structure) at a time.  To change the value of an
+ aggregate-variable component, do the following:
+
+ 1.  Display the value of the component as explained in the Monitoring
+     an Aggregate (Array or Structure) Variable topic.
+
+ 2.  Follow the procedure for changing the value of a scalar variable.
+
+
+2 variable
+=Title Monitoring Local Variables and Parameters
+=include debugui src_display
+ In the Local Variables View, you can monitor the values of all local
+ variables and parameters passed to a routine.
+
+ Ladebug displays these values, and checks and updates all displayed
+ values whenever the debugger regains control from your program (for
+ example, after a step or at a breakpoint).
+
+ You cannot add or remove an entry to the local variables and parameters
+ list.  Ladebug automatically removes previous entries and adds new
+ entries when a new routine appears at the top of the call stack.
+
+ To monitor a local variable or parameter do the following:
+
+ 1.  Choose Views:  Manage Views...  on either the Main Window or
+     Optional View Window.  The Views dialog box appears.
+
+ 2.  Click on the Local Variables View item in the Optional Views dialog
+     box.  The Local Variables View appears.  Ladebug automatically
+     lists all local variable and parameter names (in the Expression
+     column) and current values (in the Value/Assign column).
+
+ To change the value of a monitored value within the Local Variables
+ View, do the following:
+
+ 1.  Monitor the local variable as explained above.
+
+ 2.  Click on the variable's value in the Value/Assign column of the
+     Local Variables View.  A small dialog box appears over that value,
+     which you can now edit.
+
+ 3.  Enter the new value in the dialog box.
+
+ 4.  Click on the check mark (OK) in the dialog box.  The dialog box is
+     removed and replaced by the new value, which indicates that the
+     variable now has that value.  The debugger notifies you if you try
+     to enter a value that is incompatible with the variable's type,
+     range, and so on.
+
+ To cancel a text entry and dismiss the dialog box, click on X (Cancel).
+
+ You can change the value of only one component of an aggregate variable
+ (such as an array or structure) at a time.  To change the value of an
+ aggregate-variable component do the following:
+
+ 1.  Display the value of the component as explained in the Monitoring
+     an Aggregate (Array or Structure) Variable topic.
+
+ 2.  Follow the procedure for changing the value of a scalar variable.
+
+
+2 access_var
+=title Accessing Program Variables
+=include debugui compile
+=include debugui setscope
+=include debugui exam_deposit
+ The Additional Topics give some general considerations about accessing
+ program variables while debugging.
+
+ If your program was optimized during compilation, you might not have
+ access to certain variables while debugging.  When you compile a
+ program for debugging, it is best to disable optimization, if possible.
+
+ Before you check on the value of a variable, always execute the program
+ beyond the point where the variable is declared and initialized.  The
+ value contained in any uninitialized variable should be considered
+ invalid.
+
+ In most cases, the debugger resolves symbol ambiguities automatically
+ by using the scope and visibility rules of the source programming
+ language.  For more information about resolving symbol ambiguities, see
+ the Ladebug documentation.
+
+2 instruction
+=Title Displaying the Decoded Instruction Stream of your Program
+=include debugui cnt_options_pd_menu_hlp
+=include debugui compile
+=include debugui setscope
+=include debugui on_iwindow_hlp
+ The Instruction View displays the decoded instruction stream of your
+ program---the code that is actually executing.  This is useful if the
+ program you are debugging has been optimized by the compiler so that
+ the information in the source display does not exactly reflect the code
+ that is executing.
+
+ To display the Instruction View, choose Views:  Manage Views...  on
+ either the Main Window or the Optional View Window.  At the Optional
+ View dialog box appears, click on Instruction View.
+
+ By default, the Instruction View automatically displays the decoded
+ instruction stream of the routine in which execution is currently
+ paused.  The current-location pointer, to the left of the instructions,
+ marks the instruction that will execute next.
+
+ By default, the debugger displays line numbers and memory addresses to
+ the left of the instructions.  You can choose not to display numbers or
+ addresses so that more space is devoted to showing instructions.
+
+ To hide or display line numbers, choose File:  Display Line Numbers on
+ the Instruction View.  To hide or display memory addresses, choose
+ File:  Show Instruction Addresses on the Instruction View.
+
+ To copy memory addresses or instructions into a command you are
+ entering at the command entry prompt, select text and choose Edit:
+ Copy on the Instruction Window.  Then, position your mouse pointer at
+ the command you have entered and choose Edit:  Paste on the Main
+ Window.  (You can also select instruction text to be used with a push
+ button command you click in the push button pane of the Main Window.)
+
+ To set breakpoints from the Instruction View, click on the breakpoint
+ button next to the instruction of interest.  The breakpoint is set in
+ the source display, instruction display (if the Instruction View is
+ open), and Breakpoint View (if the Breakpoint View is open).
+ Information on the breakpoint is continuously updated in the source
+ display, and in the Instruction View and Breakpoint View if they are
+ open.
+
+ You can also set breakpoints and change breakpoint status by pulling
+ down the Break menu from the Optional View Window.
+
+ After navigating through the Instruction View, to redisplay the
+ location at which execution is paused, click on the Call Stack menu.
+
+ To display the instruction stream of any routine on the call stack,
+ choose its name from the Call Stack menu on the Main Window.
+
+2 register
+=Title Displaying and Modifying Register Values
+=include debugui cnt_options_pd_menu_hlp
+=include debugui setscope
+=include debugui on_owindow_hlp
+ The Register View displays the current contents of all machine
+ registers.
+
+ To display the Register View, choose Views:  Register View on either
+ the Main Window or the Optional View Window.
+
+ By default, the Register View automatically displays the register
+ values associated with the routine in which execution is currently
+ paused.  Any values that change as your program executes are
+ highlighted whenever the debugger regains control from your program.
+
+ To display the register values associated with any routine on the call
+ stack, choose its name from the Call Stack menu on the Main Window.
+
+ To change the value stored in a register:
+
+ 1.  Click on the register value in the Register View.  A small dialog
+     box appears over the current value, which you can now edit.
+
+ 2.  Enter the new value in the dialog box.
+
+ 3.  Click on the check mark (OK) in the dialog box.  The dialog box is
+     removed and replaced by the new value, which indicates that the
+     register now contains that value.
+
+ To cancel a text entry and dismiss the dialog box, click on X (Cancel).
+
+2 setscope
+=Title Setting the Current Scope Relative to the Call Stack
+=include debugui callstack_menu_hlp
+=include debugui src_display
+=include debugui instruction
+=include debugui register
+=include debugui access_var
+ While debugging a routine in your program, you might want to set the
+ current scope to a calling routine (a routine down the stack from the
+ routine in which execution is currently paused).  This enables you to
+ do the following:
+
+  -  Determine where the current routine call originated
+
+  -  Determine the value of a variable declared in a calling routine
+
+  -  Determine the value of a variable during a particular invocation of
+     a routine that is called recursively
+
+  -  Change the value of a variable in the context of a routine call
+
+ The Call Stack menu on the Source View lists the names of the routines
+ of your program that are currently active on the stack, up to the
+ maximum number of lines that can be displayed on your screen.
+
+ The numbers on the left side of the menu indicate the level of each
+ routine on the stack relative to level 0, which denotes the routine in
+ which execution is paused.
+
+ To set the current scope to a particular routine on the stack, choose
+ its name from the Call Stack menu.  This causes the following to occur:
+
+  -  The Call Stack menu, when released, shows the name and relative
+     level of the routine that is now the current scope.
+
+  -  The source display shows that routine's source code.
+
+  -  The Instruction View (if displayed) shows that routine's decoded
+     instructions.
+
+  -  The Register View (if displayed) shows the register values
+     associated with that routine call.
+
+  -  If the scope is set to a calling routine (call-stack level other
+     than 0), the debugger clears the current-location pointer.
+
+  -  The debugger sets the scope for symbol searches to the chosen
+     routine, so that you can examine variables, and so on, in the
+     context of that scope.
+
+ When you set the scope to a calling routine, the current-location
+ pointer (which is cleared) marks the source line to which execution
+ will return in that routine.  Depending on the source language and
+ coding style used, this might be the line that contains the call
+ statement or some subsequent line.
+
+2 multi_proc_thread
+=Title Displaying and Selecting Available Processes and Threads
+=include debugui callstack_menu_hlp
+=include debugui attach_detach_proc
+=include debugui debug_mp_applications
+=include debugui debug_multithread_app
+=include debugui set_multithread_mode
+=include debugui on_owindow_hlp
+ The Source View Context Panel contains menu buttons that list processes
+ and threads.  It allows you to change the process or thread context by
+ selecting any process or thread on the menu and bringing it under
+ debugger control.
+
+ To select a process or thread, pull down the Process or Thread menu
+ button and select the process or thread you want.  The contents of the
+ Source View and the Call Stack and any displayed optional views are
+ updated to reflect the current context.
+
+ For multithreaded applications, when you select a particular process,
+ the thread option button displays the thread list of the current
+ process.
+
+2 attach_detach_proc
+=Title Attaching and Detaching a Process
+=include debugui callstack_menu_hlp
+=include debugui src_commands_pd_menu_hlp
+=include debugui multi_proc_thread
+=include debugui debug_mp_applications
+=include debugui debug_multithread_app
+=include debugui set_multithread_mode
+=include debugui on_owindow_hlp
+ To attach to a process not currently under debugger control, choose
+ Command:  Attach to Process in the Main Window.  This displays a
+ Process Selection dialog box that shows you the list of active
+ processes to which you have access.
+
+ Select the process you want to attach to.  The Source View reflects the
+ new process.  If you have optional views displayed, they will be
+ updated to reflect the new process.
+
+ If no breakpoint is set in the process to which you are attaching, the
+ process will run to completion.  However, you can set the $stoponattach
+ variable to stop the process right after the debugger attaches to it by
+ default.
+
+ The Source View will not reflect the new process if the debugger cannot
+ find the path of the actual source file.
+
+ You can also attach to a process using the load command at the command
+ prompt.  The views are not updated until the run command is executed.
+ If a break is not set, the process will run to completion.  Use the
+ stop in or stop at command to set a break.
+
+ To detach a process, choose Commands:Detach Process in the Main Window.
+ This displays a dialog box showing all the current processes under
+ debugger control.
+
+ Click on the desired process to remove it from debugger control.
+
+  -  If the process is current (displayed in the Source View and
+     optional views), the process will run to completion and the views
+     are reinitialized (blanked out).
+
+  -  If the process you detach is not current, it will run to completion
+     and the current process will continue to display in the Source
+     View.
+
+
+2 debug_multithread_app
+=Title Debugging a Multithreaded Application
+=include debugui callstack_menu_hlp
+=include debugui src_commands_pd_menu_hlp
+=include debugui multi_proc_thread
+=include debugui debug_mp_applications
+=include debugui attach_detach_proc
+=include debugui set_multithread_mode
+=include debugui inst_workarea_hlp
+=include debugui breakpoint_disp_hlp
+=include debugui register_view_hlp
+=include debugui on_owindow_hlp
+ To debug a single process multithreaded application, follow these
+ general steps:
+
+ 1.  Start the application.
+
+ 2.  Pull down the Thread menu.  The Thread menu displays the current
+     thread on top.  If the application contains native threads, the
+     location of each thread is displayed next to each thread.  If the
+     application contains DECthreads, the thread number displays.
+
+ 3.  Select a different thread by clicking on the thread you want to
+     debug.  The Source View and Call Stack are updated.  The debugger
+     displays the current thread in Source View.
+
+ The Register and Instruction Views show information pertaining to the
+ selected thread.  The Breakpoint View does not change when the thread
+ is changed because it displays breakpoints for all processes.
+
+2 set_multithread_mode
+=Title Setting the Thread Mode
+=include debugui callstack_menu_hlp
+=include debugui src_commands_pd_menu_hlp
+=include debugui multi_proc_thread
+=include debugui attach_detach_proc
+=include debugui debug_multithread_app
+=include debugui on_owindow_hlp
+ There are two thread modes:  DECthreads and native threads.  The
+ debugger defaults to DECthreads if your application is multithreaded
+ and uses DECthreads.  If your application does not use DECthreads, the
+ $threadlevel variable is set to native.
+
+ You can manually set the thread mode from the command prompt as
+ follows:
+
+ (ladebug) set $threadlevel="native"
+
+ To set it back to DECthreads:
+
+ (ladebug) set $threadlevel="decthreads"
+
+2 debug_mp_applications
+=Title Debugging a Multiprocess Application
+=include debugui callstack_menu_hlp
+=include debugui src_commands_pd_menu_hlp
+=include debugui multi_proc_thread
+=include debugui debug_mp_predefined_variables
+=include debugui debug_multithread_app
+=include debugui attach_detach_proc
+=include debugui on_owindow_hlp
+ Ladebug lets you debug one or many processes.  It provides the
+ predefined variables $catchexecs, $catchforks, and $stopparentonfork
+ for debugging applications that fork a child process or execs a
+ program.
+
+ To debug a multiprocess application, follow these general steps:
+
+ 1.  Invoke Ladebug.
+
+ 2.  If your application forks or execs or both, set the predefined
+     variables.
+
+ 3.  Start the application.
+
+ 4.  Pull down the Process menu.  The Process menu displays the current
+     process on top.  The image name for each process displays next to
+     each process.
+
+ 5.  Select a different process by clicking on the process you want to
+     debug.  The Source View and Call Stack are updated.
+
+
+2 debug_mp_predefined_variables
+=Title Setting Predefined Variables for Multiprocess Debugging
+=include debugui callstack_menu_hlp
+=include debugui src_commands_pd_menu_hlp
+=include debugui debug_mp_applications
+=include debugui multi_proc_thread
+=include debugui debug_multithread_app
+=include debugui attach_detach_proc
+=include debugui on_owindow_hlp
+ The debugger provides predefined variables for debugging applications
+ that fork a child process or execs a program:
+
+ 1.  $catchexecs -- When set to 1, this variable instructs the debugger
+     to notify the user and stop the program when a program execs.  The
+     default is 0.
+
+ 2.  $catchforks -- When set to 1, this variable instructs the debugger
+     to notify the user when a program forks a child process.  The child
+     process stops and is brought under debugger control.  By default,
+     the parent process is not stopped.  The default is 0.
+
+ 3.  $catchparentonfork -- When set to 1, this variable instructs the
+     debugger to stop the parent process when a program forks a child
+     process.  The default is 0.
+
+ To set these variables from the command prompt, enter the following:
+
+ (ladebug) set $catchforks=1
+ (ladebug) set $catchexecs=1
+ (ladebug) set $stopparentonfork=1
+
+ When a fork occurs, the debugger automatically sets the debugger
+ variables $childprocess and $parentprocess to the new child or parent
+ process ID.
+
+2 custom
+=title Customizing the Debugger
+=include debugui custom_views
+=include debugui custom_lineno
+=include debugui custom_button
+=include debugui custom_resource
+=include debugui custom_key_breakdb
+=include debugui custom_key_select
+=include debugui custom_font
+=include debugui on_mwindow_hlp
+ You can customize the debugger's DECwindows Motif interface as follows:
+
+  -  Define the startup configuration of the debugger windows and views
+
+  -  Show or hide line numbers in the Source View at debugger startup
+
+  -  Modify, add, or remove push buttons and associated debugger
+     commands
+
+  -  Define the key sequence to display the dialog box for conditional
+     and action breakpoints
+
+  -  Define the key sequence to make text selection language-sensitive
+     in the source display
+
+  -  Define the character font for text displayed in specific windows
+     and views
+
+  -  Define or redefine the commands bound to individual keys on your
+     computer's keypad.
+
+ You can control the first three of these customizations interactively
+ from the DECwindows Motif interface, as explained in the Additional
+ Topics.  In each of these cases, you can save the current settings by
+ choosing Options:  Save Options on either the Main Window or Optional
+ View Window.
+
+ In addition, you can control all customizations by editing the debugger
+ resource file (ladebugresource, in your home directory).
+
+2 custom_views
+=title Defining the Startup Configuration of Windows
+=include debugui custom_resource
+=include debugui custom
+ To define the startup configuration of the debugger windows and views:
+
+ 1.  While using the debugger, set up the desired configuration of the
+     windows and views.
+
+ 2.  Choose Options:  Save Options on either the Main Window or Optional
+     View Window.  This creates a new version of the debugger resource
+     file with the new settings.
+
+ When you later start the debugger, the new configuration appears
+ automatically.
+
+ NOTE:  Adding views to the startup configuration increases the startup
+ time accordingly.
+
+ You can also define the startup window configuration by editing the
+ current definition of the following resources in the ladebugresource
+ resource file:
+
+ DebugSource.width
+ DebugSource.x
+ DebugSource.height
+ DebugSource.y
+ DebugControl.width
+ DebugControl.x
+ DebugControl.height
+ DebugControl.y
+
+2 custom_lineno
+=title Displaying or Hiding Source Line Numbers by Default
+=include debugui custom_resource
+=include debugui custom
+ The Source View displays source line numbers by default at debugger
+ startup.  To hide (or display) line numbers at debugger startup, do the
+ following:
+
+ 1.  While using the debugger, choose File:  Display Line Numbers on the
+     Main Window.  A button next to that menu item indicates that line
+     numbers are turned on.
+
+ 2.  To save this setting, choose Options:  Save Options menu on either
+     the Main Window or Optional View Window.  This creates a new
+     version of the debugger resource file.
+
+ When you start the debugger later, the line numbers will be either
+ displayed or hidden accordingly.
+
+ You can also set the startup default for line numbers by setting the
+ following resource to either True or False in the ladebugresource
+ resource file.
+
+ DebugSource.StartupShowSourceLineno
+
+2 custom_button
+=title Modifying, Adding, Removing, and Resequencing Push Buttons
+=include debugui custom_button_mod
+=include debugui custom_button_add
+=include debugui custom_button_remove
+=include debugui custom_button_move
+=include debugui custom_resource
+=include debugui custom
+ The push buttons on the push-button panel are associated with debugger
+ commands.  You can do the following:
+
+  -  Change a push button's label or the command associated with a push
+     button
+
+  -  Add a new push button and assigns a command to that button
+
+  -  Remove a push button
+
+  -  Resequence a push button
+
+ NOTE:  You cannot modify or remove the Interrupt push button.
+
+ The Additional Topics explain how to customize push buttons
+ interactively through the graphical user interface.
+
+ To save these modifications for subsequent debugger sessions, choose
+ Options:  Save Options on either the Main Window or an optional view.
+ This creates a new version of the debugger resource file with the new
+ definitions.
+
+2 custom_button_move
+=title Resequencing a Push Button and Associated Command
+ To resequence a push button, do the following:
+
+ 1.  Choose Options:  Customize...  on either the Main Window or the
+     optional view.  The Customize dialog box appears.
+
+ 2.  Click on the push button in the control panel of the Customize
+     dialog box.
+
+ 3.  Click on Right Arrow or Left Arrow.  The push button is resequenced
+     one place to the right or left in the dialog box control panel.
+
+ 4.  Click on OK.  The push button is resequenced one place to the right
+     or left in the push-button panel on the Main Window.
+
+
+2 custom_button_mod
+=title Changing a Push Button's Label or Associated Command
+=include debugui command_help
+=include debugui custom_button
+ To change a push button's label or the debugger command associated with
+ a push button, do the following:
+
+ 1.  Choose Options:  Customize...  on either the Main Window or
+     Optional View Window.  The Customize dialog box appears.
+
+ 2.  Click on the push button in the control panel of the dialog box.
+
+ 3.  If changing the push button label, enter the new label in the Label
+     field or choose a predefined icon from the Icon menu.  (If changing
+     the push button label, verify that the Icon menu is set to None.)
+
+ 4.  If changing the command associated with the push button, enter the
+     new command in the Command field.
+
+     If the command is to operate on a name or language expression
+     selected in a window, include %s in the command name.  For example,
+     the following command displays the current value of the variable
+     whose name is currently selected:
+
+     print %s
+
+     If the command is to operate on a name that has a a percent sign
+     (%) as the first character, specify two percent signs.
+
+ 5.  Click on Modify.  The push button is modified in the dialog box
+     control panel.
+
+ 6.  Click on OK.  The push button is modified in the push-button panel
+     on the Main Window.
+
+
+2 custom_button_add
+=title Adding a New Push Button and Associated Command
+=include debugui command_help
+=include debugui custom_button
+ To add a new push button to the push-button panel and assign a debugger
+ command to that push button, do the following:
+
+ 1.  Choose Options:  Customize...  on either the Main Window or
+     Optional View Window.  The Customize dialog box appears.
+
+ 2.  Enter the debugger command for that push button in the Command
+     field.
+
+ 3.  Enter a label for that push button in the Label field or choose a
+     predefined icon from the Icon menu.
+
+ 4.  Click on Add.  The push button is added to the control panel within
+     the dialog box.
+
+ 5.  Click on OK.  The push button is added to the push-button panel in
+     the Main Window.
+
+ If you are debugging programs written in C or C++, you may want to add
+ a new push button to the push button pane, one that monitors a
+ dereferenced value.  If so, you enter the following command in the
+ Command field of the Customize dialog box:
+  
+        monitor *%s
+
+
+2 custom_button_remove
+=title Removing a Push Button
+=include debugui custom_button
+ To remove a push button, do the following:
+
+ 1.  Choose Options:  Customize...  on either the Main Window or
+     Optional View Window.  The Customize dialog box appears.
+
+ 2.  Click on the push button in the control panel of the Customize
+     dialog box.
+
+ 3.  Click on Remove.  The push button is removed from the control panel
+     within the dialog box.
+
+ 4.  Click on OK.  The push button is removed from the push button pane
+     in the Main Window.
+
+
+
+2 custom_resource
+=title Customizing Your Debugger Resource File
+=include debugui custom
+ The debugger is installed on your system with a debugger resource file
+ that defines the startup defaults for the following customizable
+ parameters:
+
+  -  Configuration of windows and views
+
+  -  Whether to show or hide line numbers in the Source View
+
+  -  Button names and associated debugger commands
+
+  -  Key sequence to display the dialog box for conditional and action
+     breakpoints
+
+  -  Key sequence for language-sensitive text selection in the source
+     display
+
+  -  Character fonts for text in the windows and views
+
+  -  Key bindings for commands associated with the computer keypad
+
+ A listing of the system default debugger resource file with explanatory
+ comments is in the manual provided with this debugger.
+
+ When you first choose Options:  Save Options on the Main Window or
+ Optional View Window, the debugger creates your own local debugger
+ resource file (ladebugresource, in your home directory).
+
+ This local file contains your current settings for the following
+ parameters, which you can customize from the DECwindows Motif interface
+ as follows:
+
+  -  Configuration of windows and views
+
+  -  Whether to show or hide line numbers in the Source View
+
+  -  Push button names and associated debugger commands
+
+ When you start the debugger subsequently, it uses the settings defined
+ in your local resource file (for example, window configuration) and
+ uses the system default resource file for the other settings (for
+ example, character fonts).  Whenever you Options:  Save Options, a new
+ version of your local resource file is created.
+
+ Using the system default file as a reference, you can add customized
+ resource settings to your own local file as explained in the following
+ topics.  When you subsequently choose Options:  Save Options, the
+ debugger automatically copies these added settings to the new version
+ of your local file.
+
+ For complete information about specifying key sequences, see the
+ translation table syntax in the X Toolkit Intrinsics documentation.
+
+2 custom_key_breakdb
+=title Defining the Key Sequence for the Breakpoint Dialog Box
+=include debugui break_cond
+=include debugui break_action
+=include debugui custom_resource
+=include debugui custom
+ By default, the key sequence for displaying the dialog box for
+ conditional and action breakpoints is Ctrl/MB1.  To define another key
+ sequence, edit the current definition of the following resource in the
+ ladebugresource resource file:
+
+ DebugSource.ModifyBreakpointToggleSequence
+
+2 custom_key_select
+=title Defining the Key Sequence for Text Selection
+=include debugui select
+=include debugui custom_resource
+=include debugui custom
+ By default, the key sequence for language-sensitive text selection in
+ the Source View is Ctrl/MB1.  To define another key sequence, edit the
+ current definition of the following resource in the ladebugresource
+ resource file:
+
+ DebugSource.IdentifierSelectionSequence
+
+ To avoid conflict with standard DECwindows Motif word selection, do not
+ use a double-click combination, such as Ctrl<Btn1Down>(2).
+
+2 custom_font
+=title Defining the Font for Displayed Text
+=include debugui custom_resource
+=include debugui custom
+ To define another font for the text displayed in various debugger
+ windows and views, edit the current definition of the following
+ resources in the ladebugresource resource file:
+
+ DebugSource.Font
+ DebugControl.MessageViewFont
+ DebugControl.MonitorViewPrimaryFont
+ DebugControl.MonitorViewSecondaryFont
+
+2 custom_key_binding
+=title Defining the Key Bindings on the Keypad
+=include debugui custom_resource
+=include debugui custom
+ The following commands have been mapped to individual keys on your
+ computer's keypad:
+
+ Command                 Keypad Label            Key Designation
+ --------                ------------            ---------------
+
+ Next                      KP0                    <Key>0xFFB0
+ Go                        KPcomma                <Key>0xFFAC
+ Activate                  ENTER                  <Key>0xFF8D
+
+ To bind a different command to a key that is already associated with a
+ command, edit the current definition of the following resources in the
+ ladebugresource resource file:
+
+ DebugSource.*DXmCSText.translations:#override\n\
+    <Key>0xFFB0: EnterCmdOnCmdLine("step\line") \n\
+    <Key>0xFFAC: EnterCmdOnCmdLine("go") \n\
+    <Key>0xFF8D: activate()\n\
+
+ To bind a command to a key that is not currently associated with a
+ command, refer to the Keysym Encoding chapter of the "X and Motif Quick
+ Reference Guide" for key designations.
+
+2 decwindows_basics
+=title DECwindows Motif Basics
+=include debugui on_mwindow_hlp
+ Information about using DECwindows Motif, such as how to use windows,
+ dialog boxes, and scroll bars, is available from Session Manager help.
+ To get Session Manager help:
+
+ 1.  Move the mouse pointer to the Session Manager icon (the icon that
+     contains a small key in it) in the Icon Box.
+
+ 2.  Press MB1 (mouse button 1) twice to display the Session Manager
+     window.
+
+ 3.  Move the mouse pointer to the Help menu; press and hold MB1 to pull
+     down this menu.
+
+ 4.  Move the mouse pointer to the On Basics menu item and release MB1.
+     The Session Manager displays a Help window, which includes a list
+     of Additional Topics about using DECwindows Motif.
+
+
+2 on_context
+=Title On Context Item in Help Menu
+=include debugui on_help_hlp
+=include debugui help_pd_menu_hlp
+=include debugui on_mwindow_hlp
+=include debugui on_owindow_hlp
+=include debugui on_ewindow_hlp
+=include debugui on_iwindow_hlp
+ Context-sensitive help is information about an area or object in a
+ window or a dialog box.
+
+ To display context-sensitive help about a particular area or object, do
+ the following:
+
+ 1.  Choose Help:  On Context from the Help menu in a debugger window.
+     The pointer shape changes to a question mark (?).
+
+ 2.  Place the question mark on an object or area in a debugger window
+     or dialog box and click on MB1.
+
+     Information about that area object is displayed in a Help window.
+     Additional Topics provide task-oriented discussions, where
+     applicable.
+
+ To display context-sensitive help for a dialog box, you should click on
+ the Help button in that box.
+
+2 on_window
+=Title On Window Item in Help Menu
+=include debugui on_help_hlp
+=include debugui help_pd_menu_hlp
+=include debugui on_mwindow_hlp
+=include debugui on_owindow_hlp
+=include debugui on_ewindow_hlp
+=include debugui on_iwindow_hlp
+ Choose Help:  On Window for an overview of the debugger along with
+ information on how to do various tasks using the debugger.
+
+2 on_help
+=Title On Help Item in Help Menu
+=include debugui on_help_hlp
+=include debugui help_pd_menu_hlp
+=include debugui on_mwindow_hlp
+=include debugui on_owindow_hlp
+=include debugui on_ewindow_hlp
+=include debugui on_iwindow_hlp
+ Choose Help:  On Help for instructions on how to use the help system.
+
+2 on_version
+=Title On Version Item in Help Menu
+=include debugui on_version_hlp
+=include debugui on_help_hlp
+=include debugui help_pd_menu_hlp
+=include debugui on_mwindow_hlp
+=include debugui on_owindow_hlp
+=include debugui on_ewindow_hlp
+=include debugui on_iwindow_hlp
+ Choose On Version in the Help menu for version and copyright
+ information about the Ladebug Debugger.
+
+2 on_command
+=Title On Commands Item in Help Menu
+=include debugui interfaces
+=include debugui cmd_entry
+=include debugui msg_region_hlp
+=include debugui ladbx_cmd
+=include debugui command_help
+=include debugui on_help_hlp
+=include debugui help_pd_menu_hlp
+=include debugui on_mwindow_hlp
+ Choose On Commands in the Help menu for information about Ladebug
+ commands.
+
+ Ladebug is layered on the Ladebug Debugger that is bundled with the
+ Digital UNIX operating system.  You can enter Ladebug commands at the
+ (ladebug) command-entry prompt in the Command Message View.
+
+ You can also enter Ladebug commands at the system prompt.
+
+2 context_sensitive_help
+=title Displaying Context-Sensitive Help
+=include debugui on_help_hlp
+ Context-sensitive help is information about an area or object in a
+ window or a dialog box.
+
+ To display context-sensitive help, do the following:
+
+ 1.  Choose Help:  On Context from a debugger window.  The pointer shape
+     changes to a question mark (?).
+
+ 2.  Place the question mark on an object or area in a debugger window
+     or dialog box.
+
+ 3.  Click on MB1.  Help for that area or object is displayed in a Help
+     window.  Additional Topics provide task-oriented discussions, where
+     applicable.
+
+ To display context-sensitive help for a dialog box, you can also click
+ on the Help button in the dialog box.
+
+2 overview_help
+=title Displaying the On Window Help Topic and Subtopics
+=include debugui on_mwindow_hlp
+=include debugui on_help_hlp
+=include debugui help_pd_menu_hlp
+ The On Window help topic introduces the debugger and provides subtopics
+ on using the Main Window, using the Optional Views Window, using the
+ Instruction Window, and subtopics with task-oriented information about
+ the debugger and debugging.
+
+ To display the On Window topics, choose Help:  On Window in a debugger
+ window.  Then, to display information about a particular subject,
+ choose a topic from the list of Additional Topics.
+
+2 command_help
+=title Displaying Help on Debugger Commands
+=include debugui interfaces
+=include debugui cmd_entry
+=include debugui msg_region_hlp
+=include debugui ladbx_cmd
+=include debugui disabled_osf_cmds
+=include debugui more_disabled_cmds
+=include debugui custom_button_mod
+=include debugui on_help_hlp
+=include debugui help_pd_menu_hlp
+=include debugui on_mwindow_hlp
+ You can enter Ladebug commands as follows:
+
+  -  At the command-entry prompt in the Command Message View.
+
+  -  In certain debugger dialog boxes (for example, when assigning a new
+     command to a push button on the push-button panel).
+
+ To display help on Ladebug commands, use either of these techniques:
+
+  -  Type help at the prompt.  This displays all of the Ladebug
+     commands.  To display help on a particular command, type help
+     'command' without the quotes.
+
+  -  Choose Help:  On Commands at a debugger window, choose one of the
+     Commands topics, then choose the command name from the list of
+     Additional Topics.
+
+

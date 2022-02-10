@@ -1,0 +1,85 @@
+/*
+ * *****************************************************************
+ * *                                                               *
+ * *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+ * *                                                               *
+ * *   All Rights Reserved.  Unpublished rights  reserved  under   *
+ * *   the copyright laws of the United States.                    *
+ * *                                                               *
+ * *   The software contained on this media  is  proprietary  to   *
+ * *   and  embodies  the  confidential  technology  of  Digital   *
+ * *   Equipment Corporation.  Possession, use,  duplication  or   *
+ * *   dissemination of the software and media is authorized only  *
+ * *   pursuant to a valid written license from Digital Equipment  *
+ * *   Corporation.                                                *
+ * *                                                               *
+ * *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+ * *   by the U.S. Government is subject to restrictions  as  set  *
+ * *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+ * *   or  in  FAR 52.227-19, as applicable.                       *
+ * *                                                               *
+ * *****************************************************************
+ */
+/* 
+ * Mach Operating System
+ * Copyright (c) 1989 Carnegie-Mellon University
+ * Copyright (c) 1988 Carnegie-Mellon University
+ * All rights reserved.  The CMU software License Agreement specifies
+ * the terms and conditions for use and redistribution.
+ */
+/*
+ * HISTORY
+ */
+
+subsystem monitor 2800;
+
+/*
+ * Abstract:
+ *   MiG definitions file for monitor kernel interface.  This file
+ *	is preliminary pending an implementation of monitor ports.
+ *
+ */
+
+#include <mach/std_types.defs>
+#include <mach/mach_types.defs>
+
+type monitor_t = port_t
+#if	KERNEL_SERVER
+		intran: monitor_t convert_port_to_monitor(port_t)
+		outtran: port_t convert_monitor_to_port(monitor_t)
+		destructor: monitor_deallocate(monitor_t)
+#endif	/* KERNEL_SERVER */
+		;
+
+import <mach/kernel_event.h>;
+
+type kern_mon_data_t		= struct[6] of int;
+type kern_mon_buffer_t		= array[*:320] of kern_mon_data_t;
+
+routine	monitor_create(
+		this_task	: task_t;
+	out	new_monitor	: monitor_t; 
+	inout	requested_size	: int);
+
+routine	monitor_terminate(
+		this_monitor	: monitor_t); 
+
+routine	monitor_resume(
+		this_monitor	: monitor_t); 
+
+routine	monitor_suspend(
+		this_monitor	: monitor_t); 
+
+
+routine thread_monitor(
+		this_monitor	: monitor_t;
+		monitor_id	: int;
+		this_thread	: thread_t);
+
+routine thread_unmonitor(
+		this_monitor	: monitor_t;
+		this_thread	: thread_t);
+
+routine monitor_read(
+		this_monitor	: monitor_t;
+	out	buffer		: kern_mon_buffer_t, IsLong);

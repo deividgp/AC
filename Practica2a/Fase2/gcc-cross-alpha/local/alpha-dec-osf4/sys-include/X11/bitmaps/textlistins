@@ -1,0 +1,36 @@
+/*
+ * *****************************************************************
+ * *                                                               *
+ * *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+ * *                                                               *
+ * *   All Rights Reserved.  Unpublished rights  reserved  under   *
+ * *   the copyright laws of the United States.                    *
+ * *                                                               *
+ * *   The software contained on this media  is  proprietary  to   *
+ * *   and  embodies  the  confidential  technology  of  Digital   *
+ * *   Equipment Corporation.  Possession, use,  duplication  or   *
+ * *   dissemination of the software and media is authorized only  *
+ * *   pursuant to a valid written license from Digital Equipment  *
+ * *   Corporation.                                                *
+ * *                                                               *
+ * *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+ * *   by the U.S. Government is subject to restrictions  as  set  *
+ * *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+ * *   or  in  FAR 52.227-19, as applicable.                       *
+ * *                                                               *
+ * *****************************************************************
+ */
+/*
+ * HISTORY
+ */
+
+#define textlistins.xbm_width 20
+#define textlistins.xbm_height 20
+#define textlistins.xbm_x_hot 0
+#define textlistins.xbm_y_hot 0
+static char textlistins.xbm_bits[] = {
+   0xdb, 0xb6, 0x05, 0x01, 0x80, 0x0a, 0x54, 0x01, 0x07, 0xab, 0x82, 0x0d,
+   0x01, 0x80, 0x08, 0xb6, 0x6d, 0x00, 0x55, 0xf5, 0x08, 0xab, 0xea, 0x08,
+   0xda, 0x36, 0x00, 0x01, 0x80, 0x08, 0x55, 0x81, 0x08, 0xaa, 0x02, 0x00,
+   0x01, 0x80, 0x08, 0x01, 0x80, 0x08, 0xaa, 0x0a, 0x00, 0x55, 0x95, 0x08,
+   0x01, 0x80, 0x0d, 0x00, 0x00, 0x07, 0x55, 0xd5, 0x0a, 0xda, 0xb6, 0x0d};

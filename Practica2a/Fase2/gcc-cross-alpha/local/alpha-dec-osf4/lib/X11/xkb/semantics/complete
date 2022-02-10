@@ -1,0 +1,7 @@
+// $XConsortium: complete,v 1.2 94/04/08 15:58:33 erik Exp $
+default xkb_semantics "complete" {
+
+xkb_types		{ include "complete" 	};
+xkb_compatibility	{ include "complete"	};
+
+};

@@ -1,0 +1,1 @@
+#define NSCC 0

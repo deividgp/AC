@@ -1,0 +1,23 @@
+#/* @(#)@(#)help/viewRemF.hlp	2.1 11 May 1993 19:06:38 -  */
+#ident  "@(#)va11:help/viewRemF.hlp   2.1"
+#
+#
+Forms, forms.hlp
+Views, views.hlp
+View Menu, viewM.hlp
+#########################################
+VIEW REMOVE FORM HELP
+
+This form allows you to remove user-created views.  If a user view is
+removed its icons are also removed, but the objects those icons represent
+are unaffected.
+
+The default views (Disks, Volumes, etc.) are not available choices.  These
+views may not be removed by the user.  Views that represent disk groups are
+only removed when that disk group is no longer accessible (after a Disk
+Group Deport operation, for example).
+
+To ensure that a view is not errantly removed, you must click Apply on this
+form twice to continue with the operation.
+
+

@@ -1,0 +1,108 @@
+#/* @(#)@(#)help/ezVcreate.hlp	2.1 11 May 1993 19:04:28 -  */
+#ident  "@(#)va11:help/ezVcreate.hlp   2.1"
+#
+#
+Basic Operations, simpleOps.hlp
+Volume, volume.hlp
+Plex, plex.hlp
+Subdisk, subdisk.hlp
+Logging Subdisk, logSd.hlp
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+#########################################
+BASIC VOLUME CREATE HELP
+
+This form is how you create a volume using basic Logical Storage Manager commands.
+The fields allow you to specify how you want the volume created.
+
+If nothing is selected when this form is popped up then the Logical Storage Manager
+will use its free space management system to allocate the disk space for
+the new volume from the disks registered on the system.  If one or more
+disks are selected, then these disks will be used to provide space for the
+new volume.
+
+If you want to create a mirrored volume then you must select the correct
+number of disks to contain the mirrors before bringing up this form.  For
+example, if you want to create a volume with three plexes (mirrors), then
+select three disks before using the pulldown menu.
+
+Only Logical Storage Manager disks are allowed to be selected for this operation.
+
+
+Fields
+----------
+
+Volume Name:	The name of the volume you are about to create.  The name
+		must be unique within this disk group.  The maximum length
+		of this field is 14 characters.  This field is required.
+
+Layout:		This is the desired layout for the new volume.  The volume
+		may be Mirrored, or it may have Concatenated or Striped
+		plexes.  For more information on these choices see their
+		individual help files.  
+
+Usage Type:	The different types of usage types available on your
+		system.  Typically these types include "gen" and "fsgen".
+		See help on Usage Types for more information.
+
+Volume Size:	This is the desired size for the new volume.  Only valid
+		positive numbers are allowed.  This field is required.
+
+Stripe Width:	Width of the stripes for this volume.  If no unit is
+		specified then the number entered here is assumed to be in
+		sectors.  The default stripe width is 128 sectors.  Only
+		positive numbers greater than zero are accepted.  This field
+		is required. 
+
+Number of Mirrors:  The number of mirrors you want this volume to have.
+		This field is only allowed if you have specified "Mirrored"
+		in the layout field.  If you have selected disks for this
+		operation, then the number of mirrors must correspond to
+		the number of disks selected.
+
+Block Change Logging:  This specifies whether or not you want a Logging
+		Subdisk associated with every plex of this volume.  The
+		log subdisk will be 1 sector long.
+
+Create File System:  This specifies whether or not you want a file system
+		created on this new volume.
+
+FS Type:	If a file system is to be created on the new volume then
+		this field determines what type the new file system will
+		be.
+
+Mount Point:	If this field is specified then the newly created file
+		system will be mounted on your system at this mount point.
+		This field may be left blank to indicate that you do not
+		wish the file system to be mounted.
+
+Mkdir if necessary:  If a mount point is specified then this option
+		determines whether or not to create one or more directories
+		while attempting to mount the file system. 
+
+
+Errors
+----------
+
+"Volume name is required."
+A valid name must be entered in this field for the operation to continue.
+Enter a valid name.
+
+"There's already a component by this name in this disk group."
+The name specified for this volume is not unique within this disk group.
+Enter a different name.
+
+"Bad characters in volume size field."
+The string entered in the Volume size field contains invalid characters.
+Enter a positive number greater than zero in this field.
+
+"Volume size is less than 1"
+Zero or negative numbers are not allowed in the Length field.  Enter a
+valid number.
+
+"Bad characters in Number of Mirrors field."
+The string entered in the Volume size field contains invalid characters.
+Enter a positive number greater than zero in this field.
+
+
+

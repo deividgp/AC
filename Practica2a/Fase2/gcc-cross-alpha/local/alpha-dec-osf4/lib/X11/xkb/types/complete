@@ -1,0 +1,7 @@
+default xkb_types "complete" {
+    include "basic"
+    replace "nocancel"
+    include "mousekeys"
+    include "pc"
+    include "iso9995"
+};

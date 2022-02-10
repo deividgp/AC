@@ -1,0 +1,221 @@
+// **************************************************************
+// *								*
+// * Keymaps for en_US.ISO8859-1 - English for U.S.		*
+// *								*
+// **************************************************************
+
+xkb_keymap "lk201" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk201)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_us(vt105)"		};
+    xkb_geometry	{ description = "Digital US LK201";
+			  include "geometry/digital_lk(lk201)"		};
+};
+
+xkb_keymap "lk401" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_us(vt108)"		};
+    xkb_geometry	{ description = "Digital US LK401";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_us(vt108)"		};
+    xkb_geometry	{ description = "Digital US LK411";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_us(vt108)"		};
+    xkb_geometry	{ description = "Digital US LK461";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk421" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk421)"		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"	        	};
+    xkb_symbols         { include "symbols/digital_us(unix)"		};
+    xkb_geometry	{ description = "Digital US LK421";
+			  include "geometry/digital_unix(unix)"		};
+};
+
+xkb_keymap "lk441" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk443)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_us(lk44x)"		};
+    xkb_geometry	{ description = "Digital US LK441";
+			  include "geometry/digital_pc(pc101)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk443" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk443)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_us(lk44x)"		};
+    xkb_geometry	{ description = "Digital US LK443";
+			  include "geometry/digital_pc(pc101)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk44x" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk443)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_us(lk44x)"		};
+    xkb_geometry	{ description = "Digital US LK443";
+			  include "geometry/digital_pc(pc101)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk450" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk450)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_us(vt108)"		};
+    xkb_geometry	{ description = "Digital US LK450";
+			  include "geometry/digital_lk(lk450)"		};
+};
+
+xkb_keymap "pcxalaa" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_us(pcxalaa)"		};
+    xkb_geometry	{ description = "Digital US PCXAL-AA";
+			  include "geometry/digital_pc(pc101)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxalfa" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_us(pcxalfa)"		};
+    xkb_geometry	{ description = "Digital US PCXAL-FA";
+			  include "geometry/digital_pc(pc101)"
+			  include "geometry/digital_pc(leds_on_keys)"	};
+};
+
+xkb_keymap "pcxalga" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_us(pcxalga)"		};
+    xkb_geometry	{ description = "Digital US PCXAL-GA";
+			  include "geometry/digital_pc(pc101)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxalka" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_us(pcxalka)"		};
+    xkb_geometry	{ description = "Digital US PCXAL-KA";
+			  include "geometry/digital_pc(pc101)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxal" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_us(pcxal)"		};
+    xkb_geometry	{ description = "Digital US PCXAL";
+			  include "geometry/digital_pc(pc101)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471aa" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_us(lk471aa)"		};
+    xkb_geometry	{ description = "Digital US LK471-AA";
+			  include "geometry/digital_pc(pc101)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_us(lk471)"		};
+    xkb_geometry	{ description = "Digital US LK471";
+			  include "geometry/digital_pc(pc101)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97wa2" {
+    // Like the lk471, except for the geometry and the description.
+    // Since the 3 Windows keys are no-ops, we use the pc101 keycodes.
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_us(lk471)"		};
+    xkb_geometry	{ description = "Digital US LK971W-A2";
+			  include "geometry/digital_pc(pc104)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97waa" {
+    // Like the lk471, except for the geometry and the description.
+    // Since the 3 Windows keys are no-ops, we use the pc101 keycodes.
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_us(lk471aa)"	};
+    xkb_geometry	{ description = "Digital US LK97W-AA";
+			  include "geometry/digital_pc(pc104)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97w" {
+    // Like the lk471, except for the geometry and the description.
+    // Since the 3 Windows keys are no-ops, we use the pc101 keycodes.
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_us(lk471)"		};
+    xkb_geometry	{ description = "Digital US LK97W";
+			  include "geometry/digital_pc(pc104)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "natural" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc104)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_us(pc104)"		};
+    xkb_geometry	{ include "geometry/microsoft"			};
+};
+
+xkb_keymap "pcxal-dvorak" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_us(pcxal_dvorak)"	};
+    xkb_geometry	{ description = "Digital US PCXAL Dvorak";
+			  include "geometry/digital_pc(pc101)"
+			  include "geometry/digital_pc(leds_on_keys)"	};
+};
+
+xkb_keymap "natural-dvorak" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc104)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_us(pc104_dvorak)"	};
+    xkb_geometry	{ include "geometry/microsoft"			};
+};

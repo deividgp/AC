@@ -1,0 +1,79 @@
+#/* @(#)@(#)help/fsOps.hlp	2.1 11 May 1993 19:04:52 -  */
+#ident  "@(#)va11:help/fsOps.hlp   2.1"
+#
+#
+Disk Group, diskGrp.hlp
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+Basic Volume Create Form, ezVcreate.hlp
+File System Make Form, fsMake.hlp
+File System Mount Form, fsMount.hlp
+File System Check Form, fsFsck.hlp
+File System Snapshot Menu, fsSnap.hlp
+File System Properties Form, fsMenu.hlp
+#########################################
+FILE SYSTEM OPERATIONS HELP
+
+This pulldown menu lets you perform various creation and maintenance
+operations on file systems.
+
+These operations are done by executing system file system commands
+directly, without knowledge of the Logical Storage Manager.  
+
+The Visual Administrator updates /etc/fstab (file system table) when
+appropriate to maintain consistency.
+
+
+Create
+------
+Create a file system on a Logical Storage Manager disk by creating a volume on 
+that disk and creating a file system on that volume.  You select the type of
+volume you wish to create from a cascade menu listing the basic types of
+volumes: striped or simple.
+
+The disk(s) you select will be used to supply the free space for the
+volume.  If you wish to create a mirrored volume, you must first create a
+volume (simple or striped) with only one mirror (plex), and then add
+another mirror to it using the Add Mirror command.
+
+In order to create a disk for striping you may select at least two disks to
+stripe across if you want a striped volume.  See help on Striping for more
+information.
+
+If you do not specify any Logical Storage Manager disks, the Logical Storage 
+Manager chooses what free space to use on its own.  See help on the Basic Volume 
+Create Form for more information.
+
+Make File System
+----------------
+Make a file system from an existing volume.  The operation is not allowed
+for volume that already contains a valid file system.
+
+Mount
+-----
+Mount the file system that resides on the selected volume.  This operation
+assumes that the selected volume already contains a valid file system.  A
+form is brought up where you specify options to use for the mount
+operation, including the mount point.
+
+Unmount
+-------
+Unmount the file system that resides on the selected volume.  No checking
+is done to see if the unmount operation will be successful, i.e. if the
+mount point is currently busy, the unmount operation will fail.
+
+Check File System (fsck)
+------------------------
+This operation checks the file system on a selected volume for possible
+corruption.  One and only one volume icon must be selected for this
+operation.  The selected volume must contain a file system, but this file
+system cannot be currently mounted.  A form is popped up where you may
+specify the file system type, see help on the File System Check form for
+more information.
+
+Display Properties
+------------------
+Display information for file systems mounted on the system.  The user
+chooses which file system to display information on from a list of all
+mounted file systems.  If a volume is selected, then the properties for
+the file system that resides on that volume is displayed by default.

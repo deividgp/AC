@@ -1,0 +1,10 @@
+! 
+! DECwindows Diff
+! 
+! Copyright © Digital Equipment Corporation. 1989,1994. All rights reserved.
+! 
+*dxdiff*textdisplay*fontList:		fixed
+*dxdiff*displayLineNumbers:		True
+*dxdiff*drawDiffsAsLines:		False
+*dxdiff*displaymenu*borderWidth:	1
+*dxdiffmaindisplay.DXmfitToScreenPolicy:	AS_NEEDED

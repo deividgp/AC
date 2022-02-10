@@ -1,0 +1,76 @@
+# 
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+#
+# HISTORY
+# 
+# @(#)$RCSfile: disk.repl.help,v $ $Revision: 1.1.2.3 $ (DEC) $Date: 1993/11/16 18:32:11 $
+# 
+# @(#)src/common/cmd/vxvm/voladm/disk.repl.help	5.4 16 Mar 1993 01:19:55 - Copyright (c) 1993 VERITAS Software Corp.
+#ident	"@(#)vxvm:common/cmd/vxvm/voladm/disk.repl.help	5.4"
+#
+# Copyright(C)1993 VERITAS Software Corporation.  ALL RIGHTS RESERVED.
+# UNPUBLISHED -- RIGHTS RESERVED UNDER THE COPYRIGHT
+# LAWS OF THE UNITED STATES.  USE OF A COPYRIGHT NOTICE
+# IS PRECAUTIONARY ONLY AND DOES NOT IMPLY PUBLICATION
+# OR DISCLOSURE.
+# 
+# THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION AND
+# TRADE SECRETS OF VERITAS SOFTWARE.  USE, DISCLOSURE,
+# OR REPRODUCTION IS PROHIBITED WITHOUT THE PRIOR
+# EXPRESS WRITTEN PERMISSION OF VERITAS SOFTWARE.
+# 
+#               RESTRICTED RIGHTS LEGEND
+# USE, DUPLICATION, OR DISCLOSURE BY THE GOVERNMENT IS
+# SUBJECT TO RESTRICTIONS AS SET FORTH IN SUBPARAGRAPH
+# (C) (1) (ii) OF THE RIGHTS IN TECHNICAL DATA AND
+# COMPUTER SOFTWARE CLAUSE AT DFARS 252.227-7013.
+#               VERITAS SOFTWARE
+# 4800 GREAT AMERICA PARKWAY, SANTA CLARA, CA 95054
+#
+  This operation can be used to replace a disk that failed during use,
+  or that you removed using the "Remove a disk for replacement" menu
+  operation.  Disks can fail either because the physical disk was
+  removed from the system, or because some set of failures have made
+  the disk unusable.
+
+  This operation takes as input a disk name.  If that disk name is
+  used by more than one disk group, you will also be asked to choose
+  the disk group.  You will also be asked for a physical disk to use
+  as a replacement, by disk device name.  You can select any physical
+  disk that is not currently added to a disk group.  The physical disk
+  will be checked for suitability and you may be asked whether it is
+  reasonable to use it.
+
+  Mirrors of volumes are recovered, if possible, as part of the
+  operation.  If all mirrors of some volumes require recovery, you may
+  have to restore those volumes from a backup.  To restore a volume
+  from a backup, start it with:
+
+	volume [-g <diskgroup>] -f start <volume-name>
+
+  then restore the volume from tape onto the block device:
+
+	/dev/vol/<diskgroup>/<volume-name>>
+
+  or the raw device:
+
+	/dev/vol/<diskgroup>/<volume-name>>

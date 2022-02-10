@@ -1,0 +1,7 @@
+! 
+! DECwindows PrintScreen
+! 
+! Copyright © Digital Equipment Corporation. 1989,1994. All rights reserved.
+! 
+*menubar*tearOffModel:	XmTEAR_OFF_ENABLED
+*MainWindow.DXmfitToScreenPolicy:  AS_NEEDED

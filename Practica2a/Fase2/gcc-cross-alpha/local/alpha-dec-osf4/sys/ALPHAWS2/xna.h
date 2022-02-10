@@ -1,0 +1,1 @@
+#define NXNA 0

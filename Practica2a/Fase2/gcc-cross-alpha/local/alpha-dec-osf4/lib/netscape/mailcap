@@ -1,0 +1,2 @@
+image/x-xpixmap; /usr/dt/bin/dticon -file %s
+application/x-duaction; duaction %s

@@ -1,0 +1,10 @@
+#/* @(#)@(#)help/fsSnap.hlp	2.1 11 May 1993 19:04:57 -  */
+#ident  "@(#)va11:help/fsSnap.hlp   2.1"
+#
+#
+Volume Snapshot, ezSnapshot.hlp
+File System Snapshot Create, fsSnapCrt.hlp
+#########################################
+FILE SYSTEM SNAPSHOT HELP
+
+This operation is not supported on UFS. 

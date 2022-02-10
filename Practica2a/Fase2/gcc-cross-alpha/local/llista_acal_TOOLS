@@ -1,0 +1,13 @@
+libexec/gcc/alpha-dec-osf4/3.4.6/install-tools/mkheaders
+alpha-dec-osf4/sys-include/COPIED
+alpha-dec-osf4/bin/as
+alpha-dec-osf4/lib/COPIED
+alpha-dec-osf4/lib/ldscripts/alpha.xr
+alpha-dec-osf4/lib/ldscripts/alpha.x
+alpha-dec-osf4/lib/ldscripts/alpha.xu
+alpha-dec-osf4/lib/ldscripts/alpha.xbn
+alpha-dec-osf4/lib/ldscripts/alpha.xn
+alpha-dec-osf4/lib/libg2c.la
+bin/alpha-dec-osf4-gccbug
+bin/alpha-dec-osf4-as
+lib/gcc/alpha-dec-osf4/3.4.6/install-tools/mkheaders.conf

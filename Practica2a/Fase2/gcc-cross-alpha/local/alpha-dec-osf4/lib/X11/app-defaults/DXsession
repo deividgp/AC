@@ -1,0 +1,166 @@
+! DECwindows Session Manager
+! 
+! Copyright © Digital Equipment Corporation. 1989,1995. All rights reserved.
+! 
+
+*PointerShape.x:				185
+*PointerShape.y:				57
+*PointerShape.visibleItemsCount:		6
+!
+!  Session Manager Applications Menu
+!
+! "*applications" specifies the items in the Application Definitions dialog box
+*applications:  AccessX,Bookreader,CDA Viewer,Calculator,Calendar,Cardfiler,Clock,DECterm,Mail,Notepad,Paint,Differences,XTerm,Mwm,Print Screen,Account Manager,Archiver,Audit Manager,Display Window,File Sharing,Host Manager,Kernel Tuner,License Manager,Power Management,Process Tuner,Shutdown,System Information,Mail Configuration,Disk Configuration,Network Configuration,BIND Configuration,NIS Setup,NFS Configuration,Print Configuration,Who,Input-Output Statistics,Network Statistics,System Messages,Virtual Memory Statistics,SysMan Configuration Checklist
+*AccessX.command:	/usr/bin/X11/accessx
+*Bookreader.command:	/usr/bin/X11/dxbook
+*CDA Viewer.command:	/usr/bin/X11/dxvdoc
+*Calculator.command:	/usr/bin/X11/dxcalc
+*Calendar.command:	/usr/bin/X11/dxcalendar
+*Cardfiler.command:	/usr/bin/X11/dxcardfiler
+*Clock.command:  	/usr/bin/X11/dxclock
+*DECterm.command:	/usr/bin/X11/dxterm -ls
+*Mail.command:		/usr/bin/X11/dxmail
+*Notepad.command:	/usr/bin/X11/dxnotepad
+*Paint.command:		/usr/bin/X11/dxpaint	
+*Differences.command:	/usr/bin/X11/dxdiff
+*XTerm.command:		/usr/bin/X11/xterm -ls
+*Print Screen.command:	/usr/bin/X11/dxprint -X
+*Mwm.command: /usr/bin/X11/mwm -multiscreen
+
+! System management applications, added for Digital Unix 4.0. <joeh>
+*Account Manager.command:       /usr/sbin/dop -n dxaccounts
+*Archiver.command:              /usr/sbin/dop -n dxarchiver
+*Audit Manager.command:		/usr/sbin/dop /usr/tcb/bin/dxaudit
+*Display Window.command:	/usr/bin/X11/dxdw
+*File Sharing.command:		/usr/sbin/dop -n /usr/bin/X11/dxfileshare
+*Host Manager.command:		/usr/bin/X11/dxhosts
+*Kernel Tuner.command:		/usr/sbin/dop /usr/bin/X11/dxkerneltuner
+*License Manager.command:	/usr/sbin/dop /usr/bin/X11/dxlicenses
+*Power Management.command:	/usr/sbin/dop -n dxpower
+*Process Tuner.command:		/usr/sbin/dop -n /usr/bin/X11/dxproctuner
+*Shutdown.command:		/usr/sbin/dop /usr/bin/X11/dxshutdown
+*System Information.command:	/usr/bin/X11/dxsysinfo
+*Mail Configuration.command:	/usr/sbin/dop mailconfig
+*Disk Configuration.command:	/usr/sbin/dop diskconfig
+*Network Configuration.command:	/usr/sbin/dop netconfig
+*BIND Configuration.command:	/usr/sbin/dop bindconfig
+*NIS Setup.command:		/usr/sbin/dop nissetup
+*NFS Configuration.command:	/usr/sbin/dop nfsconfig
+*Print Configuration.command:	/usr/sbin/dop printconfig
+*Who.command:			/usr/bin/X11/dxdw -c "/usr/bin/w"
+*Input-Output Statistics.command:	/usr/bin/X11/dxdw -c "/usr/bin/iostat 1 15"
+*Network Statistics.command:	/usr/bin/X11/dxdw -c /usr/sbin/netstat
+*System Messages.command:	/usr/sbin/dop /usr/bin/X11/dxdw -c "/usr/bin/tail -f /var/adm/messages"
+*Virtual Memory Statistics.command:	/usr/bin/X11/dxdw -c "/usr/bin/vmstat"
+*SysMan Configuration Checklist.command:	/usr/sbin/dop checklist
+! End of System management applications, added as of Digital Unix 4.0.
+
+*bell_percent: 50
+*bell_enable: enable
+*keyclick_enable: enable
+*keyclick_percent: 50
+*autorepeat_mode: enable
+*lock_state: caps
+*hold_screen_key: F1
+*operator_window_key: F2
+*operator_modifier_key: ctrl
+*screen_saver_enable: enable
+*screen_saver_period: 10
+*pointer_button_order: right
+*mouse_accel_numerator: 7
+*mouse_accel_denominator: 1
+*mouse_accel_threshold: 3
+*pointer_shape:	0
+*doubleClickDelay: 250
+*multiClickTime: 250
+*message_region_text: Messages
+*message_history_size: 50
+*message_size_height: 200
+*message_size_width: 600
+*startup_state: mapped
+*create_terminal: 1
+*create_vue: 0
+*confirm_endsession: 1
+*host_list:		0  	
+*num_hosts:		0
+! XDM will set this to the proper default
+!*keyboard_dialect:	System Default
+*WmIconForm.IconStyle:		1
+!
+! "*AppMenu" specifies the items in the Applications pulldown menu
+! Keep the num_AppMenu value in sync with the number of menu items specified
+*AppMenu:	AccessX,Bookreader,CDA Viewer,Calculator,Calendar,Cardfiler,Clock,DECterm,Mail,Notepad,Paint,Differences,XTerm,Print Screen
+*num_AppMenu:	14
+sm.x:	10
+sm.y:	95
+*pauseSession: /usr/bin/X11/dxpause
+*pause_text:	Type your password to resume the session
+!
+! When the resource windowManagerName has the value "System Default", the 
+! value of the resource windowManagerName_default is used to start
+! the default window manager. This resource must be the full 
+! pathname for the window manager (e.g. /usr/bin/X11/mwm).
+*windowManagerName_default:  /usr/bin/X11/mwm
+*windowManagerName: System Default
+
+*decw_print_widget*options_button.sensitive: false
+
+*rootPasswd: false
+*pauseSaver: 10
+
+!
+! Entries in the Language dialog box alphabetized by language name
+DXsession.languages: \
+Null'',\
+Default'Default',\
+ca_ES.ISO8859-1'Catalan',\
+zh_CN'Chinese China',\
+zh_CN.dechanzi'Chinese China (DEC Hanzi)',\
+zh_HK.big5'Chinese Hong Kong (Big 5)',\
+zh_HK.eucTW'Chinese Hong Kong (EUC Taiwan)',\
+zh_HK.dechanyu'Chinese Hong Kong (DEC Hanyu)',\
+zh_HK.dechanzi'Chinese Hong Kong (DEC Hanzi)',\
+zh_TW'Chinese Taiwan',\
+zh_TW.big5'Chinese Taiwan (Big5)',\
+zh_TW.dechanyu'Chinese Taiwan (DEC Hanyu)',\
+zh_TW.eucTW'Chinese Taiwan (EUC)',\
+cs_CZ.ISO8859-2'Czech',\
+da_DK.ISO8859-1'Danish',\
+nl_NL.ISO8859-1'Dutch',\
+nl_BE.ISO8859-1'Dutch Belgian',\
+en_GB.ISO8859-1'English (Great Britian)',\
+en_US.ISO8859-1'English (United States)',\
+fi_FI.ISO8859-1'Finnish',\
+fr_FR.ISO8859-1'French',\
+fr_CA.ISO8859-1'French-Canadian',\
+fr_BE.ISO8859-1'French-Belgian',\
+de_DE.ISO8859-1'German',\
+el_GR.ISO8859-7'Greek',\
+iw_IL.ISO8859-8'Hebrew',\
+hu_HU.ISO8859-2'Hungarian',\
+is_IS.ISO8859-1'Icelandic',\
+it_IT.ISO8859-1'Italian',\
+ja_JP'Japanese',\
+ja_JP.deckanji'Japanese (DEC Kanji)',\
+ja_JP.eucJP'Japanese (EUC)',\
+ja_JP.sdeckanji'Japanese (Super DEC Kanji)',\
+ja_JP.SJIS'Japanese (Shift JIS)',\
+ko_KR'Korean',\
+ko_KR.deckorean'Korean (DEC Korean)',\
+ko_KR.eucKR'Korean (EUC)',\
+lt_LT.ISO8859-4'Lithuanian',\
+no_NO.ISO8859-1'Norwegian',\
+pl_PL.ISO8859-2'Polish',\
+pt_PT.ISO8859-1'Portugese',\
+ru_RU.ISO8859-5'Russian',\
+sk_SK.ISO8859-2'Slovak',\
+sl_SI.ISO8859-2'Slovene',\
+es_ES.ISO8859-1'Spanish',\
+sv_SE.ISO8859-1'Swedish',\
+fr_CH.ISO8859-1'Swiss-french',\
+de_CH.ISO8859-1'Swiss-German',\
+th_TH'Thai',\
+th_TH.TACTIS'Thai (TACTIS)',\
+tr_TR.ISO8859-9'Turkish'
+!
+*DXmfitToScreenPolicy:  AS_NEEDED

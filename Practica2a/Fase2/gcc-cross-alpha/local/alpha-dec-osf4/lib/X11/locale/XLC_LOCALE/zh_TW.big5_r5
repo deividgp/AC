@@ -1,0 +1,67 @@
+# Locale : zh_TW.big5_r5 
+# Locale database for R5's zh_TW.big5 in R6's format.
+#
+# Purpose : Backward compatibility in CT exchange  
+# 
+# 	XLC_FONTSET category
+# 
+XLC_FONTSET
+# 	fs0 class (7 bit ASCII)
+fs0	{
+	charset		ISO8859-1
+	font		ISO8859-1:GL
+}
+# 	fs1 class
+fs1	{
+	charset		BIG5-0;BIG5.HKU-0
+	font		BIG5-0:GLGR;BIG5.HKU-0:GLGR
+}
+# 	fs2 class
+fs2	{
+	charset		BIG5-UDC;BIG5.HKU-UDC
+	font		BIG5-UDC:GLGR;BIG5.HKU-UDC:GLGR
+} 
+ 
+END XLC_FONTSET
+
+# 
+# 	XLC_XLOCALE category
+# 
+XLC_XLOCALE
+
+encoding_name		big5
+mb_cur_max		4
+state_depend_encoding	False
+wc_encoding_mask	\x3fffc000
+wc_shift_bits		7
+use_stdc_env		True
+force_convert_to_mb	True
+
+# 	cs0 class
+cs0	{
+	side		GL:Default
+	length		1
+	wc_encoding	\x00000000
+	ct_encoding	ISO8859-1:GL
+}
+
+# 	cs1 class	
+cs1	{
+	side		GLGR:Default
+	length		2
+	wc_encoding	\x30000000
+	ct_encoding	BIG5-0;BIG5.HKU-0
+	region		A1A1-F9FE;A140-F97E
+}
+
+#	cs2 class 	
+cs2	{
+	side		GLGR
+	length		2
+	wc_encoding	\0x0000000
+	ct_encoding	BIG5-UDC;BIG5.HKU-UDC
+	region		8140-A07E;81A1-A0FE;FA40-FE7E;FAA1-FEFE
+} 
+# 
+
+END XLC_XLOCALE

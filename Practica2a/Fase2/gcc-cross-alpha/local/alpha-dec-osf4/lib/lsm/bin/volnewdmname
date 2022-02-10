@@ -1,0 +1,86 @@
+#!/sbin/sh -
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+# @(#)$RCSfile: volnewdmname.sh,v $ $Revision: 1.1.7.4 $ (DEC) $Date: 1995/08/01 19:59:10 $
+# @(#)src/common/cmd/vxvm/support/volnewdmname.sh	5.4 16 Mar 1993 01:17:50 - Copyright (c) 1993 VERITAS Software Corp.
+#ident	"@(#)vxvm:common/cmd/vxvm/support/volnewdmname.sh	5.4"
+
+
+DSPMSG="/sbin/lsm.d/bin/dspmsg -s 1 lsm_sh.cat"
+
+. ${VOLBIN:=/sbin/lsm.d/bin}/volcommon
+VOLUSRBIN=${VOLUSRBIN-/usr/lib/lsm/bin}
+
+usage()
+{
+	$DSPMSG 1100 "Usage: volnewdmname diskgroup\n" >&2
+}
+
+    if [ $# -ne 1 ]; then
+	usage
+	exit 1
+    fi
+    tmp_args=$*
+    set -- `getopt : $*`
+    if [ $? != 0 ]
+    then
+	usage
+        exit 1
+    fi
+    while [ $1 != '--' ]
+    do
+        case $1 in
+	?)	usage; exit 1;;
+        esac
+        shift
+    done
+    shift
+    set $tmp_args
+
+if [ $# -ne 1 ]
+then
+	usage
+	quit 1
+fi
+
+
+/sbin/voldg list rootdg > /dev/null 2>/dev/null
+ret=$?
+if [ $ret = 0 ]; 
+then
+	volprint -AQn >> $tmpfile1 || quit $?
+fi
+if [ -f "$reconfigfile" ] && [ -f "$pcapfile" ]
+then
+	exec 3<&0 < $pcaplist
+	while read disk
+	do
+		dmfile=$DISKDIR/$disk/dmname
+		[ -f "$dmfile" ] && cat $dmfile >> $tmpfile1
+	done
+	exec 0<&3 3<&-
+fi
+
+
+if [ -s $tmpfile1 ]; then
+	${VOLUSRBIN}/volparms -n "$1" < $tmpfile1
+fi
+quit $?

@@ -1,0 +1,122 @@
+!
+! This is an `xmodmap' input file for the LK444 keyboard.
+! keymake automatically generated this file
+!
+keycode 85 =	Escape 
+keycode 86 =	F1 
+keycode 87 =	F2 
+keycode 88 =	F3 
+keycode 89 =	F4 
+keycode 90 =	F5 
+keycode 100 =	F6 
+keycode 101 =	F7 
+keycode 102 =	F8 
+keycode 103 =	F9 
+keycode 104 =	F10 
+keycode 113 =	F11 
+keycode 114 =	F12 
+keycode 115 =	Print Sys_Req 
+keycode 116 =	Scroll_Lock 
+keycode 124 =	Pause Break 
+keycode 138 =	Insert 
+keycode 139 =	Home 
+keycode 140 =	Prior 
+keycode 141 =	Delete 
+keycode 142 =	End 
+keycode 143 =	Next 
+keycode 146 =	KP_Insert KP_0 
+keycode 148 =	KP_Delete KP_Decimal 
+keycode 149 =	KP_Enter 
+keycode 150 =	KP_End KP_1 
+keycode 151 =	KP_Down KP_2 
+keycode 152 =	KP_Next KP_3 
+keycode 153 =	KP_Left KP_4 
+keycode 154 =	KP_5 
+keycode 155 =	KP_Right KP_6 
+keycode 156 =	KP_Add 
+keycode 157 =	KP_Home KP_7 
+keycode 158 =	KP_Up KP_8 
+keycode 159 =	KP_Prior KP_9 
+keycode 161 =	Num_Lock 
+keycode 162 =	KP_Divide 
+keycode 163 =	KP_Multiply 
+keycode 164 =	KP_Subtract 
+keycode 167 =	Left 
+keycode 168 =	Right 
+keycode 169 =	Down 
+keycode 170 =	Up 
+keycode 171 =	Shift_R 
+keycode 172 =	Alt_L Meta_L 
+keycode 173 =	Control_R 
+keycode 174 =	Shift_L 
+keycode 175 =	Control_L 
+keycode 176 =	Caps_Lock 
+keycode 178 =	Mode_switch 
+keycode 188 =	BackSpace 
+keycode 189 =	Return 
+keycode 190 =	Tab 
+keycode 191 =	twosuperior threesuperior twosuperior threesuperior 
+keycode 192 =	ampersand 1 bar 
+keycode 193 =	A 
+keycode 194 =	Q 
+keycode 195 =	W 
+keycode 197 =	Eacute 2 at 
+keycode 198 =	Z 
+keycode 199 =	S 
+keycode 200 =	X 
+keycode 201 =	less greater backslash 
+keycode 203 =	quotedbl 3 numbersign 
+keycode 204 =	E 
+keycode 205 =	D 
+keycode 206 =	C 
+keycode 208 =	apostrophe 4 
+keycode 209 =	R 
+keycode 210 =	F 
+keycode 211 =	V 
+keycode 212 =	space 
+keycode 214 =	parenleft 5 
+keycode 215 =	T 
+keycode 216 =	G 
+keycode 217 =	B 
+keycode 219 =	section 6 asciicircum 
+keycode 220 =	Y 
+keycode 221 =	H 
+keycode 222 =	N 
+keycode 224 =	Egrave 7 
+keycode 225 =	U 
+keycode 226 =	J 
+keycode 227 =	comma question 
+keycode 229 =	exclam 8 
+keycode 230 =	I 
+keycode 231 =	K 
+keycode 232 =	semicolon period 
+keycode 234 =	Ccedilla 9 braceleft 
+keycode 235 =	O 
+keycode 236 =	L 
+keycode 237 =	colon slash 
+keycode 239 =	Agrave 0 braceright 
+keycode 240 =	P 
+keycode 242 =	M 
+keycode 243 =	equal plus asciitilde 
+keycode 245 =	minus underscore 
+keycode 246 =	dollar asterisk bracketright 
+keycode 247 =	mu sterling grave 
+keycode 249 =	parenright degree 
+keycode 250 =	asciicircum diaeresis bracketleft 
+keycode 251 =	Ugrave percent acute 
+
+clear Shift
+clear Lock
+clear Control
+clear Mod1
+clear Mod2
+clear Mod3
+clear Mod4
+clear Mod5
+
+add Shift	 = Shift_L Shift_R
+add Lock	 = Caps_Lock
+add Control	 = Control_L Control_R
+add Mod1	= Alt_L 
+add Mod3	= Mode_switch 
+add Mod4	= Num_Lock 

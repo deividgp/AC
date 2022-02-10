@@ -1,0 +1,92 @@
+#!/sbin/sh
+# 
+# generic mrg.sh
+#
+#  Copyright (c) Digital Equipment Corporation, 1994
+#  All Rights Reserved.  Unpublished rights reserved
+#  under the copyright laws of the United States.
+#  
+#  The software contained on this media is proprietary
+#  to and embodies the confidential technology of 
+#  Digital Equipment Corporation.  Possession, use,
+#  duplication or dissemination of the software and
+#  media is authorized only pursuant to a valid written
+#  license from Digital Equipment Corporation.
+#
+#  RESTRICTED RIGHTS LEGEND   Use, duplication, or 
+#  disclosure by the U.S. Government is subject to
+#  restrictions as set forth in Subparagraph (c)(1)(ii)
+#  of DFARS 252.227-7013, or in FAR 52.227-19, as
+#  applicable.
+#
+#
+# MODULE:
+#	mrg.sh
+#
+# ABSTRACT:
+#	Gold merge template.
+#
+# NOTES:
+#	Replaces the old configured file and .proto file (ie. the sterling
+#	files) with the Gold version.  This is required because of a
+#	screwup in updateinstalls from maint to sterling.
+#
+# REVISION HISTORY:
+# bryan	4/27/94
+#	Fixed update problems in all merge scripts.
+#
+# joeh 11/10/94
+#      Reverted to 3-way merge for Gold-to-Platinum upgrade install.
+#
+# 31-AUG-1995
+#      Fixed OOTB_BUGS 550 by Jing-Ying Chen.  n:dw note 4300,ui poor accel choice?
+#      Merged the XmNaccelerator and XmNacceleratorText resources to 
+#      the resource file.
+#
+# 13-OCT-1995
+#      Fixed OOTB_BUG 1355 by Trang Ngo.  Ref: DECW-SSB 01346: add *DXmfitToScreenPolicy to the resource file.
+#      Merged the *DXmfitToScreenPolicy resource.
+# 
+
+MERGE_ROUTINE=
+
+SHELL_LIB=${SHELL_LIB:-/usr/share/lib/shell}
+. $SHELL_LIB/libmrg
+
+# define your merge routine here. 
+
+# OPTIONAL: for 3-way merge, make MRG_SetCheck calls here.
+
+ MRG_SetCheck "CardfilerCard*deletecard.acceleratorText"
+ MRG_SetCheck "CardfilerCard*deletecard.accelerator"
+ MRG_SetCheck "CardfilerCard*cardfindnext.acceleratorText"
+ MRG_SetCheck "CardfilerCard*cardfindnext.accelerator"
+ MRG_SetCheck "CardfilerCard*readbitmapfile.acceleratorText"
+ MRG_SetCheck "CardfilerCard*readbitmapfile.accelerator"
+ MRG_SetCheck "CardfilerCard*pulldown_close.acceleratorText"
+ MRG_SetCheck "CardfilerCard*pulldown_close.accelerator"
+ MRG_SetCheck "CardfilerCard*undo.acceleratorText"
+ MRG_SetCheck "CardfilerCard*undo.accelerator"
+ MRG_SetCheck "CardfilerCard*cut.acceleratorText"
+ MRG_SetCheck "CardfilerCard*cut.accelerator"
+ MRG_SetCheck "CardfilerCard*copy.acceleratorText"
+ MRG_SetCheck "CardfilerCard*copy.accelerator"
+ MRG_SetCheck "CardfilerCard*paste.acceleratorText"
+ MRG_SetCheck "CardfilerCard*paste.accelerator"
+ MRG_SetCheck "CardfilerCard*card_newcard.acceleratorText"
+ MRG_SetCheck "CardfilerCard*card_newcard.accelerator"
+ MRG_SetCheck "CardfilerCard*rename.acceleratorText"
+ MRG_SetCheck "CardfilerCard*rename.accelerator"
+ MRG_SetCheck "CardfilerCard*pulldown_previous.acceleratorText"
+ MRG_SetCheck "CardfilerCard*pulldown_previous.accelerator"
+ MRG_SetCheck "CardfilerCard*pulldown_next.acceleratorText"
+ MRG_SetCheck "CardfilerCard*pulldown_next.accelerator"
+ MRG_SetCheck "Cardfiler*indexfindnext.acceleratorText"
+ MRG_SetCheck "Cardfiler*indexfindnext.accelerator"
+ MRG_SetCheck "Cardfiler*newcard.acceleratorText"
+ MRG_SetCheck "Cardfiler*newcard.accelerator"
+ MRG_SetCheck "*DXmfitToScreenPolicy"
+
+[ "$CHECK_SYNTAX" ] || MRG_Merge "$@" 
+
+

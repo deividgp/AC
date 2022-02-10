@@ -1,0 +1,32 @@
+#/* @(#)@(#)help/dgInit.hlp	2.1 11 May 1993 19:04:07 -  */
+#ident  "@(#)va11:help/dgInit.hlp   2.1"
+#
+#
+Disk Group, diskGrp.hlp
+Disk Group Import, dgImport.hlp
+Disk Group Deport, dgDeport.hlp
+#########################################
+DISK GROUP INITIALIZE FORM HELP
+
+This form specifies the name of the disk group you want to initialize
+(create).
+
+
+Fields
+----------
+
+Disk group:
+	The name of the new disk group.  This must be a valid disk group
+	name that isn't already being used by another LSM entity.
+
+
+Errors
+----------
+
+"The disk group exists already"
+The specified name for the disk group is already used on this system.
+Specify a unique name.
+
+"Disk group name is required"
+A valid name for the disk group must be specified.  Enter a valid disk
+group name in the field.

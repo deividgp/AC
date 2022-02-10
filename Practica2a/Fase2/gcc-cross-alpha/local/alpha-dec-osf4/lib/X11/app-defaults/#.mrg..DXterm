@@ -1,0 +1,49 @@
+#!/sbin/sh
+# 
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+#
+
+MERGE_ROUTINE=DXterm_merge
+
+SHELL_LIB=${SHELL_LIB:-/usr/share/lib/shell}
+. $SHELL_LIB/libmrg
+
+# define your merge routine here. 
+
+DXterm_merge()
+{
+	S1="DXterm.main.terminal.littleFontSetName: -*-terminal-medium-*-*-*-*-140-*-*-*-*-iso8859-1"
+
+	grep -q "$S1" $_FILE &&
+        {
+                MRG_Echo "removing DXterm.main.terminal.littleFontSetName"
+                grep -v "$S1" $_FILE > /tmp/$_FILE
+                mv /tmp/$_FILE $_FILE
+        }
+
+	return 0
+}
+
+# OPTIONAL: for 3-way merge, make MRG_SetCheck calls here.
+
+[ "$CHECK_SYNTAX" ] || MRG_Merge "$@" 
+

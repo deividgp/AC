@@ -1,0 +1,37 @@
+#/* @(#)@(#)help/fsMount.hlp	2.1 11 May 1993 19:04:49 -  */
+#ident  "@(#)va11:help/fsMount.hlp   2.1"
+#
+#
+#########################################
+FILE SYSTEM MOUNT FORM HELP
+
+This operation takes a selected volume and mounts the file system that
+resides on it.  This operation assumes that the specified volume (as
+specified by a block device) contains a valid file system.  A volume must
+be selected for this operation.
+
+/etc/fstab (file system table) is updated by the Visual Administrator upon
+successful completion of this operation.
+
+
+Fields
+----------
+
+Device:
+	The block device of the volume that you selected.  This field may
+	be changed to specify another block device. 
+
+FS type:
+	The type of file system you are attempting to mount.  If this field
+	isn't correct for the file system for the specified device, the
+	mount will be unsuccessful. 
+
+Mount point:	
+	The desired mount point of this file system.  If a relative path
+	name is specified (not beginning with "/") then the name will be
+	relative to the directory you were using when you started up the
+	Visual Administrator.  If the path you specify as a mount point did
+	not previously exist, it will be created for you.
+
+R/W policy:
+	The read/write policy of this file system.

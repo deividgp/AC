@@ -1,0 +1,1 @@
+#define NMSCP 0

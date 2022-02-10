@@ -1,0 +1,1 @@
+#define SNMPINFO 1

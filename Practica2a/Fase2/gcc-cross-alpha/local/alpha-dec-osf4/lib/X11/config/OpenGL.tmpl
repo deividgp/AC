@@ -1,0 +1,425 @@
+/*
+ * @DEC_COPYRIGHT@
+ */
+/*
+ * HISTORY
+ * $Log: OpenGL.tmpl,v $
+ * Revision 1.1.2.13  1997/02/17  21:06:06  devbld_mlo
+ * 	If neither OpenGLV10 or OpenGLV11 is defined, add a default
+ * 	definition of OpenGLV10.
+ * 	[1997/01/16  19:36:53  Ben_Lipchak]
+ *
+ * Revision 1.1.2.12  1996/12/05  14:06:09  Andy_Vesper
+ * 	Define EXTRA_DEFINES as -DDEC
+ * 	Change the UseInstalled locations of libs tk, aux, font and rgb
+ * 	Change the UseInstalled location of libglut
+ * 	Define USRSHLIBDIR as /usr/shlib
+ * 	[1996/12/05  14:00:35  Andy_Vesper]
+ * 
+ * Revision 1.1.2.11  1995/11/14  17:56:00  Andy_Vesper
+ * 	Fix directory tree for libglut
+ * 	[1995/11/14  17:49:20  Andy_Vesper]
+ * 
+ * 	Force GLInclude and GLUTInclude to reference $(TOP)/GL
+ * 	[1995/11/13  17:37:45  Andy_Vesper]
+ * 
+ * Revision 1.1.2.10  1995/11/10  16:55:01  Andy_Vesper
+ * 	Don't use HasSharedLibraries for libtk,libaux,librgb and libfont
+ * 	[1995/11/10  16:43:39  Andy_Vesper]
+ * 
+ * Revision 1.1.2.9  1995/10/31  20:48:20  John_Dennis
+ * 	{** Merge Information **}
+ * 		{** Command used:	bsubmit **}
+ * 		{** Ancestor revision:	1.1.2.7 **}
+ * 		{** Merge revision:	1.1.2.8 **}
+ * 	{** End **}
+ * 	make glut build with OpenGL.tmpl file
+ * 	[1995/10/31  20:43:51  John_Dennis]
+ * 
+ * Revision 1.1.2.8  1995/10/25  21:05:23  Andy_Vesper
+ * 	Add GLS library
+ * 	[1995/10/25  21:01:36  Andy_Vesper]
+ * 
+ * Revision 1.1.2.7  1995/10/12  19:11:39  Andy_Vesper
+ * 	Add support for X11R6
+ * 	[1995/10/12  14:08:17  Andy_Vesper]
+ * 
+ * Revision 1.1.2.6  1995/10/02  21:26:12  John_Dennis
+ * 	change location of OpenGL library source dir and gl widgets
+ * 	[1995/10/02  16:00:52  John_Dennis]
+ * 
+ * Revision 1.1.2.5  1993/10/26  21:14:51  John_Dennis
+ * 	add support for OpenGL Motif widgets
+ * 	[1993/10/26  21:07:34  John_Dennis]
+ * 
+ * Revision 1.1.2.4  1993/10/13  17:30:40  John_Dennis
+ * 	make new Imakefiles in SGI 1.0.11 DEC compatible, general clean-up
+ * 	[1993/10/12  21:40:59  John_Dennis]
+ * 
+ * Revision 1.1.2.3  1993/07/30  14:55:12  Andy_Vesper
+ * 	Drop the .so extension for -lGL and -lGLU.
+ * 	[1993/07/30  14:38:18  Andy_Vesper]
+ * 
+ * Revision 1.1.2.2  1993/06/16  20:31:14  John_Dennis
+ * 	Initial Version by John Dennis
+ * 	[1993/06/15  20:05:31  John_Dennis]
+ * 
+ * $EndLog$
+ */
+/* GL client defines */
+
+/****************************************************************************/
+/********************************** Global **********************************/
+/****************************************************************************/
+
+#ifndef OpenGLV10
+#ifndef OpenGLV11
+#define OpenGLV10 YES
+#endif
+#endif
+
+  _GL_DEMO_DEST = /usr/examples/GL
+
+#ifdef BuildX11R6
+  GL_CONTRIB_TOP = $(RTOP)/contrib/gl
+  GL_LIB_TOP = $(TOP)/lib/gl
+#else
+  GL_CONTRIB_TOP = $(EXTENSIONSRC)/contrib/GL
+  GL_LIB_TOP = $(EXTENSIONSRC)/lib/gl
+#endif
+
+#define ForceNormalLib YES
+
+/****************************************************************************/
+/******************************** GL Library ********************************/
+/****************************************************************************/
+
+#ifndef SharedLibGL
+#define SharedLibGL HasSharedLibraries
+#endif
+
+#ifndef NormalLibGL
+#define NormalLibGL (!SharedLibGL | ForceNormalLib)
+#endif
+
+#ifndef DebugLibGL
+#define DebugLibGL	NO      /* debugged GL library */
+#endif
+
+#ifndef ProfileLibGL
+#define ProfileLibGL	NO      /* profiled GL library */
+#endif
+
+#ifdef UseInstalled
+  GLSRC = $(EXTENSIONSRC)/glPeer/commonlib
+#else
+#ifdef BuildX11R6
+  GLSRC = $(GL_LIB_TOP)/commonlib
+#else
+  GLSRC = $(EXTENSIONSRC)/glPeer/commonlib
+#endif
+#endif
+
+USRSHLIBDIR = /usr/shlib
+
+#if SharedLibGL
+  DEPGLLIB = _UseCat($(USRSHLIBDIR),$(GLSRC),/libGL.so)
+     GLLIB = _Use(-lGL,$(DEPGLLIB))
+#else
+  DEPGLLIB = _UseCat($(USRLIBDIR),$(GLSRC),/libGL.a)
+     GLLIB = LoaderLibPrefix _Use(-lGL, $(DEPGLLIB))
+#endif
+
+/*
+ * We don't need to define GLInclude to be anything because if we are building
+ * in installed system the GL header files are referenced as <GL/*.h> and
+ * they will be found in /usr/include/GL. If we are building in the
+ * development tree the GL include files are "installed" in $(TOP)/GL by
+ * running make in extensions/include/GL. Since all Makefiles include a
+ * -I$(TOP) any <GL/*.h> include files will be found in $(TOP)/GL - John Dennis
+ */
+
+/*
+ * AFV 11/13/1995 Make GLInclude reference $(TOP)/GL so that modules
+ * that include <gl.h>, for example, will find it.
+ */
+
+#define GLInclude -I$(TOP)/GL
+
+/****************************************************************************/
+/******************************* GLU Library ********************************/
+/****************************************************************************/
+
+#ifndef SharedLibGLU
+#define SharedLibGLU HasSharedLibraries
+#endif
+
+#ifndef NormalLibGLU
+#define NormalLibGLU (!SharedLibGLU | ForceNormalLib)
+#endif
+
+#ifndef DebugLibGLU
+#define DebugLibGLU	NO
+#endif
+
+#ifndef ProfileLibGLU
+#define ProfileLibGLU	NO
+#endif
+
+#ifdef UseInstalled
+  GLUSRC = $(EXTENSIONSRC)/lib/gl/glu
+#else
+  GLUSRC = $(GL_LIB_TOP)/glu
+#endif
+
+#if SharedLibGLU
+  DEPGLULIB = _UseCat($(USRSHLIBDIR),$(GLUSRC),/libGLU.so)
+     GLULIB = _Use(-lGLU,$(DEPGLULIB))
+#else
+  DEPGLULIB = _UseCat($(USRLIBDIR),$(GLUSRC),/libGLU.a)
+     GLULIB = LoaderLibPrefix _Use(-lGLU, $(DEPGLULIB))
+#endif
+
+/****************************************************************************/
+/************************* GL Motif Widget Library **************************/
+/****************************************************************************/
+
+#ifndef SharedLibGLW
+#define SharedLibGLW HasSharedLibraries
+#endif
+
+#ifndef NormalLibGLW
+#define NormalLibGLW (!SharedLibGLW | ForceNormalLib)
+#endif
+
+#ifndef DebugLibGLW
+#define DebugLibGLW	NO
+#endif
+
+#ifndef ProfileLibGLW
+#define ProfileLibGLW	NO
+#endif
+
+#ifdef UseInstalled
+  GLWIDGETSRC = $(EXTENSIONSRC)/lib/gl/widgets
+#else
+  GLWIDGETSRC = $(GL_LIB_TOP)/widgets
+#endif
+
+#if SharedLibGLW
+  DEPGLWLIB = _UseCat($(USRSHLIBDIR),$(GLWIDGETSRC),/libGLw.so)
+     GLWLIB = _Use(-lGLw,$(DEPGLWLIB))
+#else
+  DEPGLWLIB = _UseCat($(USRLIBDIR),$(GLWIDGETSRC),/libGLw.a)
+     GLWLIB = LoaderLibPrefix _Use(-lGLw, $(DEPGLWLIB))
+#endif
+
+/****************************************************************************/
+/************************* GLS Library **************************/
+/****************************************************************************/
+
+#ifndef SharedLibGLS
+#define SharedLibGLS HasSharedLibraries
+#endif
+
+#ifdef UseInstalled
+  GLSSRC = $(EXTENSIONSRC)/lib/gl/glsref/lib
+#else
+  GLSSRC = $(GL_LIB_TOP)/glsref/lib
+#endif
+
+#if SharedLibGLS
+  DEPGLSLIB = _UseCat($(USRSHLIBDIR),$(GLSSRC),/libGLS.so)
+     GLSLIB = _Use(-lGLS,$(DEPGLSLIB))
+#else
+  DEPGLSLIB = _UseCat($(USRLIBDIR),$(GLSSRC),/libGLS.a)
+     GLSLIB = LoaderLibPrefix _Use(-lGLS, $(DEPGLSLIB))
+#endif
+
+/****************************************************************************/
+/*************************** Contrib GLUT Library ***************************/
+/****************************************************************************/
+
+#ifndef SharedLibGlut
+#define SharedLibGlut HasSharedLibraries
+#endif
+
+#ifndef NormalLibGlut
+#define NormalLibGlut (!SharedLibGlut | ForceNormalLib)
+#endif
+
+#ifndef DebugLibGlut
+#define DebugLibGlut	NO
+#endif
+
+#ifndef ProfileLibGlut
+#define ProfileLibGlut	NO
+#endif
+
+#ifdef UseInstalled
+  GLUTSRC = $(_GL_DEMO_DEST)/libglut/lib/glut
+#else
+  GLUTSRC = $(GL_CONTRIB_TOP)/libglut/lib/glut
+#endif
+
+#if SharedLibGlut
+ DEPGLUTLIB = _UseCat($(USRSHLIBDIR),$(GLUTSRC),/libglut.so)
+    GLUTLIB = _Use(-lglut,$(DEPGLUTLIB))
+#else
+ DEPGLUTLIB = _UseCat($(USRLIBDIR),$(GLUTSRC),/libglut.a)
+    GLUTLIB = LoaderLibPrefix _Use(-lglut, $(DEPGLUTLIB))
+#endif
+
+/* See comment above about GLInclude, same applies to GLUTInclude */
+/*
+ * AFV 11/13/1995 Make GLUTInclude reference $(TOP)/GL so that modules
+ * that include <glut.h>, for example, will find it.
+ */
+
+#define GLUTInclude -I$(TOP)/GL
+
+/****************************************************************************/
+/**************************** Contrib Tk Library ****************************/
+/****************************************************************************/
+
+#ifndef SharedLibGLTk
+#define SharedLibGLTk 0
+#endif
+
+#ifndef NormalLibGLTk
+#define NormalLibGLTk (!SharedLibGLTk | ForceNormalLib)
+#endif
+
+#ifndef DebugLibGLTk
+#define DebugLibGLTk	NO
+#endif
+
+#ifndef ProfileLibGLTk
+#define ProfileLibGLTk	NO
+#endif
+
+#ifdef UseInstalled
+  GLTKSRC = $(_GL_DEMO_DEST)/libtk
+#else
+  GLTKSRC = $(GL_CONTRIB_TOP)/libtk
+#endif
+
+#if SharedLibGLTk
+ DEPGLTKLIB = $(GLTKSRC)/libtk.so
+    GLTKLIB = $(DEPGLTKLIB)
+#else
+   DEPGLTKLIB = $(GLTKSRC)/libtk.a
+      GLTKLIB = LoaderLibPrefix $(DEPGLTKLIB)
+#endif
+
+#define GLTKInclude -I$(GLTKSRC)
+
+/****************************************************************************/
+/*************************** Contrib Aux Library ****************************/
+/****************************************************************************/
+
+#ifndef SharedLibGLAux
+#define SharedLibGLAux 0
+#endif
+
+#ifndef NormalLibGLAux
+#define NormalLibGLAux (!SharedLibGLAux | ForceNormalLib)
+#endif
+
+#ifndef DebugLibGLAux
+#define DebugLibGLAux	NO
+#endif
+
+#ifndef ProfileLibGLAux
+#define ProfileLibGLAux	NO
+#endif
+
+#ifdef UseInstalled
+  GLAUXSRC = $(_GL_DEMO_DEST)/libaux
+#else
+  GLAUXSRC = $(GL_CONTRIB_TOP)/libaux
+#endif
+
+#if SharedLibGLAux
+  DEPGLAUXLIB = $(GLAUXSRC)/libaux.so
+     GLAUXLIB = $(DEPGLAUXLIB)
+#else
+  DEPGLAUXLIB = $(GLAUXSRC)/libaux.a
+     GLAUXLIB = LoaderLibPrefix $(DEPGLAUXLIB)
+#endif
+
+#define GLAUXInclude -I$(GLAUXSRC)
+
+/****************************************************************************/
+/*************************** Contrib Rgb Library ****************************/
+/****************************************************************************/
+
+#ifndef SharedLibGLRgb
+#define SharedLibGLRgb 0
+#endif
+
+#ifndef NormalLibGLRgb
+#define NormalLibGLRgb (!SharedLibGLRgb | ForceNormalLib)
+#endif
+
+#ifndef DebugLibGLRgb
+#define DebugLibGLRgb	NO
+#endif
+
+#ifndef ProfileLibGLRgb
+#define ProfileLibGLRgb	NO
+#endif
+
+#ifdef UseInstalled
+  GLRGBSRC = $(_GL_DEMO_DEST)/librgb
+#else
+  GLRGBSRC = $(GL_CONTRIB_TOP)/librgb
+#endif
+
+#if SharedLibGLRgb
+ DEPGLRGBLIB = $(GLRGBSRC)/librgb.so
+    GLRGBLIB = $(DEPGLRGBLIB)
+#else
+ DEPGLRGBLIB = $(GLRGBSRC)/librgb.a
+    GLRGBLIB = LoaderLibPrefix $(DEPGLRGBLIB)
+#endif
+
+#define GLRgbInclude -I$(GLRGBSRC)
+
+/****************************************************************************/
+/*************************** Contrib Font Library ***************************/
+/****************************************************************************/
+
+#ifndef SharedLibGLFont
+#define SharedLibGLFont 0
+#endif
+
+#ifndef NormalLibGLFont
+#define NormalLibGLFont (!SharedLibGLFont | ForceNormalLib)
+#endif
+
+#ifndef DebugLibGLFont
+#define DebugLibGLFont	NO
+#endif
+
+#ifndef ProfileLibGLFont
+#define ProfileLibGLFont	NO
+#endif
+
+#ifdef UseInstalled
+  GLFONTSRC = $(_GL_DEMO_DEST)/libfont
+#else
+  GLFONTSRC = $(GL_CONTRIB_TOP)/libfont
+#endif
+
+#if SharedLibGLFont
+ DEPGLFONTLIB = $(GLFONTSRC)/libfont.so
+    GLFONTLIB = $(DEPGLFONTLIB)
+#else
+ DEPGLFONTLIB = $(GLFONTSRC)/libfont.a
+    GLFONTLIB = LoaderLibPrefix $(DEPGLFONTLIB)
+#endif
+
+#define GLFontInclude -I$(GLFONTSRC)
+
+EXTRA_DEFINES = -DDEC

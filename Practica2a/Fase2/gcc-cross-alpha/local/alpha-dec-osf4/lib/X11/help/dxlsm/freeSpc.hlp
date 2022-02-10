@@ -1,0 +1,32 @@
+#/* @(#)@(#)help/freeSpc.hlp	2.1 11 May 1993 19:04:37 -  */
+#ident  "@(#)va11:help/freeSpc.hlp   2.1"
+#
+#
+Forms, forms.hlp
+Logical Storage Manager Disk, vdisk.hlp
+Format of Size, sizeFor.hlp
+#########################################
+FREE SPACE FORM HELP
+
+This form provides information about a specific region of a Logical Storage Manager
+disk that contains free space.  Free space is visually represented as a
+"hole" between subdisks that reside on a Logical Storage Manager disk icon.
+
+As the information reported on this form cannot be changed, there are no
+Reset or Apply buttons on the form.
+
+Fields
+----------
+
+Device:
+	This field contains the name of the device where this free space
+	resides.
+
+Hole offset:
+	The offset, in sectors, into the Logical Storage Manager disk where this
+	free space extent begins.
+
+Hole size:
+	The size of this free space extent.  The unit used is specified
+	by the user under the Options pull down menu (see Format of Size
+	help for more information).

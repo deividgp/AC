@@ -1,0 +1,332 @@
+// **************************************************************
+// *								*
+// * Symbols for el_GR.ISO8859-7 - Greek for Greece		*
+// *								*
+// **************************************************************
+
+// **************************************************************
+// *								*
+// * The VT108 layouts						*
+// *								*
+// * NOTES:  There isn't a VT105 (i.e. LK201) keyboard for	*
+// *	     el_GR.  In addition, there aren't any TW/DP keys	*
+// *	     for the VT108.  The Group Shift (i.e. Mode_switch)	*
+// *	     takes care of this.				*
+// *								*
+// **************************************************************
+xkb_symbols "vt108" {
+    include "digital_vt(vt108)"
+
+    replace key <LCMP> {
+        type= "PC_BREAK",
+        symbols[Group1]= [ Multi_key, Mode_switch ]
+    };
+
+    key <AE00> {       [	   grave,      asciitilde ] };
+    key <AE01> {       [	       1,	   exclam ] };
+    key <AE02> {       [	       2,	       at ] };
+    key <AE03> {       [	       3,      numbersign ] };
+    key <AE04> {       [	       4,	   dollar ] };
+    key <AE05> {       
+	symbols[Group1]= [	       5,	  percent ],
+        symbols[Group2]= [       EuroSign ]
+    };
+    key <AE06> {       [	       6,     asciicircum ] };
+    key <AE07> {       [	       7,	ampersand ] };
+    key <AE08> {       [	       8,	 asterisk ] };
+    key <AE09> {       [	       9,	parenleft ] };
+    key <AE10> {       [	       0,      parenright ] };
+    key <AE11> {       [	   minus,      underscore ] };
+    key <AE12> {       [	   equal,	     plus ] };
+
+    key <AD01> {       [	       q,		Q ] };
+    key <AD02> {
+	symbols[Group1]= [		 w,		  W ],
+	symbols[Group2]= [ Greek_finalsmallsigma ]
+    };
+    key <AD03> {
+	symbols[Group1]= [		 e,		  E ],
+	symbols[Group2]= [   Greek_epsilon,   Greek_EPSILON ]
+    };
+    key <AD04> {
+	symbols[Group1]= [		 r,		  R ],
+	symbols[Group2]= [	 Greek_rho,	  Greek_RHO ]
+    };
+    key <AD05> {
+	symbols[Group1]= [		 t,		  T ],
+	symbols[Group2]= [	 Greek_tau,	  Greek_TAU ]
+    };
+    key <AD06> {
+	symbols[Group1]= [		 y,		  Y ],
+	symbols[Group2]= [   Greek_upsilon,   Greek_UPSILON ]
+    };
+    key <AD07> {
+	symbols[Group1]= [		 u,		  U ],
+	symbols[Group2]= [     Greek_theta,	Greek_THETA ]
+    };
+    key <AD08> {
+	symbols[Group1]= [		 i,		  I ],
+	symbols[Group2]= [	Greek_iota,	 Greek_IOTA ]
+    };
+    key <AD09> {
+	symbols[Group1]= [		 o,		  O ],
+	symbols[Group2]= [   Greek_omicron,   Greek_OMICRON ]
+    };
+    key <AD10> {
+	symbols[Group1]= [		 p,		  P ],
+	symbols[Group2]= [	  Greek_pi,	   Greek_PI ]
+    };
+    key <AD11> {       [     bracketleft,	braceleft ] };
+    key <AD12> {       [    bracketright,      braceright ] };
+
+    key <AC01> {
+	symbols[Group1]= [		 a,		  A ],
+	symbols[Group2]= [     Greek_alpha,	Greek_ALPHA ]
+    };
+    key <AC02> {
+	symbols[Group1]= [		 s,		  S ],
+	symbols[Group2]= [     Greek_sigma,	Greek_SIGMA ]
+    };
+    key <AC03> {
+	symbols[Group1]= [		 d,		  D ],
+	symbols[Group2]= [     Greek_delta,	Greek_DELTA ]
+    };
+    key <AC04> {
+	symbols[Group1]= [		 f,		  F ],
+	symbols[Group2]= [	 Greek_phi,	  Greek_PHI ]
+    };
+    key <AC05> {
+	symbols[Group1]= [		 g,		  G ],
+	symbols[Group2]= [     Greek_gamma,	Greek_GAMMA ]
+    };
+    key <AC06> {
+	symbols[Group1]= [		 h,		  H ],
+	symbols[Group2]= [	 Greek_eta,	  Greek_ETA ]
+    };
+    key <AC07> {
+	symbols[Group1]= [		 j,		  J ],
+	symbols[Group2]= [	  Greek_xi,	   Greek_XI ]
+    };
+    key <AC08> {
+	symbols[Group1]= [		 k,		  K ],
+	symbols[Group2]= [     Greek_kappa,	Greek_KAPPA ]
+    };
+    key <AC09> {
+	symbols[Group1]= [		 l,		  L ],
+	symbols[Group2]= [     Greek_lamda,	Greek_LAMDA ]
+    };
+    key <AC10> {
+	symbols[Group1]= [	apostrophe,	   quotedbl ],
+        symbols[Group2]= [   Dacute_accent,      Ddiaeresis ]      
+    };
+    key <AC11> {       [       semicolon,	    colon ] };
+    key <BKSL> {       [       backslash,	      bar ] };
+
+    key <AB00> {       [	    less,	  greater ] };
+    key <AB01> {
+	symbols[Group1]= [		 z,		  Z ],
+	symbols[Group2]= [	Greek_zeta,	 Greek_ZETA ]
+    };
+    key <AB02> {
+	symbols[Group1]= [		 x,		  X ],
+	symbols[Group2]= [	 Greek_chi,	  Greek_CHI ]
+    };
+    key <AB03> {
+	symbols[Group1]= [		 c,		  C ],
+	symbols[Group2]= [	 Greek_psi,	  Greek_PSI ]
+    };
+    key <AB04> {
+	symbols[Group1]= [		 v,		  V ],
+	symbols[Group2]= [     Greek_omega,	Greek_OMEGA ]
+    };
+    key <AB05> {
+	symbols[Group1]= [		 b,		  B ],
+	symbols[Group2]= [	Greek_beta,	 Greek_BETA ]
+    };
+    key <AB06> {
+	symbols[Group1]= [		 n,		  N ],
+	symbols[Group2]= [	  Greek_nu,	   Greek_NU ]
+    };
+    key <AB07> {
+	symbols[Group1]= [		 m,		  M ],
+	symbols[Group2]= [	  Greek_mu,	   Greek_MU ]
+    };
+    key <AB08> {       [	   comma,	    comma ] };
+    key <AB09> {       [	  period,	   period ] };
+    key <AB10> {       [	   slash,	 question ] };
+};
+
+xkb_symbols "vt108-tw" { include "digital_greek(vt108)" };
+xkb_symbols "vt108-dp" { include "digital_greek(vt108)" };
+
+// **************************************************************
+// *								*
+// * The PCXAL layouts (101-key)				*
+// *								*
+// **************************************************************
+xkb_symbols "pcxalhh" {
+//  Group shifting (locking type) is obtained by using
+//  "Control_R" key, instead of "Alt_R":
+//  include "digital_pc(pc)"
+    include "digital_pc(mode_switch_pc)"
+
+    replace key <KPDL> { [ KP_Delete, KP_Separator ] };
+
+    key <AE00> {       [	   grave,      asciitilde ] };
+    key <AE01> {       [	       1,	   exclam ] };
+    key <AE02> {       [	       2,	       at ] };
+    key <AE03> {       [	       3,      numbersign ] };
+    key <AE04> {       [	       4,	   dollar ] };
+    key <AE05> {       
+	symbols[Group1]= [	       5,	  percent ], 
+        symbols[Group2]= [       EuroSign ]
+    };
+    key <AE06> {       [	       6,     asciicircum ] };
+    key <AE07> {       [	       7,	ampersand ] };
+    key <AE08> {       [	       8,	 asterisk ] };
+    key <AE09> {       [	       9,	parenleft ] };
+    key <AE10> {       [	       0,      parenright ] };
+    key <AE11> {       [	   minus,      underscore ] };
+    key <AE12> {       [	   equal,	     plus ] };
+
+    key <AD01> {    
+	symbols[Group1]= [		 q,		  Q ],
+	// These two characters are not in the ISO8859-7 codeset.
+	// Therefore, we cannot display them.
+	symbols[Group2]= [   lessthanequal,greaterthanequal ]
+    };
+    key <AD02> {
+	symbols[Group1]= [		 w,		  W ],
+	// Same as greaterthanequal.  We cannot display radical.
+	symbols[Group2]= [ Greek_finalsmallsigma,   radical ]
+    };
+    key <AD03> {
+	symbols[Group1]= [		 e,		  E ],
+	symbols[Group2]= [   Greek_epsilon,   Greek_EPSILON ]
+    };
+    key <AD04> {
+	symbols[Group1]= [		 r,		  R ],
+	symbols[Group2]= [	 Greek_rho,	  Greek_RHO ]
+    };
+    key <AD05> {
+	symbols[Group1]= [		 t,		  T ],
+	symbols[Group2]= [	 Greek_tau,	  Greek_TAU ]
+    };
+    key <AD06> {
+	symbols[Group1]= [		 y,		  Y ],
+	symbols[Group2]= [   Greek_upsilon,   Greek_UPSILON ]
+    };
+    key <AD07> {
+	symbols[Group1]= [		 u,		  U ],
+	symbols[Group2]= [     Greek_theta,	Greek_THETA ]
+    };
+    key <AD08> {
+	symbols[Group1]= [		 i,		  I ],
+	symbols[Group2]= [	Greek_iota,	 Greek_IOTA ]
+    };
+    key <AD09> {
+	symbols[Group1]= [		 o,		  O ],
+	symbols[Group2]= [   Greek_omicron,   Greek_OMICRON ]
+    };
+    key <AD10> {
+	symbols[Group1]= [		 p,		  P ],
+	symbols[Group2]= [	  Greek_pi,	   Greek_PI ]
+    };
+    key <AD11> {       [     bracketleft,	braceleft ] };
+    key <AD12> {       [    bracketright,      braceright ] };
+    key <BKSL> {       [       backslash,	      bar ] };
+
+    key <AC01> {
+	symbols[Group1]= [		 a,		  A ],
+	symbols[Group2]= [     Greek_alpha,	Greek_ALPHA ]
+    };
+    key <AC02> {
+	symbols[Group1]= [		 s,		  S ],
+	symbols[Group2]= [     Greek_sigma,	Greek_SIGMA ]
+    };
+    key <AC03> {
+	symbols[Group1]= [		 d,		  D ],
+	symbols[Group2]= [     Greek_delta,	Greek_DELTA ]
+    };
+    key <AC04> {
+	symbols[Group1]= [		 f,		  F ],
+	symbols[Group2]= [	 Greek_phi,	  Greek_PHI ]
+    };
+    key <AC05> {
+	symbols[Group1]= [		 g,		  G ],
+	symbols[Group2]= [     Greek_gamma,	Greek_GAMMA ]
+    };
+    key <AC06> {
+	symbols[Group1]= [		 h,		  H ],
+	symbols[Group2]= [	 Greek_eta,	  Greek_ETA ]
+    };
+    key <AC07> {
+	symbols[Group1]= [		 j,		  J ],
+	symbols[Group2]= [	  Greek_xi,	   Greek_XI ]
+    };
+    key <AC08> {
+	symbols[Group1]= [		 k,		  K ],
+	symbols[Group2]= [     Greek_kappa,	Greek_KAPPA ]
+    };
+    key <AC09> {
+	symbols[Group1]= [		 l,		  L ],
+	symbols[Group2]= [     Greek_lamda,	Greek_LAMDA ]
+    };
+    key <AC10> {
+	symbols[Group1]= [	 semicolon,	      colon ]
+    };
+    key <AC11> {  
+	symbols[Group1]= [      apostrophe,	         at ],
+	symbols[Group2]= [   Dacute_accent,	 Ddiaeresis ]
+    };
+
+    key <AB01> {
+	symbols[Group1]= [		 z,		  Z ],
+	symbols[Group2]= [	Greek_zeta,	 Greek_ZETA ]
+    };
+    key <AB02> {
+	symbols[Group1]= [		 x,		  X ],
+	symbols[Group2]= [	 Greek_chi,	  Greek_CHI ]
+    };
+    key <AB03> {
+	symbols[Group1]= [		 c,		  C ],
+	symbols[Group2]= [	 Greek_psi,	  Greek_PSI ]
+    };
+    key <AB04> {
+	symbols[Group1]= [		 v,		  V ],
+	symbols[Group2]= [     Greek_omega,	Greek_OMEGA ]
+    };
+    key <AB05> {
+	symbols[Group1]= [		 b,		  B ],
+	symbols[Group2]= [	Greek_beta,	 Greek_BETA ]
+    };
+    key <AB06> {
+	symbols[Group1]= [		 n,		  N ],
+	symbols[Group2]= [	  Greek_nu,	   Greek_NU ]
+    };
+    key <AB07> {
+	symbols[Group1]= [		 m,		  M ],
+	symbols[Group2]= [	  Greek_mu,	   Greek_MU ]
+    };
+    key <AB08> {       [	   comma,	     less ] };
+    key <AB09> {       [	  period,	  greater ] };
+    key <AB10> {       [	   slash,	 question ] };
+};
+
+xkb_symbols "pcxal"   { include "digital_greek(pcxalhh)" };
+
+xkb_symbols "pcxallh" {
+    include "digital_greek(pcxalhh)"
+    replace key <KPDL> { [ KP_Delete, KP_Decimal ] };
+};
+
+xkb_symbols "lk44x"   { include "digital_greek(pcxalhh)" };
+
+xkb_symbols "lk471bh" { 
+    include "digital_greek(pcxalhh)" 
+    replace key <AE00> {       [           grave,              bar ] };
+    replace key <AE02> {       [               2,         quotedbl ] };
+    replace key <AE03> {       [               3,         sterling ] };
+    key         <AC12> {       [      numbersign,       asciitilde ] };
+};
+xkb_symbols "lk471"   { include "digital_greek(lk471bh)" };

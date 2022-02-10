@@ -1,0 +1,54 @@
+#/* @(#)@(#)help/diskEvac.hlp	2.1 11 May 1993 19:04:17 -  */
+#ident  "@(#)va11:help/diskEvac.hlp   2.1"
+#
+#
+# Copyright(C)1994 VERITAS Software Corporation.  ALL RIGHTS RESERVED.
+# UNPUBLISHED -- RIGHTS RESERVED UNDER THE COPYRIGHT
+# LAWS OF THE UNITED STATES.  USE OF A COPYRIGHT NOTICE
+# IS PRECAUTIONARY ONLY AND DOES NOT IMPLY PUBLICATION
+# OR DISCLOSURE.
+# 
+# THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION AND
+# TRADE SECRETS OF VERITAS SOFTWARE.  USE, DISCLOSURE,
+# OR REPRODUCTION IS PROHIBITED WITHOUT THE PRIOR
+# EXPRESS WRITTEN PERMISSION OF VERITAS SOFTWARE.
+# 
+#               RESTRICTED RIGHTS LEGEND
+# USE, DUPLICATION, OR DISCLOSURE BY THE GOVERNMENT IS
+# SUBJECT TO RESTRICTIONS AS SET FORTH IN SUBPARAGRAPH
+# (C) (1) (ii) OF THE RIGHTS IN TECHNICAL DATA AND
+# COMPUTER SOFTWARE CLAUSE AT DFARS 252.227-7013.
+#               VERITAS SOFTWARE
+# 4800 GREAT AMERICA PARKWAY, SANTA CLARA, CA 95054
+#
+#
+Logical Storage Manager Disk, vdisk.hlp
+Subdisk, subdisk.hlp
+#########################################
+BASIC DISKS EVACUATE HELP
+
+This operation takes two VM disks and moves all subdisks and their
+contents from one to the other.  This is useful if you need to move 
+subdisks from a physical disk that you need to replace or change 
+for some reason.
+
+This is accomplished by performing multiple, sequential "sd move"
+operations that move the subdisks from one disk to the other.
+
+
+Fields
+----------
+
+Disk group name:
+	This is the name of the disk group that both disks belong to.  The
+	name of the disk group is required.
+
+Evacuate From:
+	This is the name of the VM disk that you want to evacuate the
+	subdisks from.  This field is required.
+
+Evacuate To:
+	This is the name of the VM disk that you want to evacuate the
+	subdisks to.  This field is optional.  If no disk name is
+	specified in this field, the Volume Manager will choose an 
+	appropriate disk for you.

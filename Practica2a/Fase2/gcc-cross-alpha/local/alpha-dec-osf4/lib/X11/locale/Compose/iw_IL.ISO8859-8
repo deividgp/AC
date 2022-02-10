@@ -1,0 +1,46 @@
+# Copyright (c) Digital Equipment Corporation, 1995, 1996
+# All Rights Reserved.  Unpublished rights reserved
+# under the copyright laws of the United States.
+#
+# The software contained on this media is proprietary to
+# and embodies the confidential technology of Digital
+# Equipment Corporation.  Possession, use, duplication
+# or dissemination of the software and media is
+# authorized only pursuant to a valid written license
+# from Digital Equipment Corporation.
+#
+# RESTRICTED RIGHTS LEGEND Use, duplication, or
+# disclosure by the U.S. Government is subject to
+# restrictions as set forth in Subparagraph (c)(1)(ii)
+# of DFARS 252.227-7013, or in FAR 52.227-19, as
+# applicable.
+#
+<hebrew_zayin>					   : "\346"	hebrew_zayin
+<hebrew_daleth>					   : "\343"	hebrew_daleth
+<hebrew_shin>					   : "\371"	hebrew_shin
+<hebrew_beth>					   : "\341"	hebrew_beth
+<hebrew_samech>					   : "\361"	hebrew_samech
+<hebrew_gimmel>					   : "\342"	hebrew_gimmel
+<hebrew_qoph>					   : "\367"	hebrew_qoph
+<hebrew_he>					   : "\344"	hebrew_he
+<hebrew_kaph>					   : "\353"	hebrew_kaph
+<hebrew_aleph>					   : "\340"	hebrew_aleph
+<hebrew_resh>					   : "\370"	hebrew_resh
+<hebrew_mem>					   : "\356"	hebrew_mem
+<hebrew_nun>					   : "\360"	hebrew_nun
+<hebrew_yod>					   : "\351"	hebrew_yod
+<hebrew_ayin>					   : "\362"	hebrew_ayin
+<hebrew_teth>					   : "\350"	hebrew_teth
+<hebrew_zadi>					   : "\366"	hebrew_zadi
+<hebrew_het>					   : "\347"	hebrew_het
+<hebrew_waw>					   : "\345"	hebrew_waw
+<hebrew_taw>					   : "\372"	hebrew_taw
+<hebrew_lamed>					   : "\354"	hebrew_lamed
+<hebrew_finalnun>				   : "\357"	hebrew_finalnun
+<hebrew_finalmem>				   : "\355"	hebrew_finalmem
+<hebrew_finalzadi>				   : "\365"	hebrew_finalzadi
+<hebrew_finalkaph>				   : "\352"	hebrew_finalkaph
+<hebrew_finalpe>				   : "\363"	hebrew_finalpe
+<hebrew_pe>					   : "\364"	hebrew_pe
+
+

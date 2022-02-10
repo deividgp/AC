@@ -1,0 +1,40 @@
+#/* @(#)@(#)help/advDisk.hlp	2.1 11 May 1993 19:03:36 -  */
+#ident  "@(#)va11:help/advDisk.hlp   2.1"
+#
+#
+Advanced Operations, advOps.hlp
+Logical Storage Manager Disk, vdisk.hlp
+Physical Disk, pdisk.hlp
+Online Disk, vdiskOnln.hlp
+#########################################
+ADVANCED DISK OPERATIONS MENU HELP
+
+This menu lets the user perform various operations on physical disks.
+
+
+Initialize
+----------
+This operation brings up a form where you specify what device you want to
+initialize.  A disk identifier is written to the disk, and it is
+partitioned accordingly.  Configuration copies are written to the private
+partition of the disk if it exists.
+
+Define
+------
+This operation is similar to an Initialize operation, except that a disk
+header is not re-written to the disk.
+
+Remove
+------
+Remove a disk header and configuration copies from a disk, effectively
+removing the disk from the domain of entities that the Logical Storage Manager 
+can manage.
+
+Online
+------
+Enable writing to the selected partition.
+
+Offline
+-------
+Disable writing to the selected partition.  The partition cannot be
+currently in use.

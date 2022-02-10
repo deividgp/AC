@@ -1,0 +1,122 @@
+// **************************************************************
+// *								*
+// * Keymaps for Thai						*
+// *								*
+// **************************************************************
+
+xkb_keymap "lk201t" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk201)"		};
+    xkb_types           { include "types/default"    	         	};
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_thai(lk201t)"        };
+    xkb_geometry	{ description = "Digital Thai LK201-T";
+			  include "geometry/digital_lk(lk201)"		};
+};
+
+xkb_keymap "lk201wtt" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk201)"		};
+    xkb_types           { include "types/default"    	         	};
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_thai(lk201wtt)"	};
+    xkb_geometry	{ description = "Digital Thai LK401-WTT";
+			  include "geometry/digital_lk(lk201)"		};
+};
+
+xkb_keymap "lk401t" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)"		};
+    xkb_types           { include "types/default"    	         	};
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_thai(lk401t)"	};
+    xkb_geometry	{ description = "Digital Thai LK401-T";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk401wtt" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)"		};
+    xkb_types           { include "types/default"    	         	};
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_thai(lk401wtt)"	};
+    xkb_geometry	{ description = "Digital Thai LK401-WTT";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk443t" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk443)"		};
+    xkb_types           { include "types/default"    	         	};
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_thai(lk443t)"	};
+    xkb_geometry	{ description = "Digital Thai LK443-T";
+			  include "geometry/digital_pc(pc101)"
+                          include "geometry/digital_pc(leds_alone)" 	};
+};
+
+xkb_keymap "lk443wtt" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk443)"		};
+    xkb_types           { include "types/default"    	         	};
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_thai(lk443wtt)"	};
+    xkb_geometry	{ description = "Digital Thai LK443-WTT";
+			  include "geometry/digital_pc(pc101)"	
+                          include "geometry/digital_pc(leds_alone)" 	};
+};
+
+xkb_keymap "pcxalt" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)"		};
+    xkb_types           { include "types/default"    	         	};
+    xkb_compatibility   { include "compat/grouplock"                    };
+    xkb_symbols         { include "symbols/digital_thai(pcxalt)"	};
+    xkb_geometry	{ description = "Digital Thai PCXAL-T";
+			  include "geometry/digital_pc(pc101)"
+                          include "geometry/digital_pc(leds_alone)" 	};
+};
+
+xkb_keymap "pcxalwtt" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)"  	};
+    xkb_types           { include "types/default" 			};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_thai(pcxalwtt)"	};
+    xkb_geometry        { description = "Digital Thai PCXAL-WTT";
+                          include "geometry/digital_pc(pc101)"
+                          include "geometry/digital_pc(leds_alone)" 	};
+};
+
+
+xkb_keymap "lk471cb" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)"  	};
+    xkb_types           { include "types/default" 			};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_thai(lk471cb)"	};
+    xkb_geometry        { description = "Digital Thai LK471-CB";
+                          include "geometry/digital_pc(pc101)"
+                          include "geometry/digital_pc(leds_alone)" 	};
+};
+
+xkb_keymap "lk471" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)"  	};
+    xkb_types           { include "types/default" 			};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_thai(lk471)"	};
+    xkb_geometry        { description = "Digital Thai LK471";
+                          include "geometry/digital_pc(pc101)"
+                          include "geometry/digital_pc(leds_alone)" 	};
+};
+
+xkb_keymap "lk97wcb" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)"  	};
+    xkb_types           { include "types/default" 			};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_thai(lk97wcb)"	};
+    xkb_geometry        { description = "Digital Thai LK97W-CB";
+                          include "geometry/digital_pc(pc104)"
+                          include "geometry/digital_pc(leds_alone)" 	};
+};
+
+xkb_keymap "lk97w" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc101)"  	};
+    xkb_types           { include "types/default" 			};
+    xkb_compatibility   { include "compat/grouplock"			};
+    xkb_symbols         { include "symbols/digital_thai(lk97w)"	};
+    xkb_geometry        { description = "Digital Thai LK97W";
+                          include "geometry/digital_pc(pc104)"
+                          include "geometry/digital_pc(leds_alone)" 	};
+};

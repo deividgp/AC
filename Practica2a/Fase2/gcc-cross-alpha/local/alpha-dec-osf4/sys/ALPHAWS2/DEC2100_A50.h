@@ -1,0 +1,1 @@
+#define NDEC2100_A50 0

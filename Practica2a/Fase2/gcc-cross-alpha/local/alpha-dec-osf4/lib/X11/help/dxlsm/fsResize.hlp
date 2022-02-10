@@ -1,0 +1,9 @@
+#/* @(#)@(#)help/fsResize.hlp	2.1 11 May 1993 19:04:55 -  */
+#ident  "@(#)va11:help/fsResize.hlp   2.1"
+#
+#
+Format of Size, sizeFor.hlp
+#########################################
+FILE SYSTEM RESIZE HELP
+
+This operation is not supported on UFS. 

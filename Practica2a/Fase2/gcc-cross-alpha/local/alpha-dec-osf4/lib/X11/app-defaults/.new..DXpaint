@@ -1,0 +1,10 @@
+! 
+! DECwindows Paint
+! 
+! Copyright © Digital Equipment Corporation. 1989,1994. All rights reserved.
+! 
+!*main_menu_bar.background: blue
+!*paint_v_scroll_bar.troughColor: green
+!
+*DXmfitToScreenPolicy:  AS_NEEDED
+

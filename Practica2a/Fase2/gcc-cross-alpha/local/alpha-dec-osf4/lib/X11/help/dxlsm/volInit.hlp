@@ -1,0 +1,36 @@
+#/* @(#)@(#)help/volInit.hlp	2.1 11 May 1993 19:06:46 -  */
+#ident  "@(#)va11:help/volInit.hlp   2.1"
+#
+#
+Pulldown Menu, pulldown.hlp
+Advanced Operations, advOps.hlp
+Advanced Volume Operations, volOps.hlp
+Volume, volume.hlp
+#########################################
+INITIALIZE VOLUMES HELP
+
+This pulldown menu lets you initialize volumes.
+Specific operations are listed below.
+
+
+Active
+------
+Enable the selected volume(s) and its associated plexes, and set the state
+of all associated plexes to ACTIVE.
+
+Enable
+------
+Enable the selected volume(s) and its associated plexes, but leave the plex
+states as EMPTY.
+
+Clean
+-----
+For all selected volumes, set the state for all associated plexes to
+CLEAN.  This can be applied only under limited circumstances, see the
+volmend(1M) manual pages for more information.
+
+Zero
+----
+Enable the selected volume(s) and its associated plexes, then write zeroes
+for all the length of the volume.  After the operation completes, all
+associated plexes are set to ACTIVE, assuming that there are no I/O errors.

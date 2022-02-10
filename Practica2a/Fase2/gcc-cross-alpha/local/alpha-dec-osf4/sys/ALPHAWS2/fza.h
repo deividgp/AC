@@ -1,0 +1,1 @@
+#define NFZA 0

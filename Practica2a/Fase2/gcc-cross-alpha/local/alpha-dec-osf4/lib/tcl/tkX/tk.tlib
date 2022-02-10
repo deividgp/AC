@@ -1,0 +1,4412 @@
+#@package: library/tk tkCancelRepeat tkScreenChanged
+
+# tk.tcl --
+#
+# Initialization script normally executed in the interpreter for each
+# Tk-based application.  Arranges class bindings for widgets.
+#
+# @(#) tk.tcl 1.73 95/08/30 16:40:20
+#
+# Copyright (c) 1992-1994 The Regents of the University of California.
+# Copyright (c) 1994-1995 Sun Microsystems, Inc.
+#
+# See the file "license.terms" for information on usage and redistribution
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+
+# Insist on running with compatible versions of Tcl and Tk.
+
+scan [info tclversion] "%d.%d" a b
+if {$a != 7} {
+    error "wrong version of Tcl loaded ([info tclversion]): need 7.x"
+}
+scan $tk_version "%d.%d" a b
+if {($a != 4) || ($b < 0)} {
+    error "wrong version of Tk loaded ($tk_version): need 4.x"
+}
+unset a b
+
+# Add Tk's directory to the end of the auto-load search path:
+
+lappend auto_path $tk_library
+
+# Turn off strict Motif look and feel as a default.
+
+set tk_strictMotif 0
+
+# tkScreenChanged --
+# This procedure is invoked by the binding mechanism whenever the
+# "current" screen is changing.  The procedure does two things.
+# First, it uses "upvar" to make global variable "tkPriv" point at an
+# array variable that holds state for the current display.  Second,
+# it initializes the array if it didn't already exist.
+#
+# Arguments:
+# screen -		The name of the new screen.
+
+proc tkScreenChanged screen {
+    set disp [file rootname $screen]
+    uplevel #0 upvar #0 tkPriv.$disp tkPriv
+    global tkPriv
+    if [info exists tkPriv] {
+	set tkPriv(screen) $screen
+	return
+    }
+    set tkPriv(afterId) {}
+    set tkPriv(buttons) 0
+    set tkPriv(buttonWindow) {}
+    set tkPriv(dragging) 0
+    set tkPriv(focus) {}
+    set tkPriv(grab) {}
+    set tkPriv(initPos) {}
+    set tkPriv(inMenubutton) {}
+    set tkPriv(listboxPrev) {}
+    set tkPriv(mouseMoved) 0
+    set tkPriv(oldGrab) {}
+    set tkPriv(popup) {}
+    set tkPriv(postedMb) {}
+    set tkPriv(pressX) 0
+    set tkPriv(pressY) 0
+    set tkPriv(screen) $screen
+    set tkPriv(selectMode) char
+    set tkPriv(window) {}
+}
+
+# Do initial setup for tkPriv, so that it is always bound to something
+# (otherwise, if someone references it, it may get set to a non-upvar-ed
+# value, which will cause trouble later).
+
+tkScreenChanged [winfo screen .]
+
+# ----------------------------------------------------------------------
+# Read in files that define all of the class bindings.
+# ----------------------------------------------------------------------
+
+source $tk_library/button.tcl
+source $tk_library/entry.tcl
+source $tk_library/listbox.tcl
+source $tk_library/menu.tcl
+source $tk_library/scale.tcl
+source $tk_library/scrollbar.tcl
+source $tk_library/text.tcl
+
+# ----------------------------------------------------------------------
+# Default bindings for keyboard traversal.
+# ----------------------------------------------------------------------
+
+bind all <Tab> {focus [tk_focusNext %W]}
+bind all <Shift-Tab> {focus [tk_focusPrev %W]}
+
+# tkCancelRepeat --
+# This procedure is invoked to cancel an auto-repeat action described
+# by tkPriv(afterId).  It's used by several widgets to auto-scroll
+# the widget when the mouse is dragged out of the widget with a
+# button pressed.
+#
+# Arguments:
+# None.
+
+proc tkCancelRepeat {} {
+    global tkPriv
+    after cancel $tkPriv(afterId)
+    set tkPriv(afterId) {}
+}
+#@package: library/dialog tk_dialog
+
+# dialog.tcl --
+#
+# This file defines the procedure tk_dialog, which creates a dialog
+# box containing a bitmap, a message, and one or more buttons.
+#
+# @(#) dialog.tcl 1.16 95/07/28 09:35:57
+#
+# Copyright (c) 1992-1993 The Regents of the University of California.
+# Copyright (c) 1994-1995 Sun Microsystems, Inc.
+#
+# See the file "license.terms" for information on usage and redistribution
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+#
+
+#
+# tk_dialog:
+#
+# This procedure displays a dialog box, waits for a button in the dialog
+# to be invoked, then returns the index of the selected button.
+#
+# Arguments:
+# w -		Window to use for dialog top-level.
+# title -	Title to display in dialog's decorative frame.
+# text -	Message to display in dialog.
+# bitmap -	Bitmap to display in dialog (empty string means none).
+# default -	Index of button that is to display the default ring
+#		(-1 means none).
+# args -	One or more strings to display in buttons across the
+#		bottom of the dialog box.
+
+proc tk_dialog {w title text bitmap default args} {
+    global tkPriv
+
+    # 1. Create the top-level window and divide it into top
+    # and bottom parts.
+
+    catch {destroy $w}
+    toplevel $w -class Dialog
+    wm title $w $title
+    wm iconname $w Dialog
+    wm protocol $w WM_DELETE_WINDOW { }
+    wm transient $w [winfo toplevel [winfo parent $w]]
+    frame $w.top -relief raised -bd 1
+    pack $w.top -side top -fill both
+    frame $w.bot -relief raised -bd 1
+    pack $w.bot -side bottom -fill both
+
+    # 2. Fill the top part with bitmap and message.
+
+    label $w.msg -wraplength 3i -justify left -text $text \
+	    -font -Adobe-Times-Medium-R-Normal--*-180-*-*-*-*-*-*
+    pack $w.msg -in $w.top -side right -expand 1 -fill both -padx 3m -pady 3m
+    if {$bitmap != ""} {
+	label $w.bitmap -bitmap $bitmap
+	pack $w.bitmap -in $w.top -side left -padx 3m -pady 3m
+    }
+
+    # 3. Create a row of buttons at the bottom of the dialog.
+
+    set i 0
+    foreach but $args {
+	button $w.button$i -text $but -command "set tkPriv(button) $i"
+	if {$i == $default} {
+	    frame $w.default -relief sunken -bd 1
+	    raise $w.button$i $w.default
+	    pack $w.default -in $w.bot -side left -expand 1 -padx 3m -pady 2m
+	    pack $w.button$i -in $w.default -padx 2m -pady 2m
+	    bind $w <Return> "$w.button$i flash; set tkPriv(button) $i"
+	} else {
+	    pack $w.button$i -in $w.bot -side left -expand 1 \
+		    -padx 3m -pady 2m
+	}
+	incr i
+    }
+
+    # 4. Withdraw the window, then update all the geometry information
+    # so we know how big it wants to be, then center the window in the
+    # display and de-iconify it.
+
+    wm withdraw $w
+    update idletasks
+    set x [expr [winfo screenwidth $w]/2 - [winfo reqwidth $w]/2 \
+	    - [winfo vrootx [winfo parent $w]]]
+    set y [expr [winfo screenheight $w]/2 - [winfo reqheight $w]/2 \
+	    - [winfo vrooty [winfo parent $w]]]
+    wm geom $w +$x+$y
+    wm deiconify $w
+
+    # 5. Set a grab and claim the focus too.
+
+    set oldFocus [focus]
+    set oldGrab [grab current $w]
+    if {$oldGrab != ""} {
+	set grabStatus [grab status $oldGrab]
+    }
+    grab $w
+    tkwait visibility $w
+    if {$default >= 0} {
+	focus $w.button$default
+    } else {
+	focus $w
+    }
+
+    # 6. Wait for the user to respond, then restore the focus and
+    # return the index of the selected button.  Restore the focus
+    # before deleting the window, since otherwise the window manager
+    # may take the focus away so we can't redirect it.  Finally,
+    # restore any grab that was in effect.
+
+    tkwait variable tkPriv(button)
+    catch {focus $oldFocus}
+    destroy $w
+    if {$oldGrab != ""} {
+	if {$grabStatus == "global"} {
+	    grab -global $oldGrab
+	} else {
+	    grab $oldGrab
+	}
+    }
+    return $tkPriv(button)
+}
+#@package: library/tkerror tkerror
+
+# tkerror.tcl --
+#
+# This file contains a default version of the tkError procedure.  It
+# posts a dialog box with the error message and gives the user a chance
+# to see a more detailed stack trace.
+#
+# @(#) tkerror.tcl 1.6 95/07/28 09:36:05
+#
+# Copyright (c) 1992-1994 The Regents of the University of California.
+# Copyright (c) 1994-1995 Sun Microsystems, Inc.
+#
+# See the file "license.terms" for information on usage and redistribution
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+
+# tkerror --
+# This is the default version of tkerror.  It posts a dialog box containing
+# the error message and gives the user a chance to ask to see a stack
+# trace.
+# Arguments:
+# err -			The error message.
+
+proc tkerror err {
+    global errorInfo
+    set info $errorInfo
+    set button [tk_dialog .tkerrorDialog "Error in Tcl Script" \
+	    "Error: $err" error 0 OK "Skip Messages" "Stack Trace"]
+    if {$button == 0} {
+	return
+    } elseif {$button == 1} {
+	return -code break
+    }
+
+    set w .tkerrorTrace
+    catch {destroy $w}
+    toplevel $w -class ErrorTrace
+    wm minsize $w 1 1
+    wm title $w "Stack Trace for Error"
+    wm iconname $w "Stack Trace"
+    button $w.ok -text OK -command "destroy $w"
+    text $w.text -relief sunken -bd 2 -yscrollcommand "$w.scroll set" \
+	    -setgrid true -width 60 -height 20
+    scrollbar $w.scroll -relief sunken -command "$w.text yview"
+    pack $w.ok -side bottom -padx 3m -pady 2m
+    pack $w.scroll -side right -fill y
+    pack $w.text -side left -expand yes -fill both
+    $w.text insert 0.0 $info
+    $w.text mark set insert 0.0
+
+    # Center the window on the screen.
+
+    wm withdraw $w
+    update idletasks
+    set x [expr [winfo screenwidth $w]/2 - [winfo reqwidth $w]/2 \
+	    - [winfo vrootx [winfo parent $w]]]
+    set y [expr [winfo screenheight $w]/2 - [winfo reqheight $w]/2 \
+	    - [winfo vrooty [winfo parent $w]]]
+    wm geom $w +$x+$y
+    wm deiconify $w
+
+    # Be sure to release any grabs that might be present on the
+    # screen, since they could make it impossible for the user
+    # to interact with the stack trace.
+
+    if {[grab current .] != ""} {
+	grab release [grab current .]
+    }
+}
+#@package: library/button tkCheckRadioInvoke tkButtonInvoke tkButtonDown tkButtonEnter tkButtonUp tkButtonLeave
+
+# button.tcl --
+#
+# This file defines the default bindings for Tk label, button,
+# checkbutton, and radiobutton widgets and provides procedures
+# that help in implementing those bindings.
+#
+# @(#) button.tcl 1.17 95/05/05 16:56:01
+#
+# Copyright (c) 1992-1994 The Regents of the University of California.
+# Copyright (c) 1994 Sun Microsystems, Inc.
+#
+# See the file "license.terms" for information on usage and redistribution
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+#
+
+#-------------------------------------------------------------------------
+# The code below creates the default class bindings for buttons.
+#-------------------------------------------------------------------------
+
+bind Button <FocusIn> {}
+bind Button <Enter> {
+    tkButtonEnter %W
+}
+bind Button <Leave> {
+    tkButtonLeave %W
+}
+bind Button <1> {
+    tkButtonDown %W
+}
+bind Button <ButtonRelease-1> {
+    tkButtonUp %W
+}
+bind Button <space> {
+    tkButtonInvoke %W
+}
+bind Button <Return> {
+    if !$tk_strictMotif {
+	tkButtonInvoke %W
+    }
+}
+
+bind Checkbutton <FocusIn> {}
+bind Checkbutton <Enter> {
+    tkButtonEnter %W
+}
+bind Checkbutton <Leave> {
+    tkButtonLeave %W
+}
+bind Checkbutton <1> {
+    tkCheckRadioInvoke %W
+}
+bind Checkbutton <space> {
+    tkCheckRadioInvoke %W
+}
+bind Checkbutton <Return> {
+    if !$tk_strictMotif {
+	tkCheckRadioInvoke %W
+    }
+}
+
+bind Radiobutton <FocusIn> {}
+bind Radiobutton <Enter> {
+    tkButtonEnter %W
+}
+bind Radiobutton <Leave> {
+    tkButtonLeave %W
+}
+bind Radiobutton <1> {
+    tkCheckRadioInvoke %W
+}
+bind Radiobutton <space> {
+    tkCheckRadioInvoke %W
+}
+bind Radiobutton <Return> {
+    if !$tk_strictMotif {
+	tkCheckRadioInvoke %W
+    }
+}
+
+# tkButtonEnter --
+# The procedure below is invoked when the mouse pointer enters a
+# button widget.  It records the button we're in and changes the
+# state of the button to active unless the button is disabled.
+#
+# Arguments:
+# w -		The name of the widget.
+
+proc tkButtonEnter {w} {
+    global tkPriv
+    if {[$w cget -state] != "disabled"} {
+	$w config -state active
+	if {$tkPriv(buttonWindow) == $w} {
+	    $w configure -state active -relief sunken
+	}
+    }
+    set tkPriv(window) $w
+}
+
+# tkButtonLeave --
+# The procedure below is invoked when the mouse pointer leaves a
+# button widget.  It changes the state of the button back to
+# inactive.  If we're leaving the button window with a mouse button
+# pressed (tkPriv(buttonWindow) == $w), restore the relief of the
+# button too.
+#
+# Arguments:
+# w -		The name of the widget.
+
+proc tkButtonLeave w {
+    global tkPriv
+    if {[$w cget -state] != "disabled"} {
+	$w config -state normal
+    }
+    if {$w == $tkPriv(buttonWindow)} {
+	$w configure -relief $tkPriv(relief)
+    }
+    set tkPriv(window) ""
+}
+
+# tkButtonDown --
+# The procedure below is invoked when the mouse button is pressed in
+# a button widget.  It records the fact that the mouse is in the button,
+# saves the button's relief so it can be restored later, and changes
+# the relief to sunken.
+#
+# Arguments:
+# w -		The name of the widget.
+
+proc tkButtonDown w {
+    global tkPriv
+    set tkPriv(relief) [lindex [$w config -relief] 4]
+    if {[$w cget -state] != "disabled"} {
+	set tkPriv(buttonWindow) $w
+	$w config -relief sunken
+    }
+}
+
+# tkButtonUp --
+# The procedure below is invoked when the mouse button is released
+# in a button widget.  It restores the button's relief and invokes
+# the command as long as the mouse hasn't left the button.
+#
+# Arguments:
+# w -		The name of the widget.
+
+proc tkButtonUp w {
+    global tkPriv
+    if {$w == $tkPriv(buttonWindow)} {
+	set tkPriv(buttonWindow) ""
+	$w config -relief $tkPriv(relief)
+	if {($w == $tkPriv(window))
+		&& ([$w cget -state] != "disabled")} {
+	    uplevel #0 [list $w invoke]
+	}
+    }
+}
+
+# tkButtonInvoke --
+# The procedure below is called when a button is invoked through
+# the keyboard.  It simulate a press of the button via the mouse.
+#
+# Arguments:
+# w -		The name of the widget.
+
+proc tkButtonInvoke w {
+    if {[$w cget -state] != "disabled"} {
+	set oldRelief [$w cget -relief]
+	set oldState [$w cget -state]
+	$w configure -state active -relief sunken
+	update idletasks
+	after 100
+	$w configure -state $oldState -relief $oldRelief
+	uplevel #0 [list $w invoke]
+    }
+}
+
+# tkCheckRadioInvoke --
+# The procedure below is invoked when the mouse button is pressed in
+# a checkbutton or radiobutton widget, or when the widget is invoked
+# through the keyboard.  It invokes the widget if it
+# isn't disabled.
+#
+# Arguments:
+# w -		The name of the widget.
+
+proc tkCheckRadioInvoke w {
+    if {[$w cget -state] != "disabled"} {
+	uplevel #0 [list $w invoke]
+    }
+}
+#@package: library/scrollbar tkScrollButtonUp tkScrollByPages tkScrollButtonDown tkScrollToPos tkScrollByUnits tkScrollDrag tkScrollEndDrag tkScrollSelect tkScrollStartDrag tkScrollTopBottom
+
+# scrollbar.tcl --
+#
+# This file defines the default bindings for Tk scrollbar widgets.
+# It also provides procedures that help in implementing the bindings.
+#
+# @(#) scrollbar.tcl 1.18 95/09/05 15:19:08
+#
+# Copyright (c) 1994 The Regents of the University of California.
+# Copyright (c) 1994-1995 Sun Microsystems, Inc.
+#
+# See the file "license.terms" for information on usage and redistribution
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+#
+
+#-------------------------------------------------------------------------
+# The code below creates the default class bindings for scrollbars.
+#-------------------------------------------------------------------------
+
+# Standard Motif bindings:
+
+bind Scrollbar <Enter> {
+    if $tk_strictMotif {
+	set tkPriv(activeBg) [%W cget -activebackground]
+	%W config -activebackground [%W cget -background]
+    }
+    %W activate [%W identify %x %y]
+}
+bind Scrollbar <Motion> {
+    %W activate [%W identify %x %y]
+}
+bind Scrollbar <Leave> {
+    if $tk_strictMotif {
+	%W config -activebackground $tkPriv(activeBg)
+    }
+    %W activate {}
+}
+bind Scrollbar <1> {
+    tkScrollButtonDown %W %x %y
+}
+bind Scrollbar <B1-Motion> {
+    tkScrollDrag %W %x %y
+}
+bind Scrollbar <B1-B2-Motion> {
+    tkScrollDrag %W %x %y
+}
+bind Scrollbar <ButtonRelease-1> {
+    tkScrollButtonUp %W %x %y
+}
+bind Scrollbar <B1-Leave> {
+    # Prevents <Leave> binding from being invoked.
+}
+bind Scrollbar <B1-Enter> {
+    # Prevents <Enter> binding from being invoked.
+}
+bind Scrollbar <2> {
+    tkScrollButton2Down %W %x %y
+}
+bind Scrollbar <B1-2> {
+    # Do nothing, since button 1 is already down.
+}
+bind Scrollbar <B2-1> {
+    # Do nothing, since button 2 is already down.
+}
+bind Scrollbar <B2-Motion> {
+    tkScrollDrag %W %x %y
+}
+bind Scrollbar <ButtonRelease-2> {
+    tkScrollButtonUp %W %x %y
+}
+bind Scrollbar <B1-ButtonRelease-2> {
+    # Do nothing:  B1 release will handle it.
+}
+bind Scrollbar <B2-ButtonRelease-1> {
+    # Do nothing:  B2 release will handle it.
+}
+bind Scrollbar <B2-Leave> {
+    # Prevents <Leave> binding from being invoked.
+}
+bind Scrollbar <B2-Enter> {
+    # Prevents <Enter> binding from being invoked.
+}
+bind Scrollbar <Control-1> {
+    tkScrollTopBottom %W %x %y
+}
+bind Scrollbar <Control-2> {
+    tkScrollTopBottom %W %x %y
+}
+
+bind Scrollbar <Up> {
+    tkScrollByUnits %W v -1
+}
+bind Scrollbar <Down> {
+    tkScrollByUnits %W v 1
+}
+bind Scrollbar <Control-Up> {
+    tkScrollByPages %W v -1
+}
+bind Scrollbar <Control-Down> {
+    tkScrollByPages %W v 1
+}
+bind Scrollbar <Left> {
+    tkScrollByUnits %W h -1
+}
+bind Scrollbar <Right> {
+    tkScrollByUnits %W h 1
+}
+bind Scrollbar <Control-Left> {
+    tkScrollByPages %W h -1
+}
+bind Scrollbar <Control-Right> {
+    tkScrollByPages %W h 1
+}
+bind Scrollbar <Prior> {
+    tkScrollByPages %W hv -1
+}
+bind Scrollbar <Next> {
+    tkScrollByPages %W hv 1
+}
+bind Scrollbar <Home> {
+    tkScrollToPos %W 0
+}
+bind Scrollbar <End> {
+    tkScrollToPos %W 1
+}
+
+# tkScrollButtonDown --
+# This procedure is invoked when a button is pressed in a scrollbar.
+# It changes the way the scrollbar is displayed and takes actions
+# depending on where the mouse is.
+#
+# Arguments:
+# w -		The scrollbar widget.
+# x, y -	Mouse coordinates.
+
+proc tkScrollButtonDown {w x y} {
+    global tkPriv
+    set tkPriv(relief) [$w cget -activerelief]
+    $w configure -activerelief sunken
+    set element [$w identify $x $y]
+    if {$element == "slider"} {
+	tkScrollStartDrag $w $x $y
+    } else {
+	tkScrollSelect $w $element initial
+    }
+}
+
+# tkScrollButtonUp --
+# This procedure is invoked when a button is released in a scrollbar.
+# It cancels scans and auto-repeats that were in progress, and restores
+# the way the active element is displayed.
+#
+# Arguments:
+# w -		The scrollbar widget.
+# x, y -	Mouse coordinates.
+
+proc tkScrollButtonUp {w x y} {
+    global tkPriv
+    tkCancelRepeat
+    $w configure -activerelief $tkPriv(relief)
+    tkScrollEndDrag $w $x $y
+    $w activate [$w identify $x $y]
+}
+
+# tkScrollSelect --
+# This procedure is invoked when a button is pressed over the scrollbar.
+# It invokes one of several scrolling actions depending on where in
+# the scrollbar the button was pressed.
+#
+# Arguments:
+# w -		The scrollbar widget.
+# element -	The element of the scrollbar that was selected, such
+#		as "arrow1" or "trough2".  Shouldn't be "slider".
+# repeat -	Whether and how to auto-repeat the action:  "noRepeat"
+#		means don't auto-repeat, "initial" means this is the
+#		first action in an auto-repeat sequence, and "again"
+#		means this is the second repetition or later.
+
+proc tkScrollSelect {w element repeat} {
+    global tkPriv
+    if {$element == "arrow1"} {
+	tkScrollByUnits $w hv -1
+    } elseif {$element == "trough1"} {
+	tkScrollByPages $w hv -1
+    } elseif {$element == "trough2"} {
+	tkScrollByPages $w hv 1
+    } elseif {$element == "arrow2"} {
+	tkScrollByUnits $w hv 1
+    } else {
+	return
+    }
+    if {$repeat == "again"} {
+	set tkPriv(afterId) [after [$w cget -repeatinterval] \
+		tkScrollSelect $w $element again]
+    } elseif {$repeat == "initial"} {
+	set delay [$w cget -repeatdelay]
+	if {$delay > 0} {
+	    set tkPriv(afterId) [after $delay tkScrollSelect $w $element again]
+	}
+    }
+}
+
+# tkScrollStartDrag --
+# This procedure is called to initiate a drag of the slider.  It just
+# remembers the starting position of the mouse and slider.
+#
+# Arguments:
+# w -		The scrollbar widget.
+# x, y -	The mouse position at the start of the drag operation.
+
+proc tkScrollStartDrag {w x y} {
+    global tkPriv
+
+    if {[$w cget -command] == ""} {
+	return
+    }
+    set tkPriv(pressX) $x
+    set tkPriv(pressY) $y
+    set tkPriv(initValues) [$w get]
+    set iv0 [lindex $tkPriv(initValues) 0]
+    if {[llength $tkPriv(initValues)] == 2} {
+	set tkPriv(initPos) $iv0
+    } else {
+	if {$iv0 == 0} {
+	    set tkPriv(initPos) 0.0
+	} else {
+	    set tkPriv(initPos) [expr (double([lindex $tkPriv(initValues) 2])) \
+		    / [lindex $tkPriv(initValues) 0]]
+	}
+    }
+}
+
+# tkScrollDrag --
+# This procedure is called for each mouse motion even when the slider
+# is being dragged.  It notifies the associated widget if we're not
+# jump scrolling, and it just updates the scrollbar if we are jump
+# scrolling.
+#
+# Arguments:
+# w -		The scrollbar widget.
+# x, y -	The current mouse position.
+
+proc tkScrollDrag {w x y} {
+    global tkPriv
+
+    if {$tkPriv(initPos) == ""} {
+	return
+    }
+    set delta [$w delta [expr $x - $tkPriv(pressX)] [expr $y - $tkPriv(pressY)]]
+    if [$w cget -jump] {
+	if {[llength $tkPriv(initValues)] == 2} {
+	    $w set [expr [lindex $tkPriv(initValues) 0] + $delta] \
+		    [expr [lindex $tkPriv(initValues) 1] + $delta]
+	} else {
+	    set delta [expr round($delta * [lindex $tkPriv(initValues) 0])]
+	    eval $w set [lreplace $tkPriv(initValues) 2 3 \
+		    [expr [lindex $tkPriv(initValues) 2] + $delta] \
+		    [expr [lindex $tkPriv(initValues) 3] + $delta]]
+	}
+    } else {
+	tkScrollToPos $w [expr $tkPriv(initPos) + $delta]
+    }
+}
+
+# tkScrollEndDrag --
+# This procedure is called to end an interactive drag of the slider.
+# It scrolls the window if we're in jump mode, otherwise it does nothing.
+#
+# Arguments:
+# w -		The scrollbar widget.
+# x, y -	The mouse position at the end of the drag operation.
+
+proc tkScrollEndDrag {w x y} {
+    global tkPriv
+
+    if {$tkPriv(initPos) == ""} {
+	return
+    }
+    if [$w cget -jump] {
+	set delta [$w delta [expr $x - $tkPriv(pressX)] \
+		[expr $y - $tkPriv(pressY)]]
+	tkScrollToPos $w [expr $tkPriv(initPos) + $delta]
+    }
+    set tkPriv(initPos) ""
+}
+
+# tkScrollByUnits --
+# This procedure tells the scrollbar's associated widget to scroll up
+# or down by a given number of units.  It notifies the associated widget
+# in different ways for old and new command syntaxes.
+#
+# Arguments:
+# w -		The scrollbar widget.
+# orient -	Which kinds of scrollbars this applies to:  "h" for
+#		horizontal, "v" for vertical, "hv" for both.
+# amount -	How many units to scroll:  typically 1 or -1.
+
+proc tkScrollByUnits {w orient amount} {
+    set cmd [$w cget -command]
+    if {($cmd == "") || ([string first \
+	    [string index [$w cget -orient] 0] $orient] < 0)} {
+	return
+    }
+    set info [$w get]
+    if {[llength $info] == 2} {
+	uplevel #0 $cmd scroll $amount units
+    } else {
+	uplevel #0 $cmd [expr [lindex $info 2] + $amount]
+    }
+}
+
+# tkScrollByPages --
+# This procedure tells the scrollbar's associated widget to scroll up
+# or down by a given number of screenfuls.  It notifies the associated
+# widget in different ways for old and new command syntaxes.
+#
+# Arguments:
+# w -		The scrollbar widget.
+# orient -	Which kinds of scrollbars this applies to:  "h" for
+#		horizontal, "v" for vertical, "hv" for both.
+# amount -	How many screens to scroll:  typically 1 or -1.
+
+proc tkScrollByPages {w orient amount} {
+    set cmd [$w cget -command]
+    if {($cmd == "") || ([string first \
+	    [string index [$w cget -orient] 0] $orient] < 0)} {
+	return
+    }
+    set info [$w get]
+    if {[llength $info] == 2} {
+	uplevel #0 $cmd scroll $amount pages
+    } else {
+	uplevel #0 $cmd [expr [lindex $info 2] + $amount*([lindex $info 1] - 1)]
+    }
+}
+
+# tkScrollToPos --
+# This procedure tells the scrollbar's associated widget to scroll to
+# a particular location, given by a fraction between 0 and 1.  It notifies
+# the associated widget in different ways for old and new command syntaxes.
+#
+# Arguments:
+# w -		The scrollbar widget.
+# pos -		A fraction between 0 and 1 indicating a desired position
+#		in the document.
+
+proc tkScrollToPos {w pos} {
+    set cmd [$w cget -command]
+    if {($cmd == "")} {
+	return
+    }
+    set info [$w get]
+    if {[llength $info] == 2} {
+	uplevel #0 $cmd moveto $pos
+    } else {
+	uplevel #0 $cmd [expr round([lindex $info 0]*$pos)]
+    }
+}
+
+# tkScrollTopBottom
+# Scroll to the top or bottom of the document, depending on the mouse
+# position.
+#
+# Arguments:
+# w -		The scrollbar widget.
+# x, y -	Mouse coordinates within the widget.
+
+proc tkScrollTopBottom {w x y} {
+    set element [$w identify $x $y]
+    if [string match *1 $element] {
+	tkScrollToPos $w 0
+    } elseif [string match *2 $element] {
+	tkScrollToPos $w 1
+    }
+}
+
+# tkScrollButton2Down
+# This procedure is invoked when button 2 is pressed over a scrollbar.
+# If the button is over the trough or slider, it sets the scrollbar to
+# the mouse position and starts a slider drag.  Otherwise it just
+# behaves the same as button 1.
+#
+# Arguments:
+# w -		The scrollbar widget.
+# x, y -	Mouse coordinates within the widget.
+
+proc tkScrollButton2Down {w x y} {
+    global tkPriv
+    set element [$w identify $x $y]
+    if {($element == "arrow1") || ($element == "arrow2")} {
+	tkScrollButtonDown $w $x $y
+	return
+    }
+    tkScrollToPos $w [$w fraction $x $y]
+
+    # Need the "update idletasks" below so that the widget calls us
+    # back to reset the actual scrollbar position before we start the
+    # slider drag.
+
+    update idletasks
+    set tkPriv(relief) [$w cget -activerelief]
+    $w configure -activerelief sunken
+    $w activate slider
+    tkScrollStartDrag $w $x $y
+}
+#@package: library/text tkTextKeySelect tkTextSetCursor tkTextClipboardKeysyms tkTextTranspose tkTextScrollPages tkTextKeyExtend tkTextSelectTo tkTextPrevPara tkTextButton1 tkTextUpDownLine tkTextNextPara tkTextInsert tkTextAutoScan tkTextResetAnchor
+
+# text.tcl --
+#
+# This file defines the default bindings for Tk text widgets and provides
+# procedures that help in implementing the bindings.
+#
+# @(#) text.tcl 1.36 95/06/28 10:24:23
+#
+# Copyright (c) 1992-1994 The Regents of the University of California.
+# Copyright (c) 1994-1995 Sun Microsystems, Inc.
+#
+# See the file "license.terms" for information on usage and redistribution
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+#
+
+#-------------------------------------------------------------------------
+# Elements of tkPriv that are used in this file:
+#
+# afterId -		If non-null, it means that auto-scanning is underway
+#			and it gives the "after" id for the next auto-scan
+#			command to be executed.
+# char -		Character position on the line;  kept in order
+#			to allow moving up or down past short lines while
+#			still remembering the desired position.
+# mouseMoved -		Non-zero means the mouse has moved a significant
+#			amount since the button went down (so, for example,
+#			start dragging out a selection).
+# prevPos -		Used when moving up or down lines via the keyboard.
+#			Keeps track of the previous insert position, so
+#			we can distinguish a series of ups and downs, all
+#			in a row, from a new up or down.
+# selectMode -		The style of selection currently underway:
+#			char, word, or line.
+# x, y -		Last known mouse coordinates for scanning
+#			and auto-scanning.
+#-------------------------------------------------------------------------
+
+# tkTextClipboardKeysyms --
+# This procedure is invoked to identify the keys that correspond to
+# the "copy", "cut", and "paste" functions for the clipboard.
+#
+# Arguments:
+# copy -	Name of the key (keysym name plus modifiers, if any,
+#		such as "Meta-y") used for the copy operation.
+# cut -		Name of the key used for the cut operation.
+# paste -	Name of the key used for the paste operation.
+
+proc tkTextClipboardKeysyms {copy cut paste} {
+    bind Text <$copy> {
+	if {[selection own -displayof %W] == "%W"} {
+	    clipboard clear -displayof %W
+	    catch {
+		clipboard append -displayof %W [selection get -displayof %W]
+	    }
+	}
+    }
+    bind Text <$cut> {
+	if {[selection own -displayof %W] == "%W"} {
+	    clipboard clear -displayof %W
+	    catch {
+		clipboard append -displayof %W [selection get -displayof %W]
+		%W delete sel.first sel.last
+	    }
+	}
+    }
+    bind Text <$paste> {
+	catch {
+	    %W insert insert [selection get -displayof %W \
+		    -selection CLIPBOARD]
+	}
+    }
+}
+
+#-------------------------------------------------------------------------
+# The code below creates the default class bindings for entries.
+#-------------------------------------------------------------------------
+
+    # Standard Motif bindings:
+
+bind Text <1> {
+    tkTextButton1 %W %x %y
+    %W tag remove sel 0.0 end
+}
+bind Text <B1-Motion> {
+    set tkPriv(x) %x
+    set tkPriv(y) %y
+    tkTextSelectTo %W %x %y
+}
+bind Text <Double-1> {
+    set tkPriv(selectMode) word
+    tkTextSelectTo %W %x %y
+    catch {%W mark set insert sel.first}
+}
+bind Text <Triple-1> {
+    set tkPriv(selectMode) line
+    tkTextSelectTo %W %x %y
+    catch {%W mark set insert sel.first}
+}
+bind Text <Shift-1> {
+    tkTextResetAnchor %W @%x,%y
+    set tkPriv(selectMode) char
+    tkTextSelectTo %W %x %y
+}
+bind Text <Double-Shift-1>	{
+    set tkPriv(selectMode) word
+    tkTextSelectTo %W %x %y
+}
+bind Text <Triple-Shift-1>	{
+    set tkPriv(selectMode) line
+    tkTextSelectTo %W %x %y
+}
+bind Text <B1-Leave> {
+    set tkPriv(x) %x
+    set tkPriv(y) %y
+    tkTextAutoScan %W
+}
+bind Text <B1-Enter> {
+    tkCancelRepeat
+}
+bind Text <ButtonRelease-1> {
+    tkCancelRepeat
+}
+bind Text <Control-1> {
+    %W mark set insert @%x,%y
+}
+bind Text <Left> {
+    tkTextSetCursor %W [%W index {insert - 1c}]
+}
+bind Text <Right> {
+    tkTextSetCursor %W [%W index {insert + 1c}]
+}
+bind Text <Up> {
+    tkTextSetCursor %W [tkTextUpDownLine %W -1]
+}
+bind Text <Down> {
+    tkTextSetCursor %W [tkTextUpDownLine %W 1]
+}
+bind Text <Shift-Left> {
+    tkTextKeySelect %W [%W index {insert - 1c}]
+}
+bind Text <Shift-Right> {
+    tkTextKeySelect %W [%W index {insert + 1c}]
+}
+bind Text <Shift-Up> {
+    tkTextKeySelect %W [tkTextUpDownLine %W -1]
+}
+bind Text <Shift-Down> {
+    tkTextKeySelect %W [tkTextUpDownLine %W 1]
+}
+bind Text <Control-Left> {
+    tkTextSetCursor %W [%W index {insert - 1c wordstart}]
+}
+bind Text <Control-Right> {
+    tkTextSetCursor %W [%W index {insert wordend}]
+}
+bind Text <Control-Up> {
+    tkTextSetCursor %W [tkTextPrevPara %W insert]
+}
+bind Text <Control-Down> {
+    tkTextSetCursor %W [tkTextNextPara %W insert]
+}
+bind Text <Shift-Control-Left> {
+    tkTextKeySelect %W [%W index {insert - 1c wordstart}]
+}
+bind Text <Shift-Control-Right> {
+    tkTextKeySelect %W [%W index {insert wordend}]
+}
+bind Text <Shift-Control-Up> {
+    tkTextKeySelect %W [tkTextPrevPara %W insert]
+}
+bind Text <Shift-Control-Down> {
+    tkTextKeySelect %W [tkTextNextPara %W insert]
+}
+bind Text <Prior> {
+    tkTextSetCursor %W [tkTextScrollPages %W -1]
+}
+bind Text <Shift-Prior> {
+    tkTextKeySelect %W [tkTextScrollPages %W -1]
+}
+bind Text <Next> {
+    tkTextSetCursor %W [tkTextScrollPages %W 1]
+}
+bind Text <Shift-Next> {
+    tkTextKeySelect %W [tkTextScrollPages %W 1]
+}
+bind Text <Control-Prior> {
+    %W xview scroll -1 page
+}
+bind Text <Control-Next> {
+    %W xview scroll 1 page
+}
+
+bind Text <Home> {
+    tkTextSetCursor %W {insert linestart}
+}
+bind Text <Shift-Home> {
+    tkTextKeySelect %W {insert linestart}
+}
+bind Text <End> {
+    tkTextSetCursor %W {insert lineend}
+}
+bind Text <Shift-End> {
+    tkTextKeySelect %W {insert lineend}
+}
+bind Text <Control-Home> {
+    tkTextSetCursor %W 1.0
+}
+bind Text <Control-Shift-Home> {
+    tkTextKeySelect %W 1.0
+}
+bind Text <Control-End> {
+    tkTextSetCursor %W {end - 1 char}
+}
+bind Text <Control-Shift-End> {
+    tkTextKeySelect %W {end - 1 char}
+}
+
+bind Text <Tab> {
+    tkTextInsert %W \t
+    focus %W
+    break
+}
+bind Text <Shift-Tab> {
+    # Needed only to keep <Tab> binding from triggering;  doesn't
+    # have to actually do anything.
+}
+bind Text <Control-Tab> {
+    focus [tk_focusNext %W]
+}
+bind Text <Control-Shift-Tab> {
+    focus [tk_focusPrev %W]
+}
+bind Text <Control-i> {
+    tkTextInsert %W \t
+}
+bind Text <Return> {
+    tkTextInsert %W \n
+}
+bind Text <Delete> {
+    if {[%W tag nextrange sel 1.0 end] != ""} {
+	%W delete sel.first sel.last
+    } else {
+	%W delete insert
+	%W see insert
+    }
+}
+bind Text <BackSpace> {
+    if {[%W tag nextrange sel 1.0 end] != ""} {
+	%W delete sel.first sel.last
+    } elseif [%W compare insert != 1.0] {
+	%W delete insert-1c
+	%W see insert
+    }
+}
+
+bind Text <Control-space> {
+    %W mark set anchor insert
+}
+bind Text <Select> {
+    %W mark set anchor insert
+}
+bind Text <Control-Shift-space> {
+    set tkPriv(selectMode) char
+    tkTextKeyExtend %W insert
+}
+bind Text <Shift-Select> {
+    set tkPriv(selectMode) char
+    tkTextKeyExtend %W insert
+}
+bind Text <Control-slash> {
+    %W tag add sel 1.0 end
+}
+bind Text <Control-backslash> {
+    %W tag remove sel 1.0 end
+}
+tkTextClipboardKeysyms F16 F20 F18
+bind Text <Insert> {
+    catch {tkTextInsert %W [selection get -displayof %W]}
+}
+bind Text <KeyPress> {
+    tkTextInsert %W %A
+}
+
+# Ignore all Alt, Meta, and Control keypresses unless explicitly bound.
+# Otherwise, if a widget binding for one of these is defined, the
+# <KeyPress> class binding will also fire and insert the character,
+# which is wrong.  Ditto for <Escape>.
+
+bind Text <Alt-KeyPress> {# nothing }
+bind Text <Meta-KeyPress> {# nothing}
+bind Text <Control-KeyPress> {# nothing}
+bind Text <Escape> {# nothing}
+bind Text <KP_Enter> {# nothing}
+
+# Additional emacs-like bindings:
+
+if !$tk_strictMotif {
+    bind Text <Control-a> {
+	tkTextSetCursor %W {insert linestart}
+    }
+    bind Text <Control-b> {
+	tkTextSetCursor %W insert-1c
+    }
+    bind Text <Control-d> {
+	%W delete insert
+    }
+    bind Text <Control-e> {
+	tkTextSetCursor %W {insert lineend}
+    }
+    bind Text <Control-f> {
+	tkTextSetCursor %W insert+1c
+    }
+    bind Text <Control-k> {
+	if [%W compare insert == {insert lineend}] {
+	    %W delete insert
+	} else {
+	    %W delete insert {insert lineend}
+	}
+    }
+    bind Text <Control-n> {
+	tkTextSetCursor %W [tkTextUpDownLine %W 1]
+    }
+    bind Text <Control-o> {
+	%W insert insert \n
+	%W mark set insert insert-1c
+    }
+    bind Text <Control-p> {
+	tkTextSetCursor %W [tkTextUpDownLine %W -1]
+    }
+    bind Text <Control-t> {
+	tkTextTranspose %W
+    }
+    bind Text <Control-v> {
+	tkTextScrollPages %W 1
+    }
+    bind Text <Meta-b> {
+	tkTextSetCursor %W {insert - 1c wordstart}
+    }
+    bind Text <Meta-d> {
+	%W delete insert {insert wordend}
+    }
+    bind Text <Meta-f> {
+	tkTextSetCursor %W {insert wordend}
+    }
+    bind Text <Meta-less> {
+	tkTextSetCursor %W 1.0
+    }
+    bind Text <Meta-greater> {
+	tkTextSetCursor %W end-1c
+    }
+    bind Text <Meta-BackSpace> {
+	%W delete {insert -1c wordstart} insert
+    }
+    bind Text <Meta-Delete> {
+	%W delete {insert -1c wordstart} insert
+    }
+    tkTextClipboardKeysyms Meta-w Control-w Control-y
+
+    # A few additional bindings of my own.
+
+    bind Text <Control-h> {
+	if [%W compare insert != 1.0] {
+	    %W delete insert-1c
+	    %W see insert
+	}
+    }
+    bind Text <2> {
+	%W scan mark %x %y
+	set tkPriv(x) %x
+	set tkPriv(y) %y
+	set tkPriv(mouseMoved) 0
+    }
+    bind Text <B2-Motion> {
+	if {(%x != $tkPriv(x)) || (%y != $tkPriv(y))} {
+	    set tkPriv(mouseMoved) 1
+	}
+	if $tkPriv(mouseMoved) {
+	    %W scan dragto %x %y
+	}
+    }
+    bind Text <ButtonRelease-2> {
+	if !$tkPriv(mouseMoved) {
+	    catch {
+		%W insert @%x,%y [selection get -displayof %W]
+	    }
+	}
+    }
+}
+set tkPriv(prevPos) {}
+
+# tkTextButton1 --
+# This procedure is invoked to handle button-1 presses in text
+# widgets.  It moves the insertion cursor, sets the selection anchor,
+# and claims the input focus.
+#
+# Arguments:
+# w -		The text window in which the button was pressed.
+# x -		The x-coordinate of the button press.
+# y -		The x-coordinate of the button press.
+
+proc tkTextButton1 {w x y} {
+    global tkPriv
+
+    set tkPriv(selectMode) char
+    set tkPriv(mouseMoved) 0
+    set tkPriv(pressX) $x
+    $w mark set insert @$x,$y
+    $w mark set anchor insert
+    if {[$w cget -state] == "normal"} {focus $w}
+}
+
+# tkTextSelectTo --
+# This procedure is invoked to extend the selection, typically when
+# dragging it with the mouse.  Depending on the selection mode (character,
+# word, line) it selects in different-sized units.  This procedure
+# ignores mouse motions initially until the mouse has moved from
+# one character to another or until there have been multiple clicks.
+#
+# Arguments:
+# w -		The text window in which the button was pressed.
+# x -		Mouse x position.
+# y - 		Mouse y position.
+
+proc tkTextSelectTo {w x y} {
+    global tkPriv
+
+    set cur [$w index @$x,$y]
+    if [catch {$w index anchor}] {
+	$w mark set anchor $cur
+    }
+    set anchor [$w index anchor]
+    if {[$w compare $cur != $anchor] || (abs($tkPriv(pressX) - $x) >= 3)} {
+	set tkPriv(mouseMoved) 1
+    }
+    switch $tkPriv(selectMode) {
+	char {
+	    if [$w compare $cur < anchor] {
+		set first $cur
+		set last anchor
+	    } else {
+		set first anchor
+		set last [$w index "$cur + 1c"]
+	    }
+	}
+	word {
+	    if [$w compare $cur < anchor] {
+		set first [$w index "$cur wordstart"]
+		set last [$w index "anchor - 1c wordend"]
+	    } else {
+		set first [$w index "anchor wordstart"]
+		set last [$w index "$cur wordend"]
+	    }
+	}
+	line {
+	    if [$w compare $cur < anchor] {
+		set first [$w index "$cur linestart"]
+		set last [$w index "anchor - 1c lineend + 1c"]
+	    } else {
+		set first [$w index "anchor linestart"]
+		set last [$w index "$cur lineend + 1c"]
+	    }
+	}
+    }
+    if {$tkPriv(mouseMoved) || ($tkPriv(selectMode) != "char")} {
+	$w tag remove sel 0.0 $first
+	$w tag add sel $first $last
+	$w tag remove sel $last end
+	update idletasks
+    }
+}
+
+# tkTextKeyExtend --
+# This procedure handles extending the selection from the keyboard,
+# where the point to extend to is really the boundary between two
+# characters rather than a particular character.
+#
+# Arguments:
+# w -		The text window.
+# index -	The point to which the selection is to be extended.
+
+proc tkTextKeyExtend {w index} {
+    global tkPriv
+
+    set cur [$w index $index]
+    if [catch {$w index anchor}] {
+	$w mark set anchor $cur
+    }
+    set anchor [$w index anchor]
+    if [$w compare $cur < anchor] {
+	set first $cur
+	set last anchor
+    } else {
+	set first anchor
+	set last $cur
+    }
+    $w tag remove sel 0.0 $first
+    $w tag add sel $first $last
+    $w tag remove sel $last end
+}
+
+# tkTextAutoScan --
+# This procedure is invoked when the mouse leaves a text window
+# with button 1 down.  It scrolls the window up, down, left, or right,
+# depending on where the mouse is (this information was saved in
+# tkPriv(x) and tkPriv(y)), and reschedules itself as an "after"
+# command so that the window continues to scroll until the mouse
+# moves back into the window or the mouse button is released.
+#
+# Arguments:
+# w -		The text window.
+
+proc tkTextAutoScan {w} {
+    global tkPriv
+    if {$tkPriv(y) >= [winfo height $w]} {
+	$w yview scroll 2 units
+    } elseif {$tkPriv(y) < 0} {
+	$w yview scroll -2 units
+    } elseif {$tkPriv(x) >= [winfo width $w]} {
+	$w xview scroll 2 units
+    } elseif {$tkPriv(x) < 0} {
+	$w xview scroll -2 units
+    } else {
+	return
+    }
+    tkTextSelectTo $w $tkPriv(x) $tkPriv(y)
+    set tkPriv(afterId) [after 50 tkTextAutoScan $w]
+}
+
+# tkTextSetCursor
+# Move the insertion cursor to a given position in a text.  Also
+# clears the selection, if there is one in the text, and makes sure
+# that the insertion cursor is visible.  Also, don't let the insertion
+# cursor appear on the dummy last line of the text.
+#
+# Arguments:
+# w -		The text window.
+# pos -		The desired new position for the cursor in the window.
+
+proc tkTextSetCursor {w pos} {
+    global tkPriv
+
+    if [$w compare $pos == end] {
+	set pos {end - 1 chars}
+    }
+    $w mark set insert $pos
+    $w tag remove sel 1.0 end
+    $w see insert
+}
+
+# tkTextKeySelect
+# This procedure is invoked when stroking out selections using the
+# keyboard.  It moves the cursor to a new position, then extends
+# the selection to that position.
+#
+# Arguments:
+# w -		The text window.
+# new -		A new position for the insertion cursor (the cursor hasn't
+#		actually been moved to this position yet).
+
+proc tkTextKeySelect {w new} {
+    global tkPriv
+
+    if {[$w tag nextrange sel 1.0 end] == ""} {
+	if [$w compare $new < insert] {
+	    $w tag add sel $new insert
+	} else {
+	    $w tag add sel insert $new
+	}
+	$w mark set anchor insert
+    } else {
+	if [$w compare $new < anchor] {
+	    set first $new
+	    set last anchor
+	} else {
+	    set first anchor
+	    set last $new
+	}
+	$w tag remove sel 1.0 $first
+	$w tag add sel $first $last
+	$w tag remove sel $last end
+    }
+    $w mark set insert $new
+    $w see insert
+    update idletasks
+}
+
+# tkTextResetAnchor --
+# Set the selection anchor to whichever end is farthest from the
+# index argument.  One special trick: if the selection has two or
+# fewer characters, just leave the anchor where it is.  In this
+# case it doesn't matter which point gets chosen for the anchor,
+# and for the things like Shift-Left and Shift-Right this produces
+# better behavior when the cursor moves back and forth across the
+# anchor.
+#
+# Arguments:
+# w -		The text widget.
+# index -	Position at which mouse button was pressed, which determines
+#		which end of selection should be used as anchor point.
+
+proc tkTextResetAnchor {w index} {
+    global tkPriv
+
+    if {[$w tag ranges sel] == ""} {
+	$w mark set anchor $index
+	return
+    }
+    set a [$w index $index]
+    set b [$w index sel.first]
+    set c [$w index sel.last]
+    if [$w compare $a < $b] {
+	$w mark set anchor sel.last
+	return
+    }
+    if [$w compare $a > $c] {
+	$w mark set anchor sel.first
+	return
+    }
+    scan $a "%d.%d" lineA chA
+    scan $b "%d.%d" lineB chB
+    scan $c "%d.%d" lineC chC
+    if {$lineB < $lineC+2} {
+	set total [string length [$w get $b $c]]
+	if {$total <= 2} {
+	    return
+	}
+	if {[string length [$w get $b $a]] < ($total/2)} {
+	    $w mark set anchor sel.last
+	} else {
+	    $w mark set anchor sel.first
+	}
+	return
+    }
+    if {($lineA-$lineB) < ($lineC-$lineA)} {
+	$w mark set anchor sel.last
+    } else {
+	$w mark set anchor sel.first
+    }
+}
+
+# tkTextInsert --
+# Insert a string into a text at the point of the insertion cursor.
+# If there is a selection in the text, and it covers the point of the
+# insertion cursor, then delete the selection before inserting.
+#
+# Arguments:
+# w -		The text window in which to insert the string
+# s -		The string to insert (usually just a single character)
+
+proc tkTextInsert {w s} {
+    if {($s == "") || ([$w cget -state] == "disabled")} {
+	return
+    }
+    catch {
+	if {[$w compare sel.first <= insert]
+		&& [$w compare sel.last >= insert]} {
+	    $w delete sel.first sel.last
+	}
+    }
+    $w insert insert $s
+    $w see insert
+}
+
+# tkTextUpDownLine --
+# Returns the index of the character one line above or below the
+# insertion cursor.  There are two tricky things here.  First,
+# we want to maintain the original column across repeated operations,
+# even though some lines that will get passed through don't have
+# enough characters to cover the original column.  Second, don't
+# try to scroll past the beginning or end of the text.
+#
+# Arguments:
+# w -		The text window in which the cursor is to move.
+# n -		The number of lines to move: -1 for up one line,
+#		+1 for down one line.
+
+proc tkTextUpDownLine {w n} {
+    global tkPriv
+
+    set i [$w index insert]
+    scan $i "%d.%d" line char
+    if {[string compare $tkPriv(prevPos) $i] != 0} {
+	set tkPriv(char) $char
+    }
+    set new [$w index [expr $line + $n].$tkPriv(char)]
+    if {[$w compare $new == end] || [$w compare $new == "insert linestart"]} {
+	set new $i
+    }
+    set tkPriv(prevPos) $new
+    return $new
+}
+
+# tkTextPrevPara --
+# Returns the index of the beginning of the paragraph just before a given
+# position in the text (the beginning of a paragraph is the first non-blank
+# character after a blank line).
+#
+# Arguments:
+# w -		The text window in which the cursor is to move.
+# pos -		Position at which to start search.
+
+proc tkTextPrevPara {w pos} {
+    set pos [$w index "$pos linestart"]
+    while 1 {
+	if {(([$w get "$pos - 1 line"] == "\n") && ([$w get $pos] != "\n"))
+		|| ($pos == "1.0")} {
+	    if [regexp -indices {^[ 	]+(.)} [$w get $pos "$pos lineend"] \
+		    dummy index] {
+		set pos [$w index "$pos + [lindex $index 0] chars"]
+	    }
+	    if {[$w compare $pos != insert] || ($pos == "1.0")} {
+		return $pos
+	    }
+	}
+	set pos [$w index "$pos - 1 line"]
+    }
+}
+
+# tkTextNextPara --
+# Returns the index of the beginning of the paragraph just after a given
+# position in the text (the beginning of a paragraph is the first non-blank
+# character after a blank line).
+#
+# Arguments:
+# w -		The text window in which the cursor is to move.
+# start -	Position at which to start search.
+
+proc tkTextNextPara {w start} {
+    set pos [$w index "$start linestart + 1 line"]
+    while {[$w get $pos] != "\n"} {
+	if [$w compare $pos == end] {
+	    return [$w index "end - 1c"]
+	}
+	set pos [$w index "$pos + 1 line"]
+    }
+    while {[$w get $pos] == "\n"} {
+	set pos [$w index "$pos + 1 line"]
+	if [$w compare $pos == end] {
+	    return [$w index "end - 1c"]
+	}
+    }
+    if [regexp -indices {^[ 	]+(.)} [$w get $pos "$pos lineend"] \
+	    dummy index] {
+	return [$w index "$pos + [lindex $index 0] chars"]
+    }
+    return $pos
+}
+
+# tkTextScrollPages --
+# This is a utility procedure used in bindings for moving up and down
+# pages and possibly extending the selection along the way.  It scrolls
+# the view in the widget by the number of pages, and it returns the
+# index of the character that is at the same position in the new view
+# as the insertion cursor used to be in the old view.
+#
+# Arguments:
+# w -		The text window in which the cursor is to move.
+# count -	Number of pages forward to scroll;  may be negative
+#		to scroll backwards.
+
+proc tkTextScrollPages {w count} {
+    set bbox [$w bbox insert]
+    $w yview scroll $count pages
+    if {$bbox == ""} {
+	return [$w index @[expr [winfo height $w]/2],0]
+    }
+    return [$w index @[lindex $bbox 0],[lindex $bbox 1]]
+}
+
+# tkTextTranspose --
+# This procedure implements the "transpose" function for text widgets.
+# It tranposes the characters on either side of the insertion cursor,
+# unless the cursor is at the end of the line.  In this case it
+# transposes the two characters to the left of the cursor.  In either
+# case, the cursor ends up to the right of the transposed characters.
+#
+# Arguments:
+# w -		Text window in which to transpose.
+
+proc tkTextTranspose w {
+    set pos insert
+    if [$w compare $pos != "$pos lineend"] {
+	set pos [$w index "$pos + 1 char"]
+    }
+    set new [$w get "$pos - 1 char"][$w get  "$pos - 2 char"]
+    if [$w compare "$pos - 1 char" == 1.0] {
+	return
+    }
+    $w delete "$pos - 2 char" $pos
+    $w insert insert $new
+    $w see insert
+}
+#@package: library/optionMenu tk_optionMenu
+
+# optionMenu.tcl --
+#
+# This file defines the procedure tk_optionMenu, which creates
+# an option button and its associated menu.
+#
+# @(#) optionMenu.tcl 1.6 95/01/06 11:18:53
+#
+# Copyright (c) 1994 The Regents of the University of California.
+# Copyright (c) 1994 Sun Microsystems, Inc.
+#
+# See the file "license.terms" for information on usage and redistribution
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+#
+
+# tk_optionMenu --
+# This procedure creates an option button named $w and an associated
+# menu.  Together they provide the functionality of Motif option menus:
+# they can be used to select one of many values, and the current value
+# appears in the global variable varName, as well as in the text of
+# the option menubutton.  The name of the menu is returned as the
+# procedure's result, so that the caller can use it to change configuration
+# options on the menu or otherwise manipulate it.
+#
+# Arguments:
+# w -			The name to use for the menubutton.
+# varName -		Global variable to hold the currently selected value.
+# firstValue -		First of legal values for option (must be >= 1).
+# args -		Any number of additional values.
+
+proc tk_optionMenu {w varName firstValue args} {
+    upvar #0 $varName var
+
+    if ![info exists var] {
+	set var $firstValue
+    }
+    menubutton $w -textvariable $varName -indicatoron 1 -menu $w.menu \
+	    -relief raised -bd 2 -padx 4p -pady 4p -highlightthickness 2 \
+	    -anchor c
+    menu $w.menu -tearoff 0
+    $w.menu add command -label $firstValue \
+	    -command [list set $varName $firstValue]
+    foreach i $args {
+	$w.menu add command -label $i -command [list set $varName $i]
+    }
+    return $w.menu
+}
+#@package: library/palette tk_setPalette tkRecolorTree tkDarken tk_bisque
+
+# palette.tcl --
+#
+# This file contains procedures that change the color palette used
+# by Tk.
+#
+# @(#) palette.tcl 1.1 95/05/22 14:55:29
+#
+# Copyright (c) 1995 Sun Microsystems, Inc.
+#
+# See the file "license.terms" for information on usage and redistribution
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+#
+
+# tk_setPalette --
+# Changes the default color scheme for a Tk application by setting
+# default colors in the option database and by modifying all of the
+# color options for existing widgets that have the default value.
+#
+# Arguments:
+# The arguments consist of either a single color name, which
+# will be used as the new background color (all other colors will
+# be computed from this) or an even number of values consisting of
+# option names and values.  The name for an option is the one used
+# for the option database, such as activeForeground, not -activeforeground.
+
+proc tk_setPalette args {
+    global tkPalette
+
+    # Create an array that has the complete new palette.  If some colors
+    # aren't specified, compute them from other colors that are specified.
+
+    if {[llength $args] == 1} {
+	set new(background) [lindex $args 0]
+    } else {
+	array set new $args
+    }
+    if ![info exists new(background)] {
+	error "must specify a background color"
+    }
+    if ![info exists new(foreground)] {
+	set new(foreground) black
+    }
+    set bg [winfo rgb . $new(background)]
+    set fg [winfo rgb . $new(foreground)]
+    set darkerBg [format #%02x%02x%02x [expr (9*[lindex $bg 0])/2560] \
+	    [expr (9*[lindex $bg 1])/2560] [expr (9*[lindex $bg 2])/2560]]
+    foreach i {activeForeground insertBackground selectForeground \
+	    highlightColor} {
+	if ![info exists new($i)] {
+	    set new($i) $new(foreground)
+	}
+    }
+    if ![info exists new(disabledForeground)] {
+	set new(disabledForeground) [format #%02x%02x%02x \
+		[expr (3*[lindex $bg 0] + [lindex $fg 0])/1024] \
+		[expr (3*[lindex $bg 1] + [lindex $fg 1])/1024] \
+		[expr (3*[lindex $bg 2] + [lindex $fg 2])/1024]]
+    }
+    if ![info exists new(highlightBackground)] {
+	set new(highlightBackground) $new(background)
+    }
+    if ![info exists new(activeBackground)] {
+	# Pick a default active background that islighter than the
+	# normal background.  To do this, round each color component
+	# up by 15% or 1/3 of the way to full white, whichever is
+	# greater.
+
+	foreach i {0 1 2} {
+	    set light($i) [expr [lindex $bg $i]/256]
+	    set inc1 [expr ($light($i)*15)/100]
+	    set inc2 [expr (255-$light($i))/3]
+	    if {$inc1 > $inc2} {
+		incr light($i) $inc1
+	    } else {
+		incr light($i) $inc2
+	    }
+	    if {$light($i) > 255} {
+		set light($i) 255
+	    }
+	}
+	set new(activeBackground) [format #%02x%02x%02x $light(0) \
+		$light(1) $light(2)]
+    }
+    if ![info exists new(selectBackground)] {
+	set new(selectBackground) $darkerBg
+    }
+    if ![info exists new(troughColor)] {
+	set new(troughColor) $darkerBg
+    }
+    if ![info exists new(selectColor)] {
+	set new(selectColor) #b03060
+    }
+
+    # Walk the widget hierarchy, recoloring all existing windows.
+    # Before doing this, make sure that the tkPalette variable holds
+    # the default values of all options, so that tkRecolorTree can
+    # be sure to only change options that have their default values.
+    # If the variable exists, then it is already correct (it was created
+    # the last time this procedure was invoked).  If the variable
+    # doesn't exist, fill it in using the defaults from a few widgets.
+
+    if ![info exists tkPalette] {
+	checkbutton .c14732
+	entry .e14732
+	scrollbar .s14732
+	set tkPalette(activeBackground) \
+		[lindex [.c14732 configure -activebackground] 3]
+	set tkPalette(activeForeground) \
+		[lindex [.c14732 configure -activeforeground] 3]
+	set tkPalette(background) \
+		[lindex [.c14732 configure -background] 3]
+	set tkPalette(disabledForeground) \
+		[lindex [.c14732 configure -disabledforeground] 3]
+	set tkPalette(foreground) \
+		[lindex [.c14732 configure -foreground] 3]
+	set tkPalette(highlightBackground) \
+		[lindex [.c14732 configure -highlightbackground] 3]
+	set tkPalette(highlightColor) \
+		[lindex [.c14732 configure -highlightcolor] 3]
+	set tkPalette(insertBackground) \
+		[lindex [.e14732 configure -insertbackground] 3]
+	set tkPalette(selectColor) \
+		[lindex [.c14732 configure -selectcolor] 3]
+	set tkPalette(selectBackground) \
+		[lindex [.e14732 configure -selectbackground] 3]
+	set tkPalette(selectForeground) \
+		[lindex [.e14732 configure -selectforeground] 3]
+	set tkPalette(troughColor) \
+		[lindex [.s14732 configure -troughcolor] 3]
+	destroy .c14732 .e14732 .s14732
+    }
+    tkRecolorTree . new
+
+    # Change the option database so that future windows will get the
+    # same colors.
+
+    foreach option [array names new] {
+	option add *$option $new($option) widgetDefault
+    }
+
+    # Save the options in the global variable tkPalette, for use the
+    # next time we change the options.
+
+    array set tkPalette [array get new]
+}
+
+# tkRecolorTree --
+# This procedure changes the colors in a window and all of its
+# descendants, according to information provided by the colors
+# argument.  It only modifies colors that have their default values
+# as specified by the tkPalette variable.
+#
+# Arguments:
+# w -			The name of a window.  This window and all its
+#			descendants are recolored.
+# colors -		The name of an array variable in the caller,
+#			which contains color information.  Each element
+#			is named after a widget configuration option, and
+#			each value is the value for that option.
+
+proc tkRecolorTree {w colors} {
+    global tkPalette
+    upvar $colors c
+    foreach dbOption [array names c] {
+	set option -[string tolower $dbOption]
+	if ![catch {$w cget $option} value] {
+	    if {$value == $tkPalette($dbOption)} {
+		$w configure $option $c($dbOption)
+	    }
+	}
+    }
+    foreach child [winfo children $w] {
+	tkRecolorTree $child c
+    }
+}
+
+# tkDarken --
+# Given a color name, computes a new color value that darkens (or
+# brightens) the given color by a given percent.
+#
+# Arguments:
+# color -	Name of starting color.
+# perecent -	Integer telling how much to brighten or darken as a
+#		percent: 50 means darken by 50%, 110 means brighten
+#		by 10%.
+
+proc tkDarken {color percent} {
+    set l [winfo rgb . $color]
+    set red [expr [lindex $l 0]/256]
+    set green [expr [lindex $l 1]/256]
+    set blue [expr [lindex $l 2]/256]
+    set red [expr ($red*$percent)/100]
+    if {$red > 255} {
+	set red 255
+    }
+    set green [expr ($green*$percent)/100]
+    if {$green > 255} {
+	set green 255
+    }
+    set blue [expr ($blue*$percent)/100]
+    if {$blue > 255} {
+	set blue 255
+    }
+    format #%02x%02x%02x $red $green $blue
+}
+
+# tk_bisque --
+# Reset the Tk color palette to the old "bisque" colors.
+#
+# Arguments:
+# None.
+
+proc tk_bisque {} {
+    tk_setPalette activeBackground #e6ceb1 activeForeground black \
+	    background #ffe4c4 disabledForeground #b0b0b0 foreground black \
+	    highlightBackground #ffe4c4 highlightColor black \
+	    insertBackground black selectColor #b03060 \
+	    selectBackground #e6ceb1 selectForeground black \
+	    troughColor #cdb79e
+}
+#@package: library/tearoff tkMenuDup tkTearOffMenu
+
+# tearoff.tcl --
+#
+# This file contains procedures that implement tear-off menus.
+#
+# @(#) tearoff.tcl 1.5 95/04/23 16:50:06
+#
+# Copyright (c) 1994 The Regents of the University of California.
+# Copyright (c) 1994-1995 Sun Microsystems, Inc.
+#
+# See the file "license.terms" for information on usage and redistribution
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+#
+
+# tkTearoffMenu --
+# Given the name of a menu, this procedure creates a torn-off menu
+# that is identical to the given menu (including nested submenus).
+# The new torn-off menu exists as a toplevel window managed by the
+# window manager.  The return value is the name of the new menu.
+#
+# Arguments:
+# w -			The menu to be torn-off (duplicated).
+
+proc tkTearOffMenu w {
+    # Find a unique name to use for the torn-off menu.  Find the first
+    # ancestor of w that is a toplevel but not a menu, and use this as
+    # the parent of the new menu.  This guarantees that the torn off
+    # menu will be on the same screen as the original menu.  By making
+    # it a child of the ancestor, rather than a child of the menu, it
+    # can continue to live even if the menu is deleted;  it will go
+    # away when the toplevel goes away.
+
+    set parent [winfo parent $w]
+    while {([winfo toplevel $parent] != $parent)
+	    || ([winfo class $parent] == "Menu")} {
+	set parent [winfo parent $parent]
+    }
+    if {$parent == "."} {
+	set parent ""
+    }
+    for {set i 1} 1 {incr i} {
+	set menu $parent.tearoff$i
+	if ![winfo exists $menu] {
+	    break
+	}
+    }
+
+    tkMenuDup $w $menu
+    wm overrideredirect $menu 0
+
+    # Pick a title for the new menu by looking at the parent of the
+    # original: if the parent is a menu, then use the text of the active
+    # entry.  If it's a menubutton then use its text.
+
+    set parent [winfo parent $w]
+    switch [winfo class $parent] {
+	Menubutton {
+	    wm title $menu [$parent cget -text]
+	}
+	Menu {
+	    wm title $menu [$parent entrycget active -label]
+	}
+    }
+
+    $menu configure -tearoff 0
+    $menu post [winfo x $w] [winfo y $w]
+
+    # Set tkPriv(focus) on entry:  otherwise the focus will get lost
+    # after keyboard invocation of a sub-menu (it will stay on the
+    # submenu).
+
+    bind $menu <Enter> {
+	set tkPriv(focus) %W
+    }
+}
+
+# tkMenuDup --
+# Given a menu (hierarchy), create a duplicate menu (hierarchy)
+# in a given window.
+#
+# Arguments:
+# src -			Source window.  Must be a menu.  It and its
+#			menu descendants will be duplicated at dst.
+# dst -			Name to use for topmost menu in duplicate
+#			hierarchy.
+
+proc tkMenuDup {src dst} {
+    set cmd "menu $dst"
+    foreach option [$src configure] {
+	if {[llength $option] == 2} {
+	    continue
+	}
+	lappend cmd [lindex $option 0] [lindex $option 4]
+    }
+    eval $cmd
+    set last [$src index last]
+    if {$last == "none"} {
+	return
+    }
+    for {set i [$src cget -tearoff]} {$i <= $last} {incr i} {
+	set cmd "$dst add [$src type $i]"
+	foreach option [$src entryconfigure $i]  {
+	    lappend cmd [lindex $option 0] [lindex $option 4]
+	}
+	eval $cmd
+	if {[$src type $i] == "cascade"} {
+	    tkMenuDup [$src entrycget $i -menu] $dst.m$i
+	    $dst entryconfigure $i -menu $dst.m$i
+	}
+    }
+
+    # Duplicate the binding tags and bindings from the source menu.
+
+    regsub -all . $src {\\&} quotedSrc
+    regsub -all . $dst {\\&} quotedDst
+    regsub -all $quotedSrc [bindtags $src] $dst x
+    bindtags $dst $x
+    foreach event [bind $src] {
+	regsub -all $quotedSrc [bind $src $event] $dst x
+	bind $dst $event $x
+    }
+}
+#@package: library/scale tkScaleControlPress tkScaleActivate tkScaleEndDrag tkScaleButtonDown tkScaleIncrement tkScaleDrag
+
+# scale.tcl --
+#
+# This file defines the default bindings for Tk scale widgets and provides
+# procedures that help in implementing the bindings.
+#
+# @(#) scale.tcl 1.9 95/08/30 09:46:57
+#
+# Copyright (c) 1994 The Regents of the University of California.
+# Copyright (c) 1994-1995 Sun Microsystems, Inc.
+#
+# See the file "license.terms" for information on usage and redistribution
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+#
+
+#-------------------------------------------------------------------------
+# The code below creates the default class bindings for entries.
+#-------------------------------------------------------------------------
+
+# Standard Motif bindings:
+
+bind Scale <Enter> {
+    if $tk_strictMotif {
+	set tkPriv(activeBg) [%W cget -activebackground]
+	%W config -activebackground [%W cget -background]
+    }
+    tkScaleActivate %W %x %y
+}
+bind Scale <Motion> {
+    tkScaleActivate %W %x %y
+}
+bind Scale <Leave> {
+    if $tk_strictMotif {
+	%W config -activebackground $tkPriv(activeBg)
+    }
+    if {[%W cget -state] == "active"} {
+	%W configure -state normal
+    }
+}
+bind Scale <1> {
+    tkScaleButtonDown %W %x %y
+}
+bind Scale <B1-Motion> {
+    tkScaleDrag %W %x %y
+}
+bind Scale <B1-Leave> { }
+bind Scale <B1-Enter> { }
+bind Scale <ButtonRelease-1> {
+    tkCancelRepeat
+    tkScaleEndDrag %W
+    tkScaleActivate %W %x %y
+}
+bind Scale <2> {
+    tkScaleButton2Down %W %x %y
+}
+bind Scale <B2-Motion> {
+    tkScaleDrag %W %x %y
+}
+bind Scale <B2-Leave> { }
+bind Scale <B2-Enter> { }
+bind Scale <ButtonRelease-2> {
+    tkCancelRepeat
+    tkScaleEndDrag %W
+    tkScaleActivate %W %x %y
+}
+bind Scale <Control-1> {
+    tkScaleControlPress %W %x %y
+}
+bind Scale <Up> {
+    tkScaleIncrement %W up little noRepeat
+}
+bind Scale <Down> {
+    tkScaleIncrement %W down little noRepeat
+}
+bind Scale <Left> {
+    tkScaleIncrement %W up little noRepeat
+}
+bind Scale <Right> {
+    tkScaleIncrement %W down little noRepeat
+}
+bind Scale <Control-Up> {
+    tkScaleIncrement %W up big noRepeat
+}
+bind Scale <Control-Down> {
+    tkScaleIncrement %W down big noRepeat
+}
+bind Scale <Control-Left> {
+    tkScaleIncrement %W up big noRepeat
+}
+bind Scale <Control-Right> {
+    tkScaleIncrement %W down big noRepeat
+}
+bind Scale <Home> {
+    %W set [%W cget -from]
+}
+bind Scale <End> {
+    %W set [%W cget -to]
+}
+
+# tkScaleActivate --
+# This procedure is invoked to check a given x-y position in the
+# scale and activate the slider if the x-y position falls within
+# the slider.
+#
+# Arguments:
+# w -		The scale widget.
+# x, y -	Mouse coordinates.
+
+proc tkScaleActivate {w x y} {
+    global tkPriv
+    if {[$w cget -state] == "disabled"} {
+	return;
+    }
+    if {[$w identify $x $y] == "slider"} {
+	$w configure -state active
+    } else {
+	$w configure -state normal
+    }
+}
+
+# tkScaleButtonDown --
+# This procedure is invoked when a button is pressed in a scale.  It
+# takes different actions depending on where the button was pressed.
+#
+# Arguments:
+# w -		The scale widget.
+# x, y -	Mouse coordinates of button press.
+
+proc tkScaleButtonDown {w x y} {
+    global tkPriv
+    set tkPriv(dragging) 0
+    set el [$w identify $x $y]
+    if {$el == "trough1"} {
+	tkScaleIncrement $w up little initial
+    } elseif {$el == "trough2"} {
+	tkScaleIncrement $w down little initial
+    } elseif {$el == "slider"} {
+	set tkPriv(dragging) 1
+	set tkPriv(initValue) [$w get]
+	set coords [$w coords]
+	set tkPriv(deltaX) [expr $x - [lindex $coords 0]]
+	set tkPriv(deltaY) [expr $y - [lindex $coords 1]]
+    }
+}
+
+# tkScaleDrag --
+# This procedure is called when the mouse is dragged with
+# mouse button 1 down.  If the drag started inside the slider
+# (i.e. the scale is active) then the scale's value is adjusted
+# to reflect the mouse's position.
+#
+# Arguments:
+# w -		The scale widget.
+# x, y -	Mouse coordinates.
+
+proc tkScaleDrag {w x y} {
+    global tkPriv
+    if !$tkPriv(dragging) {
+	return
+    }
+    $w set [$w get [expr $x - $tkPriv(deltaX)] \
+	    [expr $y - $tkPriv(deltaY)]]
+}
+
+# tkScaleEndDrag --
+# This procedure is called to end an interactive drag of the
+# slider.  It just marks the drag as over.
+#
+# Arguments:
+# w -		The scale widget.
+
+proc tkScaleEndDrag {w} {
+    global tkPriv
+    set tkPriv(dragging) 0
+}
+
+# tkScaleIncrement --
+# This procedure is invoked to increment the value of a scale and
+# to set up auto-repeating of the action if that is desired.  The
+# way the value is incremented depends on the "dir" and "big"
+# arguments.
+#
+# Arguments:
+# w -		The scale widget.
+# dir -		"up" means move value towards -from, "down" means
+#		move towards -to.
+# big -		Size of increments: "big" or "little".
+# repeat -	Whether and how to auto-repeat the action:  "noRepeat"
+#		means don't auto-repeat, "initial" means this is the
+#		first action in an auto-repeat sequence, and "again"
+#		means this is the second repetition or later.
+
+proc tkScaleIncrement {w dir big repeat} {
+    global tkPriv
+    if {$big == "big"} {
+	set inc [$w cget -bigincrement]
+	if {$inc == 0} {
+	    set inc [expr abs([$w cget -to] - [$w cget -from])/10.0]
+	}
+	if {$inc < [$w cget -resolution]} {
+	    set inc [$w cget -resolution]
+	}
+    } else {
+	set inc [$w cget -resolution]
+    }
+    if {([$w cget -from] > [$w cget -to]) ^ ($dir == "up")} {
+	set inc [expr -$inc]
+    }
+    $w set [expr [$w get] + $inc]
+
+    if {$repeat == "again"} {
+	set tkPriv(afterId) [after [$w cget -repeatinterval] \
+		tkScaleIncrement $w $dir $big again]
+    } elseif {$repeat == "initial"} {
+	set delay [$w cget -repeatdelay]
+	if {$delay > 0} {
+	    set tkPriv(afterId) [after $delay \
+		    tkScaleIncrement $w $dir $big again]
+	}
+    }
+}
+
+# tkScaleControlPress --
+# This procedure handles button presses that are made with the Control
+# key down.  Depending on the mouse position, it adjusts the scale
+# value to one end of the range or the other.
+#
+# Arguments:
+# w -		The scale widget.
+# x, y -	Mouse coordinates where the button was pressed.
+
+proc tkScaleControlPress {w x y} {
+    set el [$w identify $x $y]
+    if {$el == "trough1"} {
+	$w set [$w cget -from]
+    } elseif {$el == "trough2"} {
+	$w set [$w cget -to]
+    }
+}
+
+# tkScaleButton2Down
+# This procedure is invoked when button 2 is pressed over a scale.
+# It sets the value to correspond to the mouse position and starts
+# a slider drag.
+#
+# Arguments:
+# w -		The scrollbar widget.
+# x, y -	Mouse coordinates within the widget.
+
+proc tkScaleButton2Down {w x y} {
+    global tkPriv
+
+    if {[$w cget -state] == "disabled"} {
+	return;
+    }
+    $w configure -state active
+    $w set [$w get $x $y]
+    set tkPriv(dragging) 1
+    set tkPriv(initValue) [$w get]
+    set coords "$x $y"
+    set tkPriv(deltaX) 0
+    set tkPriv(deltaY) 0
+}
+#@package: library/focus tk_focusPrev tkFocusOK tk_focusNext tk_focusFollowsMouse
+
+# focus.tcl --
+#
+# This file defines several procedures for managing the input
+# focus.
+#
+# @(#) focus.tcl 1.14 95/05/04 13:31:48
+#
+# Copyright (c) 1994-1995 Sun Microsystems, Inc.
+#
+# See the file "license.terms" for information on usage and redistribution
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+#
+
+# tk_focusNext --
+# This procedure returns the name of the next window after "w" in
+# "focus order" (the window that should receive the focus next if
+# Tab is typed in w).  "Next" is defined by a pre-order search
+# of a top-level and its non-top-level descendants, with the stacking
+# order determining the order of siblings.  The "-takefocus" options
+# on windows determine whether or not they should be skipped.
+#
+# Arguments:
+# w -		Name of a window.
+
+proc tk_focusNext w {
+    set cur $w
+    while 1 {
+
+	# Descend to just before the first child of the current widget.
+
+	set parent $cur
+	set children [winfo children $cur]
+	set i -1
+
+	# Look for the next sibling that isn't a top-level.
+
+	while 1 {
+	    incr i
+	    if {$i < [llength $children]} {
+		set cur [lindex $children $i]
+		if {[winfo toplevel $cur] == $cur} {
+		    continue
+		} else {
+		    break
+		}
+	    }
+
+	    # No more siblings, so go to the current widget's parent.
+	    # If it's a top-level, break out of the loop, otherwise
+	    # look for its next sibling.
+
+	    set cur $parent
+	    if {[winfo toplevel $cur] == $cur} {
+		break
+	    }
+	    set parent [winfo parent $parent]
+	    set children [winfo children $parent]
+	    set i [lsearch -exact $children $cur]
+	}
+	if {($cur == $w) || [tkFocusOK $cur]} {
+	    return $cur
+	}
+    }
+}
+
+# tk_focusPrev --
+# This procedure returns the name of the previous window before "w" in
+# "focus order" (the window that should receive the focus next if
+# Shift-Tab is typed in w).  "Next" is defined by a pre-order search
+# of a top-level and its non-top-level descendants, with the stacking
+# order determining the order of siblings.  The "-takefocus" options
+# on windows determine whether or not they should be skipped.
+#
+# Arguments:
+# w -		Name of a window.
+
+proc tk_focusPrev w {
+    set cur $w
+    while 1 {
+
+	# Collect information about the current window's position
+	# among its siblings.  Also, if the window is a top-level,
+	# then reposition to just after the last child of the window.
+    
+	if {[winfo toplevel $cur] == $cur}  {
+	    set parent $cur
+	    set children [winfo children $cur]
+	    set i [llength $children]
+	} else {
+	    set parent [winfo parent $cur]
+	    set children [winfo children $parent]
+	    set i [lsearch -exact $children $cur]
+	}
+
+	# Go to the previous sibling, then descend to its last descendant
+	# (highest in stacking order.  While doing this, ignore top-levels
+	# and their descendants.  When we run out of descendants, go up
+	# one level to the parent.
+
+	while {$i > 0} {
+	    incr i -1
+	    set cur [lindex $children $i]
+	    if {[winfo toplevel $cur] == $cur} {
+		continue
+	    }
+	    set parent $cur
+	    set children [winfo children $parent]
+	    set i [llength $children]
+	}
+	set cur $parent
+	if {($cur == $w) || [tkFocusOK $cur]} {
+	    return $cur
+	}
+    }
+}
+
+# tkFocusOK --
+#
+# This procedure is invoked to decide whether or not to focus on
+# a given window.  It returns 1 if it's OK to focus on the window,
+# 0 if it's not OK.  The code first checks whether the window is
+# viewable.  If not, then it never focuses on the window.  Then it
+# checks the -takefocus option for the window and uses it if it's
+# set.  If there's no -takefocus option, the procedure checks to
+# see if (a) the widget isn't disabled, and (b) it has some key
+# bindings.  If all of these are true, then 1 is returned.
+#
+# Arguments:
+# w -		Name of a window.
+
+proc tkFocusOK w {
+    if {![winfo viewable $w]} {
+	return 0
+    }
+    set code [catch {$w cget -takefocus} value]
+    if {($code == 0) && ($value != "")} {
+	if {$value == 0} {
+	    return 0
+	} elseif {$value == 1} {
+	    return 1
+	} else {
+	    set value [uplevel #0 $value $w]
+	    if {$value != ""} {
+		return $value
+	    }
+	}
+    }
+    set code [catch {$w cget -state} value]
+    if {($code == 0) && ($value == "disabled")} {
+	return 0
+    }
+    regexp Key|Focus "[bind $w] [bind [winfo class $w]]"
+}
+
+# tk_focusFollowsMouse --
+#
+# If this procedure is invoked, Tk will enter "focus-follows-mouse"
+# mode, where the focus is always on whatever window contains the
+# mouse.  If this procedure isn't invoked, then the user typically
+# has to click on a window to give it the focus.
+#
+# Arguments:
+# None.
+
+proc tk_focusFollowsMouse {} {
+    set old [bind all <Enter>]
+    set script {
+	if {("%d" == "NotifyAncestor") || ("%d" == "NotifyNonlinear")
+		|| ("%d" == "NotifyInferior")} {
+	    focus %W
+	}
+    }
+    if {$old != ""} {
+	bind all <Enter> "$old; $script"
+    } else {
+	bind all <Enter> $script
+    }
+}
+#@package: library/entry tkEntrySeeInsert tkEntryInsert tkEntryKeySelect tkEntrySetCursor tkEntryTranspose tkEntryMouseSelect tkEntryAutoScan tkEntryBackspace tkEntryButton1 tkEntryClipboardKeysyms
+
+# entry.tcl --
+#
+# This file defines the default bindings for Tk entry widgets and provides
+# procedures that help in implementing those bindings.
+#
+# @(#) entry.tcl 1.36 95/06/17 17:47:29
+#
+# Copyright (c) 1992-1994 The Regents of the University of California.
+# Copyright (c) 1994-1995 Sun Microsystems, Inc.
+#
+# See the file "license.terms" for information on usage and redistribution
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+#
+
+#-------------------------------------------------------------------------
+# Elements of tkPriv that are used in this file:
+#
+# afterId -		If non-null, it means that auto-scanning is underway
+#			and it gives the "after" id for the next auto-scan
+#			command to be executed.
+# mouseMoved -		Non-zero means the mouse has moved a significant
+#			amount since the button went down (so, for example,
+#			start dragging out a selection).
+# pressX -		X-coordinate at which the mouse button was pressed.
+# selectMode -		The style of selection currently underway:
+#			char, word, or line.
+# x, y -		Last known mouse coordinates for scanning
+#			and auto-scanning.
+#-------------------------------------------------------------------------
+
+# tkEntryClipboardKeysyms --
+# This procedure is invoked to identify the keys that correspond to
+# the "copy", "cut", and "paste" functions for the clipboard.
+#
+# Arguments:
+# copy -	Name of the key (keysym name plus modifiers, if any,
+#		such as "Meta-y") used for the copy operation.
+# cut -		Name of the key used for the cut operation.
+# paste -	Name of the key used for the paste operation.
+
+proc tkEntryClipboardKeysyms {copy cut paste} {
+    bind Entry <$copy> {
+	if {[selection own -displayof %W] == "%W"} {
+	    clipboard clear -displayof %W
+	    catch {
+		clipboard append -displayof %W [selection get -displayof %W]
+	    }
+	}
+    }
+    bind Entry <$cut> {
+	if {[selection own -displayof %W] == "%W"} {
+	    clipboard clear -displayof %W
+	    catch {
+		clipboard append -displayof %W [selection get -displayof %W]
+		%W delete sel.first sel.last
+	    }
+	}
+    }
+    bind Entry <$paste> {
+	catch {
+	    %W insert insert [selection get -displayof %W \
+		    -selection CLIPBOARD]
+	}
+    }
+}
+
+#-------------------------------------------------------------------------
+# The code below creates the default class bindings for entries.
+#-------------------------------------------------------------------------
+
+# Standard Motif bindings:
+
+bind Entry <1> {
+    tkEntryButton1 %W %x
+    %W selection clear
+}
+bind Entry <B1-Motion> {
+    set tkPriv(x) %x
+    tkEntryMouseSelect %W %x
+}
+bind Entry <Double-1> {
+    set tkPriv(selectMode) word
+    tkEntryMouseSelect %W %x
+    catch {%W icursor sel.first}
+}
+bind Entry <Triple-1> {
+    set tkPriv(selectMode) line
+    tkEntryMouseSelect %W %x
+    %W icursor 0
+}
+bind Entry <Shift-1> {
+    set tkPriv(selectMode) char
+    %W selection adjust @%x
+}
+bind Entry <Double-Shift-1>	{
+    set tkPriv(selectMode) word
+    tkEntryMouseSelect %W %x
+}
+bind Entry <Triple-Shift-1>	{
+    set tkPriv(selectMode) line
+    tkEntryMouseSelect %W %x
+}
+bind Entry <B1-Leave> {
+    set tkPriv(x) %x
+    tkEntryAutoScan %W
+}
+bind Entry <B1-Enter> {
+    tkCancelRepeat
+}
+bind Entry <ButtonRelease-1> {
+    tkCancelRepeat
+}
+bind Entry <Control-1> {
+    %W icursor @%x
+}
+
+bind Entry <Left> {
+    tkEntrySetCursor %W [expr [%W index insert] - 1]
+}
+bind Entry <Right> {
+    tkEntrySetCursor %W [expr [%W index insert] + 1]
+}
+bind Entry <Shift-Left> {
+    tkEntryKeySelect %W [expr [%W index insert] - 1]
+    tkEntrySeeInsert %W
+}
+bind Entry <Shift-Right> {
+    tkEntryKeySelect %W [expr [%W index insert] + 1]
+    tkEntrySeeInsert %W
+}
+bind Entry <Control-Left> {
+    tkEntrySetCursor %W \
+	    [string wordstart [%W get] [expr [%W index insert] - 1]]
+}
+bind Entry <Control-Right> {
+    tkEntrySetCursor %W [string wordend [%W get] [%W index insert]]
+}
+bind Entry <Shift-Control-Left> {
+    tkEntryKeySelect %W \
+	    [string wordstart [%W get] [expr [%W index insert] - 1]]
+    tkEntrySeeInsert %W
+}
+bind Entry <Shift-Control-Right> {
+    tkEntryKeySelect %W [string wordend [%W get] [%W index insert]]
+    tkEntrySeeInsert %W
+}
+bind Entry <Home> {
+    tkEntrySetCursor %W 0
+}
+bind Entry <Shift-Home> {
+    tkEntryKeySelect %W 0
+    tkEntrySeeInsert %W
+}
+bind Entry <End> {
+    tkEntrySetCursor %W end
+}
+bind Entry <Shift-End> {
+    tkEntryKeySelect %W end
+    tkEntrySeeInsert %W
+}
+
+bind Entry <Delete> {
+    if [%W selection present] {
+	%W delete sel.first sel.last
+    } else {
+	%W delete insert
+    }
+}
+bind Entry <BackSpace> {
+    tkEntryBackspace %W
+}
+
+bind Entry <Control-space> {
+    %W selection from insert
+}
+bind Entry <Select> {
+    %W selection from insert
+}
+bind Entry <Control-Shift-space> {
+    %W selection adjust insert
+}
+bind Entry <Shift-Select> {
+    %W selection adjust insert
+}
+bind Entry <Control-slash> {
+    %W selection range 0 end
+}
+bind Entry <Control-backslash> {
+    %W selection clear
+}
+tkEntryClipboardKeysyms F16 F20 F18
+
+bind Entry <KeyPress> {
+    tkEntryInsert %W %A
+}
+
+# Ignore all Alt, Meta, and Control keypresses unless explicitly bound.
+# Otherwise, if a widget binding for one of these is defined, the
+# <KeyPress> class binding will also fire and insert the character,
+# which is wrong.  Ditto for Escape, Return, and Tab.
+
+bind Entry <Alt-KeyPress> {# nothing}
+bind Entry <Meta-KeyPress> {# nothing}
+bind Entry <Control-KeyPress> {# nothing}
+bind Entry <Escape> {# nothing}
+bind Entry <Return> {# nothing}
+bind Entry <KP_Enter> {# nothing}
+bind Entry <Tab> {# nothing}
+
+bind Entry <Insert> {
+    catch {tkEntryInsert %W [selection get -displayof %W]}
+}
+
+# Additional emacs-like bindings:
+
+if !$tk_strictMotif {
+    bind Entry <Control-a> {
+	tkEntrySetCursor %W 0
+    }
+    bind Entry <Control-b> {
+	tkEntrySetCursor %W [expr [%W index insert] - 1]
+    }
+    bind Entry <Control-d> {
+	%W delete insert
+    }
+    bind Entry <Control-e> {
+	tkEntrySetCursor %W end
+    }
+    bind Entry <Control-f> {
+	tkEntrySetCursor %W [expr [%W index insert] + 1]
+    }
+    bind Entry <Control-h> {
+	tkEntryBackspace %W
+    }
+    bind Entry <Control-k> {
+	%W delete insert end
+    }
+    bind Entry <Control-t> {
+	tkEntryTranspose %W
+    }
+    bind Entry <Meta-b> {
+	tkEntrySetCursor %W \
+		[string wordstart [%W get] [expr [%W index insert] - 1]]
+    }
+    bind Entry <Meta-d> {
+	%W delete insert [string wordend [%W get] [%W index insert]]
+    }
+    bind Entry <Meta-f> {
+	tkEntrySetCursor %W [string wordend [%W get] [%W index insert]]
+    }
+    bind Entry <Meta-BackSpace> {
+	%W delete [string wordstart [%W get] [expr [%W index insert] - 1]] \
+		insert
+    }
+    tkEntryClipboardKeysyms Meta-w Control-w Control-y
+
+    # A few additional bindings of my own.
+
+    bind Entry <2> {
+	%W scan mark %x
+	set tkPriv(x) %x
+	set tkPriv(y) %y
+	set tkPriv(mouseMoved) 0
+    }
+    bind Entry <B2-Motion> {
+	if {abs(%x-$tkPriv(x)) > 2} {
+	    set tkPriv(mouseMoved) 1
+	}
+	%W scan dragto %x
+    }
+    bind Entry <ButtonRelease-2> {
+	if !$tkPriv(mouseMoved) {
+	    catch {
+		%W insert @%x [selection get -displayof %W]
+	    }
+	}
+    }
+}
+
+# tkEntryButton1 --
+# This procedure is invoked to handle button-1 presses in entry
+# widgets.  It moves the insertion cursor, sets the selection anchor,
+# and claims the input focus.
+#
+# Arguments:
+# w -		The entry window in which the button was pressed.
+# x -		The x-coordinate of the button press.
+
+proc tkEntryButton1 {w x} {
+    global tkPriv
+
+    set tkPriv(selectMode) char
+    set tkPriv(mouseMoved) 0
+    set tkPriv(pressX) $x
+    $w icursor @$x
+    $w selection from @$x
+    if {[lindex [$w configure -state] 4] == "normal"} {focus $w}
+}
+
+# tkEntryMouseSelect --
+# This procedure is invoked when dragging out a selection with
+# the mouse.  Depending on the selection mode (character, word,
+# line) it selects in different-sized units.  This procedure
+# ignores mouse motions initially until the mouse has moved from
+# one character to another or until there have been multiple clicks.
+#
+# Arguments:
+# w -		The entry window in which the button was pressed.
+# x -		The x-coordinate of the mouse.
+
+proc tkEntryMouseSelect {w x} {
+    global tkPriv
+
+    set cur [$w index @$x]
+    set anchor [$w index anchor]
+    if {($cur != $anchor) || (abs($tkPriv(pressX) - $x) >= 3)} {
+	set tkPriv(mouseMoved) 1
+    }
+    switch $tkPriv(selectMode) {
+	char {
+	    if $tkPriv(mouseMoved) {
+		if {$cur < [$w index anchor]} {
+		    $w selection to $cur
+		} else {
+		    $w selection to [expr $cur+1]
+		}
+	    }
+	}
+	word {
+	    if {$cur < [$w index anchor]} {
+		$w selection range [string wordstart [$w get] $cur] \
+			[string wordend [$w get] [expr $anchor-1]]
+	    } else {
+		$w selection range [string wordstart [$w get] $anchor] \
+			[string wordend [$w get] $cur]
+	    }
+	}
+	line {
+	    $w selection range 0 end
+	}
+    }
+    update idletasks
+}
+
+# tkEntryAutoScan --
+# This procedure is invoked when the mouse leaves an entry window
+# with button 1 down.  It scrolls the window left or right,
+# depending on where the mouse is, and reschedules itself as an
+# "after" command so that the window continues to scroll until the
+# mouse moves back into the window or the mouse button is released.
+#
+# Arguments:
+# w -		The entry window.
+
+proc tkEntryAutoScan {w} {
+    global tkPriv
+    set x $tkPriv(x)
+    if {$x >= [winfo width $w]} {
+	$w xview scroll 2 units
+	tkEntryMouseSelect $w $x
+    } elseif {$x < 0} {
+	$w xview scroll -2 units
+	tkEntryMouseSelect $w $x
+    }
+    set tkPriv(afterId) [after 50 tkEntryAutoScan $w]
+}
+
+# tkEntryKeySelect --
+# This procedure is invoked when stroking out selections using the
+# keyboard.  It moves the cursor to a new position, then extends
+# the selection to that position.
+#
+# Arguments:
+# w -		The entry window.
+# new -		A new position for the insertion cursor (the cursor hasn't
+#		actually been moved to this position yet).
+
+proc tkEntryKeySelect {w new} {
+    if ![$w selection present] {
+	$w selection from insert
+	$w selection to $new
+    } else {
+	$w selection adjust $new
+    }
+    $w icursor $new
+}
+
+# tkEntryInsert --
+# Insert a string into an entry at the point of the insertion cursor.
+# If there is a selection in the entry, and it covers the point of the
+# insertion cursor, then delete the selection before inserting.
+#
+# Arguments:
+# w -		The entry window in which to insert the string
+# s -		The string to insert (usually just a single character)
+
+proc tkEntryInsert {w s} {
+    if {$s == ""} {
+	return
+    }
+    catch {
+	set insert [$w index insert]
+	if {([$w index sel.first] <= $insert)
+		&& ([$w index sel.last] >= $insert)} {
+	    $w delete sel.first sel.last
+	}
+    }
+    $w insert insert $s
+    tkEntrySeeInsert $w
+}
+
+# tkEntryBackspace --
+# Backspace over the character just before the insertion cursor.
+# If backspacing would move the cursor off the left edge of the
+# window, reposition the cursor at about the middle of the window.
+#
+# Arguments:
+# w -		The entry window in which to backspace.
+
+proc tkEntryBackspace w {
+    if [$w selection present] {
+	$w delete sel.first sel.last
+    } else {
+	set x [expr {[$w index insert] - 1}]
+	if {$x >= 0} {$w delete $x}
+	if {[$w index @0] >= [$w index insert]} {
+	    set range [$w xview]
+	    set left [lindex $range 0]
+	    set right [lindex $range 1]
+	    $w xview moveto [expr $left - ($right - $left)/2.0]
+	}
+    }
+}
+
+# tkEntrySeeInsert --
+# Make sure that the insertion cursor is visible in the entry window.
+# If not, adjust the view so that it is.
+#
+# Arguments:
+# w -		The entry window.
+
+proc tkEntrySeeInsert w {
+    set c [$w index insert]
+    set left [$w index @0]
+    if {$left > $c} {
+	$w xview $c
+	return
+    }
+    set x [winfo width $w]
+    while {([$w index @$x] <= $c) && ($left < $c)} {
+	incr left
+	$w xview $left
+    }
+}
+
+# tkEntrySetCursor -
+# Move the insertion cursor to a given position in an entry.  Also
+# clears the selection, if there is one in the entry, and makes sure
+# that the insertion cursor is visible.
+#
+# Arguments:
+# w -		The entry window.
+# pos -		The desired new position for the cursor in the window.
+
+proc tkEntrySetCursor {w pos} {
+    $w icursor $pos
+    $w selection clear
+    tkEntrySeeInsert $w
+}
+
+# tkEntryTranspose -
+# This procedure implements the "transpose" function for entry widgets.
+# It tranposes the characters on either side of the insertion cursor,
+# unless the cursor is at the end of the line.  In this case it
+# transposes the two characters to the left of the cursor.  In either
+# case, the cursor ends up to the right of the transposed characters.
+#
+# Arguments:
+# w -		The entry window.
+
+proc tkEntryTranspose w {
+    set i [$w index insert]
+    if {$i < [$w index end]} {
+	incr i
+    }
+    set first [expr $i-2]
+    if {$first < 0} {
+	return
+    }
+    set new [string index [$w get] [expr $i-1]][string index [$w get] $first]
+    $w delete $first $i
+    $w insert insert $new
+    tkEntrySeeInsert $w
+}
+#@package: library/menu tkTraverseToMenu tkMenuUnpost tk_popup tkMbEnter tkMenuButtonDown tkPostOverPoint tkTraverseWithinMenu tkMenuFirstEntry tkMenuInvoke tkMbLeave tkFirstMenu tkMenuFindName tkMbMotion tkMenuLeave tkMenuMotion tkMbPost tkMenuLeftRight tkMenuNextEntry tkMbButtonUp tkMenuFind tkMenuEscape
+
+# menu.tcl --
+#
+# This file defines the default bindings for Tk menus and menubuttons.
+# It also implements keyboard traversal of menus and implements a few
+# other utility procedures related to menus.
+#
+# @(#) menu.tcl 1.54 95/08/29 17:33:53
+#
+# Copyright (c) 1992-1994 The Regents of the University of California.
+# Copyright (c) 1994-1995 Sun Microsystems, Inc.
+#
+# See the file "license.terms" for information on usage and redistribution
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+#
+
+#-------------------------------------------------------------------------
+# Elements of tkPriv that are used in this file:
+#
+# cursor -		Saves the -cursor option for the posted menubutton.
+# focus -		Saves the focus during a menu selection operation.
+#			Focus gets restored here when the menu is unposted.
+# grabGlobal -		Used in conjunction with tkPriv(oldGrab):  if
+#			tkPriv(oldGrab) is non-empty, then tkPriv(grabGlobal)
+#			contains either an empty string or "-global" to
+#			indicate whether the old grab was a local one or
+#			a global one.
+# inMenubutton -	The name of the menubutton widget containing
+#			the mouse, or an empty string if the mouse is
+#			not over any menubutton.
+# oldGrab -		Window that had the grab before a menu was posted.
+#			Used to restore the grab state after the menu
+#			is unposted.  Empty string means there was no
+#			grab previously set.
+# popup -		If a menu has been popped up via tk_popup, this
+#			gives the name of the menu.  Otherwise this
+#			value is empty.
+# postedMb -		Name of the menubutton whose menu is currently
+#			posted, or an empty string if nothing is posted
+#			A grab is set on this widget.
+# relief -		Used to save the original relief of the current
+#			menubutton.
+# window -		When the mouse is over a menu, this holds the
+#			name of the menu;  it's cleared when the mouse
+#			leaves the menu.
+#-------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------
+# Overall note:
+# This file is tricky because there are four different ways that menus
+# can be used:
+#
+# 1. As a pulldown from a menubutton.  This is the most common usage.
+#    In this style, the variable tkPriv(postedMb) identifies the posted
+#    menubutton.
+# 2. As a torn-off menu copied from some other menu.  In this style
+#    tkPriv(postedMb) is empty, and the top-level menu is no
+#    override-redirect.
+# 3. As an option menu, triggered from an option menubutton.  In thi
+#    style tkPriv(postedMb) identifies the posted menubutton.
+# 4. As a popup menu.  In this style tkPriv(postedMb) is empty and
+#    the top-level menu is override-redirect.
+#
+# The various binding procedures use the  state described above to
+# distinguish the various cases and take different actions in each
+# case.
+#-------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------
+# The code below creates the default class bindings for menus
+# and menubuttons.
+#-------------------------------------------------------------------------
+
+bind Menubutton <FocusIn> {}
+bind Menubutton <Enter> {
+    tkMbEnter %W
+}
+bind Menubutton <Leave> {
+    tkMbLeave %W
+}
+bind Menubutton <1> {
+    if {$tkPriv(inMenubutton) != ""} {
+	tkMbPost $tkPriv(inMenubutton) %X %Y
+    }
+}
+bind Menubutton <Motion> {
+    tkMbMotion %W up %X %Y
+}
+bind Menubutton <B1-Motion> {
+    tkMbMotion %W down %X %Y
+}
+bind Menubutton <ButtonRelease-1> {
+    tkMbButtonUp %W
+}
+bind Menubutton <space> {
+    tkMbPost %W
+    tkMenuFirstEntry [%W cget -menu]
+}
+bind Menubutton <Return> {
+    tkMbPost %W
+    tkMenuFirstEntry [%W cget -menu]
+}
+
+# Must set focus when mouse enters a menu, in order to allow
+# mixed-mode processing using both the mouse and the keyboard.
+
+bind Menu <FocusIn> {}
+bind Menu <Enter> {
+    set tkPriv(window) %W
+    focus %W
+}
+bind Menu <Leave> {
+    tkMenuLeave %W %X %Y %s
+}
+bind Menu <Motion> {
+    tkMenuMotion %W %y %s
+}
+bind Menu <ButtonPress> {
+    tkMenuButtonDown %W
+}
+bind Menu <ButtonRelease> {
+    tkMenuInvoke %W
+}
+bind Menu <space> {
+    tkMenuInvoke %W
+}
+bind Menu <Return> {
+    tkMenuInvoke %W
+}
+bind Menu <Escape> {
+    tkMenuEscape %W
+}
+bind Menu <Left> {
+    tkMenuLeftRight %W left
+}
+bind Menu <Right> {
+    tkMenuLeftRight %W right
+}
+bind Menu <Up> {
+    tkMenuNextEntry %W -1
+}
+bind Menu <Down> {
+    tkMenuNextEntry %W +1
+}
+bind Menu <KeyPress> {
+    tkTraverseWithinMenu %W %A
+}
+
+# The following bindings apply to all windows, and are used to
+# implement keyboard menu traversal.
+
+bind all <Alt-KeyPress> {
+    tkTraverseToMenu %W %A
+}
+bind all <F10> {
+    tkFirstMenu %W
+}
+
+# tkMbEnter --
+# This procedure is invoked when the mouse enters a menubutton
+# widget.  It activates the widget unless it is disabled.  Note:
+# this procedure is only invoked when mouse button 1 is *not* down.
+# The procedure tkMbB1Enter is invoked if the button is down.
+#
+# Arguments:
+# w -			The  name of the widget.
+
+proc tkMbEnter w {
+    global tkPriv
+
+    if {$tkPriv(inMenubutton) != ""} {
+	tkMbLeave $tkPriv(inMenubutton)
+    }
+    set tkPriv(inMenubutton) $w
+    if {[$w cget -state] != "disabled"} {
+	$w configure -state active
+    }
+}
+
+# tkMbLeave --
+# This procedure is invoked when the mouse leaves a menubutton widget.
+# It de-activates the widget, if the widget still exists.
+#
+# Arguments:
+# w -			The  name of the widget.
+
+proc tkMbLeave w {
+    global tkPriv
+
+    set tkPriv(inMenubutton) {}
+    if ![winfo exists $w] {
+	return
+    }
+    if {[$w cget -state] == "active"} {
+	$w configure -state normal
+    }
+}
+
+# tkMbPost --
+# Given a menubutton, this procedure does all the work of posting
+# its associated menu and unposting any other menu that is currently
+# posted.
+#
+# Arguments:
+# w -			The name of the menubutton widget whose menu
+#			is to be posted.
+# x, y -		Root coordinates of cursor, used for positioning
+#			option menus.  If not specified, then the center
+#			of the menubutton is used for an option menu.
+
+proc tkMbPost {w {x {}} {y {}}} {
+    global tkPriv
+    if {([$w cget -state] == "disabled") || ($w == $tkPriv(postedMb))} {
+	return
+    }
+    set menu [$w cget -menu]
+    if {$menu == ""} {
+	return
+    }
+    if ![string match $w.* $menu] {
+	error "can't post $menu:  it isn't a descendant of $w (this is a new requirement in Tk versions 3.0 and later)"
+    }
+    set cur $tkPriv(postedMb)
+    if {$cur != ""} {
+	tkMenuUnpost {}
+    }
+    set tkPriv(cursor) [$w cget -cursor]
+    set tkPriv(relief) [$w cget -relief]
+    $w configure -cursor arrow
+    $w configure -relief raised
+    set tkPriv(postedMb) $w
+    set tkPriv(focus) [focus]
+    $menu activate none
+
+    # If this looks like an option menubutton then post the menu so
+    # that the current entry is on top of the mouse.  Otherwise post
+    # the menu just below the menubutton, as for a pull-down.
+
+    if {([$w cget -indicatoron] == 1) && ([$w cget -textvariable] != "")} {
+	if {$y == ""} {
+	    set x [expr [winfo rootx $w] + [winfo width $w]/2]
+	    set y [expr [winfo rooty $w] + [winfo height $w]/2]
+	}
+	tkPostOverPoint $menu $x $y [tkMenuFindName $menu [$w cget -text]]
+    } else {
+	$menu post [winfo rootx $w] [expr [winfo rooty $w]+[winfo height $w]]
+    }
+    focus $menu
+    tkSaveGrabInfo $w
+    grab -global $w
+}
+
+# tkMenuUnpost --
+# This procedure unposts a given menu, plus all of its ancestors up
+# to (and including) a menubutton, if any.  It also restores various
+# values to what they were before the menu was posted, and releases
+# a grab if there's a menubutton involved.  Special notes:
+# 1. It's important to unpost all menus before releasing the grab, so
+#    that any Enter-Leave events (e.g. from menu back to main
+#    application) have mode NotifyGrab.
+# 2. Be sure to enclose various groups of commands in "catch" so that
+#    the procedure will complete even if the menubutton or the menu
+#    or the grab window has been deleted.
+#
+# Arguments:
+# menu -		Name of a menu to unpost.  Ignored if there
+#			is a posted menubutton.
+
+proc tkMenuUnpost menu {
+    global tkPriv
+    set mb $tkPriv(postedMb)
+
+    # Restore focus right away (otherwise X will take focus away when
+    # the menu is unmapped and under some window managers (e.g. olvwm)
+    # we'll lose the focus completely).
+
+    catch {focus $tkPriv(focus)}
+    set tkPriv(focus) ""
+
+    # Unpost menu(s) and restore some stuff that's dependent on
+    # what was posted.
+
+    catch {
+	if {$mb != ""} {
+	    set menu [$mb cget -menu]
+	    $menu unpost
+	    set tkPriv(postedMb) {}
+	    $mb configure -cursor $tkPriv(cursor)
+	    $mb configure -relief $tkPriv(relief)
+	} elseif {$tkPriv(popup) != ""} {
+	    $tkPriv(popup) unpost
+	    set tkPriv(popup) {}
+	} elseif {[wm overrideredirect $menu]} {
+	    # We're in a cascaded sub-menu from a torn-off menu or popup.
+	    # Unpost all the menus up to the toplevel one (but not
+	    # including the top-level torn-off one) and deactivate the
+	    # top-level torn off menu if there is one.
+
+	    while 1 {
+		set parent [winfo parent $menu]
+		if {([winfo class $parent] != "Menu")
+			|| ![winfo ismapped $parent]} {
+		    break
+		}
+		$parent activate none
+		$parent postcascade none
+		if {![wm overrideredirect $parent]} {
+		    break
+		}
+		set menu $parent
+	    }
+	    $menu unpost
+	}
+    }
+
+    # Release grab, if any, and restore the previous grab, if there
+    # was one.
+
+    if {$menu != ""} {
+	set grab [grab current $menu]
+	if {$grab != ""} {
+	    grab release $grab
+	}
+    }
+    if {$tkPriv(oldGrab) != ""} {
+	if {$tkPriv(grabStatus) == "global"} {
+	    grab set -global $tkPriv(oldGrab)
+	} else {
+	    grab set $tkPriv(oldGrab)
+	}
+	set tkPriv(oldGrab) ""
+    }
+}
+
+# tkMbMotion --
+# This procedure handles mouse motion events inside menubuttons, and
+# also outside menubuttons when a menubutton has a grab (e.g. when a
+# menu selection operation is in progress).
+#
+# Arguments:
+# w -			The name of the menubutton widget.
+# upDown - 		"down" means button 1 is pressed, "up" means
+#			it isn't.
+# rootx, rooty -	Coordinates of mouse, in (virtual?) root window.
+
+proc tkMbMotion {w upDown rootx rooty} {
+    global tkPriv
+
+    if {$tkPriv(inMenubutton) == $w} {
+	return
+    }
+    set new [winfo containing $rootx $rooty]
+    if {($new != $tkPriv(inMenubutton)) && (($new == "")
+	    || ([winfo toplevel $new] == [winfo toplevel $w]))} {
+	if {$tkPriv(inMenubutton) != ""} {
+	    tkMbLeave $tkPriv(inMenubutton)
+	}
+	if {($new != "") && ([winfo class $new] == "Menubutton")
+		&& ([$new cget -indicatoron] == 0)} {
+	    if {$upDown == "down"} {
+		tkMbPost $new $rootx $rooty
+	    } else {
+		tkMbEnter $new
+	    }
+	}
+    }
+}
+
+# tkMbButtonUp --
+# This procedure is invoked to handle button 1 releases for menubuttons.
+# If the release happens inside the menubutton then leave its menu
+# posted with element 0 activated.  Otherwise, unpost the menu.
+#
+# Arguments:
+# w -			The name of the menubutton widget.
+
+proc tkMbButtonUp w {
+    global tkPriv
+
+    if  {($tkPriv(postedMb) == $w) && ($tkPriv(inMenubutton) == $w)} {
+	tkMenuFirstEntry [$tkPriv(postedMb) cget -menu]
+    } else {
+	tkMenuUnpost {}
+    }
+}
+
+# tkMenuMotion --
+# This procedure is called to handle mouse motion events for menus.
+# It does two things.  First, it resets the active element in the
+# menu, if the mouse is over the menu.  Second, if a mouse button
+# is down, it posts and unposts cascade entries to match the mouse
+# position.
+#
+# Arguments:
+# menu -		The menu window.
+# y -			The y position of the mouse.
+# state -		Modifier state (tells whether buttons are down).
+
+proc tkMenuMotion {menu y state} {
+    global tkPriv
+    if {$menu == $tkPriv(window)} {
+	$menu activate @$y
+    }
+    if {($state & 0x1f00) != 0} {
+	$menu postcascade active
+    }
+}
+
+# tkMenuButtonDown --
+# Handles button presses in menus.  There are a couple of tricky things
+# here:
+# 1. Change the posted cascade entry (if any) to match the mouse position.
+# 2. If there is a posted menubutton, must grab to the menubutton;  this
+#    overrrides the implicit grab on button press, so that the menu
+#    button can track mouse motions over other menubuttons and change
+#    the posted menu.
+# 3. If there's no posted menubutton (e.g. because we're a torn-off menu
+#    or one of its descendants) must grab to the top-level menu so that
+#    we can track mouse motions across the entire menu hierarchy.
+#
+# Arguments:
+# menu -		The menu window.
+
+proc tkMenuButtonDown menu {
+    global tkPriv
+    $menu postcascade active
+    if {$tkPriv(postedMb) != ""} {
+	grab -global $tkPriv(postedMb)
+    } else {
+	while {[wm overrideredirect $menu]
+		&& ([winfo class [winfo parent $menu]] == "Menu")
+		&& [winfo ismapped [winfo parent $menu]]} {
+	    set menu [winfo parent $menu]
+	}
+
+	# Don't update grab information if the grab window isn't changing.
+	# Otherwise, we'll get an error when we unpost the menus and
+	# restore the grab, since the old grab window will not be viewable
+	# anymore.
+
+	if {$menu != [grab current $menu]} {
+	    tkSaveGrabInfo $menu
+	}
+
+	# Must re-grab even if the grab window hasn't changed, in order
+	# to release the implicit grab from the button press.
+
+	grab -global $menu
+    }
+}
+
+# tkMenuLeave --
+# This procedure is invoked to handle Leave events for a menu.  It
+# deactivates everything unless the active element is a cascade element
+# and the mouse is now over the submenu.
+#
+# Arguments:
+# menu -		The menu window.
+# rootx, rooty -	Root coordinates of mouse.
+# state -		Modifier state.
+
+proc tkMenuLeave {menu rootx rooty state} {
+    global tkPriv
+    set tkPriv(window) {}
+    if {[$menu index active] == "none"} {
+	return
+    }
+    if {([$menu type active] == "cascade")
+	    && ([winfo containing $rootx $rooty]
+	    == [$menu entrycget active -menu])} {
+	return
+    }
+    $menu activate none
+}
+
+# tkMenuInvoke --
+# This procedure is invoked when button 1 is released over a menu.
+# It invokes the appropriate menu action and unposts the menu if
+# it came from a menubutton.
+#
+# Arguments:
+# w -			Name of the menu widget.
+
+proc tkMenuInvoke w {
+    if {[$w type active] == "cascade"} {
+	$w postcascade active
+	set menu [$w entrycget active -menu]
+	tkMenuFirstEntry $menu
+    } elseif {[$w type active] == "tearoff"} {
+	tkMenuUnpost $w
+	tkTearOffMenu $w
+    } else {
+	tkMenuUnpost $w
+	uplevel #0 [list $w invoke active]
+    }
+}
+
+# tkMenuEscape --
+# This procedure is invoked for the Cancel (or Escape) key.  It unposts
+# the given menu and, if it is the top-level menu for a menu button,
+# unposts the menu button as well.
+#
+# Arguments:
+# menu -		Name of the menu window.
+
+proc tkMenuEscape menu {
+    if {[winfo class [winfo parent $menu]] != "Menu"} {
+	tkMenuUnpost $menu
+    } else {
+	tkMenuLeftRight $menu -1
+    }
+}
+
+# tkMenuLeftRight --
+# This procedure is invoked to handle "left" and "right" traversal
+# motions in menus.  It traverses to the next menu in a menu bar,
+# or into or out of a cascaded menu.
+#
+# Arguments:
+# menu -		The menu that received the keyboard
+#			event.
+# direction -		Direction in which to move: "left" or "right"
+
+proc tkMenuLeftRight {menu direction} {
+    global tkPriv
+
+    # First handle traversals into and out of cascaded menus.
+
+    if {$direction == "right"} {
+	set count 1
+	if {[$menu type active] == "cascade"} {
+	    $menu postcascade active
+	    set m2 [$menu entrycget active -menu]
+	    if {$m2 != ""} {
+		tkMenuFirstEntry $m2
+	    }
+	    return
+	}
+    } else {
+	set count -1
+	set m2 [winfo parent $menu]
+	if {[winfo class $m2] == "Menu"} {
+	    $menu activate none
+	    focus $m2
+
+	    # This code unposts any posted submenu in the parent.
+
+	    set tmp [$m2 index active]
+	    $m2 activate none
+	    $m2 activate $tmp
+	    return
+	}
+    }
+
+    # Can't traverse into or out of a cascaded menu.  Go to the next
+    # or previous menubutton, if that makes sense.
+
+    set w $tkPriv(postedMb)
+    if {$w == ""} {
+	return
+    }
+    set buttons [winfo children [winfo parent $w]]
+    set length [llength $buttons]
+    set i [expr [lsearch -exact $buttons $w] + $count]
+    while 1 {
+	while {$i < 0} {
+	    incr i $length
+	}
+	while {$i >= $length} {
+	    incr i -$length
+	}
+	set mb [lindex $buttons $i]
+	if {([winfo class $mb] == "Menubutton")
+		&& ([$mb cget -state] != "disabled")
+		&& ([$mb cget -menu] != "")
+		&& ([[$mb cget -menu] index last] != "none")} {
+	    break
+	}
+	if {$mb == $w} {
+	    return
+	}
+	incr i $count
+    }
+    tkMbPost $mb
+    tkMenuFirstEntry [$mb cget -menu]
+}
+
+# tkMenuNextEntry --
+# Activate the next higher or lower entry in the posted menu,
+# wrapping around at the ends.  Disabled entries are skipped.
+#
+# Arguments:
+# menu -			Menu window that received the keystroke.
+# count -			1 means go to the next lower entry,
+#				-1 means go to the next higher entry.
+
+proc tkMenuNextEntry {menu count} {
+    global tkPriv
+    if {[$menu index last] == "none"} {
+	return
+    }
+    set length [expr [$menu index last]+1]
+    set active [$menu index active]
+    if {$active == "none"} {
+	set i 0
+    } else {
+	set i [expr $active + $count]
+    }
+    while 1 {
+	while {$i < 0} {
+	    incr i $length
+	}
+	while {$i >= $length} {
+	    incr i -$length
+	}
+	if {[catch {$menu entrycget $i -state} state] == 0} {
+	    if {$state != "disabled"} {
+		break
+	    }
+	}
+	if {$i == $active} {
+	    return
+	}
+	incr i $count
+    }
+    $menu activate $i
+    $menu postcascade $i
+}
+
+# tkMenuFind --
+# This procedure searches the entire window hierarchy under w for
+# a menubutton that isn't disabled and whose underlined character
+# is "char".  It returns the name of that window, if found, or an
+# empty string if no matching window was found.  If "char" is an
+# empty string then the procedure returns the name of the first
+# menubutton found that isn't disabled.
+#
+# Arguments:
+# w -				Name of window where key was typed.
+# char -			Underlined character to search for;
+#				may be either upper or lower case, and
+#				will match either upper or lower case.
+
+proc tkMenuFind {w char} {
+    global tkPriv
+    set char [string tolower $char]
+
+    foreach child [winfo child $w] {
+	switch [winfo class $child] {
+	    Menubutton {
+		set char2 [string index [$child cget -text] \
+			[$child cget -underline]]
+		if {([string compare $char [string tolower $char2]] == 0)
+			|| ($char == "")} {
+		    if {[$child cget -state] != "disabled"} {
+			return $child
+		    }
+		}
+	    }
+	    Frame {
+		set match [tkMenuFind $child $char]
+		if {$match != ""} {
+		    return $match
+		}
+	    }
+	}
+    }
+    return {}
+}
+
+# tkTraverseToMenu --
+# This procedure implements keyboard traversal of menus.  Given an
+# ASCII character "char", it looks for a menubutton with that character
+# underlined.  If one is found, it posts the menubutton's menu
+#
+# Arguments:
+# w -				Window in which the key was typed (selects
+#				a toplevel window).
+# char -			Character that selects a menu.  The case
+#				is ignored.  If an empty string, nothing
+#				happens.
+
+proc tkTraverseToMenu {w char} {
+    if {$char == ""} {
+	return
+    }
+    while {[winfo class $w] == "Menu"} {
+	set w [winfo parent $w]
+    }
+    set w [tkMenuFind [winfo toplevel $w] $char]
+    if {$w != ""} {
+	tkMbPost $w
+	tkMenuFirstEntry [$w cget -menu]
+    }
+}
+
+# tkFirstMenu --
+# This procedure traverses to the first menubutton in the toplevel
+# for a given window, and posts that menubutton's menu.
+#
+# Arguments:
+# w -				Name of a window.  Selects which toplevel
+#				to search for menubuttons.
+
+proc tkFirstMenu w {
+    set w [tkMenuFind [winfo toplevel $w] ""]
+    if {$w != ""} {
+	tkMbPost $w
+	tkMenuFirstEntry [$w cget -menu]
+    }
+}
+
+# tkTraverseWithinMenu
+# This procedure implements keyboard traversal within a menu.  It
+# searches for an entry in the menu that has "char" underlined.  If
+# such an entry is found, it is invoked and the menu is unposted.
+#
+# Arguments:
+# w -				The name of the menu widget.
+# char -			The character to look for;  case is
+#				ignored.  If the string is empty then
+#				nothing happens.
+
+proc tkTraverseWithinMenu {w char} {
+    if {$char == ""} {
+	return
+    }
+    set char [string tolower $char]
+    set last [$w index last]
+    if {$last == "none"} {
+	return
+    }
+    for {set i 0} {$i <= $last} {incr i} {
+	if [catch {set char2 [string index \
+		[$w entrycget $i -label] \
+		[$w entrycget $i -underline]]}] {
+	    continue
+	}
+	if {[string compare $char [string tolower $char2]] == 0} {
+	    if {[$w type $i] == "cascade"} {
+		$w postcascade $i
+		$w activate $i
+		set m2 [$w entrycget $i -menu]
+		if {$m2 != ""} {
+		    tkMenuFirstEntry $m2
+		}
+	    } else {
+		tkMenuUnpost $w
+		uplevel #0 [list $w invoke $i]
+	    }
+	    return
+	}
+    }
+}
+
+# tkMenuFirstEntry --
+# Given a menu, this procedure finds the first entry that isn't
+# disabled or a tear-off or separator, and activates that entry.
+# However, if there is already an active entry in the menu (e.g.,
+# because of a previous call to tkPostOverPoint) then the active
+# entry isn't changed.  This procedure also sets the input focus
+# to the menu.
+#
+# Arguments:
+# menu -		Name of the menu window (possibly empty).
+
+proc tkMenuFirstEntry menu {
+    if {$menu == ""} {
+	return
+    }
+    focus $menu
+    if {[$menu index active] != "none"} {
+	return
+    }
+    set last [$menu index last]
+    if {$last == "none"} {
+	return
+    }
+    for {set i 0} {$i <= $last} {incr i} {
+	if {([catch {set state [$menu entrycget $i -state]}] == 0)
+		&& ($state != "disabled") && ([$menu type $i] != "tearoff")} {
+	    $menu activate $i
+	    return
+	}
+    }
+}
+
+# tkMenuFindName --
+# Given a menu and a text string, return the index of the menu entry
+# that displays the string as its label.  If there is no such entry,
+# return an empty string.  This procedure is tricky because some names
+# like "active" have a special meaning in menu commands, so we can't
+# always use the "index" widget command.
+#
+# Arguments:
+# menu -		Name of the menu widget.
+# s -			String to look for.
+
+proc tkMenuFindName {menu s} {
+    set i ""
+    if {![regexp {^active$|^last$|^none$|^[0-9]|^@} $s]} {
+	catch {set i [$menu index $s]}
+	return $i
+    }
+    set last [$menu index last]
+    if {$last == "none"} {
+	return
+    }
+    for {set i 0} {$i <= $last} {incr i} {
+	if ![catch {$menu entrycget $i -label} label] {
+	    if {$label == $s} {
+		return $i
+	    }
+	}
+    }
+    return ""
+}
+
+# tkPostOverPoint --
+# This procedure posts a given menu such that a given entry in the
+# menu is centered over a given point in the root window.  It also
+# activates the given entry.
+#
+# Arguments:
+# menu -		Menu to post.
+# x, y -		Root coordinates of point.
+# entry -		Index of entry within menu to center over (x,y).
+#			If omitted or specified as {}, then the menu's
+#			upper-left corner goes at (x,y).
+
+proc tkPostOverPoint {menu x y {entry {}}}  {
+    if {$entry != {}} {
+	if {$entry == [$menu index last]} {
+	    incr y [expr -([$menu yposition $entry] \
+		    + [winfo reqheight $menu])/2]
+	} else {
+	    incr y [expr -([$menu yposition $entry] \
+		    + [$menu yposition [expr $entry+1]])/2]
+	}
+	incr x [expr -[winfo reqwidth $menu]/2]
+    }
+    $menu post $x $y
+    if {($entry != {}) && ([$menu entrycget $entry -state] != "disabled")} {
+	$menu activate $entry
+    }
+}
+
+# tkSaveGrabInfo --
+# Sets the variables tkPriv(oldGrab) and tkPriv(grabStatus) to record
+# the state of any existing grab on the w's display.
+#
+# Arguments:
+# w -			Name of a window;  used to select the display
+#			whose grab information is to be recorded.
+
+proc tkSaveGrabInfo w {
+    global tkPriv
+    set tkPriv(oldGrab) [grab current $w]
+    if {$tkPriv(oldGrab) != ""} {
+	set tkPriv(grabStatus) [grab status $tkPriv(oldGrab)]
+    }
+}
+
+# tk_popup --
+# This procedure pops up a menu and sets things up for traversing
+# the menu and its submenus.
+#
+# Arguments:
+# menu -		Name of the menu to be popped up.
+# x, y -		Root coordinates at which to pop up the
+#			menu.
+# entry -		Index of a menu entry to center over (x,y).
+#			If omitted or specified as {}, then menu's
+#			upper-left corner goes at (x,y).
+
+proc tk_popup {menu x y {entry {}}} {
+    global tkPriv
+    if {($tkPriv(popup) != "") || ($tkPriv(postedMb) != "")} {
+	tkMenuUnpost {}
+    }
+    tkPostOverPoint $menu $x $y $entry
+    tkSaveGrabInfo $menu
+    grab -global $menu
+    set tkPriv(popup) $menu
+    set tkPriv(focus) [focus]
+    focus $menu
+}
+#@package: library/obsolete tk_bindForTraversal tk_menuBar
+
+# obsolete.tcl --
+#
+# This file contains obsolete procedures that people really shouldn't
+# be using anymore, but which are kept around for backward compatibility.
+#
+# @(#) obsolete.tcl 1.2 94/12/17 16:05:21
+#
+# Copyright (c) 1994 The Regents of the University of California.
+# Copyright (c) 1994 Sun Microsystems, Inc.
+#
+# See the file "license.terms" for information on usage and redistribution
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+#
+
+# The procedures below are here strictly for backward compatibility with
+# Tk version 3.6 and earlier.  The procedures are no longer needed, so
+# they are no-ops.  You should not use these procedures anymore, since
+# they may be removed in some future release.
+
+proc tk_menuBar args {}
+proc tk_bindForTraversal args {}
+#@package: library/listbox tkListboxBeginSelect tkListboxSelectAll tkListboxUpDown tkListboxBeginExtend tkListboxDataExtend tkListboxExtendUpDown tkListboxBeginToggle tkListboxMotion tkListboxAutoScan tkListboxCancel
+
+# listbox.tcl --
+#
+# This file defines the default bindings for Tk listbox widgets
+# and provides procedures that help in implementing those bindings.
+#
+# @(#) listbox.tcl 1.13 95/08/22 08:49:50
+#
+# Copyright (c) 1994 The Regents of the University of California.
+# Copyright (c) 1994-1995 Sun Microsystems, Inc.
+#
+# See the file "license.terms" for information on usage and redistribution
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+
+#--------------------------------------------------------------------------
+# tkPriv elements used in this file:
+#
+# afterId -		Token returned by "after" for autoscanning.
+# listboxPrev -		The last element to be selected or deselected
+#			during a selection operation.
+# listboxSelection -	All of the items that were selected before the
+#			current selection operation (such as a mouse
+#			drag) started;  used to cancel an operation.
+#--------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------
+# The code below creates the default class bindings for listboxes.
+#-------------------------------------------------------------------------
+
+# Note: the check for existence of %W below is because this binding
+# is sometimes invoked after a window has been deleted (e.g. because
+# there is a double-click binding on the widget that deletes it).  Users
+# can put "break"s in their bindings to avoid the error, but this check
+# makes that unnecessary.
+
+bind Listbox <1> {
+    if [winfo exists %W] {
+	tkListboxBeginSelect %W [%W index @%x,%y]
+    }
+}
+bind Listbox <B1-Motion> {
+    set tkPriv(x) %x
+    set tkPriv(y) %y
+    tkListboxMotion %W [%W index @%x,%y]
+}
+bind Listbox <ButtonRelease-1> {
+    tkCancelRepeat
+    %W activate @%x,%y
+}
+bind Listbox <Shift-1> {
+    tkListboxBeginExtend %W [%W index @%x,%y]
+}
+bind Listbox <Control-1> {
+    tkListboxBeginToggle %W [%W index @%x,%y]
+}
+bind Listbox <B1-Leave> {
+    set tkPriv(x) %x
+    set tkPriv(y) %y
+    tkListboxAutoScan %W
+}
+bind Listbox <B1-Enter> {
+    tkCancelRepeat
+}
+
+bind Listbox <Up> {
+    tkListboxUpDown %W -1
+}
+bind Listbox <Shift-Up> {
+    tkListboxExtendUpDown %W -1
+}
+bind Listbox <Down> {
+    tkListboxUpDown %W 1
+}
+bind Listbox <Shift-Down> {
+    tkListboxExtendUpDown %W 1
+}
+bind Listbox <Left> {
+    %W xview scroll -1 units
+}
+bind Listbox <Control-Left> {
+    %W xview scroll -1 pages
+}
+bind Listbox <Right> {
+    %W xview scroll 1 units
+}
+bind Listbox <Control-Right> {
+    %W xview scroll 1 pages
+}
+bind Listbox <Prior> {
+    %W yview scroll -1 pages
+    %W activate @0,0
+}
+bind Listbox <Next> {
+    %W yview scroll 1 pages
+    %W activate @0,0
+}
+bind Listbox <Control-Prior> {
+    %W xview scroll -1 pages
+}
+bind Listbox <Control-Next> {
+    %W xview scroll 1 pages
+}
+bind Listbox <Home> {
+    %W xview moveto 0
+}
+bind Listbox <End> {
+    %W xview moveto 1
+}
+bind Listbox <Control-Home> {
+    %W activate 0
+    %W see 0
+    %W selection clear 0 end
+    %W selection set 0
+}
+bind Listbox <Shift-Control-Home> {
+    tkListboxDataExtend %W 0
+}
+bind Listbox <Control-End> {
+    %W activate end
+    %W see end
+    %W selection clear 0 end
+    %W selection set end
+}
+bind Listbox <Shift-Control-End> {
+    tkListboxDataExtend %W end
+}
+bind Listbox <F16> {
+    if {[selection own -displayof %W] == "%W"} {
+	clipboard clear -displayof %W
+	clipboard append -displayof %W [selection get -displayof %W]
+    }
+}
+bind Listbox <space> {
+    tkListboxBeginSelect %W [%W index active]
+}
+bind Listbox <Select> {
+    tkListboxBeginSelect %W [%W index active]
+}
+bind Listbox <Control-Shift-space> {
+    tkListboxBeginExtend %W [%W index active]
+}
+bind Listbox <Shift-Select> {
+    tkListboxBeginExtend %W [%W index active]
+}
+bind Listbox <Escape> {
+    tkListboxCancel %W
+}
+bind Listbox <Control-slash> {
+    tkListboxSelectAll %W
+}
+bind Listbox <Control-backslash> {
+    if {[%W cget -selectmode] != "browse"} {
+	%W selection clear 0 end
+    }
+}
+
+# Additional Tk bindings that aren't part of the Motif look and feel:
+
+bind Listbox <2> {
+    %W scan mark %x %y
+}
+bind Listbox <B2-Motion> {
+    %W scan dragto %x %y
+}
+
+# tkListboxBeginSelect --
+#
+# This procedure is typically invoked on button-1 presses.  It begins
+# the process of making a selection in the listbox.  Its exact behavior
+# depends on the selection mode currently in effect for the listbox;
+# see the Motif documentation for details.
+#
+# Arguments:
+# w -		The listbox widget.
+# el -		The element for the selection operation (typically the
+#		one under the pointer).  Must be in numerical form.
+
+proc tkListboxBeginSelect {w el} {
+    global tkPriv
+    if {[$w cget -selectmode]  == "multiple"} {
+	if [$w selection includes $el] {
+	    $w selection clear $el
+	} else {
+	    $w selection set $el
+	}
+    } else {
+	$w selection clear 0 end
+	$w selection set $el
+	$w selection anchor $el
+	set tkPriv(listboxSelection) {}
+	set tkPriv(listboxPrev) $el
+    }
+}
+
+# tkListboxMotion --
+#
+# This procedure is called to process mouse motion events while
+# button 1 is down.  It may move or extend the selection, depending
+# on the listbox's selection mode.
+#
+# Arguments:
+# w -		The listbox widget.
+# el -		The element under the pointer (must be a number).
+
+proc tkListboxMotion {w el} {
+    global tkPriv
+    if {$el == $tkPriv(listboxPrev)} {
+	return
+    }
+    set anchor [$w index anchor]
+    switch [$w cget -selectmode] {
+	browse {
+	    $w selection clear 0 end
+	    $w selection set $el
+	    set tkPriv(listboxPrev) $el
+	}
+	extended {
+	    set i $tkPriv(listboxPrev)
+	    if [$w selection includes anchor] {
+		$w selection clear $i $el
+		$w selection set anchor $el
+	    } else {
+		$w selection clear $i $el
+		$w selection clear anchor $el
+	    }
+	    while {($i < $el) && ($i < $anchor)} {
+		if {[lsearch $tkPriv(listboxSelection) $i] >= 0} {
+		    $w selection set $i
+		}
+		incr i
+	    }
+	    while {($i > $el) && ($i > $anchor)} {
+		if {[lsearch $tkPriv(listboxSelection) $i] >= 0} {
+		    $w selection set $i
+		}
+		incr i -1
+	    }
+	    set tkPriv(listboxPrev) $el
+	}
+    }
+}
+
+# tkListboxBeginExtend --
+#
+# This procedure is typically invoked on shift-button-1 presses.  It
+# begins the process of extending a selection in the listbox.  Its
+# exact behavior depends on the selection mode currently in effect
+# for the listbox;  see the Motif documentation for details.
+#
+# Arguments:
+# w -		The listbox widget.
+# el -		The element for the selection operation (typically the
+#		one under the pointer).  Must be in numerical form.
+
+proc tkListboxBeginExtend {w el} {
+    if {([$w cget -selectmode] == "extended")
+	    && [$w selection includes anchor]} {
+	tkListboxMotion $w $el
+    }
+}
+
+# tkListboxBeginToggle --
+#
+# This procedure is typically invoked on control-button-1 presses.  It
+# begins the process of toggling a selection in the listbox.  Its
+# exact behavior depends on the selection mode currently in effect
+# for the listbox;  see the Motif documentation for details.
+#
+# Arguments:
+# w -		The listbox widget.
+# el -		The element for the selection operation (typically the
+#		one under the pointer).  Must be in numerical form.
+
+proc tkListboxBeginToggle {w el} {
+    global tkPriv
+    if {[$w cget -selectmode] == "extended"} {
+	set tkPriv(listboxSelection) [$w curselection]
+	set tkPriv(listboxPrev) $el
+	$w selection anchor $el
+	if [$w selection includes $el] {
+	    $w selection clear $el
+	} else {
+	    $w selection set $el
+	}
+    }
+}
+
+# tkListboxAutoScan --
+# This procedure is invoked when the mouse leaves an entry window
+# with button 1 down.  It scrolls the window up, down, left, or
+# right, depending on where the mouse left the window, and reschedules
+# itself as an "after" command so that the window continues to scroll until
+# the mouse moves back into the window or the mouse button is released.
+#
+# Arguments:
+# w -		The entry window.
+
+proc tkListboxAutoScan {w} {
+    global tkPriv
+    set x $tkPriv(x)
+    set y $tkPriv(y)
+    if {$y >= [winfo height $w]} {
+	$w yview scroll 1 units
+    } elseif {$y < 0} {
+	$w yview scroll -1 units
+    } elseif {$x >= [winfo width $w]} {
+	$w xview scroll 2 units
+    } elseif {$x < 0} {
+	$w xview scroll -2 units
+    } else {
+	return
+    }
+    tkListboxMotion $w [$w index @$x,$y]
+    set tkPriv(afterId) [after 50 tkListboxAutoScan $w]
+}
+
+# tkListboxUpDown --
+#
+# Moves the location cursor (active element) up or down by one element,
+# and changes the selection if we're in browse or extended selection
+# mode.
+#
+# Arguments:
+# w -		The listbox widget.
+# amount -	+1 to move down one item, -1 to move back one item.
+
+proc tkListboxUpDown {w amount} {
+    global tkPriv
+    $w activate [expr [$w index active] + $amount]
+    $w see active
+    switch [$w cget -selectmode] {
+	browse {
+	    $w selection clear 0 end
+	    $w selection set active
+	}
+	extended {
+	    $w selection clear 0 end
+	    $w selection set active
+	    $w selection anchor active
+	    set tkPriv(listboxPrev) [$w index active]
+	    set tkPriv(listboxSelection) {}
+	}
+    }
+}
+
+# tkListboxExtendUpDown --
+#
+# Does nothing unless we're in extended selection mode;  in this
+# case it moves the location cursor (active element) up or down by
+# one element, and extends the selection to that point.
+#
+# Arguments:
+# w -		The listbox widget.
+# amount -	+1 to move down one item, -1 to move back one item.
+
+proc tkListboxExtendUpDown {w amount} {
+    if {[$w cget -selectmode] != "extended"} {
+	return
+    }
+    $w activate [expr [$w index active] + $amount]
+    $w see active
+    tkListboxMotion $w [$w index active]
+}
+
+# tkListboxDataExtend
+#
+# This procedure is called for key-presses such as Shift-KEndData.
+# If the selection mode isn't multiple or extend then it does nothing.
+# Otherwise it moves the active element to el and, if we're in
+# extended mode, extends the selection to that point.
+#
+# Arguments:
+# w -		The listbox widget.
+# el -		An integer element number.
+
+proc tkListboxDataExtend {w el} {
+    set mode [$w cget -selectmode]
+    if {$mode == "extended"} {
+	$w activate $el
+	$w see $el
+        if [$w selection includes anchor] {
+	    tkListboxMotion $w $el
+	}
+    } elseif {$mode == "multiple"} {
+	$w activate $el
+	$w see $el
+    }
+}
+
+# tkListboxCancel
+#
+# This procedure is invoked to cancel an extended selection in
+# progress.  If there is an extended selection in progress, it
+# restores all of the items between the active one and the anchor
+# to their previous selection state.
+#
+# Arguments:
+# w -		The listbox widget.
+
+proc tkListboxCancel w {
+    global tkPriv
+    if {[$w cget -selectmode] != "extended"} {
+	return
+    }
+    set first [$w index anchor]
+    set last $tkPriv(listboxPrev)
+    if {$first > $last} {
+	set tmp $first
+	set first $last
+	set last $tmp
+    }
+    $w selection clear $first $last
+    while {$first <= $last} {
+	if {[lsearch $tkPriv(listboxSelection) $first] >= 0} {
+	    $w selection set $first
+	}
+	incr first
+    }
+}
+
+# tkListboxSelectAll
+#
+# This procedure is invoked to handle the "select all" operation.
+# For single and browse mode, it just selects the active element.
+# Otherwise it selects everything in the widget.
+#
+# Arguments:
+# w -		The listbox widget.
+
+proc tkListboxSelectAll w {
+    set mode [$w cget -selectmode]
+    if {($mode == "single") || ($mode == "browse")} {
+	$w selection clear 0 end
+	$w selection set active
+    } else {
+	$w selection set 0 end
+    }
+}
+#
+# tkdemo --
+#
+# Run the Tk demo at anytime after Extended Tcl is installed.
+# 
+#------------------------------------------------------------------------------
+# Copyright 1992-1995 Karl Lehenbauer and Mark Diekhans.
+#
+# Permission to use, copy, modify, and distribute this software and its
+# documentation for any purpose and without fee is hereby granted, provided
+# that the above copyright notice appear in all copies.  Karl Lehenbauer and
+# Mark Diekhans make no representations about the suitability of this
+# software for any purpose.  It is provided "as is" without express or
+# implied warranty.
+#------------------------------------------------------------------------------
+# $Id: tkdemo.tcl,v 5.0 1995/07/25 06:00:33 markd Rel $
+#------------------------------------------------------------------------------
+#
+
+#@package: Tk-demo tkdemo
+
+proc tkdemo {} {
+    global auto_path
+    if {[info commands tkwait] == ""} {
+        error "tkdemo may only be used from wishx"
+    }
+    set demos [searchpath $auto_path demos]
+    if {$demos == "" || ![file isdirectory $demos]} {
+        error "can't find Tk `demos' directory on the auto_path (auto_path)"
+    }
+    uplevel #0 source $demos/widget
+}
+
+

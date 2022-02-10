@@ -1,0 +1,1 @@
+#define NTZA 0

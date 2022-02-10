@@ -1,0 +1,83 @@
+# Locale : zh_TW.dechanyu_r5
+# Purpose : For backward compatibility in CT exchange  
+
+# 
+# 	XLC_FONTSET category
+# 
+XLC_FONTSET
+# 	fs0 class (7 bit ASCII)
+fs0	{
+	charset		ISO8859-1
+	font		ISO8859-1:GL
+}
+# 	fs1 class
+fs1	{
+	charset		DEC.CNS11643.1986-2
+	font		DEC.CNS11643.1986-2:GLGR
+}
+#	fs3 class
+fs3	{
+	charset		DEC.DTSCS.1990-2
+	font		DEC.DTSCS.1990-2:GR
+}
+ 
+#	fs4 class
+fs4	{
+	charset		DEC.CNS11643.1986-UDC
+	font		DEC.CNS11643.1986-UDC:GLGR;DEC.CNS11643.1986-2:GLGR
+}
+ 
+END XLC_FONTSET
+
+# 
+# 	XLC_XLOCALE category
+# 
+XLC_XLOCALE
+
+encoding_name		dechanyu
+mb_cur_max		4
+state_depend_encoding	False
+wc_encoding_mask	\x3fffc000
+wc_shift_bits		7
+use_stdc_env		True
+force_convert_to_mb	True 
+
+# 	cs0 class
+cs0	{
+	side		GL:Default
+	length		1
+	wc_encoding	\x00000000
+	ct_encoding	ISO8859-1
+}
+
+# 	cs1 class
+cs1	{
+	side		GLGR:Default
+	length		2
+	wc_encoding	\x30000000
+	ct_encoding	DEC.CNS11643.1986-2
+	region		A1A1-FCFE;FDA1-FDCB;A121-F17E;F221-F244
+}
+
+#	cs2 class	DTSCS code - DEC.DTSCS.1990-2 
+cs2	{
+	side		GR
+	length		2
+        mb_encoding     <SS> \xc2\xcb
+	wc_encoding	\x70088000
+	ct_encoding	DEC.DTSCS.1990-2
+#	region		A1A1-E4B5
+	region		A1A1-E3FE;E4A1-E4B5 
+} 
+
+#	cs3 class	HANYU_UDC
+cs3	{
+	side		GLGR
+	length		2
+	wc_encoding	\x70088000
+	ct_encoding	DEC.CNS11643.1986-UDC
+#	region		FDCC-FEFE;F245-FE7E 
+	region		FDCC-FDFE;FEA1-FEFE;F245-F27E;F321-FE7E 
+} 
+
+END XLC_XLOCALE

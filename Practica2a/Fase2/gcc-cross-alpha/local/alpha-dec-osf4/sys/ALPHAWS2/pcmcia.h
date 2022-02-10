@@ -1,0 +1,1 @@
+#define NPCMCIA 0

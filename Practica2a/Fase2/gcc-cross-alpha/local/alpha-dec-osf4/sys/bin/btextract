@@ -1,0 +1,2708 @@
+#!/sbin/sh
+#
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+#
+# HISTORY
+#
+# ***************************************************************************
+# File Name: btextract
+# Date: March 23,1995
+# Author: Mangala Kadaba
+# Program name: btextract 
+# Syntax: btextract 
+# The script can be interrupted any time, the results may not be a successful.
+# Functions: unottend_extract
+# 	     attend_extract
+# Exit Values: 0 if successful
+#		1: Usage syntax error, error with disklabel -wr, newfs, mkfdmn
+# 		   and mkfset.
+#		2: if there are entry's in FAILED_EXTRACT_TAPE file.
+#		3: if /etc/fs_info file is empty.
+#		4: If tape drive not found.
+#		5: If disk drive not found.	 
+# ***************************************************************************
+# HISTORY:
+# This script restores the file systems dumped on to the tape. In the case of
+# ufs files systems it uses "restore" command, in case of Advfs file system
+# it uses "vrestore" command.
+# It checks if the user had requested "UN"(unattended restore) or "AT"(attented)
+# restore. If "UN" then it uses the fs_info file and restores the file
+# systems. If "AT" then asks the user about the disk information.
+#
+# June 19,1996: Modified btextract as follows: (MIK)
+# 1. Change the disklabel -wr to disklabel -R -r -t file_type device prototype disk_type
+#    in unattend and attend restore.
+# 2. Added OLD_DISKLABEL=/etc/old_disklabel
+# Some of the intermediate history is missing in this section.
+# July 1,1997: Fixed qars : 
+# 1. EX_AVAIL_SIZE is now 512-blocks output of df command.
+# 2. RESTORE_YES will restore root always.
+# 3. If mt command fails then btextract will exit with error code 1.
+# 4. At the end of btextract /tmp/mnt cleanup was added.
+# 5. In ADVANCED advfs, addvol restore, more description has been added.
+# 6. In ADVANCED restore, swap setting needs to be the same swap as original
+#    partition.
+#
+# Aug 27,1997: The messages for SWAP selection & addvol was corrected.
+#              The ddr_config was executed.
+
+# ***************************************************************************
+# FUNCTION : cleanall: Cleanup routine
+# ***************************************************************************
+
+cleanall()
+{
+
+FDMNS_PATH=/etc/fdmns
+MOUNT_PATH=/tmp     
+
+if [ -d ${FDMNS_PATH} ] 
+then
+	rm -fr ${FDMNS_PATH} > /dev/null
+	mkdir -p ${FDMNS_PATH} > /dev/null
+fi
+
+df | grep $MNT > /dev/null 
+if [ $? = 0 ]
+then
+cd /
+umount $MNT
+fi
+
+if [ -d ${MOUNT_PATH} ] 
+then
+	rm -fr ${MOUNT_PATH} > /dev/null
+	mkdir -p ${MOUNT_PATH} > /dev/null
+fi
+
+#Cleanup For QAR 50942
+if [ -d /tmp/mnt ]
+then
+   rm -fr /tmp/mnt
+fi
+
+}
+
+# qar 48422
+# ***************************************************************************
+# FUNCTION : remove_fdmns: Remove /etc/fdmns directory and create it again
+# ***************************************************************************
+
+remove_fdmns()
+{
+
+FDMNS_PATH=/etc/fdmns
+if [ -d ${FDMNS_PATH} ] 
+then
+	rm -fr ${FDMNS_PATH} > /dev/null
+	mkdir -p ${FDMNS_PATH} > /dev/null
+fi
+
+}
+
+# ***************************************************************************
+# FUNCTION : get_old_disklabel
+# ***************************************************************************
+
+get_old_disklabel() 
+{
+  
+SRCH_DEV=$1
+SRCH_PATH="/dev/r$SRCH_DEV"
+
+OLD_DISKLABEL=""
+OLD_DISKLABEL=`grep -l $SRCH_PATH $PATH_DSKLBL/*`
+
+if [ ! -f $OLD_DISKLABEL ] 
+then
+	echo "$OLD_DISKLABEL does not exist..exiting"
+	remove_fdmns
+	exit 1
+fi 
+
+export OLD_DISKLABEL
+
+}
+
+# ***************************************************************************
+# FUNCTION : clean_fdmns: Takes one argument - domain name
+# ***************************************************************************
+
+clean_fdmns()
+{
+
+FDMNS_DOMAIN=$1
+FDMNS_PATH=/etc/fdmns
+[ -d ${FDMNS_PATH}/${FDMNS_DOMAIN} ] &&
+   rm -fr ${FDMNS_PATH}/${FDMNS_DOMAIN} > /dev/null
+
+}
+
+
+# ***************************************************************************
+# FUNCTION : unattend_extract
+# ***************************************************************************
+
+unattend_extract() {
+# We already know the tape drive, disk layout. All we do is restore the 
+# file systems. Read the FS_INFO file for restores.
+
+# Set the swap partition before doing the restores (mik_0918)
+# Check for the swap partition from the SWAP_FILE(/etc/swap_file)
+# It is DEFAULT restore then set the swap partition and
+# do swapon {device_name}
+
+if [ -s $SWAP_FILE ]
+then
+# We are in DEFAULT mode.
+# Pick the first swap space in /etc/swap_file.
+# swapon {device_name} to update the swap space.
+
+	echo "1p" | /sbin/ed -s $SWAP_FILE > /tmp/temp_swap_input
+	read swap_dev swap_partition swap_disk swap_type < /tmp/temp_swap_input
+	rm /tmp/temp_swap_input
+
+# Check to see if swap_disk is same as disk_num in root_swap_info file
+        grep "$swap_disk" $ROOT_SWAP_INFO > /dev/null
+        if [ $? = 0 ]
+        then
+           # read the contents of the ROOT_SWAP_INFO
+	   echo "1p" | /sbin/ed -s $ROOT_SWAP_INFO > /tmp/FILE1
+           read root_disk root_mnt root_type < /tmp/FILE1
+           rm /tmp/FILE1
+           # zero the disklabel and apply the label because later on we cannot
+	   2>&1;echo "disklabel -z"|tee -a $LOG > /dev/null
+	   /sbin/disklabel -z $swap_disk 2> /dev/null ||
+	   {
+		2>&1; echo "Error with disklabel -z $swap_disk" | tee -a $LOG > /dv/null
+	   }
+
+	   get_old_disklabel $swap_disk
+
+	   # disklabel -wr
+	   if [ $root_type = "ufs" ]
+	   then
+	      2>&1;echo "disklabel -R -r -t ufs $swap_disk $OLD_DISKLABEL $swap_type"|tee -a $LOG > /dev/null
+	      /sbin/disklabel -R -r -t ufs $swap_disk $OLD_DISKLABEL $swap_type || 
+	      {
+		  2>&1;echo "Error with disklabel -R -r -t ufs $swap_disk $OLD_DISKLABEL $swap_type"|tee -a $LOG > /dev/null
+		  2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    		  cp $ADVFS_INFO_COPY $ADVFS_INFO
+		  remove_fdmns
+		  exit 1
+	      }
+	   fi # ex_type is ufs
+
+	   if [ $root_type = "advfs" ]
+	   then
+		2>&1;echo "disklabel -R -r -t advfs $swap_disk $OLD_DISKLABEL $swap_type"|tee -a $LOG > /dev/null
+		/sbin/disklabel -R -r -t advfs $swap_disk $OLD_DISKLABEL $swap_type || 
+		{
+			2>&1;echo "Error with disklabel -R -r -t advfs $swap_disk $OLD_DISKLABEL $swap_type"|tee -a $LOG > /dev/null
+		  	2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    			cp $ADVFS_INFO_COPY $ADVFS_INFO
+			remove_fdmns
+			exit 1
+		}
+	   fi # IF advfs
+        fi # grep
+         
+	echo "Execute the /sbin/swapon -F {device_name} command to configure"|tee -a $LOG > /dev/null
+	echo "swap space in the miniroot file system." | tee -a $LOG > /dev/null
+	swap_path=
+	swap_path="/dev/$swap_dev"
+	/sbin/swapon -F $swap_path 
+	ret=$?
+
+	if [ $ret != 0 ]
+	then
+	  if [ $ret = 8 ]
+          then
+             #disklabel is corrupted
+	     get_old_disklabel $swap_disk
+	     2>&1;echo "disklabel -R -r $swap_disk $OLD_DISKLABEL $swap_type" |tee -a $LOG > /dev/null
+	     /sbin/disklabel -R -r $swap_disk $OLD_DISKLABEL $swap_type 
+	     if [ $!= 0 ]
+             then
+		  2>&1;echo "Error with disklabel -R -r $swapdisk $OLD_DISKLABEL $swaptype"|tee -a $LOG > /dev/null
+		  2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    		  cp $ADVFS_INFO_COPY $ADVFS_INFO
+		  remove_fdmns
+		  exit 1
+	      else
+                  /sbin/swapon -F $swap_path
+                  if [ $? != 0 ]
+                  then
+		    echo | tee -a $LOG
+		    echo "btextract: Attempts to swapon $swap_path failed."|tee -a $LOG
+		    echo "The btextract utility could hang when restoring  /usr or"|tee -a $LOG
+		    echo "large file systems.  Please configure swap space in miniroot"|tee -a $LOG
+		    echo "file system."|tee -a $LOG
+                    exit 1
+                  else
+		    /sbin/swapon -s | grep $swap_path > /dev/null
+		    if [ $? = 0 ]
+		    then
+			echo "swapon $swap_path succeeded."|tee -a $LOG > /dev/null
+		    else
+			echo "swapon $swap_path failed."|tee -a $LOG 
+                        exit 1
+		    fi # swapon -s
+                  fi # swapon 2nd try
+              fi # disklabel
+           else
+		echo | tee -a $LOG
+		echo "btextract: Attempts to swapon $swap_path failed."|tee -a $LOG
+		echo "The btextract utility could hang when restoring  /usr or"|tee -a $LOG
+		echo "large file systems.  Please configure swap space in miniroot"|tee -a $LOG
+		echo "file system."|tee -a $LOG
+                exit 1
+           fi # ret is 8
+	else
+		/sbin/swapon -s | grep $swap_path > /dev/null
+		if [ $? = 0 ]
+		then
+			echo "swapon $swap_path succeeded."|tee -a $LOG > /dev/null
+		else
+			echo "swapon $swap_path failed."|tee -a $LOG 
+                        exit 1
+		fi
+	fi # swapon first try	
+else
+	echo
+	echo "The /etc/swap_file does not exist and swap cannot be defined."|tee -a $LOG
+	echo "Either the swap space was not defined on the system where the"|tee -a $LOG
+	echo "tape was created or the /etc/swap_file was deleted from the"|tee -a $LOG
+	echo "miniroot file system."|tee -a $LOG
+	echo |tee -a $LOG
+	echo "Configure swap space using the swapon command, then restart the"|tee -a $LOG
+	echo "btextract utility."|tee -a $LOG
+	echo | tee -a $LOG
+	echo "Exiting btetxract..."|tee -a $LOG
+	remove_fdmns
+	exit 1
+fi # swap_file does not exist.	
+
+#########################
+
+2>&1;echo |tee -a $LOG
+2>&1;echo "The file systems that will be restored are listed below"|tee -a $LOG
+2>&1;echo "using the following format: Name Mount Type"|tee -a $LOG
+2>&1;echo |tee -a $LOG
+
+cat $TMPFSINFO
+
+INDEX=1
+NUM=`cat $NUMBER_DUMPS`
+
+while [ "$INDEX" -le "$NUM" ]
+do
+	WORKDIR=`pwd`
+	echo "${INDEX}p" | /sbin/ed -s $FS_INFO > /tmp/FILE1
+read EX_DEV EX_MNT EX_TYPE EX_SIZE EX_CDEV EX_NUM EX_LABEL EX_OVERHEAD_SIZE EX_ROOT EX_DISK EX_DOMAIN1 EX_DOMAIN2 EX_BDEV EX_VOL_NUM < /tmp/FILE1
+
+EX_AVAIL_SIZE=
+
+#Cleanup
+rm /tmp/FILE1
+
+2>&1;echo |tee -a $LOG
+2>&1;echo "NOW RESTORING......"|tee -a $LOG
+2>&1;echo |tee -a $LOG
+2>&1;echo "Create disk $EX_CDEV and restore the contents."|tee -a $LOG
+2>&1;echo |tee -a $LOG
+
+DEV="/dev/"
+RAW="r"
+CSLICE="c"
+
+WORKDIR=`pwd`
+cd /dev
+
+# Call get_old_disklabel function to obtain the disklabel information
+# for the restored device.
+
+get_old_disklabel $EX_NUM
+
+2>&1; echo "disklabel -r $EX_NUM" | tee -a $LOG > /dev/null
+/sbin/disklabel -r $EX_NUM 2> /dev/null 1> /dev/null
+if [ $? != 0 ]
+then
+	# disklabel -z
+	2>&1;echo "disklabel -z"|tee -a $LOG > /dev/null
+	/sbin/disklabel -z $EX_NUM 2> /dev/null ||
+	{
+		2>&1; echo "Error with disklabel -z $EX_NUM" | tee -a $LOG > /dev/null
+	}
+
+	# disklabel -wr
+	if [ $EX_TYPE = "ufs" ]
+	then
+	2>&1;echo "disklabel -R -r -t ufs $EX_NUM $OLD_DISKLABEL $EX_LABEL"|tee -a $LOG > /dev/null
+	/sbin/disklabel -R -r -t ufs $EX_NUM $OLD_DISKLABEL $EX_LABEL || 
+	{
+		2>&1;echo "Error with disklabel -R -r -t ufs $EX_NUM $OLD_DISKLABEL $EX_LABEL"|tee -a $LOG > /dev/null
+		  2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    		cp $ADVFS_INFO_COPY $ADVFS_INFO
+		remove_fdmns
+		exit 1
+	}
+	fi # ex_type is ufs
+
+	if [ $EX_TYPE = "advfs" ]
+	then
+		if [ "$EX_ROOT" = "yes" ]
+		then
+			2>&1;echo "disklabel -R -r -t advfs $EX_NUM $OLD_DISKLABEL $EX_LABEL"|tee -a $LOG > /dev/null
+			/sbin/disklabel -R -r -t advfs $EX_NUM $OLD_DISKLABEL $EX_LABEL || 
+			{
+				2>&1;echo "Error with disklabel -R -r -t advfs $EX_NUM $OLD_DISKLABEL $EX_LABEL"|tee -a $LOG > /dev/null
+		  		2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    				cp $ADVFS_INFO_COPY $ADVFS_INFO
+				remove_fdmns
+				exit 1
+			}
+		else
+			2>&1;echo "disklabel -R -r $EX_NUM $OLD_DISKLABEL $EX_LABEL"|tee -a $LOG > /dev/null
+			/sbin/disklabel -R -r $EX_NUM $OLD_DISKLABEL $EX_LABEL || 
+			{
+				2>&1;echo "Error with disklabel -R -r $EX_NUM $OLD_DISKLABEL $EX_LABEL"|tee -a $LOG > /dev/null
+		  		2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    				cp $ADVFS_INFO_COPY $ADVFS_INFO
+				remove_fdmns
+				exit 1
+			}
+		fi # if ex_root = yes
+	fi # ex_type is advfs
+else
+	if [ "$EX_ROOT" = "yes" ]
+	then
+	# disklabel -z
+	2>&1;echo "disklabel -z"|tee -a $LOG > /dev/null
+	/sbin/disklabel -z $EX_NUM 2> /dev/null ||
+	{
+		2>&1; echo "Error with disklabel -z $EX_NUM" | tee -a $LOG > /dv/null
+	}
+
+	# disklabel -wr
+	if [ $EX_TYPE = "ufs" ]
+	then
+	2>&1;echo "disklabel -R -r -t ufs $EX_NUM $OLD_DISKLABEL $EX_LABEL"|tee -a $LOG > /dev/null
+	/sbin/disklabel -R -r -t ufs $EX_NUM $OLD_DISKLABEL $EX_LABEL || 
+	{
+		2>&1;echo "Error with disklabel -R -r -t ufs $EX_NUM $OLD_DISKLABEL $EX_LABEL"|tee -a $LOG > /dev/null
+		  2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    		cp $ADVFS_INFO_COPY $ADVFS_INFO
+		remove_fdmns
+		exit 1
+	}
+	fi # ex_type is ufs
+
+	if [ $EX_TYPE = "advfs" ]
+	then
+		2>&1;echo "disklabel -R -r -t advfs $EX_NUM $OLD_DISKLABEL $EX_LABEL"|tee -a $LOG > /dev/null
+		/sbin/disklabel -R -r -t advfs $EX_NUM $OLD_DISKLABEL $EX_LABEL || 
+		{
+			2>&1;echo "Error with disklabel -R -r -t advfs $EX_NUM $OLD_DISKLABEL $EX_LABEL"|tee -a $LOG > /dev/null
+		  	2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    			cp $ADVFS_INFO_COPY $ADVFS_INFO
+			remove_fdmns
+			exit 1
+		}
+	fi # IF advfs
+	fi # If EX_ROOT
+fi # if cannot read disklabel
+
+cd $WORKDIR
+
+case "$EX_TYPE" in
+ufs)
+2>&1;echo "Restoring ufs file type."|tee -a $LOG
+2>&1;echo ""|tee -a $LOG
+cd /dev
+2>&1;echo "newfs -F $EX_CDEV $EX_LABEL"|tee -a $LOG > /dev/null
+/sbin/newfs -F $EX_CDEV $EX_LABEL ||
+{
+	2>&1; echo "Error with newfs."|tee -a $LOG
+	2>&1;echo "btextract exited. Create a new file system and restart the btextract utility." |tee -a $LOG 
+    	cp $ADVFS_INFO_COPY $ADVFS_INFO
+	remove_fdmns
+	exit 1
+}
+
+
+if [ ! -d $MNT ]
+then
+	mkdir $MNT
+fi
+
+# Only if mount succeeds then restore the contents
+/sbin/mount $EX_DEV $MNT 
+if [ $? = 0 ]
+then
+cd $WORKDIR
+# Let us check that the restore can fit in this slice. If yes then do the
+# restore else note it down in /tmp/failed_extract_file. If successful then
+# add the entry to /tmp/actual_extract_file.
+	df $MNT > $TMP/temp1
+	if [ $? = 0 ]
+	then
+		EDSTRING="
+		1d
+		w
+		q
+		"
+		echo "$EDSTRING" | /sbin/ed -s $TMP/temp1 2>&1 > /dev/null
+		#read a b c EX_AVAIL_SIZE e f < $TMP/temp1	
+		# Changing the EX_AVAIL_SIZE from Available to 512-blocks
+		# size. (QAR 48546)
+		read a EX_AVAIL_SIZE c d e f < $TMP/temp1	
+		# Cleanup
+		/sbin/rm $TMP/temp1 
+                # Added code for QAR 51022
+                # Check to see that available size is ge to size of
+                # the dumped filesystem. The available size is 
+                # calculated from the df or showfdmn commands.
+                # If true then set RESTORE_YES to zero. Check for
+                # root filesystem, set RESTORE_YES to 1 else to 0
+                RESTORE_YES=0
+                if [ "$EX_AVAIL_SIZE" -ge "$EX_SIZE" ]
+                then
+                    RESTORE_YES=1
+                else
+                    if [ "$EX_MNT" = "/" ]
+                    then
+                        RESTORE_YES=1
+                    else
+                        RESTORE_YES=0
+                    fi
+                 fi # QAR 51022
+                    
+                if [ "$RESTORE_YES" -eq 1 ]          #QAR 51022
+		then
+			cd $MNT
+			2>&1;echo "Restoring the contents for $EX_DEV file system."|tee -a $LOG
+			2>&1;echo "The restore may take several minutes."|tee -a $LOG
+			/sbin/restore -rf $TAPE  
+			if [ $? != 0 ]
+			then
+				2>&1;echo "Error in restoring to $EX_DEV from the tape."|tee -a $LOG
+				echo "$EX_DEV\t$EX_MNT\t$EX_TYPE\t$EX_SIZE" >> $FAILED_EXTRACT_FILE
+			else
+				echo "$EX_DEV\t$EX_MNT\t$EX_TYPE\t$EX_SIZE" >> $ACTUAL_EXTRACT_FILE
+				echo "The following file system was restored." >> $LOG
+				echo "$EX_DEV $EX_MNT $EX_TYPE $EX_SIZE" >> $LOG
+#Even for unattended extract, copy the logfile to /tmp, so we require
+#the un_root_dev information.
+				if [ "$EX_MNT" = "/" ]
+				then
+					UN_ROOT_DEV=/
+					echo "$EX_DEV" >> $UN_ROOT_FILE
+                                        ROOT_DISK="$EX_NUM"
+				fi
+#Remove the restoresymtable as it occupies a lot of space on root and usr.
+				rm restoresymtable
+			fi # restore if statement
+		else # QAR 51022
+		     echo "The size of partition selected after forming a filesystem is $EX_AVAIL_SIZE" >> $LOG
+		     echo "You need to re-run btextract and select another partition. >> $LOG
+                     echo "The new partition should be 3.25% more than the size of the filesystem which needs to be restored. >> $LOG
+ 		     echo "$EX_DEV\t$EX_MNT\t$EX_TYPE\t$EX_SIZE" >> $FAILED_EXTRACT_FILE
+		fi # RESTORE_YES = 1
+	fi # if df if statement
+		cd $WORKDIR
+		/sbin/umount $MNT
+else
+				echo "$EX_DEV\t$EX_MNT\t$EX_TYPE\t$EX_SIZE" >> $FAILED_EXTRACT_FILE
+fi
+		/sbin/mt fsf 1
+		if [ $? != 0 ] # qar 50943
+                then
+                    2>&1;echo |tee -a $LOG
+                    2>&1;echo "The tape has not been positioned properly."|tee -a $LOG
+	            if [ -s $FAILED_EXTRACT_FILE ] 
+	            then
+                      2>&1;echo |tee -a $LOG
+                      2>&1;echo "WARNING: The following file systems were not restored. "|tee -a $LOG
+                      2>&1;echo "It could either be disk space exceeded, or tape drive problem."|tee -a $LOG
+		      2>&1;cat $FAILED_EXTRACT_FILE|tee -a $LOG > /dev/null
+		      cat $FAILED_EXTRACT_FILE
+                      2>&1;echo |tee -a $LOG
+	            fi # FAILED
+                    cleanall
+		    2>&1;echo "Exiting btextract" | tee -a $LOG
+	            exit 1
+                fi # mt fsf 
+		EX_AVAIL_SIZE=
+;;
+##################
+advfs)  cd /dev
+2>&1;echo "Restoring advfs file type."|tee -a $LOG
+
+2>&1;echo "mkfdmn -F -t $EX_LABEL /dev/$EX_DISK $EX_DOMAIN1"|tee -a $LOG > /dev/null
+/sbin/mkfdmn -F -t $EX_LABEL /dev/$EX_DISK $EX_DOMAIN1 ||
+{
+	2>&1; echo "Error with mkfdmn."|tee -a $LOG
+	2>&1; echo "Exiting btextract."|tee -a $LOG
+    	cp $ADVFS_INFO_COPY $ADVFS_INFO
+	#clean_fdmns $EX_DOMAIN1
+	remove_fdmns
+	exit 1
+}	
+
+
+2>&1;echo "mkfset $EX_DOMAIN1 $EX_DOMAIN2"|tee -a $LOG > /dev/null
+/sbin/mkfset $EX_DOMAIN1 $EX_DOMAIN2 ||
+{
+	2>&1; echo "Error with mkfset."|tee -a $LOG
+	2>&1; echo "Exiting btextract."|tee -a $LOG
+    	cp $ADVFS_INFO_COPY $ADVFS_INFO
+	#clean_fdmns $EX_DOMAIN1
+	remove_fdmns
+	exit 1
+}
+
+# Do addvol here
+if [ "$EX_VOL_NUM" -gt "1" ]
+then
+	#Start a while loop and do addvol, if addvol fails do disklabel,
+	#if that fails print a error message and go to next restore.
+	INDEX1=1
+	WORKDIR=`pwd`
+	ADD_VOL=
+	ADD_VOL=`expr $EX_VOL_NUM - 1`
+# Do lmf 
+		$lmffile
+	while [ "$INDEX1" -le "$ADD_VOL" ]
+	do
+		echo "1p" | /sbin/ed -s $ADVFS_INFO > /tmp/FILE2
+#EX_TEMP_DISK is rz1b, EX_TEMP_DNUM is rz1 EX_TEMP_LABEL is rz26l
+# EX_TEMP_BDEV is /dev/rz1b
+# EX_TEMP_CDEV is /dev/rrz1b
+		read EX_TEMP_DISK EX_TEMP_DNUM EX_TEMP_LABEL < /tmp/FILE2
+		EX_TEMP_BDEV="/dev/$EX_TEMP_DISK"
+		EX_TEMP_CDEV="/dev/r$EX_TEMP_DISK"
+		rm /tmp/FILE2
+		/sbin/addvol -F $EX_TEMP_BDEV $EX_DOMAIN1
+		if [ $? != 0 ]
+		then
+			#the diskneeds to be labelled
+
+			# Call get_old_disklabel function to obtain the disklabel 
+		        # information for the restored device.
+
+			get_old_disklabel $EX_TEMP_DNUM
+
+			2>&1;echo "disklabel -r $EX_TEMP_DNUM "|tee -a $LOG > /dev/null
+			/sbin/disklabel -r $EX_TEMP_DNUM 2> /dev/null 1> /dev/null
+			if [ $? != 0 ]
+			then
+				#Zero the label
+				2>&1; echo "disklabel -z $EX_TEMP_DNUM" | tee -a $LOG > /dev/null
+				/sbin/disklabel -z $EX_TEMP_DNUM 2> /dev/null ||
+				{
+					2>&1; echo "Error with disklabel." | tee -a $LOG > /dev/null
+				}
+				#Now write disklabel
+				   2>&1;echo "disklabel -R -r $EX_TEMP_DNUM $OLD_DISKLABEL $EX_TEMP_LABEL"|tee -a $LOG > /dev/null
+				   /sbin/disklabel -R -r $EX_TEMP_DNUM $OLD_DISKLABEL $EX_TEMP_LABEL 
+				   if [ $? = 0 ]
+				   then
+					/sbin/addvol -F $EX_TEMP_BDEV $EX_DOMAIN1
+                                        ADDVOL_UN_OK="yes"
+				   else
+					2>&1;echo "btextract exited. Rerun the script after the disk is labelled." |tee -a $LOG 
+					2>&1;echo "Could not add $EX_TEMP_DISK to $EX_DOMAIN1 because of disk label error."|tee -a $LOG
+					cp $ADVFS_INFO_COPY $ADVFS_INFO
+					remove_fdmns
+					#clean_fdmns $EX_DOMAIN1
+					exit 1
+				    fi # if disklabel -R -r
+			fi # disklabel is not readable
+                else
+                        ADDVOL_UN_OK="yes"
+		fi #addvol if
+
+if [ "$ADDVOL_UN_OK" = "yes" ]
+then
+
+# Do the ADVFS_LINK processing since addvol suceeded.
+EDSTRING="
+1d
+w
+q
+"
+	echo "$EDSTRING" | /sbin/ed -s $ADVFS_INFO > /dev/null
+#Add this to the ADVFS_LINK file, so that the restored file system can be
+#properly configured for advfs.
+	echo "$EX_DOMAIN1 $EX_TEMP_DISK" >> $ADVFS_LINK
+	ADVFS_LINK_NUM=`expr $ADVFS_LINK_NUM + 1`
+fi # ADDVOL_UN_OK=yes
+
+INDEX1=`expr $INDEX1 + 1`
+done # concat loop
+fi # if number of volume is > 1
+
+if [ ! -d $MNT ]
+then
+	mkdir $MNT
+fi
+
+# Only if mount succeeds then restore the contents
+/sbin/mount $EX_DEV $MNT 
+if [ $? = 0 ]
+then
+cd $WORKDIR
+# Let us check that the restore can fit in this slice. If yes then do the
+# restore else note it down in /tmp/failed_extract_file. If successful then
+# add the entry to /tmp/actual_extract_file.
+# Do df for advfs:
+	df $MNT > $TMP/temp1
+	if [ $? = 0 ]
+	then
+                EDSTRING="
+                1d
+                w
+                q
+                "
+                echo "$EDSTRING" | /sbin/ed -s $TMP/temp1 2>&1 > /dev/null
+		#read a b c EX_AVAIL_SIZE e f < $TMP/temp1	
+		# Changing the EX_AVAIL_SIZE from Available to 512-blocks
+		# size. (QAR 48546)
+		read a EX_AVAIL_SIZE c d e f < $TMP/temp1	
+                # Cleanup
+                /sbin/rm $TMP/temp1
+                # Added code for QAR 51022
+                # Check to see that available size is ge to size of
+                # the dumped filesystem. The available size is 
+                # calculated from the df or showfdmn commands.
+                # If true then set RESTORE_YES to zero. Check for
+                # root filesystem, set RESTORE_YES to 1 else to 0
+                RESTORE_YES=0
+                if [ "$EX_AVAIL_SIZE" -ge "$EX_SIZE" ]
+                then
+                    RESTORE_YES=1
+                else
+                    if [ "$EX_MNT" = "/" ]
+                    then
+                        RESTORE_YES=1
+                    else
+                        RESTORE_YES=0
+                    fi
+                 fi # QAR 51022
+
+		if [ "$RESTORE_YES" -eq 1 ]
+		then
+			cd $MNT
+			2>&1;echo "Restoring the contents for $EX_DEV file system."|tee -a $LOG
+			2>&1;echo "The restore may take several minutes."|tee -a $LOG
+			/sbin/vrestore -xf $TAPE 
+			if [ $? != 0 ]
+			then
+				2>&1;echo "Error in restoring to $EX_DEV from the tape."|tee -a $LOG
+				echo "$EX_DEV\t$EX_MNT\t$EX_TYPE\t$EX_SIZE\t$EX_CDEV\t$EX_NUM\t$EX_LABEL\t$EX_DISK\t$EX_DOMAIN1\t$EX_DOMAIN2\t$EX_BDEV" >> $FAILED_EXTRACT_FILE
+				clean_fdmns $EX_DOMAIN1
+				/sbin/mt fsf 1
+		                if [ $? != 0 ] # qar 50943
+                                then
+                                   2>&1;echo |tee -a $LOG
+                                   2>&1;echo "The tape has not been positioned properly."|tee -a $LOG
+	                           if [ -s $FAILED_EXTRACT_FILE ] 
+	                           then
+                                       2>&1;echo |tee -a $LOG
+                                       2>&1;echo "WARNING: The following file systems were not restored. "|tee -a $LOG
+                                       2>&1;echo "It could either be disk space exceeded, or tape drive problem."|tee -a $LOG
+		                       2>&1;cat $FAILED_EXTRACT_FILE|tee -a $LOG > /dev/null
+		                       cat $FAILED_EXTRACT_FILE
+                                       2>&1;echo |tee -a $LOG
+	                            fi # FAILED
+                                    cleanall
+		                    2>&1;echo "Exiting btextract" | tee -a $LOG
+	                            exit 1
+                                 fi # mt fsf 
+			else
+				echo "$EX_DEV\t$EX_MNT\t$EX_TYPE\t$EX_SIZE " >> $ACTUAL_EXTRACT_FILE 
+				echo "The following file system was restored." >> $LOG
+				echo "$EX_DEV $EX_MNT $EX_TYPE $EX_SIZE $EX_CDEV" >> $LOG
+#Even for unattended extract, copy the logfile to /tmp, so we require
+#the un_root_dev information.
+				if [ "$EX_MNT" = "/" ]
+				then
+					UN_ROOT_DEV=/
+					echo "$EX_DEV" >> $UN_ROOT_FILE
+                                        ROOT_DISK="$EX_NUM"
+				fi
+			fi # restore if statement
+		else # QAR 51022
+		     echo "The size of partition selected after forming a filesystem is $EX_AVAIL_SIZE" >> $LOG
+		     echo "You need to re-run btextract and select another partition. >> $LOG
+                     echo "The new partition should be 10% more than the size of the filesystem which needs to be restored. >> $LOG
+		     echo "$EX_DEV\t$EX_MNT\t$EX_TYPE\t$EX_SIZE" >> $FAILED_EXTRACT_FILE
+		     clean_fdmns $EX_DOMAIN1
+		     /sbin/mt fsf 1
+		     if [ $? != 0 ] # qar 50943
+                     then
+                         2>&1;echo |tee -a $LOG
+                         2>&1;echo "The tape has not been positioned properly."|tee -a $LOG
+	                 if [ -s $FAILED_EXTRACT_FILE ] 
+	                 then
+                             2>&1;echo |tee -a $LOG
+                             2>&1;echo "WARNING: The following file systems were not restored. "|tee -a $LOG
+                             2>&1;echo "It could either be disk space exceeded, or tape drive problem."|tee -a $LOG
+		             2>&1;cat $FAILED_EXTRACT_FILE|tee -a $LOG > /dev/null
+		             cat $FAILED_EXTRACT_FILE
+                             2>&1;echo |tee -a $LOG
+	                 fi # FAILED
+                         cleanall
+		         2>&1;echo "Exiting btextract" | tee -a $LOG
+	                 exit 1
+                    fi # mt fsf 
+		fi # if RESTORE_YES
+	fi # end of df if statement
+		cd $WORKDIR
+		/sbin/umount $MNT
+else
+				echo "$EX_DEV\t$EX_MNT\t$EX_TYPE\t$EX_SIZE" >> $FAILED_EXTRACT_FILE
+				clean_fdmns $EX_DOMAIN1
+				/sbin/mt fsf 1
+		                if [ $? != 0 ] # qar 50943
+                                then
+                                   2>&1;echo |tee -a $LOG
+                                   2>&1;echo "The tape has not been positioned properly."|tee -a $LOG
+	                           if [ -s $FAILED_EXTRACT_FILE ] 
+	                           then
+                                      2>&1;echo |tee -a $LOG
+                                      2>&1;echo "WARNING: The following file systems were not restored. "|tee -a $LOG
+                                      2>&1;echo "It could either be disk space exceeded, or tape drive problem."|tee -a $LOG
+		                      2>&1;cat $FAILED_EXTRACT_FILE|tee -a $LOG > /dev/null
+		                      cat $FAILED_EXTRACT_FILE
+                                      2>&1;echo |tee -a $LOG
+	                            fi # FAILED
+                                    cleanall
+		                    2>&1;echo "Exiting btextract" | tee -a $LOG
+	                            exit 1
+                                 fi # mt fsf 
+fi
+		EX_AVAIL_SIZE=
+;;
+*)	2>&1;echo "Unknown file system type, restoring next file system."|tee -a $LOG
+	;;
+esac
+
+#Now increment the index
+INDEX=`expr $INDEX + 1`
+
+done #end of the fs_info file
+
+#Cleanup
+
+} # end of unattend_extract
+
+# ***************************************************************************
+# FUNCTION : attend_extract
+# ***************************************************************************
+
+attend_extract()
+{
+
+### If there is a customised disklabel script, then execute the script.
+### ADPECP_0898
+
+if [ ! -s $CUSTOM_DISKLABEL_FILE ]
+then
+     CUSTOM_DISKLABEL="no"
+else
+     CUSTOM_DISKLABEL="yes"
+fi
+
+if [ $CUSTOM_DISKLABEL = "yes" ]
+then
+      2>&1;echo "Executing the $CUSTOM_DISKLABEL_FILE" | tee -a $LOG
+      chmod +x $CUSTOM_DISKLABEL_FILE
+      /sbin/sh $CUSTOM_DISKLABEL_FILE | tee -a $LOG
+      if [ $? != 0 ]
+      then
+          echo "-------------------------------------------------------------------------" | tee -a $LOG
+          echo "ERROR in $CUSTOM_DISKLABEL_FILE; The return code from the script is not 0" | tee -a $LOG
+          echo "There is no guarantee about the results produced from the restore through" | tee -a $LOG
+          echo "ATTENDED mode in btextract." | tee -a $LOG
+          echo "-------------------------------------------------------------------------" | tee -a $LOG
+          CUSTOM_DISKLABEL="no"
+      fi
+fi
+
+PICK_USED_PART=
+FSTAB_RW=1
+
+# Pick the swap partition first (mik_0918)
+
+SWAP_TRY=1
+while [ "$SWAP_TRY" -eq 1 ]
+do
+
+# QAR 48893 (added that this swap should be the same disk on which root
+# will reside.
+#
+
+MSG4="
+SWAP DISK SELECTION
+You must select a system disk drive for SWAP activation in the miniroot file 
+system and on the RESTORED ROOT FILESYSTEM. The same disk partition is used 
+in the miniroot and on the restored system. Conventionally, this disk drive 
+should be the drive where the root file system will be restored, and the "b" 
+partition is the SWAP partition. The script sets the "b" partition of the 
+restored root disk as swap partition at the end of btextract, provided the 
+"b" partition is not used for anything use.
+
+The following table lists the available disks, and may take several seconds
+to compile. After the table is displayed, enter the number that corresponds
+to the disk drive: "
+
+ROUTINE="SWAP SELECTION DISK"
+export ROUTINE
+2>&1;echo "$MSG4"|tee -a $LOG
+
+SDRIVE=`/sbin/finder -b` ||
+{
+        2>&1;echo "Valid disk drive not found. Install a disk drive."|tee -a $LOG
+        2>&1;echo "swap was not activated. End of btextract utility."|tee -a $LOG
+	remove_fdmns
+        exit 5
+}
+
+set xx $SDRIVE; shift
+# For example: DNAME is RZ73, SNAME is rz and DNUM is 8
+# For example: NAME_NUM is rz8
+DNAME=$1 SNAME=$2 DNUM=$3
+NAME_NUM=$SNAME$DNUM
+
+# qar 48987
+WORKDIR=`pwd`
+cd /dev
+/dev/MAKEDEV $NAME_NUM 2>&1 |tee -a $LOG > /dev/null
+cd $WORKDIR
+# qar 48987
+
+# START OF QAR 49859, 50214, 51657
+# *****************************************************************************************
+#
+# The swap disk is being labelled as the root disk label if the label matches.
+#
+
+# Get the entry which is the root entry form the fs_info file.
+INDEX_SWAP=1
+NUM_DUMP=`cat $NUMBER_DUMPS`
+
+while [ "$INDEX_SWAP" -le "$NUM_DUMP" ]
+do
+
+
+echo "${INDEX_SWAP}p" | /sbin/ed -s $FS_INFO > /tmp/TMPFILE
+read EXSWAP_DEV EXSWAP_MNT EXSWAP_TYPE EXSWAP_SIZE EXSWAP_CDEV EXSWAP_NUM EXSWAP_LABEL EXSWAP_OVERHEAD_SIZE EXSWAP_ROOT EXSWAP_DISK EXSWAP_DOMAIN1 EXSWAP_DOMAIN2 EXSWAP_BDEV EXSWAP_VOL_NUM < /tmp/TMPFILE
+
+if [ "$EXSWAP_ROOT" = "yes" ]
+then
+    break
+else
+    INDEX_SWAP=`expr $INDEX_SWAP + 1`
+fi
+
+done
+
+
+# Cleanup
+rm /tmp/TMPFILE
+
+### Continue with the disklabel as existed in btextract if the
+### custom_disklabel flag is set to "no"
+### ADPECP_0898
+
+if [ $CUSTOM_DISKLABEL = "no" ]
+then
+
+#  Now the EXSWAP_LABEL should be compared with the selected disk. If the label is same
+# then put the root disklabel.
+
+# Check if the disk is labelled, if not then label it with default label.
+
+2>&1;echo "disklabel -r $NAME_NUM "|tee -a $LOG > /dev/null
+
+/sbin/disklabel -r $NAME_NUM 2> /dev/null 1> /dev/null
+if [ $? != 0 ]
+then
+
+    # Zero the disklabel
+    cd /dev
+    2>&1;echo "disklabel -z $NAME_NUM"|tee -a $LOG > /dev/null
+    /sbin/disklabel -z $NAME_NUM 2> /dev/null ||
+    {
+	2>&1;echo "Error with disklabel -z $NAME_NUM" |tee -a $LOG > /dev/null
+    }    
+
+    2>&1;echo "disklabel -wr $NAME_NUM $DNAME"|tee -a $LOG > /dev/null
+    /sbin/disklabel -wr $NAME_NUM $DNAME ||
+    {
+	  2>&1;echo "\nError with disklabel -wr -t ufs $NAME_NUM $DNAME" |tee -a $LOG 
+	  2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    	  cp $ADVFS_INFO_COPY $ADVFS_INFO
+	  remove_fdmns
+	  exit 1
+    }
+
+fi #if disklabel failed
+
+if [ "$DNAME" = "$EXSWAP_LABEL" ]
+then
+
+
+# Call get_old_disklabel function to obtain the disklabel information
+# for the restored device.
+
+	get_old_disklabel $EXSWAP_NUM
+
+	2>&1;echo "disklabel -z $NAME_NUM"|tee -a $LOG > /dev/null
+	/sbin/disklabel -z $NAME_NUM 2> /dev/null ||
+	{
+		2>&1;echo "Error with disklabel -z $NAME_NUM" |tee -a $LOG  > /dev/null
+	}
+
+	if [ "$EXSWAP_TYPE" = "ufs" ]
+	then
+	   2>&1;echo "disklabel -R -r -t ufs $NAME_NUM $OLD_DISKLABEL $DNAME"|tee -a $LOG > /dev/null
+	   /sbin/disklabel -R -r -t ufs $NAME_NUM $OLD_DISKLABEL $DNAME ||
+	   {
+	        2>&1;echo "\nError with disklabel -R -r -t ufs $NAME_NUM $OLD_DISKLABEL $DNAME" |tee -a $LOG 
+	  	2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    		cp $ADVFS_INFO_COPY $ADVFS_INFO
+	  	remove_fdmns
+	        exit 1
+	   }
+	fi # if exswap_type is ufs
+
+	
+	if [ "$EXSWAP_TYPE" = "advfs" ]
+	then
+	   /sbin/disklabel -R -r -t advfs $NAME_NUM $OLD_DISKLABEL $DNAME ||
+	   {
+		2>&1; echo "Error with disklabel -R -r -t advfs $NAME_NUM $OLD_DISKLABEL $DNAME"|tee -a $LOG
+	  	2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    		cp $ADVFS_INFO_COPY $ADVFS_INFO
+	  	remove_fdmns
+		exit 1
+	   }
+	fi # if exswap_type is advfs
+
+fi # DNAME is EXSWAP_LABEL
+
+fi # CUSTOM_DISKLABEL equals no - ADPECP_0898
+
+# END OF QAR 49859, 50214, 51657
+# *****************************************************************************************
+# *****************************************************************************************
+2>&1;echo |tee -a $LOG
+2>&1;echo "You have selected "$NAME_NUM" as the disk drive. You need to select a partition"|tee -a $LOG
+2>&1;echo "for the SWAP space in miniroot file system."|tee -a $LOG
+
+MSG5="
+Using the table provided, find the letter that corresponds to the
+disk drive you selected for SWAP.
+"
+2>&1;echo "$MSG5" |tee -a $LOG
+SPART=`/sbin/pickapart $NAME_NUM $PICK_USED_PART`
+if [ $? != 0 ]
+then
+        # no partitions on the disk
+        2>&1;echo "\nSelect another disk."|tee -a $LOG
+        SWAP_TRY=1
+else
+        SWAP_TRY=0
+fi
+
+
+#Confirming that this is the device and partition chosen is correct.
+if [ "$SWAP_TRY" = 0 ]
+then
+while :
+do
+2>&1;echo |tee -a $LOG
+2>&1;echo "You have selected \"$SPART\" as the partition for "$NAME_NUM" disk device for swap."|tee -a $LOG
+2>&1;echo "Is this the correct partition? (y/n) [y]: "|tee -a $LOG
+read ANS
+        case "$ANS" in
+        yes|y|Yes|YES|"") echo "y" | tee -a $LOG > /dev/null
+                        break
+                        ;;
+        no|n|NO|No)     2>&1;echo "Select the disk partition again."|tee -a $LOG
+                        SWAP_TRY=1
+			echo "n" | tee -a $LOG > /dev/null
+                        break
+                        ;;
+        "?")            2>&1;echo "To complete the btextract session, you must" |tee -a $LOG
+                        2>&1;echo "enter a valid partition for the swap"|tee -a $LOG
+                        2>&1;echo "to be activated in the miniroot file system."|tee -a $LOG
+			echo "?" | tee -a $LOG > /dev/null
+                        ;;
+        *)              2>&1;echo "Answer y or n."|tee -a $LOG
+                        CONFIRM="no"
+			echo "*" | tee -a $LOG > /dev/null
+                        ;;
+        esac
+done # while : for testing the PPART
+fi # if swap_try = 0 then do case statement
+
+
+if [ $SWAP_TRY = 0 ]
+then
+# Now execute the /sbin/swapon device_name command (mik_0918)
+	echo "Execute the /sbin/swapon {device_name} command to configure"|tee -a $LOG > /dev/null
+	echo "swap space in the miniroot file system." | tee -a $LOG > /dev/null
+	swap_path=
+	swap_path="/dev/$NAME_NUM$SPART"
+	/sbin/swapon $swap_path 
+	ret_adv=$?
+	if [ $ret_adv != 0 ]
+	then
+          if [ $ret_adv = 8 ]
+           then
+                echo "Select again a swap space"|tee -a $LOG > /dev/null
+                SWAP_TRY=1
+           else
+		echo | tee -a $LOG
+		echo "btextract: Attempts to swapon $swap_path failed."|tee -a $LOG
+		echo "The btextract utility could hang when restoring  /usr or"|tee -a $LOG
+		echo "large file systems.  Please configure swap space in miniroot"|tee -a $LOG
+		echo "file system."|tee -a $LOG
+                exit 1
+           fi # ret_adv = 8
+	else
+		/sbin/swapon -s | grep $swap_path > /dev/null
+		if [ $? = 0 ]
+		then
+			echo "swapon $swap_path succeeded."|tee -a $LOG > /dev/null
+			# For next time you need to save this part id so keep concatenating into
+			# one variable.
+			PICK_USED_PART="$PICK_USED_PART $NAME_NUM$SPART"
+			#echo "PICK_USED_PART are: $PICK_USED_PART"
+		else
+			echo "swapon $swap_path failed."|tee -a $LOG 
+		fi # swapon -s
+			
+	fi # ret_adv != 0	
+fi # SWAP_TRY = 0
+
+done # SWAP_TRY = 1 while loop
+
+################
+
+2>&1;echo ""|tee -a $LOG
+2>&1;echo "FILE SYSTEM(S) TO BE RESTORED" |tee -a $LOG
+2>&1;echo "The file systems that will be restored are listed below"|tee -a $LOG
+2>&1;echo "using the following format: Name Mount Type"|tee -a $LOG
+2>&1;echo |tee -a $LOG
+
+cat $TMPFSINFO
+
+INDEX=1
+NUM=`cat $NUMBER_DUMPS`
+
+while [ "$INDEX" -le "$NUM" ]
+do
+	WORKDIR=`pwd`
+	echo "${INDEX}p" | /sbin/ed -s $FS_INFO > /tmp/FILE1
+read EX_DEV EX_MNT EX_TYPE EX_SIZE EX_CDEV EX_NUM EX_LABEL EX_OVERHEAD_SIZE EX_ROOT EX_DISK EX_DOMAIN1 EX_DOMAIN2 EX_BDEV EX_VOL_NUM < /tmp/FILE1
+
+# Use a capital 
+CAP_EX_LABEL=
+
+EX_AVAIL_SIZE=
+
+rm /tmp/FILE1
+
+TRY=1
+while [ "$TRY" -eq 1 ]
+do
+
+2>&1;echo |tee -a $LOG
+2>&1;echo "NOW RESTORING..."|tee -a $LOG
+2>&1;echo "the contents of disk $EX_DEV,"|tee -a $LOG 
+if [ $EX_TYPE = "advfs" ]
+then
+	2>&1;echo "disk device $EX_BDEV,"|tee -a $LOG
+fi
+2>&1;echo "disk label $EX_LABEL,"|tee -a $LOG
+2>&1;echo "disk type $EX_TYPE,"|tee -a $LOG
+2>&1;echo "disk size $EX_SIZE(512-blocks), mounted on $EX_MNT. "|tee -a $LOG
+2>&1;echo |tee -a $LOG
+
+MSG2="
+You must select a system disk drive for the restore operation.
+The following table lists the available disks, and may take several seconds
+to compile. After the table is displayed, enter the number that corresponds 
+to the disk drive: "
+
+ROUTINE="SYSTEM DISK"
+export ROUTINE
+2>&1;echo "$MSG2"|tee -a $LOG
+
+DDRIVE=`/sbin/finder -b` ||
+{
+        2>&1;echo "Valid disk drive not found. Install a disk drive."|tee -a $LOG
+	2>&1;echo "No file systems were extracted. End of btextract utility."|tee -a $LOG
+	remove_fdmns
+        exit 5
+}
+
+set xx $DDRIVE; shift
+# For example: DNAME is RZ73, SNAME is rz and DNUM is 8
+# For example: NAME_NUM is rz8
+DNAME=$1 SNAME=$2 DNUM=$3
+NAME_NUM=$SNAME$DNUM
+#
+DEV="/dev/"
+CSLICE="c"
+POUND_SIGN="#"
+RAW="r"
+FULL_DEV=$DEV$SNAME$DNUM$CSLICE
+C_DEV=$DEV$RAW$SNAME$DNUM$CSLICE
+DISK_LABEL=$EX_LABEL
+#echo "NAME_NUM is: $NAME_NUM"
+#echo "DNAME is: $DNAME"
+
+#MAKEDEV
+WORKDIR=`pwd`
+cd /dev
+./MAKEDEV $NAME_NUM 2>&1 |tee -a $LOG > /dev/null
+
+#echo "$DNAME $SNAME $DNUM $NAME_NUM $DISK_LABEL" >> $LOG
+
+#See if disklabel is OK, if else write the default disklabel before
+#doing the partition selection
+
+WORKDIR=`pwd`
+
+### Continue with the disklabel of disks as existed in btextract
+### if the custom_disklabel flag is set to "no"
+### ADPECP_0898
+if [ $CUSTOM_DISKLABEL = "no" ]
+then
+
+# In attended mode, get_old_disklabel won't be called if user selects 
+# different disk type than the old dumped device number.
+
+if [ "$DNAME" = "$EX_LABEL" ]
+then
+
+# Call get_old_disklabel function to obtain the disklabel information
+# for the restored device.
+
+	get_old_disklabel $EX_NUM
+
+fi
+
+
+cd /dev
+2>&1;echo "disklabel -r $NAME_NUM "|tee -a $LOG > /dev/null
+/sbin/disklabel -r $NAME_NUM 2> /dev/null 1> /dev/null
+if [ $? != 0 ] 
+then
+
+	2>&1;echo "disklabel -z $NAME_NUM"|tee -a $LOG > /dev/null
+	/sbin/disklabel -z $NAME_NUM 2> /dev/null ||
+	{
+		2>&1;echo "Error with disklabel -z $NAME_NUM" |tee -a $LOG > /dev/null
+	}
+
+	if [ "$EX_TYPE" = "ufs" ]
+	then
+		if [ "$DNAME" = "$EX_LABEL" ]
+		then
+		  2>&1;echo "disklabel -R -r -t ufs $NAME_NUM $OLD_DISKLABEL $DNAME"|tee -a $LOG > /dev/null
+		  /sbin/disklabel -R -r -t ufs $NAME_NUM $OLD_DISKLABEL $DNAME ||
+		  {
+		  2>&1;echo "\nError with disklabel -R -r -t ufs $NAME_NUM $OLD_DISKLABEL $DNAME" |tee -a $LOG 
+		  2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    		  cp $ADVFS_INFO_COPY $ADVFS_INFO
+		  remove_fdmns
+		  exit 1
+		  }
+		else
+		  2>&1;echo "disklabel -wr -t ufs $NAME_NUM $DNAME"|tee -a $LOG > /dev/null
+		  /sbin/disklabel -wr -t ufs $NAME_NUM $DNAME ||
+		  {
+		  2>&1;echo "\nError with disklabel -wr -t ufs $NAME_NUM $DNAME" |tee -a $LOG 
+		  2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    		  cp $ADVFS_INFO_COPY $ADVFS_INFO
+		  remove_fdmns
+		  exit 1
+		  }
+		fi 
+	fi # if ex_type is ufs
+
+	
+	if [ "$EX_TYPE" = "advfs" ]
+	then
+		if [ "$EX_ROOT" = "yes" ]
+		then
+		  if [ "$DNAME" = "$EX_LABEL" ]
+		  then
+		    2>&1;echo "disklabel -R -r -t advfs $NAME_NUM $OLD_DISKLABEL $DNAME"|tee -a $LOG > /dev/null
+		    /sbin/disklabel -R -r -t advfs $NAME_NUM $OLD_DISKLABEL $DNAME ||
+		    {
+		  	2>&1; echo "Error with disklabel -R -r -t advfs $DEV$RAW$NAME_NUM$PPART $OLD_DISKLABEL $DNAME"|tee -a $LOG
+		  	2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    			cp $ADVFS_INFO_COPY $ADVFS_INFO
+		  	remove_fdmns
+			exit 1
+		    }
+		  else
+		    2>&1;echo "disklabel -wr -t advfs $NAME_NUM $DNAME"|tee -a $LOG > /dev/null
+		    /sbin/disklabel -wr -t advfs $NAME_NUM $DNAME ||
+		    {
+		        2>&1;echo "\nError with disklabel -wr -t advfs $NAME_NUM $DNAME" |tee -a $LOG 
+		  	2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    			cp $ADVFS_INFO_COPY $ADVFS_INFO
+		  	remove_fdmns
+		        exit 1
+		    }
+		  fi 
+		else
+		  if [ "$DNAME" = "$EX_LABEL" ]
+		  then
+		    2>&1; echo "disklabel -R -r $NAME_NUM $OLD_DISKLABEL $DNAME"|tee -a $LOG > /dev/null
+		    /sbin/disklabel -R -r $NAME_NUM $OLD_DISKLABEL $DNAME
+		    {
+			2>&1; echo "Error with disklabel -R -r $DEV$RAW$NAME_NUM$PPART $OLD_DISKLABEL $DNAME"|tee -a $LOG
+		  	2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    			cp $ADVFS_INFO_COPY $ADVFS_INFO
+		  	remove_fdmns
+			exit 1
+		    }
+		  else
+		    2>&1;echo "disklabel -wr $NAME_NUM $DNAME"|tee -a $LOG > /dev/null
+		    /sbin/disklabel -wr $NAME_NUM $DNAME ||
+		    {
+		      2>&1;echo "\nError with disklabel -wr $NAME_NUM $DNAME" |tee -a $LOG 
+		  	2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    			cp $ADVFS_INFO_COPY $ADVFS_INFO
+		  	remove_fdmns
+		      exit 1
+		    }
+	          fi 
+		fi # if EX_ROOT
+	fi # if ex_type is advfs
+else
+# Save the disklabel in AT_MR_DISKLABEL=/etc/at_mr_disklabel 
+disklabel $NAME_NUM > $AT_MR_DISKLABEL 2> /dev/null 
+
+	if [ "$EX_ROOT" = "yes" ]
+	then
+	    2>&1;echo "disklabel -z $NAME_NUM"|tee -a $LOG > /dev/null
+	    /sbin/disklabel -z $NAME_NUM 2> /dev/null ||
+	    {
+		2>&1;echo "Error with disklabel -z $NAME_NUM" |tee -a $LOG  > /dev/null
+	    }
+
+	   if [ "$EX_TYPE" = "ufs" ]
+	   then
+	       if [ "$DNAME" = "$EX_LABEL" ]
+               then
+		   2>&1;echo "disklabel -R -r -t ufs $NAME_NUM $OLD_DISKLABEL $DNAME"|tee -a $LOG > /dev/null
+		   /sbin/disklabel -R -r -t ufs $NAME_NUM $OLD_DISKLABEL $DNAME ||
+		   {
+		      2>&1;echo "\nError with disklabel -R -r -t ufs $NAME_NUM $OLD_DISKLABEL $DNAME" |tee -a $LOG 
+		  	2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    			cp $ADVFS_INFO_COPY $ADVFS_INFO
+		  	remove_fdmns
+		      exit 1
+		   }
+               else
+		   2>&1;echo "disklabel -R -r -t ufs $NAME_NUM $AT_MR_DISKLABEL $DNAME"|tee -a $LOG > /dev/null
+		   /sbin/disklabel -R -r -t ufs $NAME_NUM $AT_MR_DISKLABEL $DNAME ||
+		   {
+		      2>&1;echo "\nError with disklabel -R -r -t ufs $NAME_NUM $AT_MR_DISKLABEL $DNAME" |tee -a $LOG 
+		  	2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    			cp $ADVFS_INFO_COPY $ADVFS_INFO
+		  	remove_fdmns
+		      exit 1
+		   }
+	       fi
+	   fi # if ex_type is ufs
+
+	
+	   if [ "$EX_TYPE" = "advfs" ]
+	   then
+	       if [ "$DNAME" = "$EX_LABEL" ]
+               then
+		   2>&1; echo "disklabel -R -r -t advfs $NAME_NUM $OLD_DISKLABEL $DNAME"|tee -a $LOG > /dev/null
+		   /sbin/disklabel -R -r -t advfs $NAME_NUM $OLD_DISKLABEL $DNAME ||
+		   {
+			2>&1; echo "Error with disklabel -R -r -t advfs $NAME_NUM $OLD_DISKLABEL $DNAME"|tee -a $LOG
+		  	2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    			cp $ADVFS_INFO_COPY $ADVFS_INFO
+		  	remove_fdmns
+			exit 1
+		   }
+	       else
+		   2>&1; echo "disklabel -R -r -t advfs $NAME_NUM $AT_MR_DISKLABEL $DNAME"|tee -a $LOG > /dev/null
+		   /sbin/disklabel -R -r -t advfs $NAME_NUM $AT_MR_DISKLABEL $DNAME ||
+		   {
+			2>&1; echo "Error with disklabel -R -r -t advfs $NAME_NUM $AT_MR_DISKLABEL $DNAME"|tee -a $LOG
+		  	2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    			cp $ADVFS_INFO_COPY $ADVFS_INFO
+		  	remove_fdmns
+			exit 1
+		   }
+               fi
+	    fi # if ex_type is advfs
+	fi # if EX_ROOT 
+fi # if disk is not readable
+
+fi # CUSTOM_DISKLABEL equals no - ADPECP_0898
+
+cd $WORKDIR
+
+2>&1;echo |tee -a $LOG
+2>&1;echo "You have selected "$NAME_NUM" as the disk drive. You need to select a partition"|tee -a $LOG
+2>&1;echo "of at least $EX_OVERHEAD_SIZE size(512-blocks): "|tee -a $LOG
+
+#Part 2
+# Now get the partition, make file system, mount it and restore it
+# Show the /etc/fs_info file for guidance.
+
+MSG3="
+Using the table provided, find the letter that corresponds to the 
+disk drive you selected. 
+"
+2>&1;echo "$MSG3" |tee -a $LOG
+PPART=`/sbin/pickapart $NAME_NUM $PICK_USED_PART` 
+if [ $? != 0 ]
+then
+	# no partitions on the disk
+	2>&1;echo "\nSelect another disk."|tee -a $LOG
+	TRY=1
+else
+	TRY=0
+fi
+
+#echo "PPART is: $PPART "
+
+#Confirming that this is the device and partition chosen is correct.
+if [ "$TRY" = 0 ]
+then
+while :
+do 
+2>&1;echo |tee -a $LOG
+2>&1;echo "You have selected \"$PPART\" as the partition for "$NAME_NUM" disk device."|tee -a $LOG
+2>&1;echo "Is this the correct partition? (y/n) [y]: "|tee -a $LOG
+read ANS
+	case "$ANS" in
+        yes|y|Yes|YES|"")       
+                                break
+                                ;;
+        no|n|NO|No)             2>&1;echo "Select the disk partition again."|tee -a $LOG
+                        TRY=1
+                        break
+                        ;;
+        "?")            2>&1;echo "To complete the btextract session, you must" |tee -a $LOG
+                        2>&1;echo "enter a valid partition where the file systems"|tee -a $LOG
+                        2>&1;echo "can be restored."|tee -a $LOG
+			;;
+	*)		2>&1;echo "Answer y or n."|tee -a $LOG
+			CONFIRM="no"
+			;;
+	esac		
+done # while : for testing the PPART 
+fi # if try = 0 then do case statement
+
+if [ "$TRY" = 0 ]
+then
+case "$EX_TYPE" in
+ufs)
+2>&1;echo "newfs $NAME_NUM$PPART $EX_LABEL"|tee -a $LOG > /dev/null
+/sbin/newfs $NAME_NUM$PPART $EX_LABEL 
+ret_adv_newfs=$?
+if [ $ret_adv_newfs != 0 ]
+then
+        echo "Select the disk and partition again."|tee -a $LOG > /dev/null
+        TRY=1
+else
+	# For next time you need to save this part id so keep concatenating into
+	# one variable.
+	PICK_USED_PART="$PICK_USED_PART $NAME_NUM$PPART"
+	#echo "PICK_USED_PART are: $PICK_USED_PART"
+	break
+fi # ret_adv_newfs != 0
+;;
+advfs)
+2>&1;echo "mkfdmn -t $EX_LABEL $DEV$NAME_NUM$PPART $EX_DOMAIN1"|tee -a $LOG > /dev/null
+/sbin/mkfdmn -t $EX_LABEL $DEV$NAME_NUM$PPART $EX_DOMAIN1 
+ret_adv_mkfdmn=$?
+if [ $ret_adv_mkfdmn != 0 ]
+then
+        echo "Select the disk and partition again."|tee -a $LOG > /dev/null
+        TRY=1
+        if [ -d /etc/fdmns/$EX_DOMAIN1 ]
+        then
+            rm -fr /etc/fdmns/$EX_DOMAIN1
+        fi # /etc/fdmns
+else
+	# For next time you need to save this part id so keep concatenating into
+	# one variable.
+	PICK_USED_PART="$PICK_USED_PART $NAME_NUM$PPART"
+	#echo "PICK_USED_PART are: $PICK_USED_PART"
+	break
+fi # re_adv_mkfdmn != 0
+;;
+esac
+fi # TRY = 0
+
+done # TRY = 1 while loop
+
+case "$EX_TYPE" in
+ufs)
+2>&1;echo ""|tee -a $LOG
+2>&1;echo "Restoring ufs file type."|tee -a $LOG
+cd /dev
+
+if [ ! -d $MNT ]
+then
+	mkdir $MNT
+fi
+
+# Restore only if mount succeeds, else not.
+/sbin/mount $DEV$NAME_NUM$PPART $MNT 
+if [ $? = 0 ]
+then
+cd $WORKDIR
+# Let us check that the restore can fit in this slice. If yes then do the
+# restore else note it down in /tmp/failed_extract_file. If successful then
+# add the entry to /tmp/actual_extract_file.
+	df $MNT > $TMP/temp1
+	if [ $? = 0 ]
+	then
+		EDSTRING="
+		1d
+		w
+		q
+		"
+		echo "$EDSTRING" | /sbin/ed -s $TMP/temp1 2>&1 > /dev/null
+		#read a b c EX_AVAIL_SIZE e f < $TMP/temp1	
+		# Changing the EX_AVAIL_SIZE from Available to 512-blocks
+		# size. (QAR 48546)
+		read a EX_AVAIL_SIZE c d e f < $TMP/temp1	
+		# Cleanup
+		/sbin/rm $TMP/temp1 
+                # Added code for QAR 51022
+                # Check to see that available size is ge to size of
+                # the dumped filesystem. The available size is 
+                # calculated from the df or showfdmn commands.
+                # If true then set RESTORE_YES to zero. Check for
+                # root filesystem, set RESTORE_YES to 1 else to 0
+                RESTORE_YES=0
+                if [ "$EX_AVAIL_SIZE" -ge "$EX_SIZE" ]
+                then
+                    RESTORE_YES=1
+                else
+                    if [ "$EX_MNT" = "/" ]
+                    then
+                        RESTORE_YES=1
+                    else
+                        RESTORE_YES=0
+                    fi
+                 fi # QAR 51022
+		if [ "$RESTORE_YES" -eq 1 ]
+		then
+			cd $MNT
+			2>&1;echo "Restoring the contents of $EX_DEV file system to $NAME_NUM$PPART."|tee -a $LOG
+			2>&1;echo "The restore may take several minutes."|tee -a $LOG
+			/sbin/restore -rf $TAPE  
+			if [ $? != 0 ]
+			then
+				2>&1;echo "\nError in restoring to $NAME_NUM$PPART from the tape."|tee -a $LOG
+				echo "$EX_DEV\t$EX_MNT\t$EX_TYPE\t$EX_SIZE was not restored to $NAME_NUM$PPART" >> $FAILED_EXTRACT_FILE
+			else
+				echo "$EX_DEV\t$EX_MNT\t$EX_TYPE\t$EX_SIZE was restored to $NAME_NUM$PPART" >> $ACTUAL_EXTRACT_FILE
+				echo "The following file system was restored." >> $LOG
+				echo "$EX_DEV $EX_MNT $EX_TYPE $EX_SIZE was restored to $NAME_NUM$PPART" >> $LOG
+#
+# Add the device name, mount point file type etc for the fstab file.
+# If the mount point is root then remember the device name for later use.
+
+				echo "$DEV$NAME_NUM$PPART $EX_MNT $EX_TYPE rw 1 $FSTAB_RW" >> $NEW_FSTAB
+				FSTAB_RW=`expr $FSTAB_RW + 1`
+				if [ "$EX_MNT" = "/" ]
+				then
+					ROOT_DEV="$DEV$NAME_NUM$PPART"
+                                        ROOT_DISK="$NAME_NUM"
+# Save the ROOT_DISK information for rc.config file pagefile,etc.(mik_0918)
+  RCSWAPDEV="/dev/"$NAME_NUM"b"
+  RCSWAPPART=""$NAME_NUM"b"
+  RCSWAPTYPE=$DNAME
+	
+				fi
+# Add the disk dev number to /tmp/disk_dev file.
+				echo "$NAME_NUM" >> $DISK_DEV
+				DISK_LINK_DEV=`expr $DISK_LINK_DEV + 1`
+# Add the mount point to /tmp/mount_info file.
+				echo "$EX_MNT" >> $MOUNT_INFO
+				MOUNT_NUM=`expr $MOUNT_NUM + 1`
+#Remove restoresymtable as it occupies lot of space on root and usr.
+				rm restoresymtable
+			fi # restore if statement
+		else # QAR 51022
+		     echo "The size of partition selected after forming a filesystem is $EX_AVAIL_SIZE" >> $LOG
+		     echo "You need to re-run btextract and select another partition. >> $LOG
+                     echo "The new partition should be 10% more than the size of the filesystem which needs to be restored. >> $LOG
+				echo "$EX_DEV\t$EX_MNT\t$EX_TYPE\t$EX_SIZE was not restored to $NAME_NUM$PPART" >> $FAILED_EXTRACT_FILE
+		fi # if RESTORE_YES
+	fi # if df if statement
+		cd $WORKDIR
+		/sbin/umount $MNT
+else
+				echo "$EX_DEV\t$EX_MNT\t$EX_TYPE\t$EX_SIZE was not restored to $NAME_NUM$PPART" >> $FAILED_EXTRACT_FILE
+fi
+		/sbin/mt fsf 1
+		if [ $? != 0 ] # qar 50943
+                then
+                    2>&1;echo |tee -a $LOG
+                    2>&1;echo "The tape has not been positioned properly."|tee -a $LOG
+	            if [ -s $FAILED_EXTRACT_FILE ] 
+	            then
+                      2>&1;echo |tee -a $LOG
+                      2>&1;echo "WARNING: The following file systems were not restored. "|tee -a $LOG
+                      2>&1;echo "It could either be disk space exceeded, or tape drive problem."|tee -a $LOG
+		      2>&1;cat $FAILED_EXTRACT_FILE|tee -a $LOG > /dev/null
+		      cat $FAILED_EXTRACT_FILE
+                      2>&1;echo |tee -a $LOG
+	            fi # FAILED
+                    cleanall
+		    2>&1;echo "Exiting btextract" | tee -a $LOG
+	            exit 1
+                fi # mt fsf 
+		EX_AVAIL_SIZE=
+		;;
+##################
+advfs)
+
+2>&1;echo "" |tee -a $LOG
+2>&1;echo "Restoring advfs file type."|tee -a $LOG
+cd /dev
+2>&1;echo "mkfset $EX_DOMAIN1 $EX_DOMAIN2"|tee -a $LOG > /dev/null
+/sbin/mkfset $EX_DOMAIN1 $EX_DOMAIN2 ||
+{
+	2>&1;echo "Error with mkfset." |tee -a $LOG
+	2>&1; echo "Exiting btextract."|tee -a $LOG
+    	cp $ADVFS_INFO_COPY $ADVFS_INFO
+	#clean_fdmns $EX_DOMAIN1
+	remove_fdmns
+	exit 1
+}
+
+# Do addvol here
+if [ "$EX_VOL_NUM" -gt "1" ]
+then
+	#Start a while loop and do addvol, if addvol fails do disklabel,
+	#if that fails print a error message and go to next restore.
+	INDEX1=1
+	WORKDIR=`pwd`
+	ADD_VOL=
+	ADD_VOL=`expr $EX_VOL_NUM - 1`
+# Do lmf 
+		$lmffile
+
+# Added echo statements to inform the user more about the additional volumes.
+# QAR 48548
+		2>&1;echo "There are $ADD_VOL additional volumes. You will need to select the same number."|tee -a $LOG
+		2>&1;echo "The total disk space needed is $EX_OVERHEAD_SIZE measured in 512-byte blocks."|tee -a $LOG
+# QAR 48548
+
+while [ "$INDEX1" -le "$ADD_VOL" ]
+do
+		echo "1p" | /sbin/ed -s $ADVFS_INFO > /tmp/FILE2
+		read EX_TEMP_DISK EX_TEMP_DNUM EX_TEMP_LABEL < /tmp/FILE2
+		EX_TEMP_BDEV="/dev/$EX_TEMP_DISK"
+		rm /tmp/FILE2
+		TRY=1
+	while [ "$TRY" -eq 1 ]
+	do
+		2>&1;echo "Select an additional disk partition for adding volume to $EX_DOMAIN1"|tee -a $LOG
+              
+		2>&1;echo "On creation, the additional volume was $EX_TEMP_DISK"|tee -a $LOG
+# QAR 48548
+		2>&1;echo "and the additional disk type was $EX_TEMP_LABEL."|tee -a $LOG
+# QAR 48548
+		2>&1;echo "Enter the number that corresponds to the disk drive:"|tee -a $LOG 
+		2>&1;echo |tee -a $LOG
+		ROUTINE="SYSTEM DISK"
+		export ROUTINE
+		DDRIVE=`/sbin/finder -b` ||
+		{
+        		2>&1;echo "Valid disk drive not found. Install a disk drive."|tee -a $LOG
+			2>&1;echo "No file systems were extracted. End of btextract utility."|tee -a $LOG
+    			cp $ADVFS_INFO_COPY $ADVFS_INFO
+			remove_fdmns
+        		exit 5
+		}
+
+		set xx $DDRIVE; shift
+		# For example: DNAME is RZ73, SNAME is rz and DNUM is 8
+		# For example: NAME_NUM_ADD is rz8
+		DNAME=$1 SNAME=$2 DNUM=$3
+		NAME_NUM_ADD=$SNAME$DNUM
+		DEV="/dev/"
+		CSLICE="c"
+		POUND_SIGN="#"
+		RAW="r"
+		FULL_DEV=$DEV$SNAME$DNUM$CSLICE
+		C_DEV=$DEV$RAW$SNAME$DNUM$CSLICE
+		#MAKEDEV
+		WORKDIR=`pwd`
+		cd /dev
+		./MAKEDEV $NAME_NUM_ADD 2>&1 |tee -a $LOG > /dev/null
+
+		#echo "$DNAME $SNAME $DNUM $NAME_NUM_ADD $DISK_LABEL" >> $LOG
+            ### Added check for ADPECP_0898
+            if [ $CUSTOM_DISKLABEL = "no" ]
+            then
+
+		#Now do disklabel
+		2>&1;echo "disklabel -r $NAME_NUM_ADD "|tee -a $LOG > /dev/null
+		/sbin/disklabel -r $NAME_NUM_ADD 2> /dev/null 1> /dev/null 
+		if [ $? != 0 ]
+		then
+                # Call get_old_disklabel function to obtain the disklabel information
+                # for the restored device.
+
+	          get_old_disklabel $EX_TEMP_DNUM
+
+	           if [ "$DNAME" = "$EX_TEMP_LABEL" ]
+                   then
+			2>&1;echo "disklabel -R -r $NAME_NUM_ADD $OLD_DISKLABEL $DNAME"|tee -a $LOG > /dev/null
+			/sbin/disklabel -R -r $NAME_NUM_ADD $OLD_DISKLABEL $DNAME ||
+			{
+				2>&1;echo "\nError with disklabel -R -r $NAME_NUM_ADD $OLD_DISKLABEL $DNAME." |tee -a $LOG 
+		  		2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    				cp $ADVFS_INFO_COPY $ADVFS_INFO
+				#clean_fdmns $EX_DOMAIN1
+				remove_fdmns
+				exit 1
+			}
+                   else
+			2>&1;echo "disklabel -wr $NAME_NUM_ADD $DNAME"|tee -a $LOG > /dev/null
+			/sbin/disklabel -wr $NAME_NUM_ADD $DNAME ||
+			{
+				2>&1;echo "\nError with disklabel -wr $NAME_NUM_ADD $DNAME." |tee -a $LOG 
+		  		2>&1;echo "btextract exited. Label the disk and restart the utility." |tee -a $LOG 
+    				cp $ADVFS_INFO_COPY $ADVFS_INFO
+				#clean_fdmns $EX_DOMAIN1
+				remove_fdmns
+				exit 1
+			}
+                   fi
+		fi # if disklabel -r is not success
+
+	    fi # CUSTOM_DISKLABEL equals no - ADPECP_0898    
+
+		#Part 2
+		# Now get the partition, addvol to domain
+
+		2>&1;echo |tee -a $LOG
+		2>&1;echo "Now select a partition for this additional volume"|tee -a $LOG
+		2>&1;echo "Enter the letter of the partition for the disk you selected:"|tee -a $LOG
+		PPART_ADD=`/sbin/pickapart $NAME_NUM_ADD $PICK_USED_PART`  
+		if [ $? != 0 ]
+		then
+			# no partitions on the disk
+			2>&1;echo "\nSelect another disk."|tee -a $LOG
+			TRY=1
+		else
+			TRY=0
+		fi
+
+#Now do addvol
+          if [ $TRY = 0 ]
+          then
+		2>&1;echo "/sbin/addvol $DEV$NAME_NUM_ADD$PPART_ADD $EX_DOMAIN1"|tee -a $LOG > /dev/null
+		/sbin/addvol $DEV$NAME_NUM_ADD$PPART_ADD $EX_DOMAIN1 
+                if [ $? = 0 ]
+                then
+                   ADDVOL_AT_OK="yes"
+# For next time you need to save this part id so keep concatenating into
+# one variable.
+		   PICK_USED_PART="$PICK_USED_PART $NAME_NUM_ADD$PPART_ADD"
+                else
+                   2>&1;echo "addvol was not successful, "|tee -a $LOG
+                   2>&1;echo "select another disk and partition" |tee -a $LOG
+                   TRY=1
+                fi # if addvol is a success
+          fi # do addvol only if TRY=0
+	done # TRY = 1 while loop
+
+if [ "$ADDVOL_AT_OK" = "yes" ]
+then
+# Do the ADVFS_LINK processing since addvol suceeded.
+
+EDSTRING="
+1d
+w
+q
+"
+	echo "$EDSTRING" | /sbin/ed -s $ADVFS_INFO > /dev/null
+#Add this to the ADVFS_LINK file, so that the restored file system can be
+#properly configured for advfs.
+	echo "$EX_DOMAIN1 $NAME_NUM_ADD$PPART_ADD" >> $ADVFS_LINK
+	ADVFS_LINK_NUM=`expr $ADVFS_LINK_NUM + 1`
+# Add the disk dev number to /tmp/disk_dev file.
+	echo "$NAME_NUM_ADD" >> $DISK_DEV
+	DISK_LINK_DEV=`expr $DISK_LINK_DEV + 1`
+fi # ADDVOL_AT_OK=yes 
+
+#Increment the additional volume counter
+INDEX1=`expr $INDEX1 + 1`
+done # concat loop
+fi # if number of volume is > 1
+
+if [ ! -d $MNT ]
+then
+	mkdir $MNT
+fi
+
+# Restore only if mount succeeds, else not
+/sbin/mount $EX_DOMAIN1$POUND_SIGN$EX_DOMAIN2 $MNT 
+if [ $? = 0 ]
+then
+cd $WORKDIR
+/sbin/sleep 10
+# Let us check that the restore can fit in this slice. If yes then do the
+# restore else note it down in /tmp/failed_extract_file. If successful then
+# add the entry to /tmp/actual_extract_file.
+# Do df for advfs:
+        df $MNT > $TMP/temp1
+	if [ $? = 0 ]
+	then
+                EDSTRING="
+                1d
+                w
+                q
+                "
+                echo "$EDSTRING" | /sbin/ed -s $TMP/temp1 2>&1 > /dev/null
+		#read a b c EX_AVAIL_SIZE e f < $TMP/temp1	
+		# Changing the EX_AVAIL_SIZE from Available to 512-blocks
+		# size. (QAR 48546)
+		read a EX_AVAIL_SIZE c d e f < $TMP/temp1	
+                # Cleanup
+                /sbin/rm $TMP/temp1
+                # Added code for QAR 51022
+                # Check to see that available size is ge to size of
+                # the dumped filesystem. The available size is 
+                # calculated from the df or showfdmn commands.
+                # If true then set RESTORE_YES to zero. Check for
+                # root filesystem, set RESTORE_YES to 1 else to 0
+                RESTORE_YES=0
+                if [ "$EX_AVAIL_SIZE" -ge "$EX_SIZE" ]
+                then
+                    RESTORE_YES=1
+                else
+                    if [ "$EX_MNT" = "/" ]
+                    then
+                        RESTORE_YES=1
+                    else
+                        RESTORE_YES=0
+                    fi
+                 fi # QAR 51022
+                if [ "$RESTORE_YES" -eq 1 ]
+		then
+			cd $MNT
+			2>&1;echo "Restoring the contents of $EX_DEV to $NAME_NUM$PPART file system." |tee -a $LOG
+			2>&1;echo "The restore may take several minutes."|tee -a $LOG
+			/sbin/vrestore -xf $TAPE 
+			if [ $? != 0 ]
+			then
+				2>&1;echo "\nError in restoring to $NAME_NUM$PPART from the tape."|tee -a $LOG
+				echo "$EX_DEV\t$EX_MNT\t$EX_TYPE\t$EX_SIZE was not restored to $NAME_NUM$PPART" >> $FAILED_EXTRACT_FILE
+			        clean_fdmns $EX_DOMAIN1
+				/sbin/mt fsf 1
+		                if [ $? != 0 ] # qar 50943
+                                then
+                                    2>&1;echo |tee -a $LOG
+                                    2>&1;echo "The tape has not been positioned properly."|tee -a $LOG
+	                            if [ -s $FAILED_EXTRACT_FILE ] 
+	                            then
+                                        2>&1;echo |tee -a $LOG
+                                        2>&1;echo "WARNING: The following file systems were not restored. "|tee -a $LOG
+                                        2>&1;echo "It could either be disk space exceeded, or tape drive problem."|tee -a $LOG
+		                        2>&1;cat $FAILED_EXTRACT_FILE|tee -a $LOG > /dev/null
+		                        cat $FAILED_EXTRACT_FILE
+                                        2>&1;echo |tee -a $LOG
+	                             fi # FAILED
+                                     cleanall
+		                     2>&1;echo "Exiting btextract" | tee -a $LOG
+	                             exit 1
+                                 fi # mt fsf 
+			else
+				echo "$EX_DEV\t$EX_MNT\t$EX_TYPE\t$EX_SIZE was restored to $NAME_NUM$PPART">> $ACTUAL_EXTRACT_FILE
+				echo "The following file system was restored." >> $LOG
+				echo "$EX_DEV\t$EX_MNT\t$EX_TYPE\t$EX_SIZE\t$EX_CDEV was restored to $NAME_NUM$PPART">> $LOG
+#
+# Add the device name, mount point file type etc for the fstab file.
+# If the mount point is root then remember the device name for later use.
+# For advfs add the domain name and device name to advfs_link file, this
+# will be used to create links in /etc/fdmns directory on the restored root
+# file system.
+				echo "$EX_DOMAIN1$POUND_SIGN$EX_DOMAIN2 $EX_MNT $EX_TYPE rw 1 $FSTAB_RW" >> $NEW_FSTAB
+				FSTAB_RW=`expr $FSTAB_RW + 1`
+				echo "$EX_DOMAIN1 $NAME_NUM$PPART" >> $ADVFS_LINK
+				ADVFS_LINK_NUM=`expr $ADVFS_LINK_NUM + 1`
+				if [ "$EX_MNT" = "/" ]
+				then
+					ROOT_DEV=$EX_DOMAIN1$POUND_SIGN$EX_DOMAIN2
+                                        ROOT_DISK="$NAME_NUM"
+# Save the ROOT_DISK information for rc.config file pagefile,etc.(mik_0918)
+  RCSWAPDEV="/dev/"$NAME_NUM"b"
+  RCSWAPPART=""$NAME_NUM"b"
+  RCSWAPTYPE=$DNAME
+				fi
+# Add the disk dev number to /tmp/disk_dev file.
+				echo "$NAME_NUM" >> $DISK_DEV
+				DISK_LINK_DEV=`expr $DISK_LINK_DEV + 1`
+# Add the mount point to /tmp/mount_info file.
+				echo "$EX_MNT" >> $MOUNT_INFO
+				MOUNT_NUM=`expr $MOUNT_NUM + 1`
+			fi # restore if statement
+		else # QAR 51022
+		     echo "The size of partition selected after forming a filesystem is $EX_AVAIL_SIZE" >> $LOG
+		     echo "You need to re-run btextract and select another partition. >> $LOG
+                     echo "The new partition should be 10% more than the size of the filesystem which needs to be restored. >> $LOG
+				echo "$EX_DEV\t$EX_MNT\t$EX_TYPE\t$EX_SIZE was not restored to $NAME_NUM$PPART" >> $FAILED_EXTRACT_FILE
+			        clean_fdmns $EX_DOMAIN1
+				/sbin/mt fsf 1
+		                if [ $? != 0 ] # qar 50943
+                                then
+                                    2>&1;echo |tee -a $LOG
+                                    2>&1;echo "The tape has not been positioned properly."|tee -a $LOG
+	                            if [ -s $FAILED_EXTRACT_FILE ] 
+	                            then
+                                       2>&1;echo |tee -a $LOG
+                                       2>&1;echo "WARNING: The following file systems were not restored. "|tee -a $LOG
+                                       2>&1;echo "It could either be disk space exceeded, or tape drive problem."|tee -a $LOG
+		                       2>&1;cat $FAILED_EXTRACT_FILE|tee -a $LOG > /dev/null
+		                       cat $FAILED_EXTRACT_FILE
+                                       2>&1;echo |tee -a $LOG
+	                            fi # FAILED
+                                    cleanall
+		                    2>&1;echo "Exiting btextract" | tee -a $LOG
+	                            exit 1
+                                fi # mt fsf 
+		fi # if EX_AVAIL_SIZE if statement
+	fi # end of df if statement
+		cd $WORKDIR
+		/sbin/umount $MNT
+else
+				echo "$EX_DEV\t$EX_MNT\t$EX_TYPE\t$EX_SIZE was not restored to $NAME_NUM$PPART" >> $FAILED_EXTRACT_FILE
+			        clean_fdmns $EX_DOMAIN1
+				/sbin/mt fsf 1
+		                if [ $? != 0 ] # qar 50943
+                                then
+                                    2>&1;echo |tee -a $LOG
+                                    2>&1;echo "The tape has not been positioned properly."|tee -a $LOG
+	                            if [ -s $FAILED_EXTRACT_FILE ] 
+	                            then
+                                        2>&1;echo |tee -a $LOG
+                                        2>&1;echo "WARNING: The following file systems were not restored. "|tee -a $LOG
+                                        2>&1;echo "It could either be disk space exceeded, or tape drive problem."|tee -a $LOG
+		                        2>&1;cat $FAILED_EXTRACT_FILE|tee -a $LOG > /dev/null
+		                        cat $FAILED_EXTRACT_FILE
+                                        2>&1;echo |tee -a $LOG
+	                             fi # FAILED
+                                     cleanall
+		                     2>&1;echo "Exiting btextract" | tee -a $LOG
+	                             exit 1
+                                 fi # mt fsf 
+fi
+		EX_AVAIL_SIZE=
+;;
+*)	2>&1;echo "Unknown file system type, restoring next file system."|tee -a $LOG
+	;;
+esac
+	
+INDEX=`expr $INDEX + 1`
+
+done # get the disk information
+
+#Cleanup
+[ -f /tmp/finder.dev ] &&
+{
+        rm /tmp/finder.dev
+}
+
+[ -f /tmp/finder.tab ] &&
+{
+        rm /tmp/finder.tab
+}
+
+} # end of attend_extract
+
+my_pg()
+{
+LINE_COUNT=1
+COUNT=1
+MAX_LINES=`cat $DISKLABEL_LINES`
+while [ "$LINE_COUNT" -le "$MAX_LINES" ]
+do
+        echo "${LINE_COUNT}p" | /sbin/ed -s $DISKLABEL_INFO > /tmp/FILE1
+        CONTENT=`cat /tmp/FILE1`
+        echo $CONTENT
+        COUNT=`expr $COUNT + 1`
+        if [ $COUNT -ge "21" ]
+        then
+	      echo
+              echo "--- MORE TO FOLLOW --- Press RETURN"
+              read ANS
+              COUNT=1
+        fi #COUNT -ge 21
+        LINE_COUNT=`expr $LINE_COUNT + 1`
+done
+#cleanup
+rm /tmp/FILE1
+}
+
+
+# ***************************************************************************
+# Main Program
+# ***************************************************************************
+#
+# Variables:
+MODE=
+FS_INFO=/etc/fs_info
+ADVFS_INFO=/etc/advfs_info
+DISKLABEL_INFO=/etc/disklabel_info
+DISKLABEL_LINES=/etc/disklabel_lines
+PATH_DSKLBL=/etc/disk_lbl
+ADVFS_INFO_COPY=/tmp/advfs_info_copy
+CUSTOM_FILE=/sbin/custom_install.sh
+NUMBER_DUMPS=/etc/number_dumps
+LOG=/tmp/btextract.log
+MNT=/tmp/mnt$$
+TAPE=
+ACTUAL_EXTRACT_FILE=/tmp/actual_extract_file
+FAILED_EXTRACT_FILE=/tmp/failed_extract_file
+TMP=/tmp
+EXIT_VALUE=0
+RES=
+ANS=
+NEW_FSTAB=/tmp/new_fstab
+ADVFS_LINK=/tmp/advfs_link
+ROOT_DEV=
+ROOT_DISK=
+ADVFS_LINK_NUM=0
+DISK_DEV=/tmp/disk_dev
+DISK_LINK_DEV=0
+MOUNT_INFO=/tmp/mount_info
+MOUNT_NUM=0
+UN_ROOT_DEV=
+UN_ROOT_FILE=/tmp/un_root_file
+UN_DEV=
+SELECT_AGAIN="yes"
+OLD_DISKLABEL=/tmp/old_disklabel
+SWAP_FILE=/etc/swap_file
+SWAP_LINES=/etc/swap_lines
+AT_MR_DISKLABEL=/tmp/at_mr_disklabel 
+lmffile=/etc/lmf_file
+ADDVOL_AT_OK="no"
+ADDVOL_UN_OK="no"
+TMPFSINFO=/etc/tmpFSINFO
+RCCONFIG=/tmp/mnt/etc/rc.config
+ORIGCONFIG=/tmp/mnt/etc/orig_rc.config
+RCSWAPDEV=
+RCSWAPPART=
+RCSWAPTYPE=
+ROOT_SWAP_INFO=/etc/root_swap_info
+
+### Added custom_disklabel_file for ADPECP_0898
+CUSTOM_DISKLABEL_FILE=/etc/custom_disklabel_file
+CUSTOM_DISKLABEL="no"
+
+# trap HUP,TERM,QUIT,KILL
+trap '
+echo ""|tee -a $LOG
+echo "One of these trap condition occured. (HUP,TERM,QUIT,KILL)" | tee -a $LOG
+echo "Exiting btextract" | tee -a $LOG
+cleanall
+exit 1' 1 3 9 15
+
+# trap INT(CTRL-C)
+trap '
+echo ""|tee -a $LOG
+echo "Interrupt... Exiting btextract" | tee -a $LOG
+echo "User terminated btextract process." | tee -a $LOG
+echo "Exiting btextract." | tee -a $LOG
+cleanall
+exit 2' 2 
+
+
+USAGE="usage: btextract"
+
+if [ -f $ADVFS_INFO ]
+then
+	cp $ADVFS_INFO $ADVFS_INFO_COPY
+fi
+
+# Process options
+case "$1" in
+"")     break
+        ;;
+*)      echo "$USAGE"
+        exit 1
+        ;;
+esac
+
+> $ACTUAL_EXTRACT_FILE
+> $FAILED_EXTRACT_FILE
+> $NEW_FSTAB
+> $ADVFS_LINK
+> $DISK_DEV
+> $UN_ROOT_FILE
+> $MOUNT_INFO
+
+if [ ! -d /tmp ]
+then
+        mkdir -p /tmp
+fi
+> $LOG
+
+# -------QAR 52859
+# QAR 52859 : Running /sbin/ddr_config first thing so that we don't
+# see any ddr errors.
+
+2>&1;echo |tee -a $LOG
+2>&1;echo "Executing ddr_config"|tee -a $LOG
+/sbin/ddr_config -c /etc/ddr.dbase
+if [ $? != 0 ]
+then
+   2>&1;echo "ddr_config failed."|tee -a $LOG
+fi
+
+# QAR 52859 ------------
+   
+2>&1;echo |tee -a $LOG
+2>&1;echo "\t\tBOOTABLE TAPE RESTORE"|tee -a $LOG
+2>&1;echo |tee -a $LOG
+2>&1;echo "The btextract utility restores file systems from tapes"|tee -a $LOG
+2>&1;echo "that contain the bootable standalone system (SAS) kernel."|tee -a $LOG
+2>&1;echo |tee -a $LOG
+#Check for /etc/fs_info is empty, then exit with 1.
+if [ ! -s $FS_INFO -a ! -s $CUSTOM_FILE ]
+then
+2>&1;echo|tee -a $LOG
+2>&1;echo "File system entries were NOT found in the /etc/fs_info file."|tee -a $LOG
+2>&1;echo "custom_install.sh was not found in /sbin directory."|tee -a $LOG
+2>&1;echo "Exiting btextract utility."|tee -a $LOG
+2>&1;echo|tee -a $LOG
+        exit 3
+fi
+
+if [ -s $CUSTOM_FILE -a ! -s $FS_INFO ] 
+then
+2>&1;echo|tee -a $LOG
+2>&1;echo "File system entries were NOT found in the /etc/fs_info file, "|tee -a $LOG
+2>&1;echo "custom_install.sh was found in /sbin directory."|tee -a $LOG
+2>&1;echo "Executing custom_install.sh, then exiting btextract utility."|tee -a $LOG
+2>&1;echo|tee -a $LOG
+chmod +x /sbin/custom_install.sh
+# MIK51219
+/sbin/custom_install.sh
+exit 0
+fi
+ 
+#Ask the user the tape drive where the tape is residing currently.
+
+while [ "$SELECT_AGAIN" = "yes" ]
+do
+
+# If nrmt0h device already exist, then remove all *rmt0* devices
+# so that MAKEDEV will create nrmt0h again.
+[ -r /dev/nrmt0h ] &&
+{
+  rm -rf /dev/*rmt0*
+}
+
+
+# Get the tape info:
+MSG1="
+
+SYSTEM TAPE SELECTION
+
+Use the following table to enter the name of the tape
+drive from which the standalone kernel was booted.  Only
+one tape drive can be entered." 
+
+ROUTINE="SYSTEM TAPE"
+export ROUTINE
+2>&1;echo "$MSG1"|tee -a $LOG
+
+TDRIVE=`/sbin/finder -t` ||
+{
+#never reached
+	2>&1;echo |tee -a $LOG
+        2>&1;echo "Valid tape drive not found. Install a tape drive."|tee -a $LOG
+	2>&1;echo "No file systems were extracted. End of btextract utility."|tee -a $LOG
+        exit 4
+}
+
+set xx $TDRIVE; shift
+
+SDRIVE=$1 DNAME=$2 SNAME=$3
+#echo "SDRIVE is: $SDRIVE"
+#echo "DNAME is: $DNAME"
+#echo "SNAME is: $SNAME"
+
+TAPE_DRIVE=$DNAME$SNAME
+#echo "Tape drive scsi name is: $TAPE_DRIVE"
+
+#Makedev device
+WORKDIR=`pwd`
+cd /dev
+
+2>&1; /dev/MAKEDEV $TAPE_DRIVE 2>&1 |tee -a $LOG > /dev/null 
+if [ $? != 0 ]
+then
+	NNAME=$4
+	TAPE_DRIVE=$SNAME$NNAME
+2>&1; /dev/MAKEDEV $TAPE_DRIVE 2>&1 |tee -a $LOG > /dev/null 
+	if [ $? != 0 ]
+	then
+		2>&1;echo |tee -a $LOG
+		2>&1;echo "Use MAKEDEV to create the device, then restart the btextract utility."|tee -a $LOG
+		exit 1
+	fi					
+fi
+
+cd $WORKDIR
+TAPE="/dev/nrmt0h"
+
+
+#Cleanup
+[ -f /tmp/finder.dev ] &&
+{
+        rm /tmp/finder.dev
+}
+
+[ -f /tmp/finder.tab ] &&
+{
+        rm /tmp/finder.tab
+}
+
+# Pulled in the rewind and fsf code into the -r TAPE big if statement
+# for QAR 50873
+
+if [ ! -r $TAPE ] 
+then
+	2>&1;echo "Tape device not found in /dev directory. Select another tape device."|tee -a $LOG
+	SELECT_AGAIN="yes"
+else
+# Call mt to rewind and position it after the vmunix
+        2>&1;echo "Rewinding the tape."|tee -a $LOG
+	/sbin/mt -f $TAPE rewind  
+        if [ "$?" != 0 ]
+        then
+             echo "Error: Tape drive is not accessible." | tee -a $LOG
+	     SELECT_AGAIN="yes"
+	else
+	     sleep 3
+             2>&1;echo "Positioning the tape."|tee -a $LOG
+             2>&1;echo |tee -a $LOG
+	     /sbin/mt fsf 1
+             if [ "$?" != 0 ]
+             then
+                 echo "Error: Tape drive is not accessible." | tee -a $LOG
+	         SELECT_AGAIN="yes"
+	     else
+	         SELECT_AGAIN="no"
+	         sleep 3
+             fi # mt fsf 1
+         fi # mt rewind
+fi # -r TAPE
+
+# end of qar 50873 fix.
+
+done # while SELECT_AGAIN is yes
+
+
+# Explain DEFAULT and ADVANCED restores.
+2>&1;echo|tee -a $LOG
+2>&1;echo "You have the option of performing a DEFAULT restore or an ADVANCED"|tee -a $LOG
+2>&1;echo "restore."|tee -a $LOG
+2>&1;echo|tee -a $LOG
+2>&1;echo "During the DEFAULT restore, the btextract utility restores the file"|tee -a $LOG
+2>&1;echo "systems using the disk partition information gathered during the"|tee -a $LOG
+2>&1;echo "btcreate session.  You cannot change the target disk destination."|tee -a $LOG
+2>&1;echo|tee -a $LOG
+2>&1;echo "During an ADVANCED restore, you have the option of changing the"|tee -a $LOG
+2>&1;echo "target disk destination.  You must enter the disk drive and disk"|tee -a $LOG
+2>&1;echo "partition to use."|tee -a $LOG
+2>&1;echo|tee -a $LOG
+
+
+# Ask the user if the extraction is DEFAULT or ADVANCED
+while :
+do
+2>&1;echo|tee -a $LOG
+2>&1; echo "Do you want to perform a DEFAULT restore operation (y/n) [y]: "|tee -a $LOG
+read ANS
+case "$ANS" in
+	yes|y|"") RES="yes"
+                  MODE="DF"
+		  break
+		  ;;
+	no|n)	  RES="no"
+                  MODE="AD"
+		  break
+		  ;;
+	"?")	 2>&1;echo | tee -a $LOG
+                 2>&1;echo "Choose y if want to use the disk partition information gathered"|tee -a $LOG
+		 2>&1;echo "during the btcreate operation."|tee -a $LOG
+		 2>&1;echo |tee -a $LOG
+		 2>&1;echo "Choose n if you want to change the disk drive and disk partition"|tee -a $LOG
+		 2>&1;echo "to use."|tee -a $LOG
+		 ;;
+	*)	2>&1;echo "$RES" |tee -a $LOG > /dev/null 
+		2>&1;echo "Please answer y or n."|tee -a $LOG
+		;;
+esac
+done
+
+if [ "$RES" = "no" ]
+then
+#Show the user the disklabel_info file. It will be cat'ed and will scroll off.
+2>&1; echo |tee -a $LOG
+2>&1;echo "The /etc/disklabel_info file lists the disk labels of each"|tee -a $LOG
+2>&1;echo "disk backed up by the btcreate utiltiy."|tee -a $LOG
+2>&1;echo |tee -a $LOG
+
+	cat $DISKLABEL_INFO |tee -a $LOG > /dev/null
+	my_pg  
+	while :
+	do
+	2>&1;echo |tee -a $LOG
+	2>&1;echo "Do you want to repeat the display of the disk label file (y/n) [n]:" |tee -a $LOG
+	read ANS_DISK
+	case "$ANS_DISK" in
+	yes|Yes|y) 2>&1;echo "$ANS_DISK" |tee -a $LOG > /dev/null
+		      my_pg
+		      ;;
+	no|No|n|"") 2>&1;echo "n" |tee -a $LOG > /dev/null 
+		 break
+		 ;;
+	"?")	 2>&1;echo | tee -a $LOG
+                 2>&1;echo "The disk label file contains information about the"|tee -a $LOG
+		 2>&1;echo "disk, such as type, physical parameters, and partitioning."|tee -a $LOG
+		 ;;
+	*)	2>&1;echo "$ANS_DISK" |tee -a $LOG > /dev/null 
+		2>&1;echo "Please answer y or n."|tee -a $LOG
+		;;
+	esac
+	done
+fi
+
+
+INDEX=1
+NUM=`cat $NUMBER_DUMPS`
+
+
+if [ $MODE = "DF" ]
+then
+# Call unattend_extract function
+	unattend_extract
+else
+	attend_extract
+fi
+# General
+	if [ -s $ACTUAL_EXTRACT_FILE ] 
+	then
+2>&1;echo |tee -a $LOG
+2>&1;echo "SUMMARY OF RESTORED FILESYSTEMS: "|tee -a $LOG
+		2>&1;cat $ACTUAL_EXTRACT_FILE|tee -a $LOG > /dev/null
+		cat $ACTUAL_EXTRACT_FILE
+2>&1;echo |tee -a $LOG
+		EXIT_VALUE=0
+	fi
+	if [ -s $FAILED_EXTRACT_FILE ] 
+	then
+2>&1;echo |tee -a $LOG
+2>&1;echo "WARNING: The following file systems were not restored. "|tee -a $LOG
+2>&1;echo "It could either be disk space exceeded, or tape drive problem."|tee -a $LOG
+		2>&1;cat $FAILED_EXTRACT_FILE|tee -a $LOG > /dev/null
+		cat $FAILED_EXTRACT_FILE
+2>&1;echo |tee -a $LOG
+		EXIT_VALUE=2
+	fi
+
+  
+# Prepare the swap type in the disklabel
+# Add swap entries to the new_fstab file and only for attend
+# Modified swap to swap1 for QAR 50371 in this section.
+
+if [ $MODE != "DF" ]
+then
+
+if [ "$ROOT_DISK" != "" ]
+then
+# This is for root disk only. 
+       disklabel $ROOT_DISK | grep swap | grep b > /dev/null
+       if [ $? = 0 ]
+       then
+          if [ -s $NEW_FSTAB ]
+          then
+	     grep "swap" $NEW_FSTAB | grep "/dev/$ROOT_DISK"b"" > /dev/null
+             if [ $? != 0 ]
+             then
+               echo " ""/dev/$ROOT_DISK"b"  swap1  ufs sw 0 2""  appended to new fstab" |tee -a $LOG 
+               echo "/dev/$ROOT_DISK"b"  swap1  ufs sw 0 2" >> $NEW_FSTAB
+             fi # grep
+          fi # new_fstab
+        else
+         /sbin/disklabel -s -F $ROOT_DISK"b" swap  > /dev/null
+         if [ $? != 0 ]
+         then
+            echo "disklabel -s -F $ROOT_DISK"b" swap failed" |tee -a $LOG > /dev/null 
+            echo "Create swap on $ROOT_DISK and b partition when needed." |tee -a $LOG 
+            echo "No swap entry added to the /etc/fstab file on the restored root directory"| tee -a $LOG
+         else
+            if [ -s $NEW_FSTAB ]
+            then
+	       grep "swap" $NEW_FSTAB | grep "/dev/$ROOT_DISK"b"" > /dev/null
+               if [ $? != 0 ]
+               then
+                  echo " ""/dev/$ROOT_DISK"b"  swap1  ufs sw 0 2""  appended to new fstab" |tee -a $LOG 
+                  echo "/dev/$ROOT_DISK"b"  swap1  ufs sw 0 2" >> $NEW_FSTAB
+               fi # grep
+            fi # new_fstab
+         fi # disklabel root
+        fi # disklabel root grep
+fi # root_disk
+fi # mode is not df
+
+if [ "$ROOT_DISK" != "" ]
+then
+# This is for swap file
+  SWAP_CTR=1
+  SWAP_NUM=`cat $SWAP_LINES`
+  while [ "$SWAP_CTR" -le "$SWAP_NUM" ]
+  do
+       echo "${SWAP_CTR}p" | /sbin/ed -s $SWAP_FILE > SWAP_INPUT
+       read  SWAPDEV SWAPPART SWAPDISK SWAPTYPE < SWAP_INPUT 
+       disklabel $SWAPDISK | grep swap | grep $SWAPPART > /dev/null
+       if [ $? = 0 ]
+       then
+          if [ -s $NEW_FSTAB ]
+          then
+	     grep "swap" $NEW_FSTAB | grep "/dev/$SWAPDEV" > /dev/null
+             if [ $? != 0 ]
+             then
+                SWAP_CTR_NEW=`expr $SWAP_CTR + 1`
+               echo " ""/dev/$SWAPDEV  swap$SWAP_CTR_NEW  ufs sw 0 2""  appended to new fstab" |tee -a $LOG 
+               echo "/dev/$SWAPDEV  swap$SWAP_CTR_NEW  ufs sw 0 2" >> $NEW_FSTAB
+             fi # grep
+          fi # new_fstab
+        else
+         /sbin/disklabel -s -F $SWAPDEV swap  > /dev/null
+         if [ $? != 0 ]
+         then
+            echo "disklabel -s -F $SWAPDEV swap failed" |tee -a $LOG > /dev/null 
+            echo "Create swap on $SWAPDEV when needed." |tee -a $LOG 
+            echo "No swap entry added to the /etc/fstab file on the restored root directory"| tee -a $LOG
+         else
+            if [ -s $NEW_FSTAB ]
+            then
+	       grep "swap" $NEW_FSTAB | grep "/dev/$SWAPDEV" > /dev/null
+               if [ $? != 0 ]
+               then
+                    SWAP_CTR_NEW=`expr $SWAP_CTR + 1`
+                    echo " ""/dev/$SWAPDEV  swap$SWAP_CTR_NEW  ufs sw 0 2""  appended to new fstab" |tee -a $LOG 
+                    echo "/dev/$SWAPDEV  swap$SWAP_CTR_NEW  ufs sw 0 2" >> $NEW_FSTAB
+               fi # grep
+            fi # new_fstab
+         fi # disklabel swapdev
+        fi # disklabel swapdev grep
+        SWAP_CTR=`expr $SWAP_CTR + 1`
+   done # SWAP while loop
+#Cleanup
+rm SWAP_INPUT
+fi # root_disk
+
+# If the new_fstab file is not empty then, copy this file to the restored
+# file system. Move the restored fstab to fstab.old. Move the new_fstab
+# file to fstab. If it is advfs filesytems then create the links in fdmns
+# directory on the restored root file system.
+# If there is no root file system then none of the above is done.
+if [ -s $NEW_FSTAB ] 
+then
+	2>&1;echo |tee -a $LOG
+	if [ "$ROOT_DEV" != "" ]
+	then
+		mkdir /tmp/mnt
+		mount $ROOT_DEV /tmp/mnt 2>&1 |tee -a $LOG > /dev/null
+		OLD_FSTAB=/tmp/mnt/etc/fstab   #mik_0918
+		grep "^/proc" $OLD_FSTAB > /dev/null
+		if [ $? = 0 ]
+		then
+			echo "/proc   /proc   procfs  rw 0 0" >> $NEW_FSTAB
+			echo "/proc entry added to the $NEW_FSTAB file."| tee -a $LOG
+		else
+			echo "/proc entry was not added to $NEW_FSTAB as it did not exist, "|tee -a $LOG > /dev/null
+			echo "in the $OLD_FSTAB file."|tee -a $LOG > /dev/null
+		fi
+
+		# QAR 50371 - Added /dev/fd entry to new fstab if it existed
+		# in the old fstab entry
+		# Add /dev/fd entry if it existed in the old fstab file
+		grep "^/dev/fd" $OLD_FSTAB > /dev/null
+		if [ $? = 0 ]
+		then
+			echo "/dev/fd   /dev/fd   fdfs  rw 0 0" >> $NEW_FSTAB
+			echo "/dev/fd entry added to the $NEW_FSTAB file."| tee -a $LOG
+		else
+			echo "/dev/fd entry was not added to $NEW_FSTAB as it did not exist, "|tee -a $LOG > /dev/null
+			echo "in the $OLD_FSTAB file."|tee -a $LOG > /dev/null
+		fi
+		# end of qar 50371 fix
+	
+		2>&1;echo "cp $NEW_FSTAB /tmp/mnt/etc/new_fstab" 2>&1 |tee -a $LOG > /dev/null
+		cp $NEW_FSTAB /tmp/mnt/etc/new_fstab 
+		cp /tmp/mnt/etc/fstab /tmp/mnt/etc/fstab.old 
+		cp /tmp/mnt/etc/new_fstab /tmp/mnt/etc/fstab 
+		2>&1;echo "The original fstab file has been moved to fstab.old."|tee -a $LOG
+		2>&1;echo "The new fstab file has been copied to the restored root /etc directory."|tee -a $LOG
+# Make the disk devices on restored root file system.
+		if [ -s $DISK_DEV ]
+		then
+			LINK_DEV=1
+			2>&1;echo "Creating the disk devices on the restored root file system." |tee -a $LOG > /dev/null
+			while [ "$LINK_DEV" -le "$DISK_LINK_DEV" ]
+			do
+				echo "${LINK_DEV}p" | /sbin/ed -s $DISK_DEV > /tmp/FILE0
+				read  DISKDEV < /tmp/FILE0
+				WORKDIR=`pwd`
+				cd /tmp/mnt/dev
+				/dev/MAKEDEV $DISKDEV 2>&1 |tee -a $LOG > /dev/null
+				cd $WORKDIR
+				LINK_DEV=`expr $LINK_DEV + 1`
+			done # while loop
+			#Cleanup
+			rm /tmp/FILE0
+		fi # DISK_DEV
+
+# Make the mount points on restored root file system if they don't exist.
+		if [ -s $MOUNT_INFO ]
+		then
+			MOUNT_COUNT=1
+			while [ "$MOUNT_COUNT" -le "$MOUNT_NUM" ]
+			do
+				echo "${MOUNT_COUNT}p" | /sbin/ed -s $MOUNT_INFO > /tmp/FILE2
+				read  MOUNT_POINT < /tmp/FILE2
+				WORKDIR=`pwd`
+				cd /tmp/mnt/
+				if [ ! -d /tmp/mnt$MOUNT_POINT ]
+				then
+					2>&1;echo "Creating /tmp/mnt$MOUNT_POINT directory on the restored root file system." |tee -a $LOG > /dev/null
+					mkdir -p /tmp/mnt$MOUNT_POINT 2>&1 |tee -a $LOG > /dev/null
+				fi
+				cd $WORKDIR
+				MOUNT_COUNT=`expr $MOUNT_COUNT + 1`
+			done # while loop
+			#Cleanup
+			rm /tmp/FILE2
+		fi # MOUNT_INFO
+		
+		if [ -s $ADVFS_LINK ]
+		then
+			LINK_NUM=1
+			2>&1;echo "Creating the domains on the restored root file system." |tee -a $LOG > /dev/null
+			while [ "$LINK_NUM" -le "$ADVFS_LINK_NUM" ]
+			do
+				echo "${LINK_NUM}p" | /sbin/ed -s $ADVFS_LINK > /tmp/FILE1
+				read  DOM DEV < /tmp/FILE1
+                                if [ ! -d /tmp/mnt/etc/fdmns/$DOM ]
+                                then
+				      mkdir -p /tmp/mnt/etc/fdmns/$DOM > /dev/null 2>&1
+                                else
+                                        WORKDIR=`pwd`
+                                        cd /tmp/mnt/etc/fdmns
+                                        if [ $? = 0 ]
+                                        then
+                                                rm -rf $DOM >/dev/null 2>&1
+                                                mkdir -p $DOM >/dev/null 2>&1
+                                        fi
+                                fi # DOM dir
+				cd $WORKDIR
+				LINK_NUM=`expr $LINK_NUM + 1`
+                        done
+
+			LINK_NUM=1
+			while [ "$LINK_NUM" -le "$ADVFS_LINK_NUM" ]
+			do
+				echo "${LINK_NUM}p" | /sbin/ed -s $ADVFS_LINK > /tmp/FILE2
+				read  DOM DEV < /tmp/FILE2
+				WORKDIR=`pwd`
+				cd /tmp/mnt/etc/fdmns/$DOM
+				ln -s /dev/$DEV $DEV ||
+				{
+					2>&1;echo |tee -a $LOG
+					2>&1;echo "WARNING: The advfs domain for $DOM and link for $DEV was not created."|tee -a $LOG 
+				}
+				cd $WORKDIR
+				LINK_NUM=`expr $LINK_NUM + 1`
+			done # while loop
+			#copy the .advfslock files also
+			cp -p /etc/fdmns/.adv* /tmp/mnt/etc/fdmns
+			#Cleanup
+			rm /tmp/FILE2 /tmp/FILE1
+		fi # advfs_link
+		umount /tmp/mnt
+	fi # root_dev
+fi # NEW_FSTAB
+
+# qar 48989: messages to show /etc/rc.config
+# Modify the PAGEFILE,PARTITION and PARTITIONTYPE in RCCONFIG file. (mik_0918)
+if [ "$ROOT_DEV" != "" ]
+then
+   mount $ROOT_DEV /tmp/mnt 2>&1 |tee -a $LOG > /dev/null
+   if [ -f $RCCONFIG ]
+   then
+		echo "The restored root's /etc/rc.config file will be modified" | tee -a $LOG > /dev/null
+		echo "Copying /etc/rc.config file to /etc/orig_rc.config file." | tee -a $LOG > /dev/null
+	cp -p $RCCONFIG $ORIGCONFIG
+#
+	grep "PAGEFILE=" $RCCONFIG > /dev/null
+	if [ $? = 0 ]
+	then
+		EDSTRING="
+			/PAGEFILE=
+			d
+			w
+			q
+			"
+		echo  "$EDSTRING" | /sbin/ed -s $RCCONFIG > /dev/null
+	else
+		echo "PAGEFILE= was not found in /etc/rc.config file." | tee -a $LOG  > /dev/null
+		echo "A new entry for PAGEFILE will be added to /etc/rc.config file."|tee -a $LOG > /dev/null
+	fi
+	echo "PAGEFILE=\"$RCSWAPDEV\"" >> $RCCONFIG
+	echo "export PAGEFILE" >> $RCCONFIG
+	echo "PAGEFILE modified in /etc/rc.config file." | tee -a $LOG > /dev/null
+#
+	grep "PARTITION=" $RCCONFIG > /dev/null
+	if [ $? = 0 ]
+	then
+		EDSTRING="
+			/PARTITION=
+			d
+			w
+			q
+			"
+		echo "$EDSTRING" | /sbin/ed -s $RCCONFIG > /dev/null
+	else
+		echo "PARTITION= was not found in $RCCONFIG file." | tee -a $LOG > /dev/null
+		echo "A new entry for PARTITION will be added to $RCCONFIG file."|tee -a $LOG > /dev/null
+	fi
+	echo "PARTITION=\"$RCSWAPPART\"" >> $RCCONFIG
+	echo "export PARTITION" >> $RCCONFIG
+	echo "PARTITION modified in /etc/rc.config file." | tee -a $LOG > /dev/null
+#
+	grep "PARTITIONTYPE=" $RCCONFIG > /dev/null
+	if [ $? = 0 ]
+	then
+		EDSTRING="
+			/PARTITIONTYPE=
+			d
+			w
+			q
+			"
+		echo "$EDSTRING" | /sbin/ed -s $RCCONFIG > /dev/null
+	else
+		echo "PARTITIONTYPE= was not found in $RCCONFIG file." | tee -a $LOG > /dev/null
+		echo "A new entry for PARTITIONTYPE will be added to $RCCONFIG file."|tee -a $LOG > /dev/null
+	fi
+	echo "PARTITIONTYPE=\"$RCSWAPTYPE\"" >> $RCCONFIG
+	echo "export PARTITIONTYPE" >> $RCCONFIG
+	echo "PARTITIONTYPE modified in /etc/rc.config file." | tee -a $LOG > /dev/null
+	echo "/etc/rc.config file on the restored root is modified." |tee -a $LOG
+else
+	echo "The /etc/rc.config file on the restored root, does not exist." | tee -a $LOG
+   fi # RCCONFIG if loop
+#
+#   Add a new link in /sbin for swapdefault.
+    ln -f -s $RCSWAPDEV /tmp/mnt/sbin/swapdefault
+#
+   2>&1;echo "btextract.log file has been copied to the restored root directory"|tee -a $LOG 
+   cp -p /tmp/btextract.log /tmp/mnt/
+   umount /tmp/mnt
+fi # ROOT_DEV exists.	
+
+2>&1;echo |tee -a $LOG 
+2>&1;echo "Rewinding the tape."|tee -a $LOG 
+	/sbin/mt -f $TAPE rewind
+	/sbin/sleep 10
+
+2>&1;echo |tee -a $LOG
+2>&1;echo "btextract.log was created on the memory file system in /tmp directory"|tee -a $LOG
+
+
+if [ -s $UN_ROOT_FILE ]
+then
+	echo "1p" | /sbin/ed -s $UN_ROOT_FILE > /tmp/FILE3
+	read  UN_DEV < /tmp/FILE3
+	mkdir -p /tmp/mnt
+	mount $UN_DEV /tmp/mnt
+	2>&1;echo "btextract.log file has been copied to the restored root directory"|tee -a $LOG 
+	cp /tmp/btextract.log /tmp/mnt/
+	umount $UN_DEV
+	rm /tmp/FILE3
+fi # UN_ROOT_FILE
+
+# Run the custom script now:
+if [ -s $CUSTOM_FILE ] 
+then
+	2>&1;echo |tee -a $LOG
+	2>&1;echo "Executing the custom_install.sh file."|tee -a $LOG
+	chmod +x /sbin/custom_install.sh
+# MIK51219
+	/sbin/custom_install.sh
+fi
+
+2>&1;echo | tee -a $LOG
+2>&1;echo "\tEnd of system image restore."|tee -a $LOG
+
+if [ -f $ADVFS_INFO_COPY ]
+then
+	cp $ADVFS_INFO_COPY $ADVFS_INFO
+fi
+
+#Cleanup For QAR 50942
+if [ -d /tmp/mnt ]
+then
+   rm -fr /tmp/mnt
+fi
+
+exit $EXIT_VALUE
+
+# end of main program of btextract

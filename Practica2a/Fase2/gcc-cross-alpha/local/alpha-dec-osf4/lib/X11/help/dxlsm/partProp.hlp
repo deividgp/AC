@@ -1,0 +1,48 @@
+#/* @(#)@(#)help/partProp.hlp	2.1 11 May 1993 19:05:28 -  */
+#ident  "@(#)va11:help/partProp.hlp   2.1"
+#
+#
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+Disk Group, diskGrp.hlp
+Volume, volume.hlp
+Plex, plex.hlp
+Subdisk, subdisk.hlp
+#########################################
+PARTITION PROPERTIES FORM HELP
+
+This form displays information about partitions on your system.  None
+of the fields on this form may be changed in any way.   Because of this,
+there is no apply or reset button; then only way to pop down the form is by
+pressing Cancel.
+
+For more information about the types and permissions, see the "sys/vtoc.h"
+header file.
+
+
+Fields
+----------
+
+Device:
+	The device node that the Visual Administrator uses to communicate
+	with this disk.
+
+Start Sector:
+	The sector on the physical disk where this partition begins.
+
+Size:
+	Length, in sectors, of this partition.
+
+Type:
+	These choices shows what the identification tag of this partition
+	is.  
+
+Permissions:
+	These flags represent the permissions and status conditions of the
+	specified partition. 
+
+Disk Media:
+	This is the disk media record that corresponds to this partition.
+	If nothing is in this field, then the partition has not been
+	initialized with a disk media record.  See the Logical Storage Manager
+	documentation for more information. 

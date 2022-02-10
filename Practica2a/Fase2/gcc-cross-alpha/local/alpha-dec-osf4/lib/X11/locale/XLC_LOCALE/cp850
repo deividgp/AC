@@ -1,0 +1,80 @@
+#  XLocale Database Sample for cp850.
+#
+
+#
+# 	XLC_FONTSET category
+#
+XLC_FONTSET
+# 	fs0 class
+fs0	{
+	charset		ISO8859-1:GL
+	font		IBM-850:GL; ISO8859-1:GL
+}
+# 	fs1 class
+fs1	{
+	charset		ISO8859-1:GR
+	font		ISO8859-1:GR
+}
+# 	fs2 class
+fs2	{
+	charset		IBM-850:GR
+	font		IBM-850:GR; REMAP
+}
+#	remap fs2
+REMAP {
+	locale		en_US.ISO8859-1
+	charset		ISO8859-1:GR
+}
+END XLC_FONTSET
+
+#
+# 	XLC_XLOCALE category
+#
+XLC_XLOCALE
+
+encoding_name		IBM-850
+mb_cur_max		1
+state_depend_encoding	False
+
+wc_encoding_mask	\x30000000
+wc_shift_bits		7
+
+
+
+
+use_stdc_env            True
+force_convert_to_mb     True
+
+# 	cs0 class
+cs0	{
+	side		GL:Default
+	length		1
+	wc_encoding	\x00000000
+	ct_encoding	ISO8859-1:GL
+}
+
+
+# 	cs1 class
+cs1	{
+	side		GR:Default
+	length		1
+
+	wc_encoding	\x30000000
+
+
+
+	ct_encoding	IBM-850:GR
+}
+
+#	associated locale 0, for ct exchange and font remapping
+assoc_locale0 {
+	locale		en_US.ISO8859-1
+	conversion	cp850-ISO8859-1
+}
+#	ct charset remapping
+ct_charset_remap0 {
+	charset			IBM-850:GR
+	assoc_locale_index	0
+}
+
+END XLC_XLOCALE

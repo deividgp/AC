@@ -1,0 +1,1 @@
+#define NWS 1

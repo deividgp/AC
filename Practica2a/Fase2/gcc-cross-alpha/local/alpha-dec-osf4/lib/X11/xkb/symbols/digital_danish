@@ -1,0 +1,242 @@
+// **************************************************************
+// *								*
+// * Symbols for da_DK.ISO8859-1 - Danish for Denmark		*
+// *								*
+// **************************************************************
+
+xkb_symbols "danish-tw" {
+    key <AE00> {
+	symbols[Group1]= [	asciitilde,	    section ],
+	symbols[Group2]= [	asciitilde,		 at ]
+    };
+    key <AE01> {       [	       1,	   exclam ] };
+    key <AE02> {       [	       2,	 quotedbl ] };
+    key <AE03> { 
+	symbols[Group1]= [	       3,	 sterling ],
+	symbols[Group2]= [	       3,      numbersign ]
+    };
+    key <AE04> {       [	       4,	   dollar ] };
+    key <AE05> {       [	       5,	  percent ] };
+    key <AE06> {       [	       6,	ampersand ] };
+    key <AE07> {       [	       7,	    slash ] };
+    key <AE08> {       [	       8,	parenleft ] };
+    key <AE09> {       [	       9,      parenright ] };
+    key <AE10> {       [	       0,	    equal ] };
+    key <AE11> {       [	    plus,	 question ] };
+    // The following keys are not dead keys, according to VT510 specs:
+    key <AE12> {       [           acute,           grave ] };
+
+    key <AD01> {       [	       q,		Q ] };
+    key <AD02> {       [	       w,		W ] };
+    key <AD03> {
+        symbols[Group1]= [             e,                 E ],
+        symbols[Group2]= [       EuroSign ]
+    };
+    key <AD04> {       [	       r,		R ] };
+    key <AD05> {       [	       t,		T ] };
+    key <AD06> {       [	       y,		Y ] };
+    key <AD07> {       [	       u,		U ] };
+    key <AD08> {       [	       i,		I ] };
+    key <AD09> {       [	       o,		O ] };
+    key <AD10> {       [	       p,		P ] };
+    key <AD11> {
+	symbols[Group1]= [	   aring,	    Aring ],
+	symbols[Group2]= [    braceright,    bracketright ]
+    };
+    // Circumflex accent is not dead key, according to VT510 specs:
+    key <AD12> {       [        quotedbl,     asciicircum ] };
+
+    key <AC01> {       [	       a,		A ] };
+    key <AC02> {       [	       s,		S ] };
+    key <AC03> {       [	       d,		D ] };
+    key <AC04> {       [	       f,		F ] };
+    key <AC05> {       [	       g,		G ] };
+    key <AC06> {       [	       h,		H ] };
+    key <AC07> {       [	       j,		J ] };
+    key <AC08> {       [	       k,		K ] };
+    key <AC09> {       [	       l,		L ] };
+    key <AC10> {
+	symbols[Group1]= [	      ae,		 AE ],
+	symbols[Group2]= [     braceleft,	bracketleft ]
+    };
+    key <AC11> {
+	symbols[Group1]= [	  oslash,	   Ooblique ],
+	symbols[Group2]= [	     bar,	  backslash ]
+    };
+    key <BKSL> {       [      apostrophe,	 asterisk ] };
+
+    key <AB00> {       [	    less,	  greater ] };
+    key <AB01> {       [	       z,		Z ] };
+    key <AB02> {       [	       x,		X ] };
+    key <AB03> {       [	       c,		C ] };
+    key <AB04> {       [	       v,		V ] };
+    key <AB05> {       [	       b,		B ] };
+    key <AB06> {       [	       n,		N ] };
+    key <AB07> {       [	       m,		M ] };
+    key <AB08> {       [	   comma,	semicolon ] };
+    key <AB09> {       [	  period,	    colon ] };
+    key <AB10> {       [	   minus,      underscore ] };
+};
+
+xkb_symbols "danish-dp" { 
+    include "digital_danish(danish-tw)"
+    replace key <AE00> {
+	symbols[Group1]= [	asciitilde,		 at ],
+	symbols[Group2]= [	asciitilde,	    section ]
+    };
+    replace key <AE03> { 
+	symbols[Group1]= [		 3,	 numbersign ],
+	symbols[Group2]= [		 3,	   sterling ]
+    };
+    replace key <AD11> {
+	symbols[Group1]= [	braceright,    bracketright ],
+	symbols[Group2]= [	     aring,	      Aring ]
+    };
+    replace key <AC10> {
+	symbols[Group1]= [     braceleft,	bracketleft ],
+	symbols[Group2]= [	      ae,		 AE ]
+    };
+    replace key <AC11> {
+	symbols[Group1]= [	     bar,	  backslash ],
+	symbols[Group2]= [	  oslash,	   Ooblique ]
+    };
+};
+
+// **************************************************************
+// *								*
+// * The VT105 layouts - based upon the LK201-ED		*
+// *								*
+// **************************************************************
+xkb_symbols "vt105-tw" {
+    include "digital_vt(vt105)"
+    include "digital_danish(danish-tw)"
+};
+
+xkb_symbols "vt105-dp" {
+    include "digital_vt(vt105)"
+    include "digital_danish(danish-dp)"
+};
+
+xkb_symbols "vt105" { include "digital_danish(vt105-tw)" };
+
+// **************************************************************
+// *								*
+// * The VT108 layouts - based upon the LK401-AD		*
+// *								*
+// **************************************************************
+xkb_symbols "vt108-tw" {
+    include "digital_vt(vt108)"
+    include "digital_danish(danish-tw)"
+};
+
+xkb_symbols "vt108-dp" {
+    include "digital_vt(vt108)"
+    include "digital_danish(danish-dp)"
+};
+
+xkb_symbols "vt108" { include "digital_danish(vt108-tw)" };
+
+// **************************************************************
+// *								*
+// * The PCXAL layouts (102-key)				*
+// *								*
+// **************************************************************
+xkb_symbols "pcxalgd" {
+    include "digital_pc(pc)"
+    replace key <KPDL> { [ KP_Delete, KP_Separator ] };
+
+    key <AE00> {       [	 onehalf,	  section ] };
+    key <AE01> {       [	       1,	   exclam ] };
+    key <AE02> {
+	symbols[Group1]= [		 2,	   quotedbl ],
+	symbols[Group2]= [		at ]
+    };
+    key <AE03> {
+	symbols[Group1]= [		 3,	 numbersign ],
+	symbols[Group2]= [	  sterling ]
+    };
+    key <AE04> {
+	symbols[Group1]= [		 4,	   currency ],
+	symbols[Group2]= [	    dollar ]
+    };
+    key <AE05> {       [	       5,	  percent ] };
+    key <AE06> {       [	       6,	ampersand ] };
+    key <AE07> {
+	symbols[Group1]= [		 7,	      slash ],
+	symbols[Group2]= [	 braceleft ]
+    };
+    key <AE08> {
+	symbols[Group1]= [		 8,	  parenleft ],
+	symbols[Group2]= [     bracketleft ]
+    };
+    key <AE09> {
+	symbols[Group1]= [		 9,	 parenright ],
+	symbols[Group2]= [    bracketright ]
+    };
+    key <AE10> {
+	symbols[Group1]= [		 0,	      equal ],
+	symbols[Group2]= [	braceright ]
+    };
+    key <AE11> {       [	    plus,	 question ] };
+    key <AE12> {
+	symbols[Group1]= [   Dacute_accent, Dgrave_accent ],
+	symbols[Group2]= [	       bar ]
+    };
+
+    key <AD01> {       [	       q,		Q ] };
+    key <AD02> {       [	       w,		W ] };
+    key <AD03> {
+        symbols[Group1]= [             e,                 E ],
+        symbols[Group2]= [       EuroSign ]
+    };
+    key <AD04> {       [	       r,		R ] };
+    key <AD05> {       [	       t,		T ] };
+    key <AD06> {       [	       y,		Y ] };
+    key <AD07> {       [	       u,		U ] };
+    key <AD08> {       [	       i,		I ] };
+    key <AD09> {       [	       o,		O ] };
+    key <AD10> {       [	       p,		P ] };
+    key <AD11> {       [	   aring,	    Aring ] };
+    key <AD12> {
+	symbols[Group1]= [    Ddiaeresis, Dcircumflex_accent ],
+	symbols[Group2]= [        Dtilde ]
+    };
+
+    key <AC01> {       [	       a,		A ] };
+    key <AC02> {       [	       s,		S ] };
+    key <AC03> {       [	       d,		D ] };
+    key <AC04> {       [	       f,		F ] };
+    key <AC05> {       [	       g,		G ] };
+    key <AC06> {       [	       h,		H ] };
+    key <AC07> {       [	       j,		J ] };
+    key <AC08> {       [	       k,		K ] };
+    key <AC09> {       [	       l,		L ] };
+    key <AC10> {       [	      ae,	       AE ] };
+    key <AC11> {       [	  oslash,	 Ooblique ] };
+    key <AC12> {       [      apostrophe,	 asterisk ] };
+
+    key <BKSL> {
+	symbols[Group1]= [	      less,	    greater ],
+	symbols[Group2]= [	 backslash ]
+    };
+
+    key <AB01> {       [	       z,		Z ] };
+    key <AB02> {       [	       x,		X ] };
+    key <AB03> {       [	       c,		C ] };
+    key <AB04> {       [	       v,		V ] };
+    key <AB05> {       [	       b,		B ] };
+    key <AB06> {       [	       n,		N ] };
+    key <AB07> {       [	       m,		M ] };
+    key <AB08> {       [	   comma,	semicolon ] };
+    key <AB09> {       [	  period,	    colon ] };
+    key <AB10> {       [	   minus,      underscore ] };
+};
+
+xkb_symbols "pcxal"   { include "digital_danish(pcxalgd)" };
+xkb_symbols "pcxalad" { include "digital_danish(pcxalgd)" };
+xkb_symbols "pcxalfd" { include "digital_danish(pcxalgd)" };
+xkb_symbols "pcxalkd" { include "digital_danish(pcxalgd)" };
+xkb_symbols "lk44x"   { include "digital_danish(pcxalgd)" };
+
+xkb_symbols "lk471ad" { include "digital_danish(pcxalgd)" };
+xkb_symbols "lk471"   { include "digital_danish(lk471ad)" };

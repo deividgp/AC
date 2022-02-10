@@ -1,0 +1,83 @@
+#/* @(#)@(#)help/forms.hlp	2.1 11 May 1993 19:04:32 -  */
+#ident  "@(#)va11:help/forms.hlp   2.1"
+#
+#
+X Resources, resources.hlp
+#########################################
+FORMS HELP
+
+Forms are the tools that the Visual Administrator uses to present textual
+information to the user for him/her to examine and change.  This is done by
+having one or more fields that display specific information.
+
+Some forms are used to ask for information, like the Volume Create form.
+These have certain fields that must be modified or accepted by the user to
+continue with an operation.  Other forms, like the Volume Properties form,
+display information that the user can modify, if desired.  These properties
+forms can be popped up by pressing the custom mouse button (by default) on
+the icon you want information on.
+
+There exists one form of each type that is continually reused.  For
+example, there is only one Volume Properties form.  If this form is popped
+up, and the properties form for another volume is requested, then the
+values for the second volume overwrite the values for the first volume on
+the form.  The exception to this is the Analysis Statistics forms
+
+All forms have fields, buttons, and error messages.
+
+
+Fields
+------
+There are several different types of fields.  Text fields display words or
+numbers.  Choice fields display selected choices from a list of possible
+choices.  And slider bars display an number that is in a range of possible
+values.
+
+Some fields are read-only, meaning that you cannot change that field.  Read
+only fields beep when you try to change their value.
+
+Other fields are required on a form.  If a field is required then it must
+be filled in correctly for you to be able to apply changes.  If it is
+incorrect, or blank, then you will get an error message.
+
+
+Buttons
+-------
+All forms have buttons on the bottom that perform standard functions.
+
+Apply:
+	Accept the information on this form and continue with an operation.
+	If this is a properties form, then the Visual Administrator will
+	determine what changes you have made and issue the appropriate
+	commands to make the changes.  Hitting return on a form is the
+	equivalent of pressing apply.
+
+	Pressing apply will check for errors on the form, and if there are
+	none, pop down the form.  The exception to this is the Analysis
+	Parameters form; this form must be popped down with the Cancel
+	button so that the user can make continual changes to this form.
+
+Reset:
+	Fill in the fields of the form with its default values.  If this is
+	a properties form, then the Visual Administrator will fill in the
+	fields with the values that were present when the form was first
+	popped up. 
+
+Cancel:
+	Ignore all changes made on the form and pop down.  If this was
+	brought up as part of an operation (volume create, for example)
+	then the operation is canceled. 
+
+Help:
+	Pop up the help window with help about this form.
+
+
+
+Errors
+----------
+
+Error messages are presented to the user when Apply is pressed with one or
+more fields incorrect on the form.  If this is so, then a message is
+printed on the bottom of the form and the user is allowed to correct the
+field(s).  If the error cannot be corrected or the operation is no longer
+desired, press Cancel.

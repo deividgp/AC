@@ -1,0 +1,1245 @@
+# 
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+#
+# HISTORY
+# 
+#
+# Alpha config file
+#
+#
+# (c) Copyright 1990, OPEN SOFTWARE FOUNDATION, INC.
+# ALL RIGHTS RESERVED
+#
+#
+# OSF/1 Release 1.0
+#
+ident		GENERIC
+
+# All options
+options 	MACH
+options		RPTY
+options		OSF
+options		COMPAT_43
+options		BIN_COMPAT
+options		_LMF_
+options		BUFCACHE_STATS
+options		NFS
+options         NFS_SERVER
+options		CDFS
+options		DVDFS
+options		PROCFS
+options		SYSV_COFF
+#options		SYSV_ELF
+options         FFM_FS
+#options		OSF_MACH_O
+options		INOCACHE_STATS
+#options		MACH_ASSERT
+#options		MACH_CO_INFO
+#options		MACH_CO_STATS
+#options		MACH_DEBUG
+#options		MACH_IPC_STATS
+options		MACH_IPC_TCACHE
+options		MACH_IPC_WWA
+options		MACH_IPC_XXXHACK
+#options 	MACH_KDB
+#options		MACH_LDEBUG
+#options		MACH_LTRACKS
+#options		MACH_SCTIMES
+#options		MACH_EMULATION
+options		QUOTA
+options		STAT_TIME
+options		STREAMS
+options		STRKINFO
+options		BSD_TTY
+options		LDTTY
+options		SNMPINFO
+options		SL
+options		PPP
+options		UFS
+options		MSFS
+#options		XPR_DEBUG
+options		INET
+options		UIPC
+#options		NS
+options		UNIX_LOCKS                       
+options         SER_COMPAT                      
+options		VAGUE_STATS
+options		LABELS
+#options		KDEBUG
+options		TRN
+#options		PROFILING
+options		HW_AST
+options		DEC_AUDIT
+options		PWRMGR_ENABLED
+options		BPARM
+options 	ESS_STUB
+
+# ATM Options
+#options         ATM
+
+#
+# POSIX Realtime Enhancements.
+#
+# RT_SCHED_RQ depends on RT_SCHED being on.
+#
+# For RT_PREEMPT to work UNIX_LOCKS must also be turned on.
+#
+options		RT_PREEMPT
+#options		RT_PREEMPT_OPT
+options		RT_SCHED
+options		RT_SCHED_RQ
+options		RT_PML
+options		RT_TIMER
+options		RT_SEM
+options		RT_CSEM
+options		RT_IPC
+options		MACH_HOST
+options		MULTI_PLATFORM
+
+# Special options
+#makeoptions	ASOPTS="-w"
+#makeoptions	LDOPTS="-x"
+makeoptions	CDEBUGOPTS="-g3"
+#makeoptions	PROFOPTS="-DPROFTYPE=4"
+makeoptions	LOADADDR="ffffffff00000000"
+makeoptions	CCOMPRESS="-compress"
+
+# Options that don't look like options (?)
+scs_sysid	1
+processors	16
+maxusers	32
+max_vnodes      10000
+min_free_vnodes 150
+vnode_age	120
+cpu             "DEC_KN20AA"
+cpu		"DEC4000"
+cpu		"DEC7000"
+cpu		"DEC3000_500"
+cpu		"DEC3000_300"
+cpu		"DEC2000_300"
+cpu		"DEC21000"
+cpu		"DEC2100_A50"
+cpu		"DEC1000"
+cpu		"DEC1000_5"
+cpu		"DEC1000A"
+cpu		"DEC1000A_5"
+cpu		"DEC2100_A500"
+cpu		"DEC2100_C500"
+cpu		"DECAXPVME_64"
+cpu		"DECAXPPCI_33"
+cpu		"ALPHAPC64"
+cpu		"EB66PLUS"
+cpu		"EB164"
+cpu		"DECST30"
+cpu		"DECEV45_PBP"
+cpu		"DEC4100"
+cpu             "DECALPHAVME_224"
+cpu		"DECEV56_PBP"
+cpu             "ALPHABOOK1"
+cpu             "DECALPHAVME_320"
+cpu		"DEC6600"
+cpu		"DMCCEV6"
+
+config		vmunix		swap generic
+
+# All adapters
+bus		tc0	at nexus?
+callout after_c "../bin/mkdata tc"
+
+bus		ibus0	at nexus?
+#bus		tvbus0	at nexus?
+bus		lsb0	at nexus?
+bus		tlsb0	at nexus?
+bus		mcbus0	at nexus?
+
+# Primary PCI Bus adapters
+bus		pci0	at *
+bus		pci1	at *
+# NOTE: This is the "GENERIC, never-to-reach" pci
+#	bus entry, used for ppb-based pci's
+bus		pci16777216	at *
+
+callout after_c "../bin/mkdata pci"
+
+# EISA bus
+bus		eisa0   at *
+callout after_c "../bin/mkdata eisa"
+
+# Isa bus
+bus		isa0	at *
+callout after_c "../bin/mkdata isa"
+
+# PCMCIA 'busses'/adapters
+bus	 	pcmcia0	at *
+bus		pcmcia1	at *
+
+#ATA busses/adapters
+bus		ata0	at *
+bus		ata1	at *
+bus		ata2	at *
+
+# I2O 'busses'
+# -- a place holder; used by i2o.c to generate i2o bus structs
+bus		i2o0	at *
+
+# I2O Block Storage OSM driver
+controller              i2o_bs0         at *
+
+
+# Connected busses
+bus		iop0	at lsb0		vector ioperror
+bus		xmi0	at iop0		vector xmierror
+bus		xmi1	at iop0		vector xmierror
+bus		xmi2	at iop0		vector xmierror
+bus		xmi3	at iop0		vector xmierror
+bus		fbus0	at iop0		vector fbuserror
+bus		fbus1	at iop0		vector fbuserror
+bus		fbus2	at iop0		vector fbuserror
+bus		fbus3	at iop0		vector fbuserror
+bus		tiop0	at tlsb0 	vector tioperror
+bus		tiop1	at tlsb0	vector tioperror
+bus		tiop2	at tlsb0	vector tioperror
+bus		xmi0	at tiop?	vector xmierror
+bus		xmi1	at tiop?	vector xmierror
+bus		xmi2	at tiop?	vector xmierror
+bus		xmi3	at tiop?	vector xmierror
+bus		fbus0	at tiop?	vector fbuserror
+bus		fbus1	at tiop?	vector fbuserror
+bus		fbus2	at tiop?	vector fbuserror
+bus		fbus3	at tiop?	vector fbuserror
+bus		lbus0	at ibus0
+bus		fbus0	at ibus0	vector fbuserror
+
+# XZA 'busses'
+bus		xza0	at xmi?
+bus		xza1	at xmi?
+bus		xza2	at xmi?
+bus		xza3	at xmi?
+bus		xza4	at xmi?
+bus		xza5	at xmi?
+bus		xza6	at xmi?
+bus		xza7	at xmi?
+bus		xza8	at xmi?
+bus		xza9	at xmi?
+bus		xza10	at xmi?
+bus		xza11	at xmi?
+bus		xza12	at xmi?
+bus		xza13	at xmi?
+bus		xza14	at xmi?
+bus		xza15	at xmi?
+
+# TCDS 'busses'
+bus		tcds0	at *		vector tcdsintr
+bus		tcds1	at *		vector tcdsintr
+bus		tcds2	at *		vector tcdsintr
+bus		tcds3	at *		vector tcdsintr
+bus		tcds4	at *		vector tcdsintr
+bus		tcds5	at *		vector tcdsintr
+bus		tcds6	at *		vector tcdsintr
+
+# ASC 'busses'
+bus		asc0	at *		vector ascintr
+bus		asc1	at *		vector ascintr
+bus		asc2	at *		vector ascintr
+bus		asc3	at *		vector ascintr
+bus		asc4	at *		vector ascintr
+bus		asc5	at *		vector ascintr
+bus		asc6	at *		vector ascintr
+
+# KZTSA 'busses'
+bus		tza0	at *		vector tzaintr
+bus		tza1	at *		vector tzaintr
+bus		tza2	at *		vector tzaintr
+bus		tza3	at *		vector tzaintr
+bus		tza4	at *		vector tzaintr
+bus		tza5	at *		vector tzaintr
+bus		tza6	at *		vector tzaintr
+
+# AHA1740/2 EISA SCSI 'busses'
+bus		aha0    at eisa?	vector ahaintr
+bus		aha1    at eisa?	vector ahaintr
+bus		aha2    at eisa?	vector ahaintr
+bus		aha3    at eisa?	vector ahaintr
+bus		aha4    at eisa?	vector ahaintr
+bus		aha5    at eisa?	vector ahaintr
+
+# NCR'810 PCI SCSI 'busses'
+bus		psiop0	at pci?		vector psiopintr
+bus		psiop1	at pci?		vector psiopintr
+bus		psiop2	at pci?		vector psiopintr
+bus		psiop3	at pci?		vector psiopintr
+
+# ITI 875/895/896 SCSI 'busses'
+bus		itpsa0	at pci?		vector itpsaintr
+bus		itpsa1	at pci?		vector itpsaintr
+bus		itpsa2	at pci?		vector itpsaintr
+bus		itpsa3	at pci?		vector itpsaintr
+bus		itpsa4	at pci?		vector itpsaintr
+bus		itpsa5	at pci?		vector itpsaintr
+bus		itpsa6	at pci?		vector itpsaintr
+bus		itpsa7	at pci?		vector itpsaintr
+bus		itpsa8	at pci?		vector itpsaintr
+bus		itpsa9	at pci?		vector itpsaintr
+bus		itpsa10	at pci?		vector itpsaintr
+bus		itpsa11	at pci?		vector itpsaintr
+bus		itpsa12	at pci?		vector itpsaintr
+bus		itpsa13	at pci?		vector itpsaintr
+bus		itpsa14	at pci?		vector itpsaintr
+bus		itpsa15	at pci?		vector itpsaintr
+bus		itpsa16	at pci?		vector itpsaintr
+bus		itpsa17	at pci?		vector itpsaintr
+bus		itpsa18	at pci?		vector itpsaintr
+bus		itpsa19	at pci?		vector itpsaintr
+bus		itpsa20	at pci?		vector itpsaintr
+bus		itpsa21	at pci?		vector itpsaintr
+bus		itpsa22	at pci?		vector itpsaintr
+bus		itpsa23	at pci?		vector itpsaintr
+bus		itpsa24	at pci?		vector itpsaintr
+bus		itpsa25	at pci?		vector itpsaintr
+bus		itpsa26	at pci?		vector itpsaintr
+bus		itpsa27	at pci?		vector itpsaintr
+bus		itpsa28	at pci?		vector itpsaintr
+bus		itpsa29	at pci?		vector itpsaintr
+bus		itpsa30	at pci?		vector itpsaintr
+bus		itpsa31	at pci?		vector itpsaintr
+bus		itpsa32	at pci?		vector itpsaintr
+bus		itpsa33	at pci?		vector itpsaintr
+bus		itpsa34	at pci?		vector itpsaintr
+bus		itpsa35	at pci?		vector itpsaintr
+bus		itpsa36	at pci?		vector itpsaintr
+bus		itpsa37	at pci?		vector itpsaintr
+bus		itpsa38	at pci?		vector itpsaintr
+bus		itpsa39	at pci?		vector itpsaintr
+bus		itpsa40	at pci?		vector itpsaintr
+bus		itpsa41	at pci?		vector itpsaintr
+bus		itpsa42	at pci?		vector itpsaintr
+bus		itpsa43	at pci?		vector itpsaintr
+bus		itpsa44	at pci?		vector itpsaintr
+bus		itpsa45	at pci?		vector itpsaintr
+bus		itpsa46	at pci?		vector itpsaintr
+bus		itpsa47	at pci?		vector itpsaintr
+bus		itpsa48	at pci?		vector itpsaintr
+bus		itpsa49	at pci?		vector itpsaintr
+bus		itpsa50	at pci?		vector itpsaintr
+bus		itpsa51	at pci?		vector itpsaintr
+bus		itpsa52	at pci?		vector itpsaintr
+bus		itpsa53	at pci?		vector itpsaintr
+bus		itpsa54	at pci?		vector itpsaintr
+bus		itpsa55	at pci?		vector itpsaintr
+bus		itpsa56	at pci?		vector itpsaintr
+bus		itpsa57	at pci?		vector itpsaintr
+bus		itpsa58	at pci?		vector itpsaintr
+bus		itpsa59	at pci?		vector itpsaintr
+bus		itpsa60	at pci?		vector itpsaintr
+bus		itpsa61	at pci?		vector itpsaintr
+bus		itpsa62	at pci?		vector itpsaintr
+bus		itpsa63	at pci?		vector itpsaintr
+
+# PZA 'busses'
+bus		pza0	at pci?		vector pzaintr
+bus		pza1	at pci?		vector pzaintr
+bus		pza2	at pci?		vector pzaintr
+bus             pza3    at pci? 	vector pzaintr
+bus             pza4    at pci? 	vector pzaintr
+bus             pza5    at pci? 	vector pzaintr
+bus             pza6    at pci? 	vector pzaintr
+bus             pza7    at pci? 	vector pzaintr
+bus             pza8    at pci? 	vector pzaintr
+bus             pza9    at pci? 	vector pzaintr
+bus             pza10    at pci? 	vector pzaintr
+bus             pza11    at pci? 	vector pzaintr
+bus             pza12    at pci? 	vector pzaintr
+bus             pza13    at pci? 	vector pzaintr
+bus             pza14    at pci? 	vector pzaintr
+bus             pza15    at pci? 	vector pzaintr
+bus             pza16    at pci? 	vector pzaintr
+bus             pza17    at pci? 	vector pzaintr
+bus             pza18    at pci? 	vector pzaintr
+bus             pza19    at pci? 	vector pzaintr
+bus             pza20    at pci? 	vector pzaintr
+bus             pza21    at pci? 	vector pzaintr
+bus             pza22    at pci? 	vector pzaintr
+bus             pza23    at pci? 	vector pzaintr
+bus             pza24    at pci? 	vector pzaintr
+bus             pza25    at pci? 	vector pzaintr
+bus             pza26    at pci? 	vector pzaintr
+bus             pza27    at pci? 	vector pzaintr
+bus             pza28    at pci? 	vector pzaintr
+bus             pza29    at pci? 	vector pzaintr
+bus             pza30    at pci? 	vector pzaintr
+bus             pza31    at pci? 	vector pzaintr
+bus             pza32    at pci? 	vector pzaintr
+bus             pza33    at pci? 	vector pzaintr
+bus             pza34    at pci? 	vector pzaintr
+bus             pza35    at pci? 	vector pzaintr
+bus             pza36    at pci? 	vector pzaintr
+bus             pza37    at pci? 	vector pzaintr
+bus             pza38    at pci? 	vector pzaintr
+bus             pza39    at pci? 	vector pzaintr
+bus             pza40    at pci? 	vector pzaintr
+bus             pza41    at pci? 	vector pzaintr
+bus             pza42    at pci? 	vector pzaintr
+bus             pza43    at pci? 	vector pzaintr
+bus             pza44    at pci? 	vector pzaintr
+bus             pza45    at pci? 	vector pzaintr
+bus             pza46    at pci? 	vector pzaintr
+bus             pza47    at pci? 	vector pzaintr
+bus             pza48    at pci? 	vector pzaintr
+bus             pza49    at pci? 	vector pzaintr
+bus             pza50    at pci? 	vector pzaintr
+bus             pza51    at pci? 	vector pzaintr
+bus             pza52    at pci? 	vector pzaintr
+bus             pza53    at pci? 	vector pzaintr
+bus             pza54    at pci? 	vector pzaintr
+bus             pza55    at pci? 	vector pzaintr
+bus             pza56    at pci? 	vector pzaintr
+bus             pza57    at pci? 	vector pzaintr
+bus             pza58    at pci? 	vector pzaintr
+bus             pza59    at pci? 	vector pzaintr
+bus             pza60    at pci? 	vector pzaintr
+bus             pza61    at pci? 	vector pzaintr
+bus             pza62    at pci? 	vector pzaintr
+bus             pza63    at pci? 	vector pzaintr
+
+# QLOGIC ISP1020 SCSI 'busses'
+bus             isp0    at pci?         vector ispintr
+bus             isp1    at pci?         vector ispintr
+bus             isp2    at pci?         vector ispintr
+bus             isp3    at pci?         vector ispintr
+bus             isp4    at pci?         vector ispintr
+bus             isp5    at pci?         vector ispintr
+bus             isp6    at pci?         vector ispintr
+bus             isp7    at pci?         vector ispintr
+bus             isp8    at pci?         vector ispintr
+bus             isp9    at pci?         vector ispintr
+bus             isp10    at pci?        vector ispintr
+bus             isp11    at pci?        vector ispintr
+bus             isp12    at pci? 	vector ispintr
+bus             isp13    at pci? 	vector ispintr
+bus             isp14    at pci? 	vector ispintr
+bus             isp15    at pci? 	vector ispintr
+bus             isp16    at pci? 	vector ispintr
+bus             isp17    at pci? 	vector ispintr
+bus             isp18    at pci? 	vector ispintr
+bus             isp19    at pci? 	vector ispintr
+bus             isp20    at pci? 	vector ispintr
+bus             isp21    at pci? 	vector ispintr
+bus             isp22    at pci? 	vector ispintr
+bus             isp23    at pci? 	vector ispintr
+bus             isp24    at pci? 	vector ispintr
+bus             isp25    at pci? 	vector ispintr
+bus             isp26    at pci? 	vector ispintr
+bus             isp27    at pci? 	vector ispintr
+bus             isp28    at pci? 	vector ispintr
+bus             isp29    at pci? 	vector ispintr
+bus             isp30    at pci? 	vector ispintr
+bus             isp31    at pci? 	vector ispintr
+bus             isp32    at pci? 	vector ispintr
+bus             isp33    at pci? 	vector ispintr
+bus             isp34    at pci? 	vector ispintr
+bus             isp35    at pci? 	vector ispintr
+bus             isp36    at pci? 	vector ispintr
+bus             isp37    at pci? 	vector ispintr
+bus             isp38    at pci? 	vector ispintr
+bus             isp39    at pci? 	vector ispintr
+bus             isp40    at pci? 	vector ispintr
+bus             isp41    at pci? 	vector ispintr
+bus             isp42    at pci? 	vector ispintr
+bus             isp43    at pci? 	vector ispintr
+bus             isp44    at pci? 	vector ispintr
+bus             isp45    at pci? 	vector ispintr
+bus             isp46    at pci? 	vector ispintr
+bus             isp47    at pci? 	vector ispintr
+bus             isp48    at pci? 	vector ispintr
+bus             isp49    at pci? 	vector ispintr
+bus             isp50    at pci? 	vector ispintr
+bus             isp51    at pci? 	vector ispintr
+bus             isp52    at pci? 	vector ispintr
+bus             isp53    at pci? 	vector ispintr
+bus             isp54    at pci? 	vector ispintr
+bus             isp55    at pci? 	vector ispintr
+bus             isp56    at pci? 	vector ispintr
+bus             isp57    at pci? 	vector ispintr
+bus             isp58    at pci? 	vector ispintr
+bus             isp59    at pci? 	vector ispintr
+bus             isp60    at pci? 	vector ispintr
+bus             isp61    at pci? 	vector ispintr
+bus             isp62    at pci? 	vector ispintr
+bus             isp63    at pci? 	vector ispintr
+
+
+#
+# KGPSA Fibre Channel adapters
+#
+bus		emx0	at pci?
+bus		emx1	at pci?
+bus		emx2	at pci?
+bus		emx3	at pci?
+bus		emx4	at pci?
+bus		emx5	at pci?
+bus		emx6	at pci?
+bus		emx7	at pci?
+bus		emx8	at pci?
+bus		emx9	at pci?
+bus		emx10	at pci?
+bus		emx11	at pci?
+bus		emx12	at pci?
+bus		emx13	at pci?
+bus		emx14	at pci?
+bus		emx15	at pci?
+bus		emx16	at pci?
+bus		emx17	at pci?
+bus		emx18	at pci?
+bus		emx19	at pci?
+bus		emx20	at pci?
+bus		emx21	at pci?
+bus		emx22	at pci?
+bus		emx23	at pci?
+bus		emx24	at pci?
+bus		emx25	at pci?
+bus		emx26	at pci?
+bus		emx27	at pci?
+bus		emx28	at pci?
+bus		emx29	at pci?
+bus		emx30	at pci?
+bus		emx31	at pci?
+bus		emx32	at pci?
+bus		emx33	at pci?
+bus		emx34	at pci?
+bus		emx35	at pci?
+bus		emx36	at pci?
+bus		emx37	at pci?
+bus		emx38	at pci?
+bus		emx39	at pci?
+bus		emx40	at pci?
+bus		emx41	at pci?
+bus		emx42	at pci?
+bus		emx43	at pci?
+bus		emx44	at pci?
+bus		emx45	at pci?
+bus		emx46	at pci?
+bus		emx47	at pci?
+bus		emx48	at pci?
+bus		emx49	at pci?
+bus		emx50	at pci?
+bus		emx51	at pci?
+bus		emx52	at pci?
+bus		emx53	at pci?
+bus		emx54	at pci?
+bus		emx55	at pci?
+bus		emx56	at pci?
+bus		emx57	at pci?
+bus		emx58	at pci?
+bus		emx59	at pci?
+bus		emx60	at pci?
+bus		emx61	at pci?
+bus		emx62	at pci?
+bus		emx63	at pci?
+
+# VME bus adapter
+bus             vba0    at *
+
+# DEC/4000 SCSI 'busses'
+bus		siop0 at lbus0 slot 0	vector siopcointr
+bus		siop1 at lbus0 slot 1	vector siopcointr
+bus		siop2 at lbus0 slot 2	vector siopcointr
+bus		siop3 at lbus0 slot 3	vector siopcointr
+bus		siop4 at lbus0 slot 4	vector siopcointr
+
+#bus		uba0	at ibus0
+#bus		ci0	at tc0		port np
+bus		ci0	at xmi?		port np		vector cimna_isr
+
+# All controllers
+controller	scsi0	at *   vector scsiintr
+controller	scsi1	at *   vector scsiintr
+controller	scsi2	at *   vector scsiintr
+controller	scsi3	at *   vector scsiintr
+controller	scsi4	at *   vector scsiintr
+controller	scsi5	at *   vector scsiintr
+controller	scsi6	at *   vector scsiintr
+controller	scsi7	at *   vector scsiintr
+controller	scsi8	at *   vector scsiintr
+controller	scsi9	at *   vector scsiintr
+controller	scsi10	at *   vector scsiintr
+controller	scsi11	at *   vector scsiintr
+controller	scsi12	at *   vector scsiintr
+controller	scsi13	at *   vector scsiintr
+controller	scsi14	at *   vector scsiintr
+controller	scsi15	at *   vector scsiintr
+controller	scsi16	at *   vector scsiintr
+controller	scsi17	at *   vector scsiintr
+controller	scsi18	at *   vector scsiintr
+controller	scsi19	at *   vector scsiintr
+controller	scsi20	at *   vector scsiintr
+controller	scsi21	at *   vector scsiintr
+controller	scsi22	at *   vector scsiintr
+controller	scsi23	at *   vector scsiintr
+controller	scsi24	at *   vector scsiintr
+controller	scsi25	at *   vector scsiintr
+controller	scsi26	at *   vector scsiintr
+controller	scsi27	at *   vector scsiintr
+controller	scsi28	at *   vector scsiintr
+controller	scsi29	at *   vector scsiintr
+controller	scsi30	at *   vector scsiintr
+controller	scsi31	at *   vector scsiintr
+controller	scsi32	at *   vector scsiintr
+controller	scsi33	at *   vector scsiintr
+controller	scsi34	at *   vector scsiintr
+controller	scsi35	at *   vector scsiintr
+controller	scsi36	at *   vector scsiintr
+controller	scsi37	at *   vector scsiintr
+controller	scsi38	at *   vector scsiintr
+controller	scsi39	at *   vector scsiintr
+controller	scsi40	at *   vector scsiintr
+controller	scsi41	at *   vector scsiintr
+controller	scsi42	at *   vector scsiintr
+controller	scsi43	at *   vector scsiintr
+controller	scsi44	at *   vector scsiintr
+controller	scsi45	at *   vector scsiintr
+controller	scsi46	at *   vector scsiintr
+controller	scsi47	at *   vector scsiintr
+controller	scsi48	at *   vector scsiintr
+controller	scsi49	at *   vector scsiintr
+controller	scsi50	at *   vector scsiintr
+controller	scsi51	at *   vector scsiintr
+controller	scsi52	at *   vector scsiintr
+controller	scsi53	at *   vector scsiintr
+controller	scsi54	at *   vector scsiintr
+controller	scsi55	at *   vector scsiintr
+controller	scsi56	at *   vector scsiintr
+controller	scsi57	at *   vector scsiintr
+controller	scsi58	at *   vector scsiintr
+controller	scsi59	at *   vector scsiintr
+controller	scsi60	at *   vector scsiintr
+controller	scsi61	at *   vector scsiintr
+controller	scsi62	at *   vector scsiintr
+controller	scsi63	at *   vector scsiintr
+controller	bba0	at *   vector bbaintr
+controller	hsc0	at ci0   cinode 0
+controller	hsc1	at ci0   cinode 1
+controller	hsc2	at ci0   cinode 2
+controller	hsc3	at ci0   cinode 3
+controller	hsc4	at ci0   cinode 4
+controller	hsc5	at ci0   cinode 5
+controller	hsc6	at ci0   cinode 6
+controller	hsc7	at ci0   cinode 7
+controller	hsc8	at ci0   cinode 8
+controller	hsc9	at ci0   cinode 9
+controller	hsc10	at ci0   cinode 10
+controller	hsc11	at ci0   cinode 11
+controller	hsc12	at ci0   cinode 12
+controller	hsc13	at ci0   cinode 13
+controller	hsc14	at ci0   cinode 14
+controller	hsc15	at ci0   cinode 15
+
+# SWXCR EISA RAID Disk controllers (device re )
+controller      xcr0    at *	 vector xcrintr
+controller      xcr1    at *	 vector xcrintr
+controller      xcr2    at *	 vector xcrintr
+controller      xcr3    at *	 vector xcrintr
+controller      xcr4    at *	 vector xcrintr
+controller      xcr5    at *	 vector xcrintr
+controller      xcr6    at *	 vector xcrintr
+controller      xcr7    at *	 vector xcrintr
+
+# DSA KDM Software Ports
+controller	uq0     at xmi? port kdm vector uqintr
+controller	uq1     at xmi? port kdm vector uqintr
+controller	uq2     at xmi? port kdm vector uqintr
+controller	uq3     at xmi? port kdm vector uqintr
+controller	uq4     at xmi? port kdm vector uqintr
+controller	uq5     at xmi? port kdm vector uqintr
+
+# DSA Disks 
+device disk		ra0	at *		drive 0
+device disk		ra1	at *		drive 1
+device disk		ra2	at *		drive 2
+device disk		ra3	at *		drive 3
+device disk		ra4	at *		drive 4
+device disk		ra5	at *		drive 5
+device disk		ra6	at *		drive 6
+device disk		ra7	at *		drive 7
+device disk		ra8	at *		drive 8
+device disk		ra9	at *		drive 9
+device disk		ra10	at *		drive 10
+device disk		ra11	at *		drive 11
+device disk		ra12	at *		drive 12
+device disk		ra13	at *		drive 13
+device disk		ra14	at *		drive 14
+device disk		ra15	at *		drive 15
+device disk		ra16	at *		drive 16
+device disk		ra17	at *		drive 17
+device disk		ra18	at *		drive 18
+device disk		ra19	at *		drive 19
+device disk		ra20	at *		drive 20
+device disk		ra21	at *		drive 21
+device disk		ra22	at *		drive 22
+device disk		ra23	at *		drive 23
+device disk		ra24	at *		drive 24
+device disk		ra25	at *		drive 25
+device disk		ra26	at *		drive 26
+device disk		ra27	at *		drive 27
+device disk		ra28	at *		drive 28
+device disk		ra29	at *		drive 29
+device disk		ra30	at *		drive 30
+device disk		ra31	at *		drive 31
+device disk		ra32	at *		drive 32
+device disk		ra33	at *		drive 33
+device disk		ra34	at *		drive 34
+device disk		ra35	at *		drive 35
+device disk		ra36	at *		drive 36
+device disk		ra37	at *		drive 37
+device disk		ra38	at *		drive 38
+device disk		ra39	at *		drive 39
+device disk		ra40	at *		drive 40
+device disk		ra41	at *		drive 41
+device disk		ra42	at *		drive 42
+device disk		ra43	at *		drive 43
+device disk		ra44	at *		drive 44
+device disk		ra45	at *		drive 45
+device disk		ra46	at *		drive 46
+device disk		ra47	at *		drive 47
+device disk		ra48	at *		drive 48
+device disk		ra49	at *		drive 49
+device disk		ra50	at *		drive 50
+device disk		ra51	at *		drive 51
+device disk		ra52	at *		drive 52
+device disk		ra53	at *		drive 53
+device disk		ra54	at *		drive 54
+device disk		ra55	at *		drive 55
+device disk		ra56	at *		drive 56
+device disk		ra57	at *		drive 57
+device disk		ra58	at *		drive 58
+device disk		ra59	at *		drive 59
+device disk		ra60	at *		drive 60
+device disk		ra61	at *		drive 61
+device disk		ra62	at *		drive 62
+device disk		ra63	at *		drive 63
+device disk		ra64	at *		drive 64
+device disk		ra65	at *		drive 65
+device disk		ra66	at *		drive 66
+device disk		ra67	at *		drive 67
+device disk		ra68	at *		drive 68
+device disk		ra69	at *		drive 69
+device disk		ra70	at *		drive 70
+device disk		ra71	at *		drive 71
+device disk		ra72	at *		drive 72
+device disk		ra73	at *		drive 73
+device disk		ra74	at *		drive 74
+device disk		ra75	at *		drive 75
+device disk		ra76	at *		drive 76
+device disk		ra77	at *		drive 77
+device disk		ra78	at *		drive 78
+device disk		ra79	at *		drive 79
+device disk		ra80	at *		drive 80
+device disk		ra81	at *		drive 81
+device disk		ra82	at *		drive 82
+device disk		ra83	at *		drive 83
+device disk		ra84	at *		drive 84
+device disk		ra85	at *		drive 85
+device disk		ra86	at *		drive 86
+device disk		ra87	at *		drive 87
+device disk		ra88	at *		drive 88
+device disk		ra89	at *		drive 89
+device disk		ra90	at *		drive 90
+device disk		ra91	at *		drive 91
+device disk		ra92	at *		drive 92
+device disk		ra93	at *		drive 93
+device disk		ra94	at *		drive 94
+device disk		ra95	at *		drive 95
+device disk		ra96	at *		drive 96
+device disk		ra97	at *		drive 97
+device disk		ra98	at *		drive 98
+device disk		ra99	at *		drive 99
+device disk		ra100	at *		drive 100
+device disk		ra101	at *		drive 101
+device disk		ra102	at *		drive 102
+device disk		ra103	at *		drive 103
+device disk		ra104	at *		drive 104
+device disk		ra105	at *		drive 105
+device disk		ra106	at *		drive 106
+device disk		ra107	at *		drive 107
+device disk		ra108	at *		drive 108
+device disk		ra109	at *		drive 109
+device disk		ra110	at *		drive 110
+device disk		ra111	at *		drive 111
+device disk		ra112	at *		drive 112
+device disk		ra113	at *		drive 113
+device disk		ra114	at *		drive 114
+device disk		ra115	at *		drive 115
+device disk		ra116	at *		drive 116
+device disk		ra117	at *		drive 117
+device disk		ra118	at *		drive 118
+device disk		ra119	at *		drive 119
+device disk		ra120	at *		drive 120
+device disk		ra121	at *		drive 121
+device disk		ra122	at *		drive 122
+device disk		ra123	at *		drive 123
+device disk		ra124	at *		drive 124
+device disk		ra125	at *		drive 125
+device disk		ra126	at *		drive 126
+device disk		ra127	at *		drive 127
+device disk		ra128	at *		drive 128
+device disk		ra129	at *		drive 129
+device disk		ra130	at *		drive 130
+device disk		ra131	at *		drive 131
+device disk		ra132	at *		drive 132
+device disk		ra133	at *		drive 133
+device disk		ra134	at *		drive 134
+device disk		ra135	at *		drive 135
+device disk		ra136	at *		drive 136
+device disk		ra137	at *		drive 137
+device disk		ra138	at *		drive 138
+device disk		ra139	at *		drive 139
+device disk		ra140	at *		drive 140
+device disk		ra141	at *		drive 141
+device disk		ra142	at *		drive 142
+device disk		ra143	at *		drive 143
+device disk		ra144	at *		drive 144
+device disk		ra145	at *		drive 145
+device disk		ra146	at *		drive 146
+device disk		ra147	at *		drive 147
+device disk		ra148	at *		drive 148
+device disk		ra149	at *		drive 149
+device disk		ra150	at *		drive 150
+device disk		ra151	at *		drive 151
+device disk		ra152	at *		drive 152
+device disk		ra153	at *		drive 153
+device disk		ra154	at *		drive 154
+device disk		ra155	at *		drive 155
+device disk		ra156	at *		drive 156
+device disk		ra157	at *		drive 157
+device disk		ra158	at *		drive 158
+device disk		ra159	at *		drive 159
+device disk		ra160	at *		drive 160
+device disk		ra161	at *		drive 161
+device disk		ra162	at *		drive 162
+device disk		ra163	at *		drive 163
+device disk		ra164	at *		drive 164
+device disk		ra165	at *		drive 165
+device disk		ra166	at *		drive 166
+device disk		ra167	at *		drive 167
+device disk		ra168	at *		drive 168
+device disk		ra169	at *		drive 169
+device disk		ra170	at *		drive 170
+device disk		ra171	at *		drive 171
+device disk		ra172	at *		drive 172
+device disk		ra173	at *		drive 173
+device disk		ra174	at *		drive 174
+device disk		ra175	at *		drive 175
+device disk		ra176	at *		drive 176
+device disk		ra177	at *		drive 177
+device disk		ra178	at *		drive 178
+device disk		ra179	at *		drive 179
+device disk		ra180	at *		drive 180
+device disk		ra181	at *		drive 181
+device disk		ra182	at *		drive 182
+device disk		ra183	at *		drive 183
+device disk		ra184	at *		drive 184
+device disk		ra185	at *		drive 185
+device disk		ra186	at *		drive 186
+device disk		ra187	at *		drive 187
+device disk		ra188	at *		drive 188
+device disk		ra189	at *		drive 189
+device disk		ra190	at *		drive 190
+device disk		ra191	at *		drive 191
+device disk		ra192	at *		drive 192
+device disk		ra193	at *		drive 193
+device disk		ra194	at *		drive 194
+device disk		ra195	at *		drive 195
+device disk		ra196	at *		drive 196
+device disk		ra197	at *		drive 197
+device disk		ra198	at *		drive 198
+device disk		ra199	at *		drive 199
+device disk		ra200	at *		drive 200
+device disk		ra201	at *		drive 201
+device disk		ra202	at *		drive 202
+device disk		ra203	at *		drive 203
+device disk		ra204	at *		drive 204
+device disk		ra205	at *		drive 205
+device disk		ra206	at *		drive 206
+device disk		ra207	at *		drive 207
+device disk		ra208	at *		drive 208
+device disk		ra209	at *		drive 209
+device disk		ra210	at *		drive 210
+device disk		ra211	at *		drive 211
+device disk		ra212	at *		drive 212
+device disk		ra213	at *		drive 213
+device disk		ra214	at *		drive 214
+device disk		ra215	at *		drive 215
+device disk		ra216	at *		drive 216
+device disk		ra217	at *		drive 217
+device disk		ra218	at *		drive 218
+device disk		ra219	at *		drive 219
+device disk		ra220	at *		drive 220
+device disk		ra221	at *		drive 221
+device disk		ra222	at *		drive 222
+device disk		ra223	at *		drive 223
+device disk		ra224	at *		drive 224
+device disk		ra225	at *		drive 225
+device disk		ra226	at *		drive 226
+device disk		ra227	at *		drive 227
+device disk		ra228	at *		drive 228
+device disk		ra229	at *		drive 229
+device disk		ra230	at *		drive 230
+device disk		ra231	at *		drive 231
+device disk		ra232	at *		drive 232
+device disk		ra233	at *		drive 233
+device disk		ra234	at *		drive 234
+device disk		ra235	at *		drive 235
+device disk		ra236	at *		drive 236
+device disk		ra237	at *		drive 237
+device disk		ra238	at *		drive 238
+device disk		ra239	at *		drive 239
+device disk		ra240	at *		drive 240
+device disk		ra241	at *		drive 241
+device disk		ra242	at *		drive 242
+device disk		ra243	at *		drive 243
+device disk		ra244	at *		drive 244
+device disk		ra245	at *		drive 245
+device disk		ra246	at *		drive 246
+device disk		ra247	at *		drive 247
+device disk		ra248	at *		drive 248
+device disk		ra249	at *		drive 249
+device disk		ra250	at *		drive 250
+device disk		ra251	at *		drive 251
+device disk		ra252	at *		drive 252
+device disk		ra253	at *		drive 253
+device disk		ra254	at *		drive 254
+device disk		ra255	at *		drive 255
+
+# DSA Tapes 
+device tape		tms0	at *		drive 0
+device tape		tms1	at *		drive 1
+device tape		tms2	at *		drive 2
+device tape		tms3	at *		drive 3
+device tape		tms4	at *		drive 4
+device tape		tms5	at *		drive 5
+device tape		tms6	at *		drive 6
+device tape		tms7	at *		drive 7
+device tape		tms8	at *		drive 8 
+device tape		tms9	at *		drive 9 
+device tape		tms10	at *		drive 10 
+device tape		tms11	at *		drive 11 
+device tape		tms12	at *		drive 12 
+device tape		tms13	at *		drive 13 
+device tape		tms14	at *		drive 14 
+device tape		tms15	at *		drive 15 
+device tape		tms16	at *		drive 16 
+device tape		tms17	at *		drive 17 
+device tape		tms18	at *		drive 18 
+device tape		tms19	at *		drive 19 
+device tape		tms20	at *		drive 20 
+device tape		tms21	at *		drive 21 
+device tape		tms22	at *		drive 22 
+device tape		tms23	at *		drive 23
+device tape		tms24	at *		drive 24 
+device tape		tms25	at *		drive 25 
+device tape		tms26	at *		drive 26 
+device tape		tms27	at *		drive 27 
+device tape		tms28	at *		drive 28 
+device tape		tms29	at *		drive 29 
+device tape		tms30	at *		drive 30 
+device tape		tms31	at *		drive 31 
+
+# EISA SWXCR RAID disks
+device disk		re0	at xcr0		drive 0
+device disk		re1	at xcr0		drive 1
+device disk		re2	at xcr0		drive 2
+device disk		re3	at xcr0		drive 3
+device disk		re4	at xcr0		drive 4
+device disk		re5	at xcr0		drive 5
+device disk		re6	at xcr0		drive 6
+device disk		re7	at xcr0		drive 7
+device disk		re8	at xcr1		drive 8
+device disk		re9	at xcr1		drive 9
+device disk		re10	at xcr1		drive 10
+device disk		re11	at xcr1		drive 11
+device disk		re12	at xcr1		drive 12
+device disk		re13	at xcr1		drive 13
+device disk		re14	at xcr1		drive 14
+device disk		re15	at xcr1		drive 15
+device disk		re16	at xcr2		drive 16
+device disk		re17	at xcr2		drive 17
+device disk		re18	at xcr2		drive 18
+device disk		re19	at xcr2		drive 19
+device disk		re20	at xcr2		drive 20
+device disk		re21	at xcr2		drive 21
+device disk		re22	at xcr2		drive 22
+device disk		re23	at xcr2		drive 23
+device disk		re24	at xcr3		drive 24
+device disk		re25	at xcr3		drive 25
+device disk		re26	at xcr3		drive 26
+device disk		re27	at xcr3		drive 27
+device disk		re28	at xcr3		drive 28
+device disk		re29	at xcr3		drive 29
+device disk		re30	at xcr3		drive 30
+device disk		re31	at xcr3		drive 31
+device disk		re32	at xcr4		drive 32
+device disk		re33	at xcr4		drive 33
+device disk		re34	at xcr4		drive 34
+device disk		re35	at xcr4		drive 35
+device disk		re36	at xcr4		drive 36
+device disk		re37	at xcr4		drive 37
+device disk		re38	at xcr4		drive 38
+device disk		re39	at xcr4		drive 39
+device disk		re40	at xcr5		drive 40
+device disk		re41	at xcr5		drive 41
+device disk		re42	at xcr5		drive 42
+device disk		re43	at xcr5		drive 43
+device disk		re44	at xcr5		drive 44
+device disk		re45	at xcr5		drive 45
+device disk		re46	at xcr5		drive 46
+device disk		re47	at xcr5		drive 47
+device disk		re48	at xcr6		drive 48
+device disk		re49	at xcr6		drive 49
+device disk		re50	at xcr6		drive 50
+device disk		re51	at xcr6		drive 51
+device disk		re52	at xcr6		drive 52
+device disk		re53	at xcr6		drive 53
+device disk		re54	at xcr6		drive 54 
+device disk		re55	at xcr6		drive 55 
+device disk		re56	at xcr7		drive 56
+device disk		re57	at xcr7		drive 57 
+device disk		re58	at xcr7		drive 58
+device disk		re59	at xcr7		drive 59
+device disk		re60	at xcr7		drive 60
+device disk		re61	at xcr7		drive 61
+device disk		re62	at xcr7		drive 62
+device disk		re63	at xcr7 	drive 63
+
+# Terminal devices
+controller		scc0	at *	slot ? vector sccintr
+controller		ace0	at *    slot ? vector aceintr
+controller		ace1	at *    slot ? vector aceintr
+controller		ace2    at *	slot ? vector aceintr
+controller		ace3    at *	slot ? vector aceintr
+controller		ace4    at *	slot ? vector aceintr
+controller		ace5    at *	slot ? vector aceintr
+controller		iscc0	at *	slot ?
+
+# Floppy disk controller
+controller		fdi0	at *
+device disk		fd0	at fdi0		drive 0
+device disk		fd1	at fdi0		drive 1
+
+# PC mouse/kybd:
+controller		gpc0	at * vector gpcintr
+
+# Power management driver
+controller		hmc0    at isa? slot ?
+
+# parallel printer:
+controller      	lp0   at *  vector lpintr
+
+
+#
+# Non-Volitile RAM devices
+#
+controller		nvtc0	at *	slot ? vector nvtcintr
+controller		envram0	at eisa? 
+controller		pnvram0	at pci? 
+
+#  Memory Channel
+controller	mchan0	at pci? 
+controller	mchan1	at pci? 
+controller	mchan2	at pci? 
+controller	mchan3	at pci? 
+controller	mchan4	at pci? 
+controller	mchan5	at pci? 
+controller	mchan6	at pci? 
+controller	mchan7	at pci? 
+
+
+#
+# Network device
+#
+controller		ln0	at *
+controller		ln1	at *
+controller		ln2	at *
+controller		ln3	at *
+controller		le0	at *
+controller		le1	at *
+controller		tu0	at *
+controller		tu1	at *
+controller		tu2	at *
+controller		tu3	at *
+controller		tu4	at *
+controller		tu5	at *
+controller		tu6	at *
+controller		tu7	at *
+controller		tu8	at *
+controller		tu9	at *
+controller		tu10	at *
+controller		tu11	at *
+controller		tu12	at *
+controller		tu13	at *
+controller		tu14	at *
+controller		tu15	at *
+controller		fza0	at *
+controller		fza1	at *
+controller		fza2	at *
+controller		fta0	at *
+controller		fta1	at *
+controller		fta2	at *
+controller		fta3	at *
+controller		fta4	at *
+controller		fta5	at *
+controller		fta6	at *
+controller		fta7	at *
+controller		te0	at * vector teintr
+controller		te1	at * vector teintr
+controller		faa0	at * vector faaintr
+controller		faa1	at * vector faaintr
+controller		faa2	at * vector faaintr
+controller		faa3	at * vector faaintr
+controller		faa4	at * vector faaintr
+controller		faa5	at * vector faaintr
+controller		faa6	at * vector faaintr
+controller		faa7	at * vector faaintr
+controller		faa8	at * vector faaintr
+controller		faa9	at * vector faaintr
+controller		faa10	at * vector faaintr
+controller		faa11	at * vector faaintr
+controller		faa12	at * vector faaintr
+controller		faa13	at * vector faaintr
+controller		faa14	at * vector faaintr
+controller		faa15	at * vector faaintr
+controller		faa16	at * vector faaintr
+controller		faa17	at * vector faaintr
+controller		faa18	at * vector faaintr
+controller		faa19	at * vector faaintr
+controller		faa20	at * vector faaintr
+controller		faa21	at * vector faaintr
+controller		faa22	at * vector faaintr
+controller		faa23	at * vector faaintr
+controller		faa24	at * vector faaintr
+controller		faa25	at * vector faaintr
+controller		faa26	at * vector faaintr
+controller		xna0	at * vector xnaintr
+controller		xna1	at * vector xnaintr
+controller		xna2	at * vector xnaintr
+controller		xna3	at * vector xnaintr
+controller		xna4	at * vector xnaintr
+controller		xna5	at * vector xnaintr
+controller		xna6	at * vector xnaintr
+controller		xna7	at * vector xnaintr
+controller		mfa0	at * vector mfaintr
+controller		mfa1	at * vector mfaintr
+controller		mfa2	at * vector mfaintr
+controller		mfa3	at * vector mfaintr
+controller		mfa4	at * vector mfaintr
+controller		mfa5	at * vector mfaintr
+controller		mfa6	at * vector mfaintr
+controller		mfa7	at * vector mfaintr
+controller		tra0	at *
+controller		tra1	at *
+controller		tra2	at *
+controller		tra3	at *
+controller		tra4	at *
+controller		tra5	at *
+controller              lta0    at *
+controller              lta1    at *
+controller              lta2    at *
+controller              lta3    at *
+
+
+# graphics devices
+
+controller		fb0	at * slot ? vector fbint
+controller		fb1	at * slot ? vector fbint
+controller		fb2	at * slot ? vector fbint
+controller		fb3	at * slot ? vector fbint
+controller		fb4	at * slot ? vector fbint
+controller		fb5	at * slot ? vector fbint
+controller		fb6	at * slot ? vector fbint
+
+controller		pv0	at * slot ? vector pvintr
+
+controller		pvl0	at * slot ? vector pvlintr
+
+controller		qvision0	at * 
+controller		qvision1	at * 
+controller		qvision2	at * 
+controller		qvision3	at * 
+
+controller		ati0		at * 
+controller		ati1		at * 
+
+controller		cirrus0		at * 
+controller		trio0	  	at * 
+controller		vga0		at * 
+
+controller		comet0		at *
+controller		comet1		at *
+controller		comet2		at *
+controller		comet3		at *
+
+controller		tga0		at *
+controller		tga1		at *
+controller		tga2		at *
+controller		tga3		at *
+controller		tga4		at *
+controller		tga5		at *
+controller		tga6		at *
+controller		tga7		at *
+controller		tga8		at *
+controller		tga9		at *
+controller		tga10		at *
+controller		tga11		at *
+controller		tga12		at *
+controller		tga13		at *
+controller		tga14		at *
+controller		tga15		at *
+
+controller		pvp0		at *
+controller		pvp1		at *
+controller		pvp2		at *
+controller		pvp3		at *
+
+controller		wd0		at *
+
+# All pseudo devices
+pseudo-device	ether
+pseudo-device	loop
+pseudo-device	lv		3
+pseudo-device	lsm		1
+pseudo-device	ws
+pseudo-device	presto
+
+# Comment the habitats you don't want included.
+pseudo-device	sysv_hab
+pseudo-device	svid_three_hab
+pseudo-device	svr_four_hab
+pseudo-device	soe_two_hab
+pseudo-device	rt_hab
+
+# USB buses
+bus		usb0 at *
+bus		usb1 at *
+
+# DEGPA: Gigabit Ethernet
+pseudo-device	alt
+
+# lfa: FORE HE Series ATM driver
+pseudo-device	lfa

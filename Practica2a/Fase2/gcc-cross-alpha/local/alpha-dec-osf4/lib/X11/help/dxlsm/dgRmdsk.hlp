@@ -1,0 +1,26 @@
+#/* @(#)@(#)help/dgRmdsk.hlp	2.1 11 May 1993 19:04:11 -  */
+#ident  "@(#)va11:help/dgRmdsk.hlp   2.1"
+#
+#
+Disk Group, diskGrp.hlp
+#########################################
+REMOVE DISKS FORM HELP
+
+This operation removes the selected disk(s) from a specified disk group.
+The name of the disk group that you want to remove the disk(s) from is
+specified in the form, and may be changed.
+
+
+Fields
+----------
+
+Remove disk from disk group:
+	This is the name of the disk group that you want to remove the
+	selected disk(s) from.  This name must be specified.
+
+
+Errors
+----------
+
+"Disk group name is required."
+This field cannot be left blank.  Enter a valid disk group name.

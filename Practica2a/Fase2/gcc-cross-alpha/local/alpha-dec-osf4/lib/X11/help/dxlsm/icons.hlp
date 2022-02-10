@@ -1,0 +1,56 @@
+#/* @(#)@(#)help/icons.hlp	2.1 11 May 1993 19:05:13 -  */
+#ident  "@(#)va11:help/icons.hlp   2.1"
+#
+#
+Views, views.hlp
+Icon Pulldown Menu, iconM.hlp
+Colors, colors.hlp
+#########################################
+ICONS HELP
+
+Icons are the on-screen representations of Logical Storage Manager or system
+objects.  By manipulating these icons you can affect changes in your system
+configuration.
+
+Icons reside in views.  If you have a user-created view, you may add icons
+to or remove icons from this view without changing the system
+configuration.  This duplication of icons is a convenient way to represent
+one object in several different places.  See help on Views for more
+information.
+
+Icons are colored by a strict priority scheme.  See help on Colors for more
+information. 
+
+There are two major ways to operate on icons in the Visual Administrator.
+The first is the click-and-operate interface, where you highlight one or
+more icons with the mouse, and then use the pulldown menus to begin an
+operation.  The other interface provided is drag-and-drop, where you click
+on an icon and then drag it to another place on a view.
+
+The operation initiated by a drag-and-drop depends on the icon being
+dragged and the place where it is dropped.  The rules are listed below.  If
+the combination of drag and drop is not listed, then the operation will be
+ignored.  When the drop icon is a "View," it means that the object is to be
+dropped in the empty space in a view, not in any particular icon.
+
+	Drag Icon	Drop Icon	Operation
+	---------	---------	----------
+	Subdisk		Any View	Plex Create
+	Subdisk		Plex		Subdisk Associate
+	Subdisk		Subdisk		Subdisk Move
+	Subdisk		Another View	Create subdisk icon in drop view
+	Subdisk		LSM disk		Subdisk Create (same size)
+	Plex		Any View	Volume Create
+	Plex		Volume		Plex Associate
+	Plex		Another View	Create plex icon in drop view
+	Volume		Another View	Create volume icon in drop view
+	Phys disk	Another View	Create Phys disk icon in drop view
+	LSM disk	Another View	Create LSM disk icon in drop view
+	
+If the name of an icon is in reverse type (white type on a black bar
+instead of black type on a white icon) then the icon is minimized.  A
+minimized icon will not display any plexes, subdisks, partitions, etc. that
+are associated with that icon.  This state can be toggled by pressing
+SHIFT-Select on the icon or by using the Minimize/Maximize Icons operations
+under the Icon pulldown menu.  See help on the Icon Pulldown Menu for more
+information.

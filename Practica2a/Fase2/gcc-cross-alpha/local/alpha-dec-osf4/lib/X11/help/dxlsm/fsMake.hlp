@@ -1,0 +1,49 @@
+#/* @(#)@(#)help/fsMake.hlp	2.1 11 May 1993 19:04:42 -  */
+#ident  "@(#)va11:help/fsMake.hlp   2.1"
+#
+#
+Volume, volume.hlp
+#########################################
+FILE SYSTEM MAKE FORM HELP
+
+This operation will make a file system on the selected volume.  A volume
+must be selected for this operation, and this operation is not valid for
+any other type of icon.
+
+If the file system is to be mounted, then /etc/fstab is modified
+automatically.
+
+
+Fields
+----------
+
+Device name:
+	The block device on which to create the file system.  This
+	corresponds to the name of the selected volume, and cannot be
+	changed.
+
+File system size:
+	The length of the file system you will create.  If no unit is
+	specified then the number is assumed to be in sectors.  This length
+	should correspond to the length of the volume or partition that you
+	are creating the file system on.
+
+FS Type:
+	The type of file system you wish to create.  The default file
+	system type is UFS. 
+
+
+Mount file system:
+	This specifies whether or not you want to mount the file system
+	after you create it.  If so, you must specify a mount point name in
+	the "Mount point" field.
+
+Mount point:
+	The desired mount point for the new file system.  If the specified
+	mount point does not already exist, the Visual Administrator will
+	automatically create it for you.
+
+Mount automatically:
+	This specifies if an entry should be made in /etc/fstab so that
+	this file system is mounted by the system every time the system
+	comes up.

@@ -1,0 +1,181 @@
+// **************************************************************
+// *								*
+// * Keymaps for hu_HU.ISO8859-2 - Hungarian for Hungary	*
+// *								*
+// * NOTES:  There isn't a VT105 (i.e. LK201) keyboard for	*
+// *	     hu_HU.						*
+// *								*
+// **************************************************************
+
+xkb_keymap "lk401-tw" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_hungarian(vt108-tw)"	};
+    xkb_geometry	{ description = "Digital Hungarian LK401 - Typewriter Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk401-dp" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_hungarian(vt108-dp)"	};
+    xkb_geometry	{ description = "Digital Hungarian LK401 - Data Processing Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk401" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_hungarian(vt108)"	};
+    xkb_geometry	{ description = "Digital Hungarian LK401";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411-tw" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_hungarian(vt108-tw)"	};
+    xkb_geometry	{ description = "Digital Hungarian LK411 - Typewriter Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411-dp" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_hungarian(vt108-dp)"	};
+    xkb_geometry	{ description = "Digital Hungarian LK411 - Data Processing Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_hungarian(vt108)"	};
+    xkb_geometry	{ description = "Digital Hungarian LK411";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461-tw" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_hungarian(vt108-tw)"	};
+    xkb_geometry	{ description = "Digital Hungarian LK461 - Typewriter Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461-dp" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_hungarian(vt108-dp)"	};
+    xkb_geometry	{ description = "Digital Hungarian LK461 - Data Processing Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_hungarian(vt108)"	};
+    xkb_geometry	{ description = "Digital Hungarian LK461";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "pcxalhq" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_hungarian(pcxalhq)"	};
+    xkb_geometry	{ description = "Digital Hungarian PCXAL-HQ";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxallq" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_hungarian(pcxallq)"	};
+    xkb_geometry	{ description = "Digital Hungarian PCXAL-LQ";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxalpq" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)"          };
+    xkb_types           { include "types/default"                       };
+    xkb_compatibility   { include "compat/default"                      };
+    xkb_symbols         { include "symbols/digital_hungarian(pcxalpq)"  };
+    xkb_geometry        { description = "Digital Hungarian PCXAL-PQ";
+                          include "geometry/digital_pc(pc102)"
+                          include "geometry/digital_pc(leds_alone)"     };
+};
+
+xkb_keymap "pcxalsq" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_hungarian(pcxalsq)"	};
+    xkb_geometry	{ description = "Digital Hungarian PCXAL-SQ";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxal" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_hungarian(pcxal)"	};
+    xkb_geometry	{ description = "Digital Hungarian PCXAL";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471bq" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_hungarian(lk471bq)"	};
+    xkb_geometry	{ description = "Digital Hungarian LK471-BQ";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_hungarian(lk471)"	};
+    xkb_geometry	{ description = "Digital Hungarian LK471";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97wbq" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_hungarian(lk471bq)"	};
+    xkb_geometry	{ description = "Digital Hungarian LK97W-BQ";
+			  include "geometry/digital_pc(pc105)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97w" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_hungarian(lk471)"	};
+    xkb_geometry	{ description = "Digital Hungarian LK97W";
+			  include "geometry/digital_pc(pc105)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+

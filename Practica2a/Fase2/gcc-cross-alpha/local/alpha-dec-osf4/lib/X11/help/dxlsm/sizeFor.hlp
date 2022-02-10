@@ -1,0 +1,22 @@
+#/* @(#)@(#)help/sizeFor.hlp	2.1 11 May 1993 19:06:17 -  */
+#ident  "@(#)va11:help/sizeFor.hlp   2.1"
+#
+#
+Pulldown Menus, pulldown.hlp
+Forms, forms.hlp
+Options, optionsM.hlp
+#########################################
+FORMAT OF SIZE HELP
+
+This pulldown menu specifies what unit you want to use in "Size" fields on
+the various forms used within the Visual Administrator.  These will be the
+default unit used when a number is displayed in any size field.  These
+unit defaults do not apply to numbers that the user enters by hand,
+however: sectors are the default amount in most cases, unless a unit is
+manually specified by the user (k, s, or m).
+
+If a number cannot be converted cleanly into a specified unit, it will
+be displayed in sectors to avoid displaying any decimal parts.
+
+A mark is displayed next to the current choice for the unit on the
+pulldown menu.  The default unit is megabytes.

@@ -1,0 +1,66 @@
+// Provide the same functionality as "compat/default," but make the
+// Mode_switch act as a locking key.
+xkb_compatibility "grouplock"  {
+
+    virtual_modifiers NumLock,AltGr=mod3;
+
+    interpret.repeat= False;
+    setMods.clearLocks= True;
+    latchMods.clearLocks= True;
+    latchMods.latchToLock= True;
+
+    interpret Shift_Lock+AnyOf(Shift+Lock) {
+	action= LockMods(modifiers=Shift);
+    };
+
+    interpret Any+Lock {
+	action= LockMods(modifiers=Lock);
+    };
+
+    interpret Num_Lock+Any {
+	virtualModifier= NumLock;
+	action= LockMods(modifiers=NumLock);
+    };
+
+    interpret Mode_switch {
+        //useModMapMods= level1;
+        action= LockGroup(group=+1);
+        virtualModifier= AltGr;
+    };
+
+    // This is needed so keys defined with the PC_BREAK type
+    // with symbols [ Multi_key, Mode_switch ] will work.
+    interpret Multi_key {
+	action= NoAction();
+	repeat= False;
+    };
+
+    interpret Any + Any {
+	action= SetMods(modifiers=modMapMods);
+    };
+
+    group 2 = AltGr;
+    group 3 = AltGr;
+    group 4 = AltGr;
+
+    indicator.allowExplicit= False;
+    indicator "Caps Lock" { 
+	whichModState= Locked;
+	modifiers= Lock;
+    };
+    indicator "Num Lock" {
+	whichModState= Locked;
+	modifiers= NumLock;
+    };
+    indicator "Shift Lock" {
+	whichModState= Locked;
+	modifiers= Shift;
+    };
+    indicator.allowExplicit= True;
+
+    augment "mousekeys"
+    augment "accessx(basic)"
+    augment "misc"
+    augment "iso9995"
+    augment "japan"
+};

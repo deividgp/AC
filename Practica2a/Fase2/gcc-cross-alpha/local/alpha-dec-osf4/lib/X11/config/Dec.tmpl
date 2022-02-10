@@ -1,0 +1,216 @@
+XCOMM 
+XCOMM *****************************************************************
+XCOMM *                                                               *
+XCOMM *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+XCOMM *                                                               *
+XCOMM *   All Rights Reserved.  Unpublished rights  reserved  under   *
+XCOMM *   the copyright laws of the United States.                    *
+XCOMM *                                                               *
+XCOMM *   The software contained on this media  is  proprietary  to   *
+XCOMM *   and  embodies  the  confidential  technology  of  Digital   *
+XCOMM *   Equipment Corporation.  Possession, use,  duplication  or   *
+XCOMM *   dissemination of the software and media is authorized only  *
+XCOMM *   pursuant to a valid written license from Digital Equipment  *
+XCOMM *   Corporation.                                                *
+XCOMM *                                                               *
+XCOMM *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+XCOMM *   by the U.S. Government is subject to restrictions  as  set  *
+XCOMM *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+XCOMM *   or  in  FAR 52.227-19, as applicable.                       *
+XCOMM *                                                               *
+XCOMM *****************************************************************
+XCOMM
+XCOMM HISTORY
+XCOMM 
+XCOMM @(#)$RCSfile: Dec.tmpl,v $ $Revision: 1.1.2.13 $ (DEC) $Date: 1995/06/22 15:38:09 $
+XCOMM
+XCOMM -------------------------------------------------------------------------
+XCOMM DEC-Specific System Build Parameters
+#ifndef BuildMotif
+#define BuildMotif NO
+#endif
+
+#if BuildMotif
+#define MotifAppsDefines
+#define MotifLibsDefines -DALPHA_64BIT -DALPHA_BUG_FIX -DNO_REGCOMP -DNO_REGEX -DDEC_BUG_FIX -DDEC_EXTENSION -DXUI_COMPATIBILITY -DDEC_MOTIF_BUG_FIX -DDEC_MOTIF_EXTENSION -DR5_XLIB -DSTRINGS_ALIGNED
+#define MotifSpecialIncludes
+#endif
+
+#ifndef SharedLibDXm
+#define SharedLibDXm HasSharedLibraries
+#endif
+#ifndef NormalLibDXm
+#define NormalLibDXm (!SharedLibDXm | ForceNormalLib)
+#endif
+#ifndef SharedLibBkr
+#define SharedLibBkr HasSharedLibraries
+#endif
+#ifndef NormalLibBkr
+#define NormalLibBkr (!SharedLibBkr | ForceNormalLib)
+#endif
+#ifndef SharedLibIds
+#define SharedLibIds HasSharedLibraries
+#endif
+#ifndef NormalLibIds
+#define NormalLibIds (!SharedLibIds | ForceNormalLib)
+#endif
+#ifndef SharedLibDvr
+#define SharedLibDvr HasSharedLibraries
+#endif
+#ifndef NormalLibDvr
+#define NormalLibDvr (!SharedLibDvr | ForceNormalLib)
+#endif
+#ifndef SharedLibLwk
+#define SharedLibLwk HasSharedLibraries
+#endif
+#ifndef NormalLibLwk
+#define NormalLibLwk (!SharedLibLwk | ForceNormalLib)
+#endif
+#ifndef SharedLibXv
+#define SharedLibXv HasSharedLibraries
+#endif
+#ifndef NormalLibXv
+#define NormalLibXv (!SharedLibXv | ForceNormalLib)
+#endif
+
+          HELPDIR = $(LIBDIR)/help
+           UIDDIR = $(LIBDIR)/uid
+           CDADIR = $(USRLIBDIR)/cda
+
+           DXMSRC = $(MLIBSRC)/DXm
+           XIESRC = $(LIBSRC)/XIE
+           IDSSRC = $(MLIBSRC)/ids
+           BKRSRC = $(MLIBSRC)/bkr
+        DWI18NSRC = $(MLIBSRC)/dwi18n
+           LWKSRC = $(MLIBSRC)/lwk
+           DVRSRC = $(MLIBSRC)/dvr
+
+        XSHLIBDIR = XShLibDir
+
+
+#if SharedLibDXm
+       DEPDXMLIB = _Use($(USRSHLIBDIR),$(DXMSRC))/libDXm.so
+          DXMLIB = _Use(-lDXm,$(DXMSRC)/libDXm.so)
+#else
+       DEPDXMLIB = _Use($(USRLIBDIR),$(DXMSRC))/libDXm.a
+          DXMLIB = LoaderLibPrefix _Use(-lDXm,$(DEPDXMLIB))
+#endif
+       MDXMLIB = $(DXMLIB)
+
+#if SharedLibXie
+        DEPXIELIB = _UseCat($(USRSHLIBDIR),$(XIESRC),/libXIE.so)
+           XIELIB = _Use(-lXIE,$(DEPXIELIB))
+#else
+        DEPXIELIB = _Use($(USRLIBDIR),$(XIESRC))/libXIE.a
+           XIELIB = LoaderLibPrefix _Use(-lXIE,$(DEPXIELIB))
+#endif
+
+#if SharedLibIds
+        DEPIDSLIB = _UseCat($(USRSHLIBDIR),$(IDSSRC),/libids.so)
+           IDSLIB = _Use(-lids,$(DEPIDSLIB))
+#else
+        DEPIDSLIB = _Use($(USRLIBDIR),$(IDSSRC))/libids.a
+           IDSLIB = LoaderLibPrefix _Use(-lids,$(DEPIDSLIB))
+#endif
+
+#if SharedLibBkr
+        DEPBKRLIB = _UseCat($(USRSHLIBDIR),$(BKRSRC),/libbkr.so)
+           BKRLIB = _Use(-lbkr,$(DEPBKRLIB))
+#else
+        DEPBKRLIB = _Use($(USRLIBDIR),$(BKRSRC))/libbkr.a
+           BKRLIB = LoaderLibPrefix _Use(-lbkr,$(DEPBKRLIB))
+#endif
+
+
+#if SharedLibI18N
+        DEPDWI18NLIB = _UseCat($(USRSHLIBDIR),$(DWI18NSRC),/libdwi18n.so)
+           DWI18NLIB = _Use(-ldwi18n,$(DEPDWI18NLIB))
+#else
+        DEPDWI18NLIB = _Use($(USRLIBDIR),$(DWI18NSRC))/libdwi18n.a
+           DWI18NLIB = LoaderLibPrefix _Use(-ldwi18n,$(DEPDWI18NLIB))
+#endif
+
+#if SharedLibLwk
+        DEPLWKLIB = _UseCat($(USRSHLIBDIR),$(LWKSRC),/liblwkdxm.so)
+           LWKLIB = _Use(-llwkdxm,$(DEPLWKLIB))
+#else
+        DEPLWKLIB = _Use($(USRLIBDIR),$(LWKSRC))/liblwkdxm.a
+           LWKLIB = LoaderLibPrefix _Use(-llwkdxm,$(DEPLWKLIB))
+#endif
+
+#if SharedLibDvr
+        DEPDVRLIB = _UseCat($(USRSHLIBDIR),$(DVRSRC),/libdvr.so)
+           DVRLIB = _Use(-ldvr,$(DEPDVRLIB))
+#else
+        DEPDVRLIB = _Use($(USRLIBDIR),$(DVRSRC))/libdvr.a
+           DVRLIB = LoaderLibPrefix _Use(-ldvr,$(DEPDVRLIB))
+#endif
+
+        DEPIMGLIB =
+        DEPIPSLIB =
+        DEPCHFLIB =
+        DEPCDALIB =
+        DEPDVSLIB =
+
+    DEPIDS_NOXLIB =
+
+           IMGLIB = -limg
+           IPSLIB = -lips
+           CHFLIB = -lchf
+           CDALIB = -lcda
+       IDS_NOXLIB = -lids_nox
+           DVSLIB = -ldvs
+
+     DEBUGUSRLIBDIR=/usr/debugshlib
+
+#ifndef DXmClientDepLibs
+#define DXmClientDepLibs $(DEPDXMLIB) $(DEPBKRLIB) MrmClientDepLibs
+#endif
+#ifndef DXmClientLibs
+#define DXmClientLibs $(DXMLIB) $(BKRLIB) MrmClientLibs
+#endif
+#ifndef LocalDefaultCCOptions
+#define LocalDefaultCCOptions -non_shared -std1
+#endif
+#ifndef LocCcCmd
+#if HasGcc
+#define LocCcCmd gcc -fstrength-reduce -fpcc-struct-return 
+#else
+#define LocCcCmd cc
+#endif
+#endif
+#ifndef LocalStandardIncludes
+#define LocalStandardIncludes /**/		/* for cross-build specifics */
+#endif
+#ifndef LocalExtraLibraries
+#define LocalExtraLibraries /**/	/* for cross-build specifics */
+#endif
+            LOCAR = LocArCmd
+            LOCCC = LocCcCmd
+        LOCSHARCC = LocShareCcCmd
+  LOCSTD_INCLUDES = LocalStandardIncludes
+ LOCEXTRA_LIBRARIES = LocalExtraLibraries
+     LOCCCOPTIONS = LocalDefaultCCOptions /* to distinguish from param flags */
+   LOCALLINCLUDES = $(INCLUDES) $(EXTRA_INCLUDES) $(TOP_INCLUDES) $(LOCSTD_INCLUDES)
+    LOCALLDEFINES = $(LOCALLINCLUDES) $(STD_DEFINES) $(EXTRA_DEFINES) $(PROTO_DEFINES) $(DEFINES)
+        LOCCFLAGS = $(CDEBUGFLAGS) $(LOCCCOPTIONS) $(LOCALLDEFINES)
+#if AlternateUsrLibDir && !defined(UseInstalled)
+        LOCLDLIBS = -L$(USRLIBDIR) $(SYS_LIBRARIES) $(LOCEXTRA_LIBRARIES)
+#else
+        LOCLDLIBS = $(SYS_LIBRARIES) $(LOCEXTRA_LIBRARIES)
+#endif
+#if AlternateUsrLibDir && defined(UseInstalled)
+     LOCLDOPTIONS = $(CDEBUGFLAGS) $(LOCCCOPTIONS) $(LOCAL_LDFLAGS) -L$(USRLIBDIR)
+#else
+     LOCLDOPTIONS = $(CDEBUGFLAGS) $(LOCCCOPTIONS) $(LOCAL_LDFLAGS)
+#endif
+
+/*
+ * The following stuff was added to support the building of Motif 
+ */
+
+#include <Motif.tmpl>
+CONFIGSRC = $(XTOP)/config
+#ifndef UseInstalled
+LDPRELIB = -L$(XTOP)/usrlib -L$(MTOP)/usrlib -L$(BUILDLIBDIR)
+#endif

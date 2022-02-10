@@ -1,0 +1,52 @@
+#!/bin/bash
+#
+# Very minimal as driver for the multipass binasm using assembler.
+# Might not be required on very new machines which use a single-pass assembler.
+
+TEMPFILE=$GCC_CROSS_ALPHA/tmp/binasm
+INSTALLDIR=$GCC_CROSS_ALPHA/local/alpha-dec-osf4/bin
+
+if [ $# -eq 0 ]; then
+	echo ERROR: No arguments.
+	exit 1;
+fi;
+
+while [ $# -gt 0 ]; do
+	case "$1" in
+		-o)
+			shift;
+			OUTPUT=$1
+			;;
+		-nocpp)
+			# was interpreted by the as driver
+			;;
+		-*)
+			PARAMS="$PARAMS $1"
+			;;
+		*)
+			INPUT=$1
+			;;
+	esac
+	shift;
+done;
+
+# we shouldn't be doing this ...
+if [ "x$INPUT" == "x" ]; then
+	echo ERROR: No inputs.
+	exit 1;
+fi;
+
+if [ "x$OUTPUT" == "x" ]; then
+	echo ERROR: No outputs
+	exit 1;
+fi;
+
+# does not interact well with spaces
+
+AS_ZERO_PARAMS="$PARAMS $INPUT -o $TEMPFILE"
+AS_ONE_PARAMS="$PARAMS $TEMPFILE -o $OUTPUT"
+
+$INSTALLDIR/alpha-emul $INSTALLDIR/as0 $AS_ZERO_PARAMS && $INSTALLDIR/alpha-emul $INSTALLDIR/as1 $AS_ONE_PARAMS 
+
+[ -f "$TEMPFILE" ] && rm $TEMPFILE 
+[ -f "$TEMPFILE.T" ] && rm ${TEMPFILE}.T

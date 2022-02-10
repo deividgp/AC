@@ -1,0 +1,223 @@
+// **************************************************************
+// *								*
+// * Keymaps for fi-FI.ISO8859-1 - Finnish for Finland		*
+// *								*
+// **************************************************************
+
+xkb_keymap "lk201-tw" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk201)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(vt105-tw)"	};
+    xkb_geometry	{ description = "Digital Finnish LK201 - Typewriter Keys";
+			  include "geometry/digital_lk(lk201)"		};
+};
+
+xkb_keymap "lk201-dp" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk201)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(vt105-dp)"	};
+    xkb_geometry	{ description = "Digital Finnish LK201 - Data Processing Keys";
+			  include "geometry/digital_lk(lk201)"		};
+};
+
+xkb_keymap "lk201" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk201)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(vt105)"	};
+    xkb_geometry	{ description = "Digital Finnish LK201";
+			  include "geometry/digital_lk(lk201)"		};
+};
+
+xkb_keymap "lk401-tw" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(vt108-tw)"	};
+    xkb_geometry	{ description = "Digital Finnish LK401 - Typewriter Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk401-dp" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(vt108-dp)"	};
+    xkb_geometry	{ description = "Digital Finnish LK401 - Data Processing Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk401" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(vt108)"	};
+    xkb_geometry	{ description = "Digital Finnish LK401";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411-tw" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(vt108-tw)"	};
+    xkb_geometry	{ description = "Digital Finnish LK411 - Typewriter Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411-dp" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(vt108-dp)"	};
+    xkb_geometry	{ description = "Digital Finnish LK411 - Data Processing Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(vt108)"	};
+    xkb_geometry	{ description = "Digital Finnish LK411";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461-tw" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(vt108-tw)"	};
+    xkb_geometry	{ description = "Digital Finnish LK461 - Typewriter Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461-dp" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(vt108-dp)"	};
+    xkb_geometry	{ description = "Digital Finnish LK461 - Data Processing Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(vt108)"	};
+    xkb_geometry	{ description = "Digital Finnish LK461";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk442" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk444)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(lk44x)"	};
+    xkb_geometry	{ description = "Digital Finnish LK442";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk444" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk444)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(lk44x)"	};
+    xkb_geometry	{ description = "Digital Finnish LK444";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk44x" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk444)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(lk44x)"	};
+    xkb_geometry	{ description = "Digital Finnish LK444";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk450" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk450)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(vt108)"	};
+    xkb_geometry	{ description = "Digital Finnish LK450";
+			  include "geometry/digital_lk(lk450)"		};
+};
+
+xkb_keymap "pcxalca" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(pcxalca)"	};
+    xkb_geometry	{ description = "Digital Finnish PCXAL-CA";
+  	   		  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxalja" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(pcxalja)"	};
+    xkb_geometry	{ description = "Digital Finnish PCXAL-JA";
+  	   		  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxal" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(pcxal)"	};
+    xkb_geometry	{ description = "Digital Finnish PCXAL";
+  	   		  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471af" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(lk471af)"	};
+    xkb_geometry	{ description = "Digital Finnish LK471-AF";
+  	   		  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(lk471)"	};
+    xkb_geometry	{ description = "Digital Finnish LK471";
+  	   		  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97waf" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(lk471af)"	};
+    xkb_geometry	{ description = "Digital Finnish LK97W-AF";
+  	   		  include "geometry/digital_pc(pc105)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97w" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_finnish(lk471)"	};
+    xkb_geometry	{ description = "Digital Finnish LK97W";
+  	   		  include "geometry/digital_pc(pc105)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+

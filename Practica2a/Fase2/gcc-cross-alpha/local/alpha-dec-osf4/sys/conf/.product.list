@@ -1,0 +1,9 @@
+# Registration file which contains a one line entry for kernel layered products
+# The format of each line is as follows. Empty lines are ignored. Any line
+# with a '#' as the first character on the line is a comment. Other
+# entries have the following fields:
+#
+# Module Path:Subset ID:Date:Company:Product:Version
+#
+# .........................................................................
+/usr/opt/PER:per:060410173844:PowerStorm 300/350 Graphics Adapter::

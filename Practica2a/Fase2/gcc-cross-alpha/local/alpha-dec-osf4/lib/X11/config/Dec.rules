@@ -1,0 +1,271 @@
+XCOMM 
+XCOMM *****************************************************************
+XCOMM *                                                               *
+XCOMM *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+XCOMM *                                                               *
+XCOMM *   All Rights Reserved.  Unpublished rights  reserved  under   *
+XCOMM *   the copyright laws of the United States.                    *
+XCOMM *                                                               *
+XCOMM *   The software contained on this media  is  proprietary  to   *
+XCOMM *   and  embodies  the  confidential  technology  of  Digital   *
+XCOMM *   Equipment Corporation.  Possession, use,  duplication  or   *
+XCOMM *   dissemination of the software and media is authorized only  *
+XCOMM *   pursuant to a valid written license from Digital Equipment  *
+XCOMM *   Corporation.                                                *
+XCOMM *                                                               *
+XCOMM *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+XCOMM *   by the U.S. Government is subject to restrictions  as  set  *
+XCOMM *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+XCOMM *   or  in  FAR 52.227-19, as applicable.                       *
+XCOMM *                                                               *
+XCOMM *****************************************************************
+XCOMM
+XCOMM HISTORY
+XCOMM 
+XCOMM @(#)$RCSfile: Dec.rules,v $ $Revision: 1.1.4.2 $ (DEC) $Date: 1995/12/20 21:18:49 $
+XCOMM
+XCOMM -------------------------------------------------------------------------
+XCOMM DEC-Specific System Build Rules
+/*
+ *
+ * Warning, when defining rules: make sure you do not include both a trailing
+ * backslash and double ampersand backslash or else you will get an extra
+ * backslash in the Makefile.
+ * 
+ * The following macros are defined for the various templates and Imakefiles
+ * (for a list of the applicable make variables, see the template files):
+ * 
+ * UudecodeTarget			(program)
+ * UudecodeMultipleTarget		(list)
+ * LocalComplexProgramTargetNoInstall	(program)
+ * LocalSimpleProgramTarget		(program)
+ * LocalSharedSimpleProgramTarget	(program)
+ * LocalComplexProgTarget		(program)
+ * LocalSharedComplexProgTarget		(program)
+ * LocalObjectCompile			(options)
+ * LocalNormalLibraryObjectRule		()
+ * LocalSpecialObjectRule		(objs,depends,options)
+ * LocalNormalDepLibraryTarget		(libname,deplist,objlist)
+ */
+
+/* 
+ * UudecodeTarget - uuedecode a file.
+ */
+#ifndef UudecodeTarget
+#define UudecodeTarget(program)                                         @@\
+all:: program                                                           @@\
+program: program.uu                                                     @@\
+	uudecode program.uu						@@\
+									@@\
+clean::									@@\
+	$(RM) program
+#endif	/* UudecodeTarget */
+
+/* 
+ * UudecodeMultipleTarget - uuedecode a list of files.
+ */
+#ifndef UudecodeMultipleTarget
+#define UudecodeMultipleTarget(list)					@@\
+all::									@@\
+	@case '${MFLAGS}' in *[i]*) set +e;; esac; \			@@\
+	for i in list; do \						@@\
+		(set -x; uudecode $$i.uu); \				@@\
+	done								@@\
+									@@\
+clean::									@@\
+	@case '${MFLAGS}' in *[i]*) set +e;; esac; \			@@\
+	for i in list; do \						@@\
+		(set -x; $(RM) $$i); \					@@\
+	done
+#endif	/* UudecodeMultipleTarget */
+
+/*
+ * LocalComplexProgramTargetNoInstall - generate rules for compiling and
+ * linking the program specified by $(OBJS) and $(SRCS), generating
+ * dependencies.  It should only be used in Imakefiles that describe a
+ * single program built on a host and when you want it built locally.
+ */
+#ifndef LocalComplexProgramTargetNoInstall
+#define	LocalComplexProgramTargetNoInstall(program)			@@\
+        PROGRAM = program						@@\
+									@@\
+             CC = $(LOCCC)						@@\
+         CFLAGS = $(LOCCFLAGS)						@@\
+         LDLIBS = $(LOCLDLIBS)						@@\
+									@@\
+AllTarget(program)							@@\
+									@@\
+program: $(OBJS) $(DEPLIBS)						@@\
+	RemoveTargetProgram($@)						@@\
+	$(LOCCC) -o $@ $(OBJS) $(LOCLDOPTIONS) $(LOCAL_LIBRARIES) $(LDLIBS) $(EXTRA_LOAD_FLAGS) @@\
+									@@\
+SaberProgramTarget(program,$(SRCS),$(OBJS),$(LOCAL_LIBRARIES),NullParameter) @@\
+									@@\
+DependTarget()								@@\
+LintTarget()								@@\
+									@@\
+clean::									@@\
+	$(RM) $(PROGRAM)
+#endif
+
+/*
+ * LocalSimpleProgramTarget - generate rules for compiling and linking programs
+ * that only have one C source file.  It should only be used in Imakefiles 
+ * that describe a single program that is compiled on a host.
+ */
+#ifndef LocalSimpleProgramTarget
+#define	LocalSimpleProgramTarget(program)				@@\
+           OBJS = program.o						@@\
+           SRCS = program.c						@@\
+									@@\
+LocalSharedComplexProgTarget(program)
+#endif /* LocalSimpleProgramTarget */
+
+
+/*
+ * LocalSharedSimpleProgTarget - generate rules for compiling and 
+ * linking programs that only have one C source file.  
+ * It should only be used in Imakefiles  that describe a single 
+ * program that is compiled on a host to run on host with shared libraries .
+ */
+
+#ifndef LocalSharedSimpleProgramTarget 
+#define	LocalSharedSimpleProgramTarget(program)				@@\
+           OBJS = program.o						@@\
+           SRCS = program.c						@@\
+									@@\
+LocalSharedComplexProgTarget(program)
+#endif /* LocalSharedSimpleProgramTarget */
+/*
+ * LocalComplexProgramTarget - generate rules for compiling and linking the 
+ * program specified by $(OBJS) and $(SRCS), installing the program and its
+ * man page, and generating dependencies.  It should only be used in 
+ * Imakefiles that describe a single program built on a host.
+ */
+#ifndef LocalComplexProgramTarget
+#define	LocalComplexProgramTarget(program)				@@\
+        PROGRAM = program						@@\
+									@@\
+             CC = $(LOCCC)						@@\
+         CFLAGS = $(LOCCFLAGS)						@@\
+         LDLIBS = $(LOCLDLIBS)						@@\
+									@@\
+AllTarget(program)							@@\
+									@@\
+program: $(OBJS) $(DEPLIBS)						@@\
+	RemoveTargetProgram($@)						@@\
+	$(LOCCC) -o $@ $(OBJS) $(LOCLDOPTIONS) $(LOCAL_LIBRARIES) $(LDLIBS) $(EXTRA_LOAD_FLAGS) @@\
+									@@\
+SaberProgramTarget(program,$(SRCS),$(OBJS),$(LOCAL_LIBRARIES),NullParameter) @@\
+									@@\
+InstallProgram(program,$(BINDIR))					@@\
+InstallManPage(program,$(MANDIR))					@@\
+DependTarget()								@@\
+LintTarget()								@@\
+									@@\
+clean::									@@\
+	$(RM) $(PROGRAM)
+#endif /* ComplexProgramTarget */
+
+
+/*
+ * LocalSharedComplexProgTarget - generate rules for compiling and linking the 
+ * program specified by $(OBJS) and $(SRCS) with shared libraries, 
+ * installing the program and its man page, and generating dependencies.  
+ * It should only be used in Imakefiles that describe a single program 
+ * built on a host.
+ */
+#ifndef LocalSharedComplexProgTarget
+#define	LocalSharedComplexProgTarget(program)				@@\
+        PROGRAM = program						@@\
+									@@\
+             CC = $(LOCSHARCC)						@@\
+         CFLAGS = $(LOCCFLAGS)						@@\
+         LDLIBS = $(LOCLDLIBS)						@@\
+									@@\
+AllTarget(program)							@@\
+									@@\
+program: $(OBJS) $(DEPLIBS)						@@\
+	RemoveTargetProgram($@)						@@\
+	$(LOCSHARCC) -o $@ $(OBJS) $(LOCLDOPTIONS) $(LOCAL_LIBRARIES) $(LOCLDLIBS) $(EXTRA_LOAD_FLAGS) @@\
+									@@\
+SaberProgramTarget(program,$(SRCS),$(OBJS),$(LOCAL_LIBRARIES),NullParameter) @@\
+									@@\
+InstallProgram(program,$(BINDIR))					@@\
+InstallManPage(program,$(MANDIR))					@@\
+DependTarget()								@@\
+LintTarget()								@@\
+									@@\
+clean::									@@\
+	$(RM) $(PROGRAM)
+#endif /* LocalSharedComplexProgramTarget */
+
+/*
+ * LocalObjectCompile - compile fragment for a host normal object file 
+ */
+#ifndef LocalObjectCompile
+#define LocalObjectCompile(options) $(RM) $@				@@\
+	$(LOCCC) -c $(LOCCFLAGS) options $*.c
+#endif /* LocalObjectCompile */
+
+/*
+ * LocalNormalLibraryObjectRule - for simple host libraries
+ */
+#ifndef LocalNormalLibraryObjectRule
+#define	LocalNormalLibraryObjectRule()					@@\
+.c.o:									@@\
+	LocalObjectCompile($(_NOOP_))
+#endif /* LocalNormalLibraryObjectRule */
+
+/*
+ * LocalSpecialObjectRule - generate rules to compile a file with special flags
+ * on host.
+ */
+#ifndef LocalSpecialObjectRule
+#define LocalSpecialObjectRule(objs,depends,options)			@@\
+objs:	depends								@@\
+	LocalObjectCompile(options)
+#endif /* LocalSpecialObjectRule */
+
+/*
+ * LocalNormalDepLibraryTarget - generate rules to create a library on host.
+ */
+#ifndef LocalNormalDepLibraryTarget
+#define	LocalNormalDepLibraryTarget(libname,deplist,objlist)		@@\
+AllTarget(Concat(lib,libname.a))					@@\
+									@@\
+Concat(lib,libname.a): deplist						@@\
+	$(RM) $@							@@\
+	$(LOCAR) $@ objlist						@@\
+	ranlib $@
+#endif /* LocalNormalDepLibraryTarget */
+
+	/* 
+	 * GCompressPSTarget
+	 * Used to Compress .ps or .PS.Z files in .ps.gz format
+	 * this improves the compression factor tremendously
+	 */
+#ifndef GCompressPSTarget
+#define GCompressPSTarget(psgzfiles)        @@\
+COMPRESS  = gzip -c --best                  @@\
+UNCOMPRESS= gzip -dc                        @@\
+                                            @@\
+AllTarget(psgzfiles)                        @@\
+                                            @@\
+clean::                                     @@\
+	$(RM) psgzfiles                         @@\
+                                            @@\
+.SUFFIXES: .PS.Z .ps.gz .ps                 @@\
+                                            @@\
+.ps.ps.gz :                                 @@\
+	$(COMPRESS) $*.ps >$*.ps.gz             @@\
+                                            @@\
+.PS.Z.ps.gz :                               @@\
+	$(UNCOMPRESS) $*.PS.Z | $(COMPRESS) >$*.ps.gz
+#endif /* GCompressPSTarget */
+
+/*
+ * The following include was added to support the building of Motif
+ */
+
+#include <Motif.rules>

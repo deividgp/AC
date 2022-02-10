@@ -1,0 +1,111 @@
+#!/sbin/sh
+# 
+# generic mrg.sh
+#
+#  Copyright (c) Digital Equipment Corporation, 1995
+#  All Rights Reserved.  Unpublished rights reserved
+#  under the copyright laws of the United States.
+#  
+#  The software contained on this media is proprietary
+#  to and embodies the confidential technology of 
+#  Digital Equipment Corporation.  Possession, use,
+#  duplication or dissemination of the software and
+#  media is authorized only pursuant to a valid written
+#  license from Digital Equipment Corporation.
+#
+#  RESTRICTED RIGHTS LEGEND   Use, duplication, or 
+#  disclosure by the U.S. Government is subject to
+#  restrictions as set forth in Subparagraph (c)(1)(ii)
+#  of DFARS 252.227-7013, or in FAR 52.227-19, as
+#  applicable.
+#
+#
+# MODULE:
+#	mrg.sh
+#
+# ABSTRACT:
+#	Gold merge template.
+#
+# NOTES:
+#	Replaces the old configured file and .proto file (ie. the sterling
+#	files) with the Gold version.  This is required because of a
+#	screwup in updateinstalls from maint to sterling.
+#
+# REVISION HISTORY:
+# bryan	4/27/94
+#	Fixed update problems in all merge scripts.
+#
+# joeh 11/10/94
+#      Reverted to 3-way merge for Gold-to-Platinum upgrade install.
+#
+# trang 13/10/95
+#      Fixed OOTB_BUG 1355 by Trang Ngo.  Ref: DECW-SSB 01346: add *DXmfitToScreenPolicy to the resource file.
+#      Merged the *DXmfitToScreenPolicy resource.
+#
+# joeh 12/20/94
+#      Fixed OOTB_BUG 1328 by Joseph Hui.  Ref: OSF_QAR 36894: support for sysman needed.
+#      Added merge code for system management commands added to
+#      the Application Definition menu.
+#
+
+MERGE_ROUTINE=DRI_Merge
+
+SHELL_LIB=${SHELL_LIB:-/usr/share/lib/shell}
+. $SHELL_LIB/libmrg
+
+# define your merge routine here. 
+
+# OPTIONAL: for 3-way merge, make MRG_SetCheck calls here.
+
+DRI_Merge()
+{
+        grep -Fq "*applications:" $_FILE &&
+        {
+                MRG_Echo "modifying applications"
+                ed - $_FILE << EOF 1>/dev/null
+                        /*applications:/d
+                        i
+*applications:  AccessX,Bookreader,CDA Viewer,Calculator,Calendar,Cardfiler,Clock,DECterm,Mail,Notepad,Paint,Differences,XTerm,Mwm,Print Screen,Account Manager,Archiver,Audit Manager,Display Window,File Sharing,Host Manager,Kernel Tuner,License Manager,Power Management,Process Tuner,Shutdown,System Information,Mail Configuration,Disk Configuration,Network Configuration,BIND Configuration,NIS Setup,NFS Configuration,Print Configuration,Who,Input-Output Statistics,Network Statistics,System Messages,Virtual Memory Statistics,SysMan Configuration Checklist
+*Account Manager.command:       /usr/sbin/dop -n dxaccounts
+*Archiver.command:              /usr/sbin/dop -n dxarchiver
+*Audit Manager.command:         /usr/sbin/dop /usr/tcb/bin/dxaudit
+*Display Window.command:        /usr/bin/X11/dxdw
+*File Sharing.command:          /usr/sbin/dop -n /usr/bin/X11/dxfileshare
+*Host Manager.command:          /usr/bin/X11/dxhosts
+*Kernel Tuner.command:          /usr/sbin/dop /usr/bin/X11/dxkerneltuner
+*License Manager.command:       /usr/sbin/dop /usr/bin/X11/dxlicenses
+*Power Management.command:      /usr/sbin/dop -n dxpower
+*Process Tuner.command:         /usr/sbin/dop -n /usr/bin/X11/dxproctuner
+*Shutdown.command:              /usr/sbin/dop /usr/bin/X11/dxshutdown
+*System Information.command:    /usr/bin/X11/dxsysinfo
+*Mail Configuration.command:    /usr/sbin/dop mailconfig
+*Disk Configuration.command:    /usr/sbin/dop diskconfig
+*Network Configuration.command: /usr/sbin/dop netconfig
+*BIND Configuration.command:    /usr/sbin/dop bindconfig
+*NIS Setup.command:             /usr/sbin/dop nissetup
+*NFS Configuration.command:     /usr/sbin/dop nfsconfig
+*Print Configuration.command:   /usr/sbin/dop printconfig
+*Who.command:                   /usr/bin/X11/dxdw -c "/usr/bin/w"
+*Input-Output Statistics.command: /usr/bin/X11/dxdw -c "/usr/bin/iostat 1 15"
+*Network Statistics.command:    /usr/bin/X11/dxdw -c /usr/sbin/netstat
+*System Messages.command:       /usr/sbin/dop /usr/bin/X11/dxdw -c "/usr/bin/tail -f /var/adm/messages"
+*Virtual Memory Statistics.command:     /usr/bin/X11/dxdw -c "/usr/bin/vmstat"
+*SysMan Configuration Checklist.command:	/usr/sbin/dop checklist
+*DXmfitToScreenPolicy:  AS_NEEDED
+.
+w
+q
+EOF
+                [ $? = 0 ] ||
+                {
+                        MRG_Echo "\tfailed to modify applications"
+                        RET=1
+                }
+        }
+
+        return $RET
+}
+
+[ "$CHECK_SYNTAX" ] || MRG_Merge "$@" 
+
+

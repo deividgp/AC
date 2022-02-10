@@ -1,0 +1,125 @@
+! The following resources are automatically created/saved when user does
+! Save Window Configuration in the Options menu.
+DebugSource.width:	615
+DebugSource.x:	12
+DebugSource.height:	660
+DebugSource.y:	36
+DebugControl.width:	612
+DebugControl.x:	643
+DebugControl.height:	290
+DebugControl.y:	36
+DebugInstruction.width:	618
+DebugInstruction.x:	649
+DebugInstruction.height: 300
+DebugInstruction.y:	36
+! The following resource creates line no display in source view at startup
+DebugSource.StartupShowSourceLineno:	True
+DebugInstruction.StartupShowInstLineno: True
+DebugInstruction.StartupShowInstAddrno: False
+!
+DebugSource*SrcView.height:	371
+DebugSource*MessageOutputPanel.height:	138
+DebugSource*PushbuttonPanel.height:	41
+!
+!
+! The following resource tells debugger which buttons to put in control window.
+! Buttons will show in the order they are listed here.
+! For each button there MUST be a set of associated resources.
+!   Example:	ButtonCommand - associates a command with the button
+!               ButtonLegend  - Label of the button (OR pixmap name if pixmap
+!                               flag is set True).
+!               ButtonPixmapFlag - Flag if true treates ButtonLegend as name of
+!				   predefined pixmap.
+!
+DebugControl.ButtonList:	 MonitorPushButton, PrintPushButton, NextPushButton, StepPushButton, ReturnPushButton, ContinuePushButton
+DebugControl.ButtonCommand.MonitorPushButton:	$ monitor %s
+DebugControl.ButtonCommand.PrintPushButton:	$ print (%s)
+DebugControl.ButtonCommand.NextPushButton:	next
+DebugControl.ButtonCommand.StepPushButton:	step
+DebugControl.ButtonCommand.ReturnPushButton:	return
+DebugControl.ButtonCommand.ContinuePushButton:	cont
+DebugControl.ButtonLegend.MonitorPushButton:	Monitor
+DebugControl.ButtonLegend.PrintPushButton:	Print
+DebugControl.ButtonLegend.NextPushButton:	Next
+DebugControl.ButtonLegend.StepPushButton:	Step
+DebugControl.ButtonLegend.ReturnPushButton:	Return
+DebugControl.ButtonLegend.ContinuePushButton:	continue_pixmap
+DebugControl.ButtonPixmapFlag.MonitorPushButton:	False
+DebugControl.ButtonPixmapFlag.PrintPushButton:	False
+DebugControl.ButtonPixmapFlag.NextPushButton:	False
+DebugControl.ButtonPixmapFlag.StepPushButton:	False
+DebugControl.ButtonPixmapFlag.ReturnPushButton:	False
+DebugControl.ButtonPixmapFlag.ContinuePushButton:	True
+DebugControl*BreakpointView.height:	192
+DebugControl*MonitorView.height:	197
+DebugResourceFileVersion:	1
+!
+! THE FOLLOWING RESOURCES CAN ONLY BE CHANGED BY EDITING THIS FILE.
+! -----------------------------------------------------------------
+! Be sure to trim any trailing white-spaces.
+!
+! FONT RESOURCES:
+!
+!   If a font is specified for a view, and the font is available on the
+!   system, it will be used for that view.
+!
+!   For any views which do not explicitly specify a font, the font specified
+!   by the resource "DebugDefault.Font" will be used if it is available on the
+!   system.
+!
+!   If no font resources are specified at all, the debugger will use the
+!   systems own default font specification.
+!
+!   The "DebugOptions.Font" applies to all optional views.  We suggest that
+!   you select a font with a point size no larger than 14 in the option views
+!   in order to preserve label alignment.
+!
+!              FORMAT:   -*-FONTNAM-FACE-T-*--*-PTS-*-*-*-*-CHARSET
+!
+DebugDefault.Font:	 -*-COURIER-BOLD-R-*--*-100-*-*-*-*-ISO8859-1
+DebugSource.Font: 	 -*-COURIER-BOLD-R-*--*-100-*-*-*-*-ISO8859-1
+DebugInstruction.Font:   -*-COURIER-BOLD-R-*--*-100-*-*-*-*-ISO8859-1
+DebugMessage.Font:	 -*-COURIER-BOLD-R-*--*-100-*-*-*-*-ISO8859-1
+DebugOptions.Font: 	 -*-TIMES-BOLD-R-*--*-100-*-*-*-*-ISO8859-1
+!
+! The following resource changes the key sequence used it activate the
+! dialog box for conditional and action breakpoints. 
+DebugSource.ModifyBreakpointToggleSequence: Ctrl <Btn1Down>, Ctrl <Btn1Up>
+!
+! The following resources define the keypad functions. 
+! <Key>0xFFB0=KP0, <Key>0xFFAC=KP,
+DebugSource.*DXmCSText.translations:#override\n\
+    <Key>0xFFB0: EnterCmdOnCmdLine("next") \n\
+    <Key>0xFFAC: EnterCmdOnCmdLine("go") \n\
+    <Key>0xFF8D: activate()\n
+! 
+! How the Identifier word (language based delimiters) selection is invoked 
+! NOTE: DO NOT use any double click combinitation for the following resource
+!       otherwise normal text selection in the source window will not work.
+DebugSource.IdentifierSelectionSequence: Ctrl<Btn1Down>
+! 
+! Drag and drop is not currently supported, we'll turn it off
+*.dragInitiatorProtocolStyle: DRAG_NONE
+*.dragReceiverProtocolStyle: DRAG_NONE
+!
+!
+DebugProgIO.minWidth:					100
+DebugProgIO.minHeight:					100
+DebugProgIO*DECterm*scrollHorizontal:                   True
+DebugProgIO*DECterm*scrollVertical:                     True
+DebugProgIO*DECterm*SaveLinesOffTop:                    True
+!
+! Turn on the command repeat if user presses only "RETURN" key
+DebugSupportCommandRepeat :                             True
+! 
+! Enables the debugger's exit confirmation dialog box.
+DebugDisplayExitConfirmDB: True
+!
+! Automaticlly set the initial breakpoint on $main and run
+DebugSetInitialBreakpoint:      True
+!
+! Echo the debugger commands to the communications view.
+DebugEchoCommands: True
+!
+! Debugger main window an optional view window title format.
+DebugControl.TitleFormat: %Ladebug Debugger - %p: %f

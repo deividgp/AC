@@ -1,0 +1,65 @@
+#/* @(#)@(#)help/help.hlp	2.1 11 May 1993 19:05:02 -  */
+#ident  "@(#)va11:help/help.hlp   2.1"
+#
+#
+Volume, volume.hlp
+Plex, plex.hlp
+Subdisk, subdisk.hlp
+Log Subdisk, logSd.hlp
+Disk Group, diskGrp.hlp
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+Forms, forms.hlp
+Pulldown Menus, pulldown.hlp
+Views, views.hlp
+X Resources, resources.hlp
+Icons, icons.hlp
+Usage Types, usetype.hlp
+Mirroring, mirror.hlp
+Striping, stripe.hlp
+Concatenated, concat.hlp
+#########################################
+HELP ON HELP          (General Help)
+
+This is the help window for the Logical Storage Visual Administrator.
+
+Use the horizontal and vertical scroll bars to reposition the windows
+within the Visual Administrator if you cannot see all the information on
+your screen at the same time.
+
+The section at the bottom of this window is the "See Also..." section.
+This section contains phrases that can be used to get more information on
+pertinent subjects.  To use this feature, use the mouse to click on the
+word (or words) that describe the subject you want more information on.
+This action will bring up this subject.
+
+The help menu remembers the order that you visit help topics.  If you ever
+want to go back to re-read some previous topic, use the mouse to click on
+the "Previous" button on the menu bar.  This will take you back one topic.
+If you then click on the "Next" button on the menu bar you will go forward
+a topic until you have reached the end of your explored topics.
+
+For help topics associated with pulldown menus (this one is about the help
+screen and its menus) there is always a list of buttons and their
+functions.
+
+
+File
+----
+This pulldown menu has only one option (CLOSE).  The close option pops down
+the help window.  The record of help topics is retained, however.
+
+Previous
+--------
+Display previous help topic visited.  If none is available the terminal
+will beep.
+
+Next
+----
+Display next help topic.  If there is no topic to return to the terminal
+will beep.
+
+Help
+----
+Display a general help file on how to use the help subsystem, or a help
+file that serves as an index for all other help files.

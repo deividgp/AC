@@ -1,0 +1,775 @@
+#!/bin/ksh
+#
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+#
+# HISTORY
+#
+#
+# HISTORY:
+# July 2,1997: Added /sbin/sysconfig & /sbin/reboot to the COPYLIST
+#
+# Aug 27,1997: Added /sbin/ddr_config to the COPYLIST.
+#              Added TruCluster to the *4.* case statement.
+#
+# Files needed in current directory
+#
+#	vmunix	-	sas kernel
+#	sboot	-	system boot
+#
+#	fsmrg	-	merge a file system into a sas kernel
+#	pmerge	-	merge sboot and kernel together
+#	mksastape -	put osf boot block and checksum in front of kernel
+# Added config_file argument to mktape.
+# Added many more binaries to the mini-root system.
+# Added var/adm directory to mini-root system.
+# Added check for DISK_DEV if mounted, then unmount it.
+# Exit Values:
+# 1: If option problem
+# 2: If tape device is not found
+# 3: If newfs fails.
+# 4: No boot process for this version of OS. 
+# 5: trap condition.
+# 6: If no space on disk.
+# 7: If fsmrg,pmerge,mksastape and mt fails in V4.* section.
+# 8: If dd fails.
+
+
+# MIK_CLEAN
+
+# -------------------------------------------------------------------------
+# cleanup: To umount MNT_TMP ,MNT_PROCPROD & MNT if mktape exits abnormally ----
+# -------------------------------------------------------------------------
+
+function cleanup {
+
+    df | grep "${MNT_TMP}" > /dev/null 2> /dev/null
+    if [ $? = 0 ]
+    then
+       umount ${MNT_TMP}
+       rm -fr ${MNT_TMP}
+    fi
+
+    df | grep "${MNT_PROCPROD}" > /dev/null 2> /dev/null
+    if [ $? = 0 ]
+    then
+       umount ${MNT_PROCPROD}
+       rm -fr ${MNT_PROCPROD}
+    fi
+
+    df | grep "${MNT}" > /dev/null 2> /dev/null
+    if [ $? = 0 ]
+    then
+       umount ${MNT}
+       rm -fr ${MNT}
+    fi
+
+    rm -f ${EnvTmpFile}
+    rm -f ${EnvTmpFile2}
+
+} # end of cleanup
+
+LOG=/var/adm/btcreate.log
+
+[ $# -lt 6 ] && {
+	echo "usage: mktape kernel mini_path size disk_dev tape_dev config_file"|tee -a $LOG
+	echo "e.g: mktape vmunix / 30720 rz2e nrmt0h STAR(where star is the name of the machine)" |tee -a $LOG
+	exit 1
+}
+
+MNT_TMP=/var/tmp/mfsmnt$$
+true=1
+false=0
+KERNEL=$1		# sas kernel
+MINI_PATH=$2		# path to files for mini file system to put into kernel
+SIZE=$3			# size of mini file system in kernel
+DISK_DEV=$4		# disk device to use to create mini file system
+TAPE_DEV=$5		# tape device to use for creating bootable tape
+CONFIG_FILE=$6		# The config file of the machine to be backed up(in
+			# CAPITALS for example, STAR which resides in 
+			# /usr/sys/conf directory.
+### Added for ADPECP_0898
+if [ $# = 7 ]
+then
+        TMP_SPACE_PATH=$7
+else
+        TMP_SPACE_PATH=/usr/sys/bin/
+fi
+
+USING_MFS=0
+MNT_PROCPROD=/var/tmp/procprod
+if test "$DISK_DEV" = "mfs"
+then
+	mkdir -p ${MNT_TMP}
+	mkdir -p ${MNT_PROCPROD}
+	USING_MFS=$true
+	RDISK=/var/tmp/procprod/mfsImage
+fi
+	
+# Other variables
+BM_BPI=16384            # bytes/inode on filesystem
+BM_FRAGSIZ=1024
+BM_CYL=16
+
+# MIK_CLUSTER_072397 - Removed these from the copylist due to cluster
+# impact. Replaced these with actual files.
+#/etc/.new..disktab /etc/disktab, /etc/.new..passwd /etc/passwd
+#/etc/.new..group /etc/group, /etc/.new..protocols /etc/protocols
+#/etc/.new..services /etc/services, /etc/.new..svc.conf /etc/svc.conf
+#/etc/sia/.new..matrix.conf /etc/sia/.new..matrix.conf
+#/etc/sia/.new..bsd_matrix.conf /etc/sia/bsd_matrix.conf
+# /sbin/mkfdmn has been modified such that it no more linked against
+# libmach.so statically. This library has now been made part of miniroot.
+# Fix for QAR #67942
+
+COPYLIST="
+/dev/MAKEDEV /dev
+/etc/disktab /etc/disktab
+/etc/passwd /etc/passwd
+/etc/group /etc/group
+/etc/protocols /etc/protocols
+/etc/services /etc/services
+/etc/svc.conf /etc/svc.conf
+/etc/sia/matrix.conf /etc/sia/.new..matrix.conf
+/etc/sia/bsd_matrix.conf /etc/sia/bsd_matrix.conf
+/etc/sia/siainitgood /etc/sia/siainitgood
+/etc/magic /etc
+/etc/ddr.db /etc
+/etc/ddr.dbase /etc
+/sbin/chmod /sbin
+/sbin/cp /sbin
+/sbin/dd /sbin
+/sbin/ed /sbin
+/sbin/ls /sbin
+/sbin/ln /sbin
+/sbin/expr /sbin
+/sbin/grep /sbin
+/sbin/init /sbin
+/sbin/disklabel /sbin
+/sbin/fsck /sbin
+/sbin/mkdir /sbin
+/sbin/mknod /sbin
+/sbin/mount /sbin
+/sbin/mount_mfs /sbin
+/sbin/mv /sbin
+/sbin/newfs /sbin
+/sbin/rm /sbin
+/sbin/sh /sbin
+/sbin/stty /sbin
+/sbin/ufs_fsck /sbin
+/sbin/umount /sbin
+/sbin/halt /sbin
+/sbin/df /sbin
+/sbin/dump /sbin
+/sbin/restore /sbin
+/sbin/shutdown /sbin
+/sbin/cat /sbin
+/sbin/sleep /sbin
+/sbin/scu /sbin
+/sbin/date /sbin
+/sbin/mt /sbin
+/sbin/tee /sbin
+/sbin/swapon /sbin
+/sbin/sysconfig /sbin
+/sbin/ddr_config /sbin
+/sbin/reboot /sbin
+/usr/lib/sabt/etc/inittab /etc
+/usr/lib/sabt/etc/profile /.profile
+/usr/lib/sabt/etc/fstab /etc
+/usr/lib/sabt/etc/fs_info /etc
+/usr/lib/sabt/etc/number_dumps /etc
+/usr/lib/sabt/etc/disklabel_info /etc
+/usr/lib/sabt/etc/disklabel_lines /etc
+/usr/lib/sabt/etc/disk_lbl /etc
+/usr/lib/sabt/etc/swap_file /etc
+/usr/lib/sabt/etc/swap_lines /etc
+/usr/lib/sabt/etc/lmf_file /etc
+/usr/lib/sabt/etc/tmpFSINFO /etc
+/usr/lib/sabt/etc/root_swap_info /etc
+/usr/lib/sabt/sbin/finder /sbin
+/usr/lib/sabt/sbin/pickapart /sbin
+/shlib/libc.so /shlib
+/shlib/libfilsys.so /shlib
+/shlib/libmsfs.so /shlib
+/shlib/libmach.so /shlib
+/shlib/libvxvm.so /shlib
+/sbin/loader /sbin
+/sbin/hostname /sbin
+/usr/sbin/lmf /sbin
+/sbin/ifconfig /etc/ifconfig
+/sbin/stty /sbin/STTY
+"
+# Added the following to COPYLIST: (mik)
+# Added /sbin/hostname
+# Added /usr/sbin/lmf 
+
+DIRLIST="/dev /etc /etc/sia /mnt /sbin /tmp /shlib"
+
+HARDLINKS="
+shlib/libc.so  shlib/libc_r.so
+etc/sia/bsd_matrix.conf etc/sia/matrix.conf
+sbin/newfs      sbin/mfs
+"
+
+SOFTLINKS="
+sbin bin
+"
+
+# Modified the btextract to usr/sys/bin/btextract (mik)
+
+DOTFILES="
+/usr/sys/bin/btextract  /sbin/btextract
+"
+
+ADVFS_COPYLIST="
+/sbin/mount_advfs /sbin
+/sbin/mkfdmn /sbin
+/sbin/rmfdmn /sbin
+/sbin/mkfset /sbin
+/sbin/showfdmn /sbin
+/usr/sbin/addvol /sbin
+/usr/sbin/rmvol /sbin
+/usr/sbin/balance /sbin
+/sbin/showfsets /sbin
+/sbin/vdump /sbin
+/sbin/vrestore /sbin
+"
+
+### Added /usr/lib/sabt/etc/custom_disklabel_file to OTHER_COPYLIST
+### ADPECP_0898
+
+OTHER_COPYLIST="
+/usr/lib/sabt/sbin/custom_install.sh /sbin
+/usr/lib/sabt/etc/advfs_info /etc
+/usr/lib/sabt/etc/custom_disklabel_file /etc
+"
+
+# trap
+trap 'echo Interrupt... Exiting mktape; exit 5' HUP INT QUIT KILL
+
+FSMRG=/usr/sys/bin/fsmrg
+PMERGE=/usr/sys/bin/pmerge
+MKSASTAPE=/usr/sys/bin/mksastape
+SBOOT=/usr/sys/bin/sboot
+SBOOT_NEW=sboot.new
+MNT=/var/tmp/mnt$$
+
+### Changed for ADPECP_0898
+KERNELTMP=${TMP_SPACE_PATH}/vmunix.tmp.$$
+KERNELBOOT=${TMP_SPACE_PATH}/vmunix.boot.$$
+KERNELTAPE=${TMP_SPACE_PATH}/vmunix.tape.$$
+KERNEL=${TMP_SPACE_PATH}/$KERNEL
+
+# Config file if not processed as CAPITAL FILE
+WORKDIR=`pwd`
+echo $CONFIG_FILE > $WORKDIR/NAME_FILE
+tr "[a-z]" "[A-Z]" < $WORKDIR/NAME_FILE > $WORKDIR/CONFIG_FILE_UPPER_CASE
+CONFIG_FILE_2=`cat $WORKDIR/CONFIG_FILE_UPPER_CASE`
+rm -f $WORKDIR/NAME_FILE $WORKDIR/CONFIG_FILE_UPPER_CASE
+
+#
+echo ${TAPE_DEV} | grep "^/dev" || TAPE_DEV=/dev/${TAPE_DEV}
+echo ${TAPE_DEV} | grep rmt >/dev/null || {
+	echo "Device must be a tape." |tee -a $LOG
+
+	exit 2
+}
+
+umask 077
+
+set xxx `strings ${KERNEL} | grep '(Rev. '`
+VERSION=$4
+
+# Five exported variables from btcreate are used in the following
+# addlist processing code. These are: 1. MKTAPE_CALLER 2. OPT_A_FLAG
+# 3. OPT_A_INT_FLAG 4. MORE_DIRSLIST 5. MORE_FILESLIST 
+#
+
+if test "$MKTAPE_CALLER" = "btcreate" 
+then 
+	if [[ -n "$MORE_DIRSLIST" ]] || [[ -n "$MORE_FILESLIST" ]]
+	then
+  		NEWONLY_DIRLIST=""
+		for mored in ${MORE_DIRSLIST}
+  		do
+    			DIRHASIT=0
+			for d in ${DIRLIST}
+			do
+				if [[ "$mored" = "$d" ]]
+				then
+					DIRHASIT=1
+					break
+				fi
+			done
+
+			if [[ "$DIRHASIT" -eq 0 ]]
+			then
+				NEWONLY_DIRLIST="$NEWONLY_DIRLIST $mored"
+				DIRHASIT=0
+			fi
+		done
+
+		if [[ -n "$MORE_FILESLIST" ]]
+		then
+			COPYLIST="$COPYLIST$MORE_FILESLIST"
+		fi
+
+		if [[ -n "$NEWONLY_DIRLIST" ]]
+		then
+			DIRLIST="$DIRLIST$NEWONLY_DIRLIST"
+		fi
+
+	fi
+fi  # end-of-exported_addlist_information-appending-code
+
+#
+# default sas internal sizes for DEC OSF/1 version
+#
+if [ $SIZE -eq 0 ]
+then
+	SIZE=30720		#Changed the size from 35840 to 30720
+fi
+
+
+[ -n "${DISK_DEV}" ] && {
+   if [ $USING_MFS -eq 0 ]
+   then
+	echo "Creating mini root file system..." |tee -a $LOG
+	echo ${DISK_DEV} | grep "^/dev" || DISK_DEV=/dev/${DISK_DEV}
+	RDISK=`echo ${DISK_DEV} | sed 's+/dev/+/dev/r+'`
+
+        # Added, check if rzxx is mounted, if so try to unmount it, else give an
+        # error message saying that /var/tmp/mnt$$ directory will be populated
+        # with mini-root files and hopefully the user has enough space for it.
+
+	mount | grep $DISK_DEV > /tmp/file1
+	if [ $? = 0 ]
+	then
+		MOUNT_PT=`awk '{print $3}' /tmp/file1`
+		umount $MOUNT_PT ||
+		{
+		  echo "The $DISK_DEV is still mounted, the files will be copied to /var filesystem." |tee -a $LOG
+		}
+	fi
+        rm -f /tmp/file1
+   else
+
+	# MFS_CREATIONS.
+	# 
+	export MFS_PRINT=1
+	EnvTmpFile="/tmp/mfsVar$$"
+	EnvTmpFile2="/tmp/mfsVar$$" #MIK_BTTAPE_072497
+#
+        swap_set=
+	swapon -s | grep /dev | awk '{print $3}' > /tmp/mktape_swap
+        # Additional processing if swapon -s returns for example:"/dev/rz9b:"(09/19)
+	echo "1p" | ed -s /tmp/mktape_swap > /tmp/mktape_first
+	num_swap=`wc -c /tmp/mktape_first|awk '{print $1}'` 
+	grep ":" /tmp/mktape_first > /dev/null
+	if [ $? = 0 ]
+	then
+		let num_swap=num_swap-1 # This is repeated twice
+		let num_swap=num_swap-1 # Now to position the counter before colon
+		swap_set=`cut -c1-$num_swap /tmp/mktape_first` 
+	else
+		swap_set=`echo "1p" | ed -s /tmp/mktape_swap`
+	fi
+	#Cleanup
+	[ -f /tmp/mktape_swap ] && rm -f /tmp/mktape_swap
+	[ -f /tmp/mktape_first ] && rm -f /tmp/mktape_first
+#
+	#/sbin/mfs -m0 -ospace -S 512 -s30720 $swap_set ${MNT_TMP} > ${EnvTmpFile} 2>&1 > ${EnvTmpFile2}
+	/sbin/mfs -m0 -ospace -S 512 -s30720 ${MNT_TMP} > ${EnvTmpFile} 2>&1 > ${EnvTmpFile2}
+	retval=$?
+	if [ $retval -ne 0 ] 
+	then
+		echo " MFS is a failed stuff. "
+                cleanup # MIK_CLEAN
+		exit 2
+	fi
+
+# # Edit the EnvTmpFile2  #MIK_BTTAPE_072497
+
+        grep "disk" ${EnvTmpFile2} > /dev/null 2> /dev/null
+        if [ $? = 0 ]
+        then
+            # Edit the file to delete the disk line
+            sed "/disk/d" ${EnvTmpFile2} > /tmp/newEnvTmpFile
+            mv /tmp/newEnvTmpFile ${EnvTmpFile2}
+        fi
+
+# Edit the EnvTmpFile  #MIK_BTTAPE_072497
+
+        grep "disk" ${EnvTmpFile} > /dev/null 2> /dev/null
+        if [ $? = 0 ]
+        then
+            # Edit the file to delete the disk line
+            sed "/disk/d" ${EnvTmpFile} > /tmp/newEnvTmpFile
+            mv /tmp/newEnvTmpFile ${EnvTmpFile}
+        fi
+
+	#
+	# Set some variables based on the output of the mfs command.
+	. ${EnvTmpFile}
+	. ${EnvTmpFile2}
+	if [[ ! -n ${MFS_PID} ||
+	      ! -n ${MFS_BASE} ||
+	      ! -n ${MFS_SIZE} ]]
+	then
+		print -u2 "The ${EnvTmpFile} or ${EnvTmpFile2} did not have the enviornment variables."
+                cleanup # MIK_CLEAN
+                rm -f /tmp/newEnvTmpFile  #MIK_BTTAPE_072497
+                rm -f ${EnvTmpFile}  #MIK_BTTAPE_072497
+                rm -f ${EnvTmpFile2}  #MIK_BTTAPE_072497
+		exit 99
+	fi
+
+# Cleanup #MIK_BTTAPE_072497
+
+       rm -f /tmp/newEnvTmpFile
+
+   fi
+
+
+if test "$MKTAPE_CALLER" != "btcreate"  && DISK_DEV != "mfs"
+then 
+	echo "/sbin/newfs $RDISK..."|tee -a $LOG
+	echo /sbin/newfs -i $BM_BPI -c $BM_CYL -s $SIZE -f $BM_FRAGSIZ $RDISK |tee -a $LOG > /dev/null
+       	/sbin/newfs -i $BM_BPI -c $BM_CYL -s $SIZE -f $BM_FRAGSIZ $RDISK ||
+        {
+               	echo "Aborted 'newfs' on $RDISK." |tee -a $LOG
+                cleanup # MIK_CLEAN
+               	exit 3
+        }
+fi
+
+STARTDIR=`pwd`
+if [ $USING_MFS -eq 0 ]
+then
+	mkdir ${MNT}
+        echo mount $DISK $MNT |tee -a $LOG > /dev/null
+	/sbin/mount ${DISK_DEV} ${MNT}
+        rm -rf lost+found
+else
+	echo "Using mfs; MNT is ${MNT_TMP}" |tee -a $LOG > /dev/null
+	MNT=${MNT_TMP}
+	rm -f ${EnvTmpFile}
+        rm -rf lost+found
+fi
+	
+
+# A member of DIRLIST could contain directory names of the
+# form: dir1/dir2 etc. Hence, -p option is used for mkdir.
+
+	for i in ${DIRLIST}
+	do
+		mkdir -p "${MNT}${i}"
+	done
+# added
+	mkdir -p ${MNT}/var/adm
+	chmod 777 ${MNT}/var/adm
+	mkdir -p ${MNT}/var/tmp
+	touch ${MNT}/var/adm/utmp
+	mkdir ${MNT}/mdec
+	cp -p /mdec/* ${MNT}/mdec/ 2>&1 |tee -a $LOG > /dev/null
+	mkdir -p ${MNT}/etc/fdmns
+	mkdir -p ${MNT}/etc/disk_lbl
+
+# Added directories for lmf (mik)
+        mkdir -p ${MNT}/var/adm/lmf
+        cp -p /var/adm/lmf/ldb ${MNT}/var/adm/lmf/ldb
+        cp -p /var/adm/lmf/LURT ${MNT}/var/adm/lmf/LURT
+
+
+# end
+
+# At this point, all the directories in DIRLIST have been created on MNT - SRB.
+
+  set xxx ${COPYLIST}
+  shift
+
+# New code in this do block - SRB:
+  while [ $# -gt 1 ]
+  do
+	if test X"$1" = X
+	then
+		break
+	fi
+  
+        last_minipath=${MINI_PATH##*/}
+
+        if [[ "$last_minipath" = "" ]]
+        then
+                LHSOBJECT="${MINI_PATH}${1#/}"
+        else
+                LHSOBJECT="${MINI_PATH}${1}"
+        fi
+
+
+	if [[ -d "${MNT}${2}" ]]
+        then
+                 if [[ -d "$LHSOBJECT" ]]
+                 then
+#                      cp -p -R "$LHSOBJECT"  "${MNT}${2}" 2>&1 |tee -a $LOG > /dev/null
+                      cp -p -R "$LHSOBJECT"  "${MNT}${2}" 
+                      if (($? != 0))
+                      then
+                           print "Error: Could not copy "$LHSOBJECT" to "${MNT}$2/"" |tee -a $LOG > /dev/null
+                	   cleanup # MIK_CLEAN
+#                          exit 211
+                      fi
+                 else
+#                      cp -p "$LHSOBJECT" "${MNT}${2}" 2>&1 |tee -a $LOG > /dev/null
+                    cp -p "$LHSOBJECT" "${MNT}${2}" 
+                      if (($? != 0))
+                      then
+                           print "Error: Could not copy "$LHSOBJECT" to "${MNT}$2/"" |tee -a $LOG > /dev/null
+                	   cleanup # MIK_CLEAN
+#                          exit 222
+                      fi
+                 fi
+	else
+                 if [[ -d "$LHSOBJECT" ]]
+                 then
+                     print "Error: Can not copy directory "$LHSOBJECT" to a file "${MNT}$2"" |tee -a $LOG > /dev/null
+#                    exit 233
+                 else
+#                     cp -p "$LHSOBJECT" "${MNT}${2}" 2>&1 |tee -a $LOG > /dev/null
+                     cp -p "$LHSOBJECT" "${MNT}${2}" 
+                     if (($? != 0))
+                     then
+                          print "Error: Could not copy "$LHSOBJECT" to "${MNT}$2"" |tee -a $LOG > /dev/null
+                	  cleanup # MIK_CLEAN
+#                         exit 244
+                     fi
+                 fi
+	fi
+	shift 2
+  done
+
+        set xxx $DOTFILES
+        shift
+        while [ $# -gt 1 ]
+        do
+
+# Removed the WORKDIR before first argument in the cp (mik)
+
+                cp -p $1 "${MNT}${2}" 2>&1 |tee -a $LOG > /dev/null
+                shift 2
+        done
+
+        WORKDIR=`pwd`
+        set xxx $HARDLINKS
+        shift
+        while [ $# -gt 1 ]
+        do
+                cd ${MNT}
+                ln "${1}" "${2}"
+                shift 2
+        done
+
+        set xxx $SOFTLINKS
+        shift
+        while [ $# -gt 1 ]
+        do
+                ln -s "${1}" "${2}"
+                shift 2
+        done
+        cd ${WORKDIR}
+
+        set xxx $ADVFS_COPYLIST
+        shift
+        while [ $# -gt 1 ]
+        do
+                cp -p $1 "${MNT}${2}" 2>&1 |tee -a $LOG > /dev/null
+                shift 2
+        done
+
+        set xxx $OTHER_COPYLIST
+        shift
+        while [ $# -gt 1 ]
+        do
+                cp -p $1 "${MNT}${2}" 2>&1 |tee -a $LOG > /dev/null
+                shift 2
+        done
+#
+        echo "\nCreating device files on $DISK_DEV... " |tee -a $LOG
+        (cd $MNT/dev; /bin/sh ./MAKEDEV std 2>&1 |tee -a $LOG > /dev/null)
+        cd $MNT
+        mknod dev/md0a b 1 0 2>&1 |tee -a $LOG > /dev/null
+        mknod dev/md0b b 1 1 2>&1 |tee -a $LOG > /dev/null
+        sync;sync;sync
+
+# Added more stuff here
+	cd /dev
+	ls rz* > /tmp/file_rz.lis
+	cd $MNT/dev
+	for i in `cat /tmp/file_rz.lis` 
+	do
+		/bin/sh ./MAKEDEV $i 2>&1 |tee -a $LOG > /dev/null
+	done
+	sync;sync;sync
+	rm -f /tmp/file_rz.lis
+# End
+
+	cd $STARTDIR
+	if [ $USING_MFS -eq 1 ]
+	then
+		#
+		# Grab the file system image, before the umount destroys it.
+		# Check to ensure procprod is writing the stuff correctly.
+		sync
+		sleep 1
+		sync
+		sleep 1
+		# Use another mfs filesystem for /var/tmp/procprod for
+		# procprod mfsImage. Create a mfs of 17.45MB
+		# 35740/2048=17.45 MB
+	        /sbin/mfs -m0 -ospace -S512 -s35740 ${MNT_PROCPROD} > /dev/null 2> /dev/null 
+		if [ $? != 0 ]
+		then
+			print -u2 "mfs of $MNT_PROCPROD failed"
+                	cleanup # MIK_CLEAN
+			exit 999
+		fi
+		/usr/sys/bin/procprod ${MFS_PID} ${MFS_BASE} ${MFS_SIZE} ${RDISK}
+		retval=$?
+		if [ $retval -ne 0 ]
+		then
+			print -u2 "procprod failed."
+                	cleanup # MIK_CLEAN
+			exit 1000
+		fi
+	fi
+	/sbin/umount ${MNT}
+	rmdir ${MNT}
+}
+
+echo "Getting copy of kernel..." |tee -a $LOG
+cp ${KERNEL} ${KERNELTMP} 
+# mik added this check: mik_0715
+if [ $? -ne 0 ]
+then
+	echo "Copy failed..Exiting..."|tee -a $LOG
+        cleanup # MIK_CLEAN
+	exit 6
+fi
+
+echo "Merging file system into kernel..." |tee -a $LOG
+${FSMRG} ${RDISK} ${KERNELTMP} 2>&1 > /dev/null
+# mik added this check: mik_0715
+if [ $? != 0 ]
+then
+	echo "fsmrg failed..Exiting..."|tee -a $LOG
+        cleanup # MIK_CLEAN
+	exit 7
+fi
+
+case $VERSION in
+V2.*)
+	echo "Merging sboot into kernel..." |tee -a $LOG
+	cat ${SBOOT} >/dev/null || SBOOT=${SBOOT_NEW}
+	${PMERGE} ${SBOOT} ${KERNELTMP} ${KERNELBOOT}
+	dd if=/vmunix of=/tmp/PaDdInG bs=1k count=1 skip=5	# pad
+	cat ${KERNELBOOT} /tmp/PaDdInG >${KERNELTMP}		# kernel
+	rm -f ${KERNELBOOT}					# with
+	mv ${KERNELTMP} ${KERNELBOOT}				# 1k of junk
+	;;
+
+V3.*)
+	echo "Merging sboot into kernel..." |tee -a $LOG
+	cat ${SBOOT} >/dev/null || SBOOT=${SBOOT_NEW}
+	${PMERGE} ${SBOOT} ${KERNELTMP} ${KERNELBOOT}
+	echo "dd statement" |tee -a $LOG
+	dd if=/vmunix of=/tmp/PaDdInG bs=1k count=1 skip=5	# pad
+	cat ${KERNELBOOT} /tmp/PaDdInG >${KERNELTMP}		# kernel
+	rm -f ${KERNELBOOT}					# with
+	mv ${KERNELTMP} ${KERNELBOOT}				# 1k of junk
+	echo "kernelboot produced" |tee -a $LOG
+	;;
+*4.*|TruCluster)
+	echo "Merging sboot into kernel..." |tee -a $LOG
+	cat ${SBOOT} >/dev/null || SBOOT=${SBOOT_NEW} 
+	echo "pmerge sboot into kernel..." |tee -a $LOG
+	${PMERGE} ${SBOOT} ${KERNELTMP} ${KERNELBOOT} 2>&1 > /dev/null
+        if [ $? != 0 ]
+        then
+		echo "pmerge failed..Exiting..."|tee -a $LOG
+                cleanup # MIK_CLEAN
+                exit 7
+	fi
+	echo "performing dd..." |tee -a $LOG
+	dd if=/vmunix of=/tmp/PaDdInG bs=1k count=1 skip=5 2>&1  > /dev/null
+        if [ $? != 0 ]
+        then
+		echo "dd failed..Exiting..."|tee -a $LOG
+                cleanup # MIK_CLEAN
+                exit 8
+	fi
+	echo "performing cat..." |tee -a $LOG
+	cat ${KERNELBOOT} /tmp/PaDdInG >${KERNELTMP} 
+	echo "deleting $KERNELBOOT..." |tee -a $LOG
+	rm -f ${KERNELBOOT}					# with
+	echo "Moving $KERNELTMP to $KERNELBOOT..." |tee -a $LOG
+	mv ${KERNELTMP} ${KERNELBOOT}				# 1k of junk
+        if [ $? != 0 ]
+        then
+		echo "move of $KERNELTMP to $KERNELBOOT failed..Exiting..."
+                cleanup # MIK_CLEAN
+                exit 6
+	fi
+	;;
+*)
+	echo "No boot tape process for version $VERSION" |tee -a $LOG
+	exit 4
+	;;
+esac
+rm -f ${KERNELTMP}
+
+echo "Making tape bootable kernel..." |tee -a $LOG
+${MKSASTAPE} ${KERNELBOOT} ${KERNELTAPE}  2>&1 > /dev/null
+if [ $? != 0 ]
+then
+	echo "mksastape failed..Exiting..." |tee -a $LOG
+        cleanup # MIK_CLEAN
+        exit 7
+fi
+rm -f ${KERNELBOOT}
+
+mt -f ${TAPE_DEV} rewind
+if [ $? != 0 ]
+then
+	echo "mt -f $TAPE_DEV rewind failed..Exiting..." |tee -a $LOG
+        cleanup # MIK_CLEAN
+        exit 7
+fi
+
+sleep 5
+echo "Writing vmunix..." |tee -a $LOG
+dd if=${KERNELTAPE} bs=512 conv=sync of=${TAPE_DEV} 2>&1  > /dev/null
+if [ $? != 0 ]
+then
+	echo "dd of $KERNELTAPE to $TAPE_DEV failed..Exiting..."|tee -a $LOG
+        cleanup # MIK_CLEAN
+        exit 8
+fi
+rm -f ${KERNELTAPE}
+exit 0

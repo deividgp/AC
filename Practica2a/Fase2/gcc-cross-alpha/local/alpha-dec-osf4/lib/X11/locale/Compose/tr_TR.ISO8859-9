@@ -1,0 +1,848 @@
+# Copyright (c) Digital Equipment Corporation, 1995, 1996
+# All Rights Reserved.  Unpublished rights reserved
+# under the copyright laws of the United States.
+#
+# The software contained on this media is proprietary to
+# and embodies the confidential technology of Digital
+# Equipment Corporation.  Possession, use, duplication
+# or dissemination of the software and media is
+# authorized only pursuant to a valid written license
+# from Digital Equipment Corporation.
+#
+# RESTRICTED RIGHTS LEGEND Use, duplication, or
+# disclosure by the U.S. Government is subject to
+# restrictions as set forth in Subparagraph (c)(1)(ii)
+# of DFARS 252.227-7013, or in FAR 52.227-19, as
+# applicable.
+<Multi_key> <space> <space>             : "\240"     nobreakspace
+<Multi_key> <space> <quotedbl>          : "\42"      quotedbl
+<Multi_key> <space> <apostrophe>        : "\47"      apostrophe
+<Multi_key> <space> <asterisk>          : "\260"     degree
+<Multi_key> <space> <asciicircum>       : "\136"     asciicircum
+<Multi_key> <space> <grave>             : "\140"     grave
+<Multi_key> <space> <asciitilde>        : "\176"     asciitilde
+<Multi_key> <space> <diaeresis>         : "\250"     diaeresis
+<Multi_key> <space> <degree>            : "\260"     degree
+<Multi_key> <space> <acute>             : "\264"     acute
+<Multi_key> <exclam> <exclam>           : "\241"     exclamdown
+<Multi_key> <exclam> <P>                : "\266"     paragraph
+<Multi_key> <exclam> <S>                : "\247"     section
+<Multi_key> <exclam> <p>                : "\266"     paragraph
+<Multi_key> <exclam> <s>                : "\247"     section
+<Multi_key> <quotedbl> <space>          : "\42"      quotedbl
+~Ctrl <Ddiaeresis> <space>              : "\42"      quotedbl
+Alt <Ddiaeresis> <space>                : "\42"      quotedbl
+<Multi_key> <quotedbl> <quotedbl>       : "\250"     diaeresis
+~Ctrl <Ddiaeresis> <quotedbl>           : "\250"     diaeresis
+Alt <Ddiaeresis> <quotedbl>             : "\250"     diaeresis
+<Multi_key> <quotedbl> <A>              : "\304"     Adiaeresis
+~Ctrl <Ddiaeresis> <A>                  : "\304"     Adiaeresis
+Alt <Ddiaeresis> <A>                    : "\304"     Adiaeresis
+<Multi_key> <quotedbl> <E>              : "\313"     Ediaeresis
+~Ctrl <Ddiaeresis> <E>                  : "\313"     Ediaeresis
+Alt <Ddiaeresis> <E>                    : "\313"     Ediaeresis
+<Multi_key> <quotedbl> <I>              : "\317"     Idiaeresis
+~Ctrl <Ddiaeresis> <I>                  : "\317"     Idiaeresis
+Alt <Ddiaeresis> <I>                    : "\317"     Idiaeresis
+<Multi_key> <quotedbl> <O>              : "\326"     Odiaeresis
+~Ctrl <Ddiaeresis> <O>                  : "\326"     Odiaeresis
+Alt <Ddiaeresis> <O>                    : "\326"     Odiaeresis
+<Multi_key> <quotedbl> <U>              : "\334"     Udiaeresis
+~Ctrl <Ddiaeresis> <U>                  : "\334"     Udiaeresis
+Alt <Ddiaeresis> <U>                    : "\334"     Udiaeresis
+<Multi_key> <quotedbl> <a>              : "\344"     adiaeresis
+~Ctrl <Ddiaeresis> <a>                  : "\344"     adiaeresis
+Alt <Ddiaeresis> <a>                    : "\344"     adiaeresis
+<Multi_key> <quotedbl> <e>              : "\353"     ediaeresis
+~Ctrl <Ddiaeresis> <e>                  : "\353"     ediaeresis
+Alt <Ddiaeresis> <e>                    : "\353"     ediaeresis
+<Multi_key> <quotedbl> <i>              : "\357"     idiaeresis
+~Ctrl <Ddiaeresis> <i>                  : "\357"     idiaeresis
+Alt <Ddiaeresis> <i>                    : "\357"     idiaeresis
+<Multi_key> <quotedbl> <o>              : "\366"     odiaeresis
+~Ctrl <Ddiaeresis> <o>                  : "\366"     odiaeresis
+Alt <Ddiaeresis> <o>                    : "\366"     odiaeresis
+<Multi_key> <quotedbl> <u>              : "\374"     udiaeresis
+~Ctrl <Ddiaeresis> <u>                  : "\374"     udiaeresis
+Alt <Ddiaeresis> <u>                    : "\374"     udiaeresis
+<Multi_key> <quotedbl> <y>              : "\377"     ydiaeresis
+~Ctrl <Ddiaeresis> <y>                  : "\377"     ydiaeresis
+Alt <Ddiaeresis> <y>                    : "\377"     ydiaeresis
+<Multi_key> <apostrophe> <space>        : "\47"      apostrophe
+~Ctrl <Dacute_accent> <space>           : "\47"      apostrophe
+Alt <Dacute_accent> <space>             : "\47"      apostrophe
+<Multi_key> <apostrophe> <apostrophe>   : "\264"     acute
+~Ctrl <Dacute_accent> <apostrophe>      : "\264"     acute
+Alt <Dacute_accent> <apostrophe>        : "\264"     acute
+<Multi_key> <apostrophe> <A>            : "\301"     Aacute
+~Ctrl <Dacute_accent> <A>               : "\301"     Aacute
+Alt <Dacute_accent> <A>                 : "\301"     Aacute
+<Multi_key> <apostrophe> <E>            : "\311"     Eacute
+~Ctrl <Dacute_accent> <E>               : "\311"     Eacute
+Alt <Dacute_accent> <E>                 : "\311"     Eacute
+<Multi_key> <apostrophe> <I>            : "\315"     Iacute
+~Ctrl <Dacute_accent> <I>               : "\315"     Iacute
+Alt <Dacute_accent> <I>                 : "\315"     Iacute
+<Multi_key> <apostrophe> <O>            : "\323"     Oacute
+~Ctrl <Dacute_accent> <O>               : "\323"     Oacute
+Alt <Dacute_accent> <O>                 : "\323"     Oacute
+<Multi_key> <apostrophe> <U>            : "\332"     Uacute
+~Ctrl <Dacute_accent> <U>               : "\332"     Uacute
+Alt <Dacute_accent> <U>                 : "\332"     Uacute
+<Multi_key> <apostrophe> <a>            : "\341"     aacute
+~Ctrl <Dacute_accent> <a>               : "\341"     aacute
+Alt <Dacute_accent> <a>                 : "\341"     aacute
+<Multi_key> <apostrophe> <e>            : "\351"     eacute
+~Ctrl <Dacute_accent> <e>               : "\351"     eacute
+Alt <Dacute_accent> <e>                 : "\351"     eacute
+<Multi_key> <apostrophe> <i>            : "\355"     iacute
+~Ctrl <Dacute_accent> <i>               : "\355"     iacute
+Alt <Dacute_accent> <i>                 : "\355"     iacute
+<Multi_key> <apostrophe> <o>            : "\363"     oacute
+~Ctrl <Dacute_accent> <o>               : "\363"     oacute
+Alt <Dacute_accent> <o>                 : "\363"     oacute
+<Multi_key> <apostrophe> <u>            : "\372"     uacute
+~Ctrl <Dacute_accent> <u>               : "\372"     uacute
+Alt <Dacute_accent> <u>                 : "\372"     uacute
+<Multi_key> <parenleft> <parenleft>     : "\133"     bracketleft
+<Multi_key> <parenleft> <minus>         : "\173"     braceleft
+<Multi_key> <parenright> <parenright>   : "\135"     bracketright
+<Multi_key> <parenright> <minus>        : "\175"     braceright
+<Multi_key> <asterisk> <space>          : "\260"     degree
+<Multi_key> <asterisk> <A>              : "\305"     Aring
+<Multi_key> <asterisk> <a>              : "\345"     aring
+<Multi_key> <plus> <plus>               : "\43"      numbersign
+<Multi_key> <plus> <minus>              : "\261"     plusminus
+<Multi_key> <comma> <comma>             : "\270"     cedilla
+~Ctrl <Dcedilla_accent> <comma>         : "\270"     cedilla
+Alt <Dcedilla_accent> <comma>           : "\270"     cedilla
+<Multi_key> <comma> <C>                 : "\307"     Ccedilla
+~Ctrl <Dcedilla_accent> <C>             : "\307"     Ccedilla
+Alt <Dcedilla_accent> <C>               : "\307"     Ccedilla
+<Multi_key> <comma> <c>                 : "\347"     ccedilla
+~Ctrl <Dcedilla_accent> <c>             : "\347"     ccedilla
+Alt <Dcedilla_accent> <c>               : "\347"     ccedilla
+<Multi_key> <minus> <parenleft>         : "\173"     braceleft
+<Multi_key> <minus> <parenright>        : "\175"     braceright
+<Multi_key> <minus> <plus>              : "\261"     plusminus
+<Multi_key> <minus> <comma>             : "\254"     notsign
+<Multi_key> <minus> <minus>             : "\255"     hyphen
+<Multi_key> <minus> <colon>             : "\367"     division
+<Multi_key> <G> <parenleft>             : "\320"     Gbreve
+<Multi_key> <g> <parenleft>             : "\360"     gbreve
+<Multi_key> <parenleft> <G>             : "\320"     Gbreve
+<Multi_key> <parenleft> <g>             : "\360"     gbreve
+<Multi_key> <minus> <L>                 : "\243"     sterling
+<Multi_key> <minus> <Y>                 : "\245"     yen
+<Multi_key> <minus> <asciicircum>       : "\257"     macron
+<Multi_key> <minus> <l>                 : "\243"     sterling
+<Multi_key> <minus> <y>                 : "\245"     yen
+<Multi_key> <period> <asciicircum>      : "\267"     periodcentered
+<Multi_key> <slash> <slash>             : "\134"     backslash
+<Multi_key> <slash> <less>              : "\134"     backslash
+<Multi_key> <slash> <C>                 : "\242"     cent
+<Multi_key> <slash> <O>                 : "\330"     Ooblique
+<Multi_key> <slash> <U>                 : "\265"     mu
+<Multi_key> <slash> <asciicircum>       : "\174"     bar
+<Multi_key> <slash> <c>                 : "\242"     cent
+<Multi_key> <slash> <o>                 : "\370"     oslash
+<Multi_key> <slash> <u>                 : "\265"     mu
+<Multi_key> <0> <C>                     : "\251"     copyright
+<Multi_key> <0> <R>                     : "\256"     registered
+<Multi_key> <0> <S>                     : "\247"     section
+<Multi_key> <0> <X>                     : "\244"     currency
+<Multi_key> <0> <asciicircum>           : "\260"     degree
+<Multi_key> <0> <c>                     : "\251"     copyright
+<Multi_key> <0> <r>                     : "\256"     registered
+<Multi_key> <0> <s>                     : "\247"     section
+<Multi_key> <0> <x>                     : "\244"     currency
+<Multi_key> <1> <2>                     : "\275"     onehalf
+<Multi_key> <1> <4>                     : "\274"     onequarter
+<Multi_key> <1> <asciicircum>           : "\271"     onesuperior
+<Multi_key> <2> <asciicircum>           : "\262"     twosuperior
+<Multi_key> <3> <4>                     : "\276"     threequarters
+<Multi_key> <3> <asciicircum>           : "\263"     threesuperior
+<Multi_key> <colon> <minus>             : "\367"     division
+<Multi_key> <less> <slash>              : "\134"     backslash
+<Multi_key> <less> <less>               : "\253"     guillemotleft
+<Multi_key> <equal> <L>                 : "\243"     sterling
+<Multi_key> <equal> <Y>                 : "\245"     yen
+<Multi_key> <equal> <l>                 : "\243"     sterling
+<Multi_key> <equal> <y>                 : "\245"     yen
+<Multi_key> <greater> <greater>         : "\273"     guillemotright
+<Multi_key> <question> <question>       : "\277"     questiondown
+<Multi_key> <A> <quotedbl>              : "\304"     Adiaeresis
+<Multi_key> <A> <apostrophe>            : "\301"     Aacute
+<Multi_key> <A> <asterisk>              : "\305"     Aring
+<Multi_key> <A> <A>                     : "\100"     at
+<Multi_key> <A> <E>                     : "\306"     AE
+<Multi_key> <A> <asciicircum>           : "\302"     Acircumflex
+<Multi_key> <A> <underscore>            : "\252"     ordfeminine
+<Multi_key> <A> <grave>                 : "\300"     Agrave
+<Multi_key> <A> <a>                     : "\100"     at
+<Multi_key> <A> <asciitilde>            : "\303"     Atilde
+<Multi_key> <A> <diaeresis>             : "\304"     Adiaeresis
+<Multi_key> <A> <degree>                : "\305"     Aring
+<Multi_key> <A> <acute>                 : "\301"     Aacute
+<Multi_key> <C> <comma>                 : "\307"     Ccedilla
+<Multi_key> <C> <slash>                 : "\242"     cent
+<Multi_key> <C> <0>                     : "\251"     copyright
+<Multi_key> <C> <O>                     : "\251"     copyright
+<Multi_key> <C> <o>                     : "\251"     copyright
+<Multi_key> <C> <bar>                   : "\242"     cent
+<Multi_key> <E> <quotedbl>              : "\313"     Ediaeresis
+<Multi_key> <E> <apostrophe>            : "\311"     Eacute
+<Multi_key> <E> <asciicircum>           : "\312"     Ecircumflex
+<Multi_key> <E> <grave>                 : "\310"     Egrave
+<Multi_key> <E> <diaeresis>             : "\313"     Ediaeresis
+<Multi_key> <E> <acute>                 : "\311"     Eacute
+<Multi_key> <I> <quotedbl>              : "\317"     Idiaeresis
+<Multi_key> <I> <apostrophe>            : "\315"     Iacute
+<Multi_key> <I> <asciicircum>           : "\316"     Icircumflex
+<Multi_key> <I> <grave>                 : "\314"     Igrave
+<Multi_key> <I> <diaeresis>             : "\317"     Idiaeresis
+<Multi_key> <I> <acute>                 : "\315"     Iacute
+<Multi_key> <L> <minus>                 : "\243"     sterling
+<Multi_key> <L> <equal>                 : "\243"     sterling
+<Multi_key> <N> <asciitilde>            : "\321"     Ntilde
+<Multi_key> <O> <quotedbl>              : "\326"     Odiaeresis
+<Multi_key> <O> <apostrophe>            : "\323"     Oacute
+<Multi_key> <O> <slash>                 : "\330"     Ooblique
+<Multi_key> <O> <C>                     : "\251"     copyright
+<Multi_key> <O> <R>                     : "\256"     registered
+<Multi_key> <O> <S>                     : "\247"     section
+<Multi_key> <O> <X>                     : "\244"     currency
+<Multi_key> <O> <asciicircum>           : "\324"     Ocircumflex
+<Multi_key> <O> <underscore>            : "\272"     masculine
+<Multi_key> <O> <grave>                 : "\322"     Ograve
+<Multi_key> <O> <c>                     : "\251"     copyright
+<Multi_key> <O> <r>                     : "\256"     registered
+<Multi_key> <O> <s>                     : "\247"     section
+<Multi_key> <O> <x>                     : "\244"     currency
+<Multi_key> <O> <asciitilde>            : "\325"     Otilde
+<Multi_key> <O> <diaeresis>             : "\326"     Odiaeresis
+<Multi_key> <O> <acute>                 : "\323"     Oacute
+<Multi_key> <P> <exclam>                : "\266"     paragraph
+<Multi_key> <R> <0>                     : "\256"     registered
+<Multi_key> <R> <O>                     : "\256"     registered
+<Multi_key> <R> <o>                     : "\256"     registered
+<Multi_key> <S> <exclam>                : "\247"     section
+<Multi_key> <S> <0>                     : "\247"     section
+<Multi_key> <S> <O>                     : "\247"     section
+<Multi_key> <S> <o>                     : "\247"     section
+<Multi_key> <comma> <S>                 : "\336"     Scedilla
+~Ctrl <Dcedilla_accent> <S>             : "\336"     Scedilla
+Alt <Dcedilla_accent> <S>               : "\336"     Scedilla
+<Multi_key> <S> <comma>                 : "\336"     Scedilla
+<Multi_key> <U> <quotedbl>              : "\334"     Udiaeresis
+<Multi_key> <U> <apostrophe>            : "\332"     Uacute
+<Multi_key> <U> <asciicircum>           : "\333"     Ucircumflex
+<Multi_key> <U> <grave>                 : "\331"     Ugrave
+<Multi_key> <U> <diaeresis>             : "\334"     Udiaeresis
+<Multi_key> <U> <acute>                 : "\332"     Uacute
+<Multi_key> <X> <0>                     : "\244"     currency
+<Multi_key> <X> <O>                     : "\244"     currency
+<Multi_key> <X> <X>                     : "\327"     multiply
+<Multi_key> <X> <o>                     : "\244"     currency
+<Multi_key> <X> <x>                     : "\327"     multiply
+<Multi_key> <I> <period>                : "\335"     Iabovedot
+<Multi_key> <period> <I>                : "\335"     Iabovedot
+<Multi_key> <I> <degree>                : "\335"     Iabovedot
+<Multi_key> <degree> <I>                : "\335"     Iabovedot
+~Ctrl <Dring_accent> <I>                : "\335"     Iabovedot
+Alt <Dring_accent> <I>                  : "\335"     Iabovedot
+<Multi_key> <Y> <minus>                 : "\245"     yen
+<Multi_key> <Y> <equal>                 : "\245"     yen
+<Multi_key> <asciicircum> <space>       : "\136"     asciicircum
+~Ctrl <Dcircumflex_accent> <space>      : "\136"     asciicircum
+Alt <Dcircumflex_accent> <space>        : "\136"     asciicircum
+<Multi_key> <asciicircum> <minus>       : "\257"     macron
+~Ctrl <Dcircumflex_accent> <minus>      : "\257"     macron
+Alt <Dcircumflex_accent> <minus>        : "\257"     macron
+<Multi_key> <asciicircum> <period>      : "\267"     periodcentered
+~Ctrl <Dcircumflex_accent> <period>     : "\267"     periodcentered
+Alt <Dcircumflex_accent> <period>       : "\267"     periodcentered
+<Multi_key> <asciicircum> <slash>       : "\174"     bar
+~Ctrl <Dcircumflex_accent> <slash>      : "\174"     bar
+Alt <Dcircumflex_accent> <slash>        : "\174"     bar
+<Multi_key> <asciicircum> <0>           : "\260"     degree
+~Ctrl <Dcircumflex_accent> <0>          : "\260"     degree
+Alt <Dcircumflex_accent> <0>            : "\260"     degree
+<Multi_key> <asciicircum> <1>           : "\271"     onesuperior
+~Ctrl <Dcircumflex_accent> <1>          : "\271"     onesuperior
+Alt <Dcircumflex_accent> <1>            : "\271"     onesuperior
+<Multi_key> <asciicircum> <2>           : "\262"     twosuperior
+~Ctrl <Dcircumflex_accent> <2>          : "\262"     twosuperior
+Alt <Dcircumflex_accent> <2>            : "\262"     twosuperior
+<Multi_key> <asciicircum> <3>           : "\263"     threesuperior
+~Ctrl <Dcircumflex_accent> <3>          : "\263"     threesuperior
+Alt <Dcircumflex_accent> <3>            : "\263"     threesuperior
+<Multi_key> <asciicircum> <A>           : "\302"     Acircumflex
+~Ctrl <Dcircumflex_accent> <A>          : "\302"     Acircumflex
+Alt <Dcircumflex_accent> <A>            : "\302"     Acircumflex
+<Multi_key> <asciicircum> <E>           : "\312"     Ecircumflex
+~Ctrl <Dcircumflex_accent> <E>          : "\312"     Ecircumflex
+Alt <Dcircumflex_accent> <E>            : "\312"     Ecircumflex
+<Multi_key> <asciicircum> <I>           : "\316"     Icircumflex
+~Ctrl <Dcircumflex_accent> <I>          : "\316"     Icircumflex
+Alt <Dcircumflex_accent> <I>            : "\316"     Icircumflex
+<Multi_key> <asciicircum> <O>           : "\324"     Ocircumflex
+~Ctrl <Dcircumflex_accent> <O>          : "\324"     Ocircumflex
+Alt <Dcircumflex_accent> <O>            : "\324"     Ocircumflex
+<Multi_key> <asciicircum> <U>           : "\333"     Ucircumflex
+~Ctrl <Dcircumflex_accent> <U>          : "\333"     Ucircumflex
+Alt <Dcircumflex_accent> <U>            : "\333"     Ucircumflex
+<Multi_key> <asciicircum> <underscore>  : "\257"     macron
+~Ctrl <Dcircumflex_accent> <underscore> : "\257"     macron
+Alt <Dcircumflex_accent> <underscore>   : "\257"     macron
+<Multi_key> <asciicircum> <a>           : "\342"     acircumflex
+~Ctrl <Dcircumflex_accent> <a>          : "\342"     acircumflex
+Alt <Dcircumflex_accent> <a>            : "\342"     acircumflex
+<Multi_key> <asciicircum> <e>           : "\352"     ecircumflex
+~Ctrl <Dcircumflex_accent> <e>          : "\352"     ecircumflex
+Alt <Dcircumflex_accent> <e>            : "\352"     ecircumflex
+<Multi_key> <asciicircum> <i>           : "\356"     icircumflex
+~Ctrl <Dcircumflex_accent> <i>          : "\356"     icircumflex
+Alt <Dcircumflex_accent> <i>            : "\356"     icircumflex
+<Multi_key> <asciicircum> <o>           : "\364"     ocircumflex
+~Ctrl <Dcircumflex_accent> <o>          : "\364"     ocircumflex
+Alt <Dcircumflex_accent> <o>            : "\364"     ocircumflex
+<Multi_key> <asciicircum> <u>           : "\373"     ucircumflex
+~Ctrl <Dcircumflex_accent> <u>          : "\373"     ucircumflex
+Alt <Dcircumflex_accent> <u>            : "\373"     ucircumflex
+<Multi_key> <underscore> <A>            : "\252"     ordfeminine
+<Multi_key> <underscore> <O>            : "\272"     masculine
+<Multi_key> <underscore> <asciicircum>  : "\257"     macron
+<Multi_key> <underscore> <a>            : "\252"     ordfeminine
+<Multi_key> <underscore> <o>            : "\272"     masculine
+<Multi_key> <grave> <space>             : "\140"     grave
+~Ctrl <Dgrave_accent> <space>           : "\140"     grave
+Alt <Dgrave_accent> <space>             : "\140"     grave
+<Multi_key> <grave> <A>                 : "\300"     Agrave
+~Ctrl <Dgrave_accent> <A>               : "\300"     Agrave
+Alt <Dgrave_accent> <A>                 : "\300"     Agrave
+<Multi_key> <grave> <E>                 : "\310"     Egrave
+~Ctrl <Dgrave_accent> <E>               : "\310"     Egrave
+Alt <Dgrave_accent> <E>                 : "\310"     Egrave
+<Multi_key> <grave> <I>                 : "\314"     Igrave
+~Ctrl <Dgrave_accent> <I>               : "\314"     Igrave
+Alt <Dgrave_accent> <I>                 : "\314"     Igrave
+<Multi_key> <grave> <O>                 : "\322"     Ograve
+~Ctrl <Dgrave_accent> <O>               : "\322"     Ograve
+Alt <Dgrave_accent> <O>                 : "\322"     Ograve
+<Multi_key> <grave> <U>                 : "\331"     Ugrave
+~Ctrl <Dgrave_accent> <U>               : "\331"     Ugrave
+Alt <Dgrave_accent> <U>                 : "\331"     Ugrave
+<Multi_key> <grave> <a>                 : "\340"     agrave
+~Ctrl <Dgrave_accent> <a>               : "\340"     agrave
+Alt <Dgrave_accent> <a>                 : "\340"     agrave
+<Multi_key> <grave> <e>                 : "\350"     egrave
+~Ctrl <Dgrave_accent> <e>               : "\350"     egrave
+Alt <Dgrave_accent> <e>                 : "\350"     egrave
+<Multi_key> <grave> <i>                 : "\354"     igrave
+~Ctrl <Dgrave_accent> <i>               : "\354"     igrave
+Alt <Dgrave_accent> <i>                 : "\354"     igrave
+<Multi_key> <grave> <o>                 : "\362"     ograve
+~Ctrl <Dgrave_accent> <o>               : "\362"     ograve
+Alt <Dgrave_accent> <o>                 : "\362"     ograve
+<Multi_key> <grave> <u>                 : "\371"     ugrave
+~Ctrl <Dgrave_accent> <u>               : "\371"     ugrave
+Alt <Dgrave_accent> <u>                 : "\371"     ugrave
+<Multi_key> <a> <quotedbl>              : "\344"     adiaeresis
+<Multi_key> <a> <apostrophe>            : "\341"     aacute
+<Multi_key> <a> <asterisk>              : "\345"     aring
+<Multi_key> <a> <A>                     : "\100"     at
+<Multi_key> <a> <asciicircum>           : "\342"     acircumflex
+<Multi_key> <a> <underscore>            : "\252"     ordfeminine
+<Multi_key> <a> <grave>                 : "\340"     agrave
+<Multi_key> <a> <a>                     : "\100"     at
+<Multi_key> <a> <e>                     : "\346"     ae
+<Multi_key> <a> <asciitilde>            : "\343"     atilde
+<Multi_key> <a> <diaeresis>             : "\344"     adiaeresis
+<Multi_key> <a> <degree>                : "\345"     aring
+<Multi_key> <a> <acute>                 : "\341"     aacute
+<Multi_key> <c> <comma>                 : "\347"     ccedilla
+<Multi_key> <c> <slash>                 : "\242"     cent
+<Multi_key> <c> <0>                     : "\251"     copyright
+<Multi_key> <c> <O>                     : "\251"     copyright
+<Multi_key> <c> <o>                     : "\251"     copyright
+<Multi_key> <c> <bar>                   : "\242"     cent
+<Multi_key> <e> <quotedbl>              : "\353"     ediaeresis
+<Multi_key> <e> <apostrophe>            : "\351"     eacute
+<Multi_key> <e> <asciicircum>           : "\352"     ecircumflex
+<Multi_key> <e> <grave>                 : "\350"     egrave
+<Multi_key> <e> <diaeresis>             : "\353"     ediaeresis
+<Multi_key> <e> <acute>                 : "\351"     eacute
+<Multi_key> <i> <quotedbl>              : "\357"     idiaeresis
+<Multi_key> <i> <apostrophe>            : "\355"     iacute
+<Multi_key> <i> <asciicircum>           : "\356"     icircumflex
+<Multi_key> <i> <grave>                 : "\354"     igrave
+<Multi_key> <i> <diaeresis>             : "\357"     idiaeresis
+<Multi_key> <i> <acute>                 : "\355"     iacute
+<Multi_key> <l> <minus>                 : "\243"     sterling
+<Multi_key> <l> <equal>                 : "\243"     sterling
+<Multi_key> <n> <asciitilde>            : "\361"     ntilde
+<Multi_key> <o> <quotedbl>              : "\366"     odiaeresis
+<Multi_key> <o> <apostrophe>            : "\363"     oacute
+<Multi_key> <o> <slash>                 : "\370"     oslash
+<Multi_key> <o> <C>                     : "\251"     copyright
+<Multi_key> <o> <R>                     : "\256"     registered
+<Multi_key> <o> <S>                     : "\247"     section
+<Multi_key> <o> <X>                     : "\244"     currency
+<Multi_key> <o> <asciicircum>           : "\364"     ocircumflex
+<Multi_key> <o> <underscore>            : "\272"     masculine
+<Multi_key> <o> <grave>                 : "\362"     ograve
+<Multi_key> <o> <c>                     : "\251"     copyright
+<Multi_key> <o> <r>                     : "\256"     registered
+<Multi_key> <o> <s>                     : "\247"     section
+<Multi_key> <o> <x>                     : "\244"     currency
+<Multi_key> <o> <asciitilde>            : "\365"     otilde
+<Multi_key> <o> <diaeresis>             : "\366"     odiaeresis
+<Multi_key> <o> <acute>                 : "\363"     oacute
+<Multi_key> <p> <exclam>                : "\266"     paragraph
+<Multi_key> <r> <0>                     : "\256"     registered
+<Multi_key> <r> <O>                     : "\256"     registered
+<Multi_key> <r> <o>                     : "\256"     registered
+<Multi_key> <s> <exclam>                : "\247"     section
+<Multi_key> <s> <0>                     : "\247"     section
+<Multi_key> <s> <O>                     : "\247"     section
+<Multi_key> <s> <o>                     : "\247"     section
+<Multi_key> <s> <s>                     : "\337"     ssharp
+<Multi_key> <comma> <s>                 : "\376"     scedilla
+~Ctrl <Dcedilla_accent> <s>             : "\376"     scedilla
+Alt <Dcedilla_accent> <s>               : "\376"     scedilla
+<Multi_key> <s> <comma>                 : "\376"     scedilla
+<Multi_key> <u> <quotedbl>              : "\374"     udiaeresis
+<Multi_key> <u> <apostrophe>            : "\372"     uacute
+<Multi_key> <u> <asciicircum>           : "\373"     ucircumflex
+<Multi_key> <u> <grave>                 : "\371"     ugrave
+<Multi_key> <u> <diaeresis>             : "\374"     udiaeresis
+<Multi_key> <u> <acute>                 : "\372"     uacute
+<Multi_key> <x> <0>                     : "\244"     currency
+<Multi_key> <x> <O>                     : "\244"     currency
+<Multi_key> <x> <X>                     : "\327"     multiply
+<Multi_key> <x> <o>                     : "\244"     currency
+<Multi_key> <x> <x>                     : "\327"     multiply
+<Multi_key> <y> <quotedbl>              : "\377"     ydiaeresis
+<Multi_key> <i> <i>                     : "\375"     idotless
+<Multi_key> <y> <minus>                 : "\245"     yen
+<Multi_key> <y> <equal>                 : "\245"     yen
+<Multi_key> <y> <diaeresis>             : "\377"     ydiaeresis
+<Multi_key> <bar> <C>                   : "\242"     cent
+<Multi_key> <bar> <c>                   : "\242"     cent
+<Multi_key> <bar> <bar>                 : "\246"     brokenbar
+<Multi_key> <asciitilde> <space>        : "\176"     asciitilde
+~Ctrl <Dtilde> <space>                  : "\176"     asciitilde
+Alt <Dtilde> <space>                    : "\176"     asciitilde
+<Multi_key> <asciitilde> <A>            : "\303"     Atilde
+~Ctrl <Dtilde> <A>                      : "\303"     Atilde
+Alt <Dtilde> <A>                        : "\303"     Atilde
+<Multi_key> <asciitilde> <N>            : "\321"     Ntilde
+~Ctrl <Dtilde> <N>                      : "\321"     Ntilde
+Alt <Dtilde> <N>                        : "\321"     Ntilde
+<Multi_key> <asciitilde> <O>            : "\325"     Otilde
+~Ctrl <Dtilde> <O>                      : "\325"     Otilde
+Alt <Dtilde> <O>                        : "\325"     Otilde
+<Multi_key> <asciitilde> <a>            : "\343"     atilde
+~Ctrl <Dtilde> <a>                      : "\343"     atilde
+Alt <Dtilde> <a>                        : "\343"     atilde
+<Multi_key> <asciitilde> <n>            : "\361"     ntilde
+~Ctrl <Dtilde> <n>                      : "\361"     ntilde
+Alt <Dtilde> <n>                        : "\361"     ntilde
+<Multi_key> <asciitilde> <o>            : "\365"     otilde
+~Ctrl <Dtilde> <o>                      : "\365"     otilde
+Alt <Dtilde> <o>                        : "\365"     otilde
+<Multi_key> <diaeresis> <space>         : "\250"     diaeresis
+<Multi_key> <diaeresis> <A>             : "\304"     Adiaeresis
+<Multi_key> <diaeresis> <E>             : "\313"     Ediaeresis
+<Multi_key> <diaeresis> <I>             : "\317"     Idiaeresis
+<Multi_key> <diaeresis> <O>             : "\326"     Odiaeresis
+<Multi_key> <diaeresis> <U>             : "\334"     Udiaeresis
+<Multi_key> <diaeresis> <a>             : "\344"     adiaeresis
+<Multi_key> <diaeresis> <e>             : "\353"     ediaeresis
+<Multi_key> <diaeresis> <i>             : "\357"     idiaeresis
+<Multi_key> <diaeresis> <o>             : "\366"     odiaeresis
+<Multi_key> <diaeresis> <u>             : "\374"     udiaeresis
+<Multi_key> <diaeresis> <y>             : "\377"     ydiaeresis
+<Multi_key> <degree> <space>            : "\260"     degree
+~Ctrl <Dring_accent> <space>            : "\260"     degree
+Alt <Dring_accent> <space>              : "\260"     degree
+<Multi_key> <degree> <A>                : "\305"     Aring
+~Ctrl <Dring_accent> <A>                : "\305"     Aring
+Alt <Dring_accent> <A>                  : "\305"     Aring
+<Multi_key> <degree> <a>                : "\345"     aring
+~Ctrl <Dring_accent> <a>                : "\345"     aring
+Alt <Dring_accent> <a>                  : "\345"     aring
+<Multi_key> <acute> <space>             : "\264"     acute
+<Multi_key> <acute> <A>                 : "\301"     Aacute
+<Multi_key> <acute> <E>                 : "\311"     Eacute
+<Multi_key> <acute> <I>                 : "\315"     Iacute
+<Multi_key> <acute> <O>                 : "\323"     Oacute
+<Multi_key> <acute> <U>                 : "\332"     Uacute
+<Multi_key> <acute> <a>                 : "\341"     aacute
+<Multi_key> <acute> <e>                 : "\351"     eacute
+<Multi_key> <acute> <i>                 : "\355"     iacute
+<Multi_key> <acute> <o>                 : "\363"     oacute
+<Multi_key> <acute> <u>                 : "\372"     uacute
+Alt ~Ctrl ~Shift <space> <space> <space> : "\240"     nobreakspace
+Alt ~Ctrl ~Shift <space> <space> <quotedbl> : "\42"      quotedbl
+Alt ~Ctrl ~Shift <space> <space> <apostrophe> : "\47"      apostrophe
+Alt ~Ctrl ~Shift <space> <space> <asterisk> : "\260"     degree
+Alt ~Ctrl ~Shift <space> <space> <asciicircum> : "\136"     asciicircum
+Alt ~Ctrl ~Shift <space> <space> <grave> : "\140"     grave
+Alt ~Ctrl ~Shift <space> <space> <asciitilde> : "\176"     asciitilde
+Alt ~Ctrl ~Shift <space> <space> <diaeresis> : "\250"     diaeresis
+Alt ~Ctrl ~Shift <space> <space> <degree> : "\260"     degree
+Alt ~Ctrl ~Shift <space> <space> <acute> : "\264"     acute
+Alt ~Ctrl ~Shift <space> <exclam> <exclam> : "\241"     exclamdown
+Alt ~Ctrl ~Shift <space> <exclam> <P>   : "\266"     paragraph
+Alt ~Ctrl ~Shift <space> <exclam> <S>   : "\247"     section
+Alt ~Ctrl ~Shift <space> <exclam> <p>   : "\266"     paragraph
+Alt ~Ctrl ~Shift <space> <exclam> <s>   : "\247"     section
+Alt ~Ctrl ~Shift <space> <quotedbl> <space> : "\42"      quotedbl
+Alt ~Ctrl ~Shift <space> <quotedbl> <quotedbl> : "\250"     diaeresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <A> : "\304"     Adiaeresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <E> : "\313"     Ediaeresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <I> : "\317"     Idiaeresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <O> : "\326"     Odiaeresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <U> : "\334"     Udiaeresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <a> : "\344"     adiaeresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <e> : "\353"     ediaeresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <i> : "\357"     idiaeresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <o> : "\366"     odiaeresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <u> : "\374"     udiaeresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <y> : "\377"     ydiaeresis
+Alt ~Ctrl ~Shift <space> <apostrophe> <space> : "\47"      apostrophe
+Alt ~Ctrl ~Shift <space> <apostrophe> <apostrophe> : "\264"     acute
+Alt ~Ctrl ~Shift <space> <apostrophe> <A> : "\301"     Aacute
+Alt ~Ctrl ~Shift <space> <apostrophe> <E> : "\311"     Eacute
+Alt ~Ctrl ~Shift <space> <apostrophe> <I> : "\315"     Iacute
+Alt ~Ctrl ~Shift <space> <apostrophe> <O> : "\323"     Oacute
+Alt ~Ctrl ~Shift <space> <apostrophe> <U> : "\332"     Uacute
+Alt ~Ctrl ~Shift <space> <apostrophe> <a> : "\341"     aacute
+Alt ~Ctrl ~Shift <space> <apostrophe> <e> : "\351"     eacute
+Alt ~Ctrl ~Shift <space> <apostrophe> <i> : "\355"     iacute
+Alt ~Ctrl ~Shift <space> <apostrophe> <o> : "\363"     oacute
+Alt ~Ctrl ~Shift <space> <apostrophe> <u> : "\372"     uacute
+Alt ~Ctrl ~Shift <space> <parenleft> <parenleft> : "\133"     bracketleft
+Alt ~Ctrl ~Shift <space> <parenleft> <minus> : "\173"     braceleft
+Alt ~Ctrl ~Shift <space> <parenright> <parenright> : "\135"     bracketright
+Alt ~Ctrl ~Shift <space> <parenright> <minus> : "\175"     braceright
+Alt ~Ctrl ~Shift <space> <asterisk> <space> : "\260"     degree
+Alt ~Ctrl ~Shift <space> <asterisk> <A> : "\305"     Aring
+Alt ~Ctrl ~Shift <space> <asterisk> <a> : "\345"     aring
+Alt ~Ctrl ~Shift <space> <plus> <plus>  : "\43"      numbersign
+Alt ~Ctrl ~Shift <space> <plus> <minus> : "\261"     plusminus
+Alt ~Ctrl ~Shift <space> <comma> <comma> : "\270"     cedilla
+Alt ~Ctrl ~Shift <space> <comma> <C>    : "\307"     Ccedilla
+Alt ~Ctrl ~Shift <space> <comma> <c>    : "\347"     ccedilla
+Alt ~Ctrl ~Shift <space> <minus> <parenleft> : "\173"     braceleft
+Alt ~Ctrl ~Shift <space> <minus> <parenright> : "\175"     braceright
+Alt ~Ctrl ~Shift <space> <minus> <plus> : "\261"     plusminus
+Alt ~Ctrl ~Shift <space> <minus> <comma> : "\254"     notsign
+Alt ~Ctrl ~Shift <space> <minus> <minus> : "\255"     hyphen
+Alt ~Ctrl ~Shift <space> <minus> <colon> : "\367"     division
+Alt ~Ctrl ~Shift <space> <G> <parenleft> : "\320"     Gbreve
+Alt ~Ctrl ~Shift <space> <g> <parenleft> : "\360"     gbreve
+Alt ~Ctrl ~Shift <space> <parenleft> <G> : "\320"     Gbreve
+Alt ~Ctrl ~Shift <space> <parenleft> <g> : "\360"     gbreve
+Alt ~Ctrl ~Shift <space> <minus> <L>    : "\243"     sterling
+Alt ~Ctrl ~Shift <space> <minus> <Y>    : "\245"     yen
+Alt ~Ctrl ~Shift <space> <minus> <asciicircum> : "\257"     macron
+Alt ~Ctrl ~Shift <space> <minus> <l>    : "\243"     sterling
+Alt ~Ctrl ~Shift <space> <minus> <y>    : "\245"     yen
+Alt ~Ctrl ~Shift <space> <period> <asciicircum> : "\267"     periodcentered
+Alt ~Ctrl ~Shift <space> <slash> <slash> : "\134"     backslash
+Alt ~Ctrl ~Shift <space> <slash> <less> : "\134"     backslash
+Alt ~Ctrl ~Shift <space> <slash> <C>    : "\242"     cent
+Alt ~Ctrl ~Shift <space> <slash> <O>    : "\330"     Ooblique
+Alt ~Ctrl ~Shift <space> <slash> <U>    : "\265"     mu
+Alt ~Ctrl ~Shift <space> <slash> <asciicircum> : "\174"     bar
+Alt ~Ctrl ~Shift <space> <slash> <c>    : "\242"     cent
+Alt ~Ctrl ~Shift <space> <slash> <o>    : "\370"     oslash
+Alt ~Ctrl ~Shift <space> <slash> <u>    : "\265"     mu
+Alt ~Ctrl ~Shift <space> <0> <C>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <0> <R>        : "\256"     registered
+Alt ~Ctrl ~Shift <space> <0> <S>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <0> <X>        : "\244"     currency
+Alt ~Ctrl ~Shift <space> <0> <asciicircum> : "\260"     degree
+Alt ~Ctrl ~Shift <space> <0> <c>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <0> <r>        : "\256"     registered
+Alt ~Ctrl ~Shift <space> <0> <s>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <0> <x>        : "\244"     currency
+Alt ~Ctrl ~Shift <space> <1> <2>        : "\275"     onehalf
+Alt ~Ctrl ~Shift <space> <1> <4>        : "\274"     onequarter
+Alt ~Ctrl ~Shift <space> <1> <asciicircum> : "\271"     onesuperior
+Alt ~Ctrl ~Shift <space> <2> <asciicircum> : "\262"     twosuperior
+Alt ~Ctrl ~Shift <space> <3> <4>        : "\276"     threequarters
+Alt ~Ctrl ~Shift <space> <3> <asciicircum> : "\263"     threesuperior
+Alt ~Ctrl ~Shift <space> <colon> <minus> : "\367"     division
+Alt ~Ctrl ~Shift <space> <less> <slash> : "\134"     backslash
+Alt ~Ctrl ~Shift <space> <less> <less>  : "\253"     guillemotleft
+Alt ~Ctrl ~Shift <space> <equal> <L>    : "\243"     sterling
+Alt ~Ctrl ~Shift <space> <equal> <Y>    : "\245"     yen
+Alt ~Ctrl ~Shift <space> <equal> <l>    : "\243"     sterling
+Alt ~Ctrl ~Shift <space> <equal> <y>    : "\245"     yen
+Alt ~Ctrl ~Shift <space> <greater> <greater> : "\273"     guillemotright
+Alt ~Ctrl ~Shift <space> <question> <question> : "\277"     questiondown
+Alt ~Ctrl ~Shift <space> <A> <quotedbl> : "\304"     Adiaeresis
+Alt ~Ctrl ~Shift <space> <A> <apostrophe> : "\301"     Aacute
+Alt ~Ctrl ~Shift <space> <A> <asterisk> : "\305"     Aring
+Alt ~Ctrl ~Shift <space> <A> <A>        : "\100"     at
+Alt ~Ctrl ~Shift <space> <A> <E>        : "\306"     AE
+Alt ~Ctrl ~Shift <space> <A> <asciicircum> : "\302"     Acircumflex
+Alt ~Ctrl ~Shift <space> <A> <underscore> : "\252"     ordfeminine
+Alt ~Ctrl ~Shift <space> <A> <grave>    : "\300"     Agrave
+Alt ~Ctrl ~Shift <space> <A> <a>        : "\100"     at
+Alt ~Ctrl ~Shift <space> <A> <asciitilde> : "\303"     Atilde
+Alt ~Ctrl ~Shift <space> <A> <diaeresis> : "\304"     Adiaeresis
+Alt ~Ctrl ~Shift <space> <A> <degree>   : "\305"     Aring
+Alt ~Ctrl ~Shift <space> <A> <acute>    : "\301"     Aacute
+Alt ~Ctrl ~Shift <space> <C> <comma>    : "\307"     Ccedilla
+Alt ~Ctrl ~Shift <space> <C> <slash>    : "\242"     cent
+Alt ~Ctrl ~Shift <space> <C> <0>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <C> <O>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <C> <o>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <C> <bar>      : "\242"     cent
+Alt ~Ctrl ~Shift <space> <E> <quotedbl> : "\313"     Ediaeresis
+Alt ~Ctrl ~Shift <space> <E> <apostrophe> : "\311"     Eacute
+Alt ~Ctrl ~Shift <space> <E> <asciicircum> : "\312"     Ecircumflex
+Alt ~Ctrl ~Shift <space> <E> <grave>    : "\310"     Egrave
+Alt ~Ctrl ~Shift <space> <E> <diaeresis> : "\313"     Ediaeresis
+Alt ~Ctrl ~Shift <space> <E> <acute>    : "\311"     Eacute
+Alt ~Ctrl ~Shift <space> <I> <quotedbl> : "\317"     Idiaeresis
+Alt ~Ctrl ~Shift <space> <I> <apostrophe> : "\315"     Iacute
+Alt ~Ctrl ~Shift <space> <I> <asciicircum> : "\316"     Icircumflex
+Alt ~Ctrl ~Shift <space> <I> <grave>    : "\314"     Igrave
+Alt ~Ctrl ~Shift <space> <I> <diaeresis> : "\317"     Idiaeresis
+Alt ~Ctrl ~Shift <space> <I> <acute>    : "\315"     Iacute
+Alt ~Ctrl ~Shift <space> <L> <minus>    : "\243"     sterling
+Alt ~Ctrl ~Shift <space> <L> <equal>    : "\243"     sterling
+Alt ~Ctrl ~Shift <space> <N> <asciitilde> : "\321"     Ntilde
+Alt ~Ctrl ~Shift <space> <O> <quotedbl> : "\326"     Odiaeresis
+Alt ~Ctrl ~Shift <space> <O> <apostrophe> : "\323"     Oacute
+Alt ~Ctrl ~Shift <space> <O> <slash>    : "\330"     Ooblique
+Alt ~Ctrl ~Shift <space> <O> <C>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <O> <R>        : "\256"     registered
+Alt ~Ctrl ~Shift <space> <O> <S>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <O> <X>        : "\244"     currency
+Alt ~Ctrl ~Shift <space> <O> <asciicircum> : "\324"     Ocircumflex
+Alt ~Ctrl ~Shift <space> <O> <underscore> : "\272"     masculine
+Alt ~Ctrl ~Shift <space> <O> <grave>    : "\322"     Ograve
+Alt ~Ctrl ~Shift <space> <O> <c>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <O> <r>        : "\256"     registered
+Alt ~Ctrl ~Shift <space> <O> <s>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <O> <x>        : "\244"     currency
+Alt ~Ctrl ~Shift <space> <O> <asciitilde> : "\325"     Otilde
+Alt ~Ctrl ~Shift <space> <O> <diaeresis> : "\326"     Odiaeresis
+Alt ~Ctrl ~Shift <space> <O> <acute>    : "\323"     Oacute
+Alt ~Ctrl ~Shift <space> <P> <exclam>   : "\266"     paragraph
+Alt ~Ctrl ~Shift <space> <R> <0>        : "\256"     registered
+Alt ~Ctrl ~Shift <space> <R> <O>        : "\256"     registered
+Alt ~Ctrl ~Shift <space> <R> <o>        : "\256"     registered
+Alt ~Ctrl ~Shift <space> <S> <exclam>   : "\247"     section
+Alt ~Ctrl ~Shift <space> <S> <0>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <S> <O>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <S> <o>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <comma> <S>    : "\336"     Scedilla
+Alt ~Ctrl ~Shift <space> <S> <comma>    : "\336"     Scedilla
+Alt ~Ctrl ~Shift <space> <U> <quotedbl> : "\334"     Udiaeresis
+Alt ~Ctrl ~Shift <space> <U> <apostrophe> : "\332"     Uacute
+Alt ~Ctrl ~Shift <space> <U> <asciicircum> : "\333"     Ucircumflex
+Alt ~Ctrl ~Shift <space> <U> <grave>    : "\331"     Ugrave
+Alt ~Ctrl ~Shift <space> <U> <diaeresis> : "\334"     Udiaeresis
+Alt ~Ctrl ~Shift <space> <U> <acute>    : "\332"     Uacute
+Alt ~Ctrl ~Shift <space> <X> <0>        : "\244"     currency
+Alt ~Ctrl ~Shift <space> <X> <O>        : "\244"     currency
+Alt ~Ctrl ~Shift <space> <X> <X>        : "\327"     multiply
+Alt ~Ctrl ~Shift <space> <X> <o>        : "\244"     currency
+Alt ~Ctrl ~Shift <space> <X> <x>        : "\327"     multiply
+Alt ~Ctrl ~Shift <space> <I> <period>   : "\335"     Iabovedot
+Alt ~Ctrl ~Shift <space> <period> <I>   : "\335"     Iabovedot
+Alt ~Ctrl ~Shift <space> <I> <degree>   : "\335"     Iabovedot
+Alt ~Ctrl ~Shift <space> <degree> <I>   : "\335"     Iabovedot
+Alt ~Ctrl ~Shift <space> <Y> <minus>    : "\245"     yen
+Alt ~Ctrl ~Shift <space> <Y> <equal>    : "\245"     yen
+Alt ~Ctrl ~Shift <space> <asciicircum> <space> : "\136"     asciicircum
+Alt ~Ctrl ~Shift <space> <asciicircum> <minus> : "\257"     macron
+Alt ~Ctrl ~Shift <space> <asciicircum> <period> : "\267"     periodcentered
+Alt ~Ctrl ~Shift <space> <asciicircum> <slash> : "\174"     bar
+Alt ~Ctrl ~Shift <space> <asciicircum> <0> : "\260"     degree
+Alt ~Ctrl ~Shift <space> <asciicircum> <1> : "\271"     onesuperior
+Alt ~Ctrl ~Shift <space> <asciicircum> <2> : "\262"     twosuperior
+Alt ~Ctrl ~Shift <space> <asciicircum> <3> : "\263"     threesuperior
+Alt ~Ctrl ~Shift <space> <asciicircum> <A> : "\302"     Acircumflex
+Alt ~Ctrl ~Shift <space> <asciicircum> <E> : "\312"     Ecircumflex
+Alt ~Ctrl ~Shift <space> <asciicircum> <I> : "\316"     Icircumflex
+Alt ~Ctrl ~Shift <space> <asciicircum> <O> : "\324"     Ocircumflex
+Alt ~Ctrl ~Shift <space> <asciicircum> <U> : "\333"     Ucircumflex
+Alt ~Ctrl ~Shift <space> <asciicircum> <underscore> : "\257"     macron
+Alt ~Ctrl ~Shift <space> <asciicircum> <a> : "\342"     acircumflex
+Alt ~Ctrl ~Shift <space> <asciicircum> <e> : "\352"     ecircumflex
+Alt ~Ctrl ~Shift <space> <asciicircum> <i> : "\356"     icircumflex
+Alt ~Ctrl ~Shift <space> <asciicircum> <o> : "\364"     ocircumflex
+Alt ~Ctrl ~Shift <space> <asciicircum> <u> : "\373"     ucircumflex
+Alt ~Ctrl ~Shift <space> <underscore> <A> : "\252"     ordfeminine
+Alt ~Ctrl ~Shift <space> <underscore> <O> : "\272"     masculine
+Alt ~Ctrl ~Shift <space> <underscore> <asciicircum> : "\257"     macron
+Alt ~Ctrl ~Shift <space> <underscore> <a> : "\252"     ordfeminine
+Alt ~Ctrl ~Shift <space> <underscore> <o> : "\272"     masculine
+Alt ~Ctrl ~Shift <space> <grave> <space> : "\140"     grave
+Alt ~Ctrl ~Shift <space> <grave> <A>    : "\300"     Agrave
+Alt ~Ctrl ~Shift <space> <grave> <E>    : "\310"     Egrave
+Alt ~Ctrl ~Shift <space> <grave> <I>    : "\314"     Igrave
+Alt ~Ctrl ~Shift <space> <grave> <O>    : "\322"     Ograve
+Alt ~Ctrl ~Shift <space> <grave> <U>    : "\331"     Ugrave
+Alt ~Ctrl ~Shift <space> <grave> <a>    : "\340"     agrave
+Alt ~Ctrl ~Shift <space> <grave> <e>    : "\350"     egrave
+Alt ~Ctrl ~Shift <space> <grave> <i>    : "\354"     igrave
+Alt ~Ctrl ~Shift <space> <grave> <o>    : "\362"     ograve
+Alt ~Ctrl ~Shift <space> <grave> <u>    : "\371"     ugrave
+Alt ~Ctrl ~Shift <space> <a> <quotedbl> : "\344"     adiaeresis
+Alt ~Ctrl ~Shift <space> <a> <apostrophe> : "\341"     aacute
+Alt ~Ctrl ~Shift <space> <a> <asterisk> : "\345"     aring
+Alt ~Ctrl ~Shift <space> <a> <A>        : "\100"     at
+Alt ~Ctrl ~Shift <space> <a> <asciicircum> : "\342"     acircumflex
+Alt ~Ctrl ~Shift <space> <a> <underscore> : "\252"     ordfeminine
+Alt ~Ctrl ~Shift <space> <a> <grave>    : "\340"     agrave
+Alt ~Ctrl ~Shift <space> <a> <a>        : "\100"     at
+Alt ~Ctrl ~Shift <space> <a> <e>        : "\346"     ae
+Alt ~Ctrl ~Shift <space> <a> <asciitilde> : "\343"     atilde
+Alt ~Ctrl ~Shift <space> <a> <diaeresis> : "\344"     adiaeresis
+Alt ~Ctrl ~Shift <space> <a> <degree>   : "\345"     aring
+Alt ~Ctrl ~Shift <space> <a> <acute>    : "\341"     aacute
+Alt ~Ctrl ~Shift <space> <c> <comma>    : "\347"     ccedilla
+Alt ~Ctrl ~Shift <space> <c> <slash>    : "\242"     cent
+Alt ~Ctrl ~Shift <space> <c> <0>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <c> <O>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <c> <o>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <c> <bar>      : "\242"     cent
+Alt ~Ctrl ~Shift <space> <e> <quotedbl> : "\353"     ediaeresis
+Alt ~Ctrl ~Shift <space> <e> <apostrophe> : "\351"     eacute
+Alt ~Ctrl ~Shift <space> <e> <asciicircum> : "\352"     ecircumflex
+Alt ~Ctrl ~Shift <space> <e> <grave>    : "\350"     egrave
+Alt ~Ctrl ~Shift <space> <e> <diaeresis> : "\353"     ediaeresis
+Alt ~Ctrl ~Shift <space> <e> <acute>    : "\351"     eacute
+Alt ~Ctrl ~Shift <space> <i> <quotedbl> : "\357"     idiaeresis
+Alt ~Ctrl ~Shift <space> <i> <apostrophe> : "\355"     iacute
+Alt ~Ctrl ~Shift <space> <i> <asciicircum> : "\356"     icircumflex
+Alt ~Ctrl ~Shift <space> <i> <grave>    : "\354"     igrave
+Alt ~Ctrl ~Shift <space> <i> <diaeresis> : "\357"     idiaeresis
+Alt ~Ctrl ~Shift <space> <i> <acute>    : "\355"     iacute
+Alt ~Ctrl ~Shift <space> <l> <minus>    : "\243"     sterling
+Alt ~Ctrl ~Shift <space> <l> <equal>    : "\243"     sterling
+Alt ~Ctrl ~Shift <space> <n> <asciitilde> : "\361"     ntilde
+Alt ~Ctrl ~Shift <space> <o> <quotedbl> : "\366"     odiaeresis
+Alt ~Ctrl ~Shift <space> <o> <apostrophe> : "\363"     oacute
+Alt ~Ctrl ~Shift <space> <o> <slash>    : "\370"     oslash
+Alt ~Ctrl ~Shift <space> <o> <C>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <o> <R>        : "\256"     registered
+Alt ~Ctrl ~Shift <space> <o> <S>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <o> <X>        : "\244"     currency
+Alt ~Ctrl ~Shift <space> <o> <asciicircum> : "\364"     ocircumflex
+Alt ~Ctrl ~Shift <space> <o> <underscore> : "\272"     masculine
+Alt ~Ctrl ~Shift <space> <o> <grave>    : "\362"     ograve
+Alt ~Ctrl ~Shift <space> <o> <c>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <o> <r>        : "\256"     registered
+Alt ~Ctrl ~Shift <space> <o> <s>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <o> <x>        : "\244"     currency
+Alt ~Ctrl ~Shift <space> <o> <asciitilde> : "\365"     otilde
+Alt ~Ctrl ~Shift <space> <o> <diaeresis> : "\366"     odiaeresis
+Alt ~Ctrl ~Shift <space> <o> <acute>    : "\363"     oacute
+Alt ~Ctrl ~Shift <space> <p> <exclam>   : "\266"     paragraph
+Alt ~Ctrl ~Shift <space> <r> <0>        : "\256"     registered
+Alt ~Ctrl ~Shift <space> <r> <O>        : "\256"     registered
+Alt ~Ctrl ~Shift <space> <r> <o>        : "\256"     registered
+Alt ~Ctrl ~Shift <space> <s> <exclam>   : "\247"     section
+Alt ~Ctrl ~Shift <space> <s> <0>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <s> <O>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <s> <o>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <s> <s>        : "\337"     ssharp
+Alt ~Ctrl ~Shift <space> <comma> <s>    : "\376"     scedilla
+Alt ~Ctrl ~Shift <space> <s> <comma>    : "\376"     scedilla
+Alt ~Ctrl ~Shift <space> <u> <quotedbl> : "\374"     udiaeresis
+Alt ~Ctrl ~Shift <space> <u> <apostrophe> : "\372"     uacute
+Alt ~Ctrl ~Shift <space> <u> <asciicircum> : "\373"     ucircumflex
+Alt ~Ctrl ~Shift <space> <u> <grave>    : "\371"     ugrave
+Alt ~Ctrl ~Shift <space> <u> <diaeresis> : "\374"     udiaeresis
+Alt ~Ctrl ~Shift <space> <u> <acute>    : "\372"     uacute
+Alt ~Ctrl ~Shift <space> <x> <0>        : "\244"     currency
+Alt ~Ctrl ~Shift <space> <x> <O>        : "\244"     currency
+Alt ~Ctrl ~Shift <space> <x> <X>        : "\327"     multiply
+Alt ~Ctrl ~Shift <space> <x> <o>        : "\244"     currency
+Alt ~Ctrl ~Shift <space> <x> <x>        : "\327"     multiply
+Alt ~Ctrl ~Shift <space> <y> <quotedbl> : "\377"     ydiaeresis
+Alt ~Ctrl ~Shift <space> <i> <i>        : "\375"     idotless
+Alt ~Ctrl ~Shift <space> <y> <minus>    : "\245"     yen
+Alt ~Ctrl ~Shift <space> <y> <equal>    : "\245"     yen
+Alt ~Ctrl ~Shift <space> <y> <diaeresis> : "\377"     ydiaeresis
+Alt ~Ctrl ~Shift <space> <bar> <C>      : "\242"     cent
+Alt ~Ctrl ~Shift <space> <bar> <c>      : "\242"     cent
+Alt ~Ctrl ~Shift <space> <bar> <bar>    : "\246"     brokenbar
+Alt ~Ctrl ~Shift <space> <asciitilde> <space> : "\176"     asciitilde
+Alt ~Ctrl ~Shift <space> <asciitilde> <A> : "\303"     Atilde
+Alt ~Ctrl ~Shift <space> <asciitilde> <N> : "\321"     Ntilde
+Alt ~Ctrl ~Shift <space> <asciitilde> <O> : "\325"     Otilde
+Alt ~Ctrl ~Shift <space> <asciitilde> <a> : "\343"     atilde
+Alt ~Ctrl ~Shift <space> <asciitilde> <n> : "\361"     ntilde
+Alt ~Ctrl ~Shift <space> <asciitilde> <o> : "\365"     otilde
+Alt ~Ctrl ~Shift <space> <diaeresis> <space> : "\250"     diaeresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <A> : "\304"     Adiaeresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <E> : "\313"     Ediaeresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <I> : "\317"     Idiaeresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <O> : "\326"     Odiaeresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <U> : "\334"     Udiaeresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <a> : "\344"     adiaeresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <e> : "\353"     ediaeresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <i> : "\357"     idiaeresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <o> : "\366"     odiaeresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <u> : "\374"     udiaeresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <y> : "\377"     ydiaeresis
+Alt ~Ctrl ~Shift <space> <degree> <space> : "\260"     degree
+Alt ~Ctrl ~Shift <space> <degree> <A>   : "\305"     Aring
+Alt ~Ctrl ~Shift <space> <degree> <a>   : "\345"     aring
+Alt ~Ctrl ~Shift <space> <acute> <space> : "\264"     acute
+Alt ~Ctrl ~Shift <space> <acute> <A>    : "\301"     Aacute
+Alt ~Ctrl ~Shift <space> <acute> <E>    : "\311"     Eacute
+Alt ~Ctrl ~Shift <space> <acute> <I>    : "\315"     Iacute
+Alt ~Ctrl ~Shift <space> <acute> <O>    : "\323"     Oacute
+Alt ~Ctrl ~Shift <space> <acute> <U>    : "\332"     Uacute
+Alt ~Ctrl ~Shift <space> <acute> <a>    : "\341"     aacute
+Alt ~Ctrl ~Shift <space> <acute> <e>    : "\351"     eacute
+Alt ~Ctrl ~Shift <space> <acute> <i>    : "\355"     iacute
+Alt ~Ctrl ~Shift <space> <acute> <o>    : "\363"     oacute
+Alt ~Ctrl ~Shift <space> <acute> <u>    : "\372"     uacute
+
+# Latin 1 keysyms plus 8859-9 hacks
+<Aacute>                                : "\301"     Aacute
+<aacute>				: "\341"     aacute
+<Adiaeresis>				: "\304"     Adiaeresis
+<adiaeresis>				: "\344"     adiaeresis
+<degree>				: "\260"     degree
+<diaeresis>				: "\250"     diaeresis
+<Eacute>				: "\311"     Eacute
+<eacute>				: "\351"     eacute
+<Iacute>				: "\315"     Iacute
+<iacute>				: "\355"     iacute
+<Oacute>				: "\323"     Oacute
+<oacute>				: "\363"     oacute
+<Odiaeresis>				: "\326"     Odiaeresis
+<odiaeresis>				: "\366"     odiaeresis
+<section>				: "\247"     section
+<Uacute>				: "\332"     Uacute
+<uacute>				: "\372"     uacute
+<Udiaeresis>				: "\334"     Udiaeresis
+<udiaeresis>				: "\374"     udiaeresis
+<Yacute>				: "\335"     Iabovedot
+<yacute>				: "\375"     idotless
+<THORN>					: "\336"     Scedilla
+<thorn>					: "\376"     scedilla
+<ETH>					: "\320"     Gbreve
+<eth>					: "\360"     gbreve
+
+<Scedilla>                              : "\336"     Scedilla
+<scedilla>                              : "\376"     scedilla
+<Gbreve>                                : "\320"     Gbreve
+<gbreve>                                : "\360"     gbreve
+<Iabovedot>                             : "\335"     Iabovedot
+<idotless>                              : "\375"     idotless

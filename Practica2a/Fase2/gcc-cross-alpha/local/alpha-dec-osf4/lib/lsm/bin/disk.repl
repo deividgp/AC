@@ -1,0 +1,207 @@
+#!/sbin/sh -
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+# @(#)$RCSfile: disk.repl.sh,v $ $Revision: 1.1.8.5 $ (DEC) $Date: 1995/08/10 15:11:56 $
+# @(#)src/common/cmd/vxvm/voladm/disk.repl.sh	5.10 16 Mar 1993 01:19:57 - Copyright (c) 1993 VERITAS Software Corp.
+#ident	"@(#)vxvm:common/cmd/vxvm/voladm/disk.repl.sh	5.10"
+
+
+DSPMSG="/sbin/lsm.d/bin/dspmsg -s 1 lsm_sh.cat"
+
+VOLADM_ROOT=${VOLADM_ROOT-/usr/lib/lsm}
+VOLADM_LIB=${VOLADM_LIB-$VOLADM_ROOT/lib}
+. $VOLADM_LIB/voladm_lib.sh
+
+voladm_menu_push ReplaceDisk
+voladm_help_push disk.rm.help
+
+while true
+do
+	voladm_begin_screen -M 3300 "Replace a failed or removed disk"
+	$DSPMSG 3301 "  Use this menu operation to specify a replacement disk for a disk\n"
+	$DSPMSG 3302 "  that you removed with the \"Remove a disk for replacement\" menu\n"
+	$DSPMSG 3303 "  operation, or that failed during use.  You will be prompted for\n"
+	$DSPMSG 3304 "  a disk name to replace and a disk device to use as a replacement.\n"
+	$DSPMSG 3305 "  You can choose an uninitialized disk, in which case the disk will\n"
+	$DSPMSG 3306 "  be initialized, or you can choose a disk that you have already\n"
+	$DSPMSG 3307 "  initialized using the Add or initialize a disk menu operation.\n"
+
+	voldisk -q list > $tmpfile1
+	found_removed=
+	exec 3<&0 < $tmpfile1
+	while read device type disk group flags
+	do
+		[ "X$device" = X- ] && found_removed=yes
+	done
+	exec 0<&3 3<&-
+	if [ -z "$found_removed" ]
+	then
+		$DSPMSG 3308 "\n  There are currently no devices that are failed or removed.\n\n"
+		voladm_continue
+		break
+	fi
+
+	message=`$DSPMSG 3309 "Select a removed or failed disk"`
+	voladm_get_disk_dmname -r "$message"
+
+	volprint -g "$dgname" -F '%dm_offset %len' -se 'sd_dm_name=="$dmname"' \
+		> $tmpfile1
+	offs=0
+	len=0
+	exec 3<&0 < $tmpfile1
+	while read sd_offset sd_len
+	do
+		offs=$sd_offset
+		len=$sd_len
+	done
+	exec 0<&3 3<&-
+	minlen=`expr $offs + $len`
+
+	voldisk -q list > $tmpfile1
+	repldevlist=
+	exec 3<&0 < $tmpfile1
+	while read device type disk group status invalid
+	do
+		[ X$disk = X- ] || continue
+		[ $status = online ] || continue
+		[ -z "$invalid" ] || continue
+
+		daname=$device
+
+		voldisk list "$daname" > $tmpfile2
+		groupline=`grep "^group:" $tmpfile2`
+		case $groupline in
+		*"name= id=") ;;
+		*)	continue;;
+		esac
+
+		dalenline=`grep "^public:" $tmpfile2`
+		dalenfield=`list_item 4 \$dalenline`
+		dalen=`expr $dalenfield : len=\(.*\)`
+		[ $dalen -ge $minlen ] || continue
+
+		append_list repldevlist $device
+	done
+	exec 0<&3 3<&-
+	repldev=
+	initdev=
+	call_init=
+	if [ ! -z "$repldevlist" ]
+	then
+	 $DSPMSG 3310 "\n  The following devices are available as replacements:\n"
+	 $DSPMSG 3312 "\n\t%s\n\n" $repldevlist
+	 $DSPMSG 3313 "  You can choose one of these disks to replace %s.\n" $dmname
+	 $DSPMSG 3314 "  Choose \"none\" to initialize another disk to replace %s.\n" $dmname
+		while true
+		do
+			message=`$DSPMSG 3315 "\Choose a device, or select \"none\""`
+			opt=`$DSPMSG 3316 "<device>,none"`
+			read_input "$message" "$opt" `first_item $repldevlist`
+				
+			[ $? -eq 0 ] || continue
+			if [ "X$input" = Xnone ]
+			then
+				break
+			elif list_member "$input" $repldevlist
+			then
+				repldev=$input
+				repldaname=$repldev
+				break
+			fi
+	 $DSPMSG 3317 "\n  Please choose a device from the following list:\n"
+	 $DSPMSG 3312 "\n\t%s\n\n" $repldevlist
+	 $DSPMSG 3314 "  Choose \"none\" to initialize another disk to replace %s.\n" $dmname
+		done
+	fi
+	if [ -z "$repldev" ]
+	then while true
+	do
+		voladm_disk_device -M 3318 "Select disk device to initialize"
+		initdev=$device
+		initdaname=$daname
+		repldev=$device
+		repldaname=$daname
+
+		voladm_call disk.ckinit "$device" "$daname" replace
+		if [ $status -eq 0 ]
+		then
+			call_init=yes
+			break
+		elif [ $status -ne 10 ]
+		then
+			voladm_yorn -M 3319 "Select a different device?" n \
+				&& continue
+			voladm_yorn -M 3320 "Replace a different disk?" n &&
+				continue 2
+			break 2
+		fi
+		break
+	done; fi
+
+	if [ "$call_init" ]
+	then
+	 $DSPMSG 3321 "\n  The requested operation is to initialize disk device %s and\n" $initdev
+	 $DSPMSG 3322 "  to then use that device to replace the removed or failed disk\n"
+	 $DSPMSG 3323 "  %s in disk group %s.\n" $dmname $dgname
+		voladm_yorn -M 3324 "Continue with operation?" y
+		if [ $? -ne 0 ]
+		then
+			voladm_yorn -M 3320 "Replace a different disk?" n && continue
+			break
+		fi
+		privlen=
+		attrs=
+		get_disk_params "$dgname"
+
+		voladm_call disk.doinit "$initdev" "$initdaname" "$privlen" "$attrs"
+		if [ $? -ne 0 ]
+		then
+			voladm_yorn -M 3320 "Replace a different disk?" n && continue
+			break
+		fi
+	else
+	 $DSPMSG 3325 "\n  The requested operation is to use the initialized device %s\n" $repldev
+	 $DSPMSG 3326 "  to replace the removed or failed disk %s in disk group %s.\n" $dmname $dgname
+		voladm_yorn -M 3324 "Continue with operation?" y
+		if [ $? -ne 0 ]
+		then
+			voladm_yorn -M 3320 "Replace a different disk?" n && continue
+			break
+		fi
+	fi
+
+	doit voldg -g $dgname -k adddisk $dmname=$repldaname 2> $tmpfile1
+	if [ $? -eq 0 ]
+	then
+		doit volrecover -b -g $dgname $dmname -o iosize=64k -s
+	 $DSPMSG 3327 "\n  Replacement of disk %s in group %s with disk device\n" $dmname $dgname
+	 $DSPMSG 3328 "  %s completed successfully.\n" $repldev
+		voladm_yorn -M 3329 "Replace another disk?" n || break
+	else
+		$DSPMSG 3330 "\n  Replacement of disk %s in group %s with device %s failed.\n" \
+			$dmname $dgname $repldev
+		$DSPMSG 3332 "  Error: %s\n" \
+			"`cat $tmpfile1`"
+		voladm_yorn -M 3320 "Replace a different disk?" n || break
+	fi
+done
+
+quit 0

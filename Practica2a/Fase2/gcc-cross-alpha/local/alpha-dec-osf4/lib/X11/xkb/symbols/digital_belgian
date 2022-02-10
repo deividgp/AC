@@ -1,0 +1,132 @@
+// **************************************************************
+// *								*
+// * Symbols for fr_BE.ISO8859-1 - French for Belgium		*
+// *								*
+// **************************************************************
+
+// **************************************************************
+// *								*
+// * The VT105 layouts						*
+// *								*
+// **************************************************************
+xkb_symbols "vt105-tw" { include "digital_french(vt105-tw)" };
+xkb_symbols "vt105-dp" { include "digital_french(vt105-dp)" };
+xkb_symbols "vt105"    { include "digital_french(vt105)"    };
+
+// **************************************************************
+// *								*
+// * The VT108 layouts						*
+// *								*
+// **************************************************************
+xkb_symbols "vt108-tw" { include "digital_french(vt108-tw)" };
+xkb_symbols "vt108-dp" { include "digital_french(vt108-dp)" };
+xkb_symbols "vt108"    { include "digital_french(vt108)"    };
+
+// **************************************************************
+// *								*
+// * The PCXAL layouts (102-key)				*
+// *								*
+// **************************************************************
+xkb_symbols "pcxalgb" {
+    include "digital_pc(pc)"
+
+    key <AE00> {       [     twosuperior,     threesuperior ] };
+    key <AE01> {
+	symbols[Group1]= [	 ampersand,		  1 ],
+	symbols[Group2]= [	       bar ]
+    };
+    key <AE02> {
+	symbols[Group1]= [	    eacute,		  2 ],
+	symbols[Group2]= [		at ]
+    };
+    key <AE03> {
+	symbols[Group1]= [	  quotedbl,		  3 ],
+	symbols[Group2]= [	numbersign ]
+    };
+    key <AE04> {       [      apostrophe,		4 ] };
+    key <AE05> {       [       parenleft,		5 ] };
+    key <AE06> {
+	symbols[Group1]= [	   section,		  6 ],
+	symbols[Group2]= [     asciicircum ]
+    };
+    key <AE07> {       [	  egrave,		7 ] };
+    key <AE08> {       [	  exclam,		8 ] };
+    key <AE09> {
+	symbols[Group1]= [	  ccedilla,		  9 ],
+	symbols[Group2]= [	 braceleft ]
+    };
+    key <AE10> {
+	symbols[Group1]= [	    agrave,		  0 ],
+	symbols[Group2]= [	 braceright ]
+    };
+    key <AE11> {       [      parenright,	   degree ] };
+    key <AE12> {       [	   minus,      underscore ] };
+
+    key <AD01> {       [	       a,		A ] };
+    key <AD02> {       [	       z,		Z ] };
+    key <AD03> {       
+	symbols[Group1]= [	       e,		  E ], 
+	symbols[Group2]= [       EuroSign ]
+    };
+    key <AD04> {       [	       r,		R ] };
+    key <AD05> {       [	       t,		T ] };
+    key <AD06> {       [	       y,		Y ] };
+    key <AD07> {       [	       u,		U ] };
+    key <AD08> {       [	       i,		I ] };
+    key <AD09> {       [	       o,		O ] };
+    key <AD10> {       [	       p,		P ] };
+    key <AD11> {       
+	symbols[Group1]= [ Dcircumflex_accent,	 Ddiaeresis ],
+	symbols[Group2]= [     bracketleft ]
+    };
+    key <AD12> {
+	symbols[Group1]= [	    dollar,	   asterisk ],
+	symbols[Group2]= [    bracketright ]
+    };
+
+    key <AC01> {       [	       q,		Q ] };
+    key <AC02> {       [	       s,		S ] };
+    key <AC03> {       [	       d,		D ] };
+    key <AC04> {       [	       f,		F ] };
+    key <AC05> {       [	       g,		G ] };
+    key <AC06> {       [	       h,		H ] };
+    key <AC07> {       [	       j,		J ] };
+    key <AC08> {       [	       k,		K ] };
+    key <AC09> {       [	       l,		L ] };
+    key <AC10> {       [	       m,		M ] };
+    key <AC11> {       
+	symbols[Group1]= [	    ugrave,	    percent ],
+	symbols[Group2]= [   Dacute_accent ]
+    };
+    key <AC12> {
+	symbols[Group1]= [		mu,	   sterling ],
+	symbols[Group2]= [   Dgrave_accent ]
+    };
+
+    key <BKSL> {       
+	symbols[Group1]= [	      less,	    greater ],
+	symbols[Group2]= [	 backslash ]
+    };
+    key <AB01> {       [	       w,		W ] };
+    key <AB02> {       [	       x,		X ] };
+    key <AB03> {       [	       c,		C ] };
+    key <AB04> {       [	       v,		V ] };
+    key <AB05> {       [	       b,		B ] };
+    key <AB06> {       [	       n,		N ] };
+    key <AB07> {       [	   comma,	 question ] };
+    key <AB08> {       [       semicolon,	   period ] };
+    key <AB09> {       [	   colon,	    slash ] };
+    key <AB10> {       
+	symbols[Group1]= [	     equal,	       plus ],
+	symbols[Group2]= [          Dtilde ]
+    };
+};
+
+xkb_symbols "pcxal"   { include "digital_belgian(pcxalgb)" };
+xkb_symbols "pcxalab" { include "digital_belgian(pcxalgb)" };
+xkb_symbols "pcxalfb" { include "digital_belgian(pcxalgb)" };
+xkb_symbols "pcxalkb" { include "digital_belgian(pcxalgb)" };
+xkb_symbols "lk44x"   { include "digital_belgian(pcxalgb)" };
+
+xkb_symbols "lk471ab" { include "digital_belgian(pcxalgb)" };
+xkb_symbols "lk471"   { include "digital_belgian(lk471ab)" };

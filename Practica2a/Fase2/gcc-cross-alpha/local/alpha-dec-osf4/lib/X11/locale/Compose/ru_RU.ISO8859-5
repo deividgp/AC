@@ -1,0 +1,72 @@
+# Copyright (c) Digital Equipment Corporation, 1992,1995
+# All Rights Reserved.  Unpublished rights reserved
+# under the copyright laws of the United States.
+#
+# The software contained on this media is proprietary to
+# and embodies the confidential technology of Digital
+# Equipment Corporation.  Possession, use, duplication
+# or dissemination of the software and media is
+# authorized only pursuant to a valid written license
+# from Digital Equipment Corporation.
+#
+# RESTRICTED RIGHTS LEGEND Use, duplication, or
+# disclosure by the U.S. Government is subject to
+# restrictions as set forth in Subparagraph (c)(1)(ii)
+# of DFARS 252.227-7013, or in FAR 52.227-19, as
+# applicable.
+<Multi_key> <plus> <plus>               : "\43"      numbersign
+<Multi_key> <parenleft> <parenleft>     : "\133"     bracketleft
+<Multi_key> <parenright> <parenright>   : "\135"     bracketright
+<Multi_key> <parenleft> <minus>         : "\173"     braceleft
+<Multi_key> <minus> <parenleft>         : "\173"     braceleft
+<Multi_key> <parenright> <minus>        : "\175"     braceright
+<Multi_key> <minus> <parenright>        : "\175"     braceright
+<Multi_key> <A> <A>                     : "\100"     at
+<Multi_key> <A> <a>                     : "\100"     at
+<Multi_key> <a> <A>                     : "\100"     at
+<Multi_key> <a> <a>                     : "\100"     at
+<Multi_key> <slash> <slash>             : "\134"     backslash
+<Multi_key> <slash> <less>              : "\134"     backslash
+<Multi_key> <less> <slash>              : "\134"     backslash
+<Multi_key> <space> <asciicircum>       : "\136"     asciicircum
+<Multi_key> <asciicircum> <space>       : "\136"     asciicircum
+~Ctrl <Dcircumflex_accent> <space>      : "\136"     asciicircum
+Alt <Dcircumflex_accent> <space>        : "\136"     asciicircum
+<Multi_key> <slash> <asciicircum>       : "\174"     bar
+<Multi_key> <asciicircum> <slash>       : "\174"     bar
+~Ctrl <Dcircumflex_accent> <slash>      : "\174"     bar
+Alt <Dcircumflex_accent> <slash>        : "\174"     bar
+<Multi_key> <space> <asciitilde>        : "\176"     asciitilde
+<Multi_key> <asciitilde> <space>        : "\176"     asciitilde
+~Ctrl <Dtilde> <space>                  : "\176"     asciitilde
+Alt <Dtilde> <space>                    : "\176"     asciitilde
+<Multi_key> <space> <grave>             : "\140"     grave
+<Multi_key> <grave> <space>             : "\140"     grave
+~Ctrl <Dgrave_accent> <space>           : "\140"     grave
+Alt <Dgrave_accent> <space>             : "\140"     grave
+<Multi_key> <space> <space>             : "\240"     nobreakspace
+<Multi_key> <minus> <minus>             : "\255"     hyphen
+Alt ~Ctrl ~Shift <space> <plus> <plus>  : "\43"      numbersign
+Alt ~Ctrl ~Shift <space> <parenleft> <parenleft> : "\133"     bracketleft
+Alt ~Ctrl ~Shift <space> <parenright> <parenright> : "\135"     bracketright
+Alt ~Ctrl ~Shift <space> <parenleft> <minus> : "\173"     braceleft
+Alt ~Ctrl ~Shift <space> <minus> <parenleft> : "\173"     braceleft
+Alt ~Ctrl ~Shift <space> <parenright> <minus> : "\175"     braceright
+Alt ~Ctrl ~Shift <space> <minus> <parenright> : "\175"     braceright
+Alt ~Ctrl ~Shift <space> <A> <A>        : "\100"     at
+Alt ~Ctrl ~Shift <space> <A> <a>        : "\100"     at
+Alt ~Ctrl ~Shift <space> <a> <A>        : "\100"     at
+Alt ~Ctrl ~Shift <space> <a> <a>        : "\100"     at
+Alt ~Ctrl ~Shift <space> <slash> <slash> : "\134"     backslash
+Alt ~Ctrl ~Shift <space> <slash> <less> : "\134"     backslash
+Alt ~Ctrl ~Shift <space> <less> <slash> : "\134"     backslash
+Alt ~Ctrl ~Shift <space> <space> <asciicircum> : "\136"     asciicircum
+Alt ~Ctrl ~Shift <space> <asciicircum> <space> : "\136"     asciicircum
+Alt ~Ctrl ~Shift <space> <slash> <asciicircum> : "\174"     bar
+Alt ~Ctrl ~Shift <space> <asciicircum> <slash> : "\174"     bar
+Alt ~Ctrl ~Shift <space> <space> <asciitilde> : "\176"     asciitilde
+Alt ~Ctrl ~Shift <space> <asciitilde> <space> : "\176"     asciitilde
+Alt ~Ctrl ~Shift <space> <space> <grave> : "\140"     grave
+Alt ~Ctrl ~Shift <space> <grave> <space> : "\140"     grave
+Alt ~Ctrl ~Shift <space> <space> <space> : "\240"     nobreakspace
+Alt ~Ctrl ~Shift <space> <minus> <minus> : "\255"     hyphen

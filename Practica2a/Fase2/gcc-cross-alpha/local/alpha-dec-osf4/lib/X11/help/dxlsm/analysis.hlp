@@ -1,0 +1,87 @@
+#/* @(#)@(#)help/analysis.hlp	2.1 11 May 1993 19:03:46 -  */
+#ident  "@(#)va11:help/analysis.hlp   2.1"
+#
+#
+Icons, icons.hlp
+X Resources, resources.hlp
+Colors, colors.hlp
+Analysis Statistics Form, analStatF.hlp
+Analysis Parameters Form, analParmF.hlp
+Volume, volume.hlp
+Plex, plex.hlp
+Subdisk, subdisk.hlp
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+#########################################
+ANALYSIS HELP
+
+Analysis is the way that the Visual Administrator displays statistics about
+the performance of Logical Storage Manager objects.  These are displayed both
+visually with different colors or patterns, and numerically with pop up
+statistics forms.
+
+Analysis statistics may optionally be written to a log file using the 
+Analysis Parameters form.  When a log file is specified, time-stamped
+statistics are written to the file at every interval in a binary format.
+This file can be examined or processed after it is converted to ascii
+text using the /usr/sbin/lsmlog2txt utility.
+
+The Logical Storage Manager collects statistics on volumes.  The Visual
+Administrator can use this data to display information on volumes, disks,
+or subdisks.  Because statistics can only be collected on volumes only
+subdisks that are associated with volumes and disks that have subdisks
+associated with volumes may be analyzed.
+
+If you have a color display then the icons being analyzed will be colored
+depending on their statistics.  On a monochrome display this is depicted
+with bitmap patterns, not colors.  The colors and patterns may all be
+modified by the user by specifying the correct X resources.  See help on 
+X Resources for more information.
+
+The cutoff values for the coloring ranges may be specified by the user with
+the Parameters pulldown menu.  The values here define what statistics will
+be in the Low, Medium, or High range.
+
+This is the default list of colors and bitmaps for the Visual
+Administrator.  The actual colors or bitmaps may vary on your system.
+
+		Color Display		Monochrome Display
+		-------------		------------------
+Low		Green			cross weave bitmap
+Medium		Yellow			root weave bitmap
+High		Red			wide weave bitmap
+
+See help on Colors for more information.
+
+When an icon is being analyzed and the property form is popped up (using
+Shift-Custom button, by default) the statistics form for the icon is
+displayed.  See help on the Analysis Statistics Form for more information.
+
+
+Start Analysis
+--------------
+Add the selected icon(s) to the list of objects being analyzed.  One or
+more icons must be selected for this operation.  Only volumes and Volume
+Manager disks can be analyzed.  If an ineligible icon is selected, an error
+will result.  Once this operation is chosen the selected icons will begin
+to display information about their performance characteristics.
+
+Stop Analysis
+-------------
+Take the selected icon(s) out of the list of objects being analyzed.  One
+or more icons must be selected for this operation.  The selected icons will
+return to their normal state (colors/patterns disappear) while all other
+icons being analyzed will continue to display their performance
+characteristics.
+
+Stop All Analysis
+-----------------
+Analysis is stopped for all icons in all views.  Once this happens all
+icons will return to their normal state (colors/patterns disappear).
+
+Parameters
+----------
+Pop up the Analysis Parameters form where you can specify your preferences
+on how you want analysis to be done.  You may specify the sample rate and
+the coloring ranges for volumes, disks, and subdisks.  See help on the
+Analysis Parameters Form for more information.

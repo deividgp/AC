@@ -1,0 +1,22 @@
+#/* @(#)@(#)help/volStart.hlp	2.1 11 May 1993 19:06:54 -  */
+#ident  "@(#)va11:help/volStart.hlp   2.1"
+#
+#
+Pulldown Menu, pulldown.hlp
+Advanced Operations, advOps.hlp
+Advanced Volume Operations, volOps.hlp
+Volume, volume.hlp
+#########################################
+START VOLUMES HELP
+
+This pulldown menu lets you start one, several, or all volumes.  
+
+
+Start
+-----
+Start the selected volume(s).  At least one volume must be selected
+for this operation, and all selected volumes must be startable.
+
+Start All
+---------
+Start all volumes in this disk group that can be started.

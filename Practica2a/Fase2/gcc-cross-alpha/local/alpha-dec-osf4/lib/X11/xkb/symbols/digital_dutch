@@ -1,0 +1,175 @@
+// **************************************************************
+// *								*
+// * Symbols for nl_NL.ISO8859-1 - Dutch for the Netherlands	*
+// *								*
+// **************************************************************
+
+// **************************************************************
+// *								*
+// * The VT105 layouts - based upon the LK201-NH		*
+// *								*
+// * NOTES:  Digital Standard 70-6 says this is the same as the *
+// *	     US map.						*
+// *								*
+// **************************************************************
+xkb_symbols "vt105-tw" { include "digital_us(vt105-tw)" };
+xkb_symbols "vt105-dp" { include "digital_us(vt105-dp)" };
+xkb_symbols "vt105"    { include "digital_us(vt105)"	};
+    
+// **************************************************************
+// *								*
+// * The VT108 layouts - based upon the LK401-AH		*
+// *								*
+// * NOTES:  The LK401 ECO to Digital Standard 70-6 says this	*
+// *	     is the same as the US map.				*
+// *								*
+// **************************************************************
+xkb_symbols "vt108-tw" 
+{ 
+        include "digital_us(vt108-tw)" 
+        replace  key <LCMP> { [ Mode_switch ] };
+};
+
+xkb_symbols "vt108-dp" 
+{ 
+        include "digital_us(vt108-dp)" 
+        replace  key <LCMP> { [ Mode_switch ] };
+};
+
+xkb_symbols "vt108" 
+{ 
+        include "digital_us(vt108)" 
+        replace  key <LCMP> { [ Mode_switch ] };
+};
+
+// **************************************************************
+// *								*
+// * The PCXAL layouts (102-key)				*
+// *								*
+// **************************************************************
+xkb_symbols "pcxalgh" {
+    include "digital_pc(pc)"
+    replace key <KPDL> { [ KP_Delete, KP_Separator ] };
+
+    key <AE00> {
+	symbols[Group1]= [		at,	    section ],
+	symbols[Group2]= [	   notsign ]
+    };
+    key <AE01> {
+	symbols[Group1]= [		 1,	     exclam ],
+	symbols[Group2]= [     onesuperior ]
+    };
+    key <AE02> {
+	symbols[Group1]= [		 2,	   quotedbl ],
+	symbols[Group2]= [     twosuperior ]
+    };
+    key <AE03> {
+	symbols[Group1]= [		 3,	 numbersign ],
+	symbols[Group2]= [   threesuperior ]
+    };
+    key <AE04> {
+	symbols[Group1]= [		 4,	     dollar ],
+	symbols[Group2]= [	onequarter ]
+    };
+    key <AE05> {
+	symbols[Group1]= [		 5,	    percent ],
+	symbols[Group2]= [	   onehalf ]
+    };
+    key <AE06> {
+	symbols[Group1]= [		 6,	  ampersand ],
+	symbols[Group2]= [   threequarters ]
+    };
+    key <AE07> {
+	symbols[Group1]= [		 7,	 underscore ],
+	symbols[Group2]= [	  sterling ]
+    };
+    key <AE08> {
+	symbols[Group1]= [		 8,	  parenleft ],
+	symbols[Group2]= [	 braceleft ]
+    };
+    key <AE09> {
+	symbols[Group1]= [		 9,	 parenright ],
+	symbols[Group2]= [	braceright ]
+    };
+    key <AE10> {       [	       0,      apostrophe ] };
+    key <AE11> {
+	symbols[Group1]= [	     slash,	   question ],
+	symbols[Group2]= [	 backslash ]
+    };
+    key <AE12> {
+	symbols[Group1]= [	    degree,	     Dtilde ],
+	symbols[Group2]= [ Dcedilla_accent ]
+    };
+
+    key <AD01> {       [	       q,		Q ] };
+    key <AD02> {       [	       w,		W ] };
+    key <AD03> {
+        symbols[Group1]= [             e,                 E ],
+        symbols[Group2]= [       EuroSign ]
+    };
+    key <AD04> {
+	symbols[Group1]= [		 r,		  R ],
+	symbols[Group2]= [	 paragraph ]
+    };
+    key <AD05> {       [	       t,		T ] };
+    key <AD06> {       [	       y,		Y ] };
+    key <AD07> {       [	       u,		U ] };
+    key <AD08> {       [	       i,		I ] };
+    key <AD09> {       [	       o,		O ] };
+    key <AD10> {       [	       p,		P ] };
+    key <AD11> {       [      Ddiaeresis, Dcircumflex_accent ] };
+    key <AD12> {       [	asterisk,	      bar ] };
+
+    key <AC01> {       [	       a,		A ] };
+    key <AC02> {
+	symbols[Group1]= [		 s,		  S ],
+	symbols[Group2]= [	    ssharp ]
+    };
+    key <AC03> {       [	       d,		D ] };
+    key <AC04> {       [	       f,		F ] };
+    key <AC05> {       [	       g,		G ] };
+    key <AC06> {       [	       h,		H ] };
+    key <AC07> {       [	       j,		J ] };
+    key <AC08> {       [	       k,		K ] };
+    key <AC09> {       [	       l,		L ] };
+    key <AC10> {       [	    plus,	plusminus ] };
+    key <AC11> {       [   Dacute_accent,   Dgrave_accent ] };
+    key <AC12> {       [	    less,	  greater ] };
+
+    key <BKSL> {
+	symbols[Group1]= [    bracketright,	bracketleft ],
+	symbols[Group2]= [	 brokenbar ]
+    };
+    key <AB01> {
+	symbols[Group1]= [		 z,		  Z ],
+	symbols[Group2]= [   guillemotleft ]
+    };
+    key <AB02> {
+	symbols[Group1]= [		 x,		  X ],
+	symbols[Group2]= [  guillemotright ]
+    };
+    key <AB03> {
+	symbols[Group1]= [		 c,		  C ],
+	symbols[Group2]= [	      cent ]
+    };
+    key <AB04> {       [	       v,		V ] };
+    key <AB05> {       [	       b,		B ] };
+    key <AB06> {       [	       n,		N ] };
+    key <AB07> {
+	symbols[Group1]= [		 m,		  M ],
+	symbols[Group2]= [		mu ]
+    };
+    key <AB08> {       [	   comma,	semicolon ] };
+    key <AB09> {
+	symbols[Group1]= [	    period,	      colon ],
+	symbols[Group2]= [  periodcentered ]
+    };
+    key <AB10> {       [	   minus,	    equal ] };
+};
+
+xkb_symbols "pcxal"   { include "digital_dutch(pcxalgh)" };
+xkb_symbols "pcxalrh" { include "digital_dutch(pcxalgh)" };
+xkb_symbols "lk44x"   { include "digital_dutch(pcxalgh)" };
+
+xkb_symbols "lk471ah" { include "digital_dutch(pcxalgh)" };
+xkb_symbols "lk471"   { include "digital_dutch(lk471ah)" };

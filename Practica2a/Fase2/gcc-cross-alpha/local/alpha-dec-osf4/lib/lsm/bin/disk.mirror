@@ -1,0 +1,114 @@
+#!/sbin/sh -
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+# @(#)$RCSfile: disk.mirror.sh,v $ $Revision: 1.1.7.3 $ (DEC) $Date: 1995/08/01 19:59:35 $
+# @(#)src/common/cmd/vxvm/voladm/disk.mirror.sh	5.3 16 Mar 1993 01:19:42 - Copyright (c) 1993 VERITAS Software Corp.
+#ident	"@(#)vxvm:common/cmd/vxvm/voladm/disk.mirror.sh	5.3"
+
+
+DSPMSG="/sbin/lsm.d/bin/dspmsg -s 1 lsm_sh.cat"
+
+VOLADM_ROOT=${VOLADM_ROOT-/usr/lib/lsm}
+VOLADM_LIB=${VOLADM_LIB-$VOLADM_ROOT/lib}
+. $VOLADM_LIB/voladm_lib.sh
+
+voladm_menu_push Mirror
+voladm_help_push disk.mirror.help
+
+while true
+do
+	voladm_begin_screen -M 3000 "Mirror volumes on a disk"
+	$DSPMSG 3001 "  This operation can be used to mirror volumes on a disk.  These\n"
+	$DSPMSG 3002 "  volumes can be be mirrored onto another disk or onto any\n"
+	$DSPMSG 3003 "  available disk space.  Volumes will not be mirrored if they are\n"
+	$DSPMSG 3004 "  already mirrored.  Also, volumes that are comprised of more than\n"
+	$DSPMSG 3005 "  one subdisk will not be mirrored.\n"
+
+	voladm_get_disk_dmname
+	srcdmname=$dmname
+
+	rootdmname=`volprint -sF "%dmname" -e 'assoc.assoc="rootvol"'`
+	if list_member $srcdmname $rootdmname
+	then
+		disk.rootmir
+		if [ $? -eq 0 ]; then 
+			voladm_yorn -M 3007 "Mirror volumes on a different disk?" n && continue
+			break;
+		fi
+		quit 0
+	fi
+
+	$DSPMSG 3008 "\n  You can choose to mirror volumes from disk %s onto any\n" \
+			"$srcdmname"
+	$DSPMSG 3009 "  available disk space, or you can choose to mirror onto a specific\n"
+	$DSPMSG 3010 "  disk.  To mirror to a specific disk, select the name of that disk.\n"
+	$DSPMSG 3011 "  To mirror to any available disk space, select \"any\".\n"
+	message=`$DSPMSG 3012 "Enter destination disk"`
+	voladm_get_disk_dmname -g "$dgname" "$message" any
+	dstdmname=$dmname
+
+	if [ "X$dstdmname" = Xany ]
+	then
+		dstdmname=
+	 $DSPMSG 3013 "\n  The requested operation is to mirror all volumes on disk %s\n" \
+			"$srcdmname"
+	 $DSPMSG 3014 "  in disk group %s onto any available disk space.\n" \
+			"$dgname"
+	else
+	 $DSPMSG 3013 "\n  The requested operation is to mirror all volumes on disk %s\n" \
+			"$srcdmname"
+	 $DSPMSG 3015 "  in disk group %s onto available disk space on disk %s.\n" \
+			"$dgname $dstdmname"
+		x=`volprint -g "\$dgname" -s -F "%disk" | grep "^$dstdmname\\$"`
+		if [ -n "$x" ]
+		then
+	 $DSPMSG 3016 "\n  There is space already allocated on disk %s.  If you don't\n" \
+			"$dstdmname"
+	 $DSPMSG 3017 "  want to mirror onto this disk, enter \"n\" at the next prompt and\n"
+	 $DSPMSG 3018 "  restart this operation from the beginning.\n"
+		fi
+	fi
+	 $DSPMSG 3019 "\n  NOTE: This operation can take a long time to complete.\n"
+	voladm_yorn -M 3020 "Continue with operation?" y
+	if [ $? -ne 0 ]
+	then
+		voladm_yorn -M 3007 "Mirror volumes on a different disk?" n && continue
+		break
+	fi
+
+	writemsg
+	doit volmirror $v_opt -V -g "$dgname" "$srcdmname" $dstdmname \
+		2> $tmpfile1
+	if [ $? -eq 0 ]
+	then
+		$DSPMSG 3021 "  Mirroring of disk %s is complete.\n" \
+			"$srcdmname"
+		voladm_yorn -M 3022 "Mirror volumes on another disk?" n || break
+	else
+		$DSPMSG 3023 "\n  Mirroring of disk %s failed.\n" \
+			"$srcdmname"
+		$DSPMSG 3024 "  Error:\n%s\n"
+			"`cat $tmpfile1`"
+		voladm_yorn -M 3007 "Mirror volumes on a different disk?" n || break
+	fi
+done
+
+quit 0

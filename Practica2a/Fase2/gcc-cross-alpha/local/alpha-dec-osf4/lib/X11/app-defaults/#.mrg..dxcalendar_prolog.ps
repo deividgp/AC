@@ -1,0 +1,65 @@
+#!/sbin/sh
+# 
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+#
+# HISTORY
+# 
+# @(#)$RCSfile: dxcalendar_prolog.ps.mrg.sh,v $ $Revision: 1.1.2.2 $ (DEC) $Date: 1996/01/15 04:47:58 $
+# 
+# 
+# Replace_It -
+#		merge routine for the OOTBs.
+#
+#	given:	global variable $_FILE
+#	does:	The Replace_It routine is used to simply replace the
+#		configuration file with the new version.  It moves the
+#		old file out of the way to save user customizations.
+#		These customizations will have to be added by hand by
+#		the user after the update.
+#	note:	This is called twice:  once in the "ToProto" phase with
+#		_FILE=.proto..<fn>, and again in the "ToConfig" phase
+#		with _FILE=<fn>.
+
+Replace_It()
+{
+	# copy the latest .new..<fn> to be the installed version
+	# of .proto..<fn> AND the configured file <fn>.
+	MRG_Echo "Replacing $_FILE with $_NEWFILE."
+	MRG_Echo "Customizations to $_FILE should be"
+	MRG_Echo "manually included from $_FILE.PreMRG."
+
+	mv $_FILE $_FILE.PreMRG
+	cp $_NEWFILE $_FILE 
+}
+
+MERGE_ROUTINE=Replace_It
+
+SHELL_LIB=${SHELL_LIB:-/usr/share/lib/shell}
+. $SHELL_LIB/libmrg
+
+# define your merge routine here. 
+
+# OPTIONAL: for 3-way merge, make MRG_SetCheck calls here.
+
+[ "$CHECK_SYNTAX" ] || MRG_Merge "$@" 
+
+

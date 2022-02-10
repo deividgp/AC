@@ -1,0 +1,74 @@
+#!/sbin/sh -
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+# @(#)$RCSfile: disk.doinit.sh,v $ $Revision: 1.1.8.5 $ (DEC) $Date: 1995/12/20 16:09:06 $
+# @(#)src/common/cmd/vxvm/voladm/disk.doinit.sh	5.10 16 Mar 1993 01:19:01 - Copyright (c) 1993 VERITAS Software Corp.
+#ident	"@(#)vxvm:common/cmd/vxvm/voladm/disk.doinit.sh	5.10"
+
+
+DSPMSG="/sbin/lsm.d/bin/dspmsg -s 1 lsm_sh.cat"
+
+VOLADM_ROOT=${VOLADM_ROOT-/usr/lib/lsm}
+VOLADM_LIB=${VOLADM_LIB-$VOLADM_ROOT/lib}
+. $VOLADM_LIB/voladm_lib.sh
+
+device=$1
+daname=$2
+privlen=
+attrs=
+
+if [ $# -gt 2 ]; then 
+	privlen=$3; 
+	attrs=$4; 
+else
+	privlen=1024
+	attrs="nconfig=1 nlog=1"
+fi
+
+voladm_begin_screen -M 2300 "Initialize a disk"
+
+doit voldisk online $daname 2> /dev/null
+
+voladm_begin_screen -M 2300 "Initialize a disk"
+doit voldisksetup -i -q $device privlen=$privlen $attrs > $tmpfile1 2>&1
+status=$?
+if [ $status -eq 1 ]; 
+then 
+	if [ -s $tmpfile1 ]; then 
+		cat $tmpfile1;
+	fi
+	rm -f $tmpfile1
+	message=`$DSPMSG 2303 "Would you like to continue??"`
+	voladm_yorn "$message" n || quit 1
+	doit voldisksetup -q -F -i $device privlen=$privlen $attrs > $tmpfile1 2>&1
+	status=$?
+fi
+if [ $status -ne 0 ]
+then
+	$DSPMSG 2301 "\  Initialization of disk device %s failed.\n" \
+			"$device"
+	$DSPMSG 2302 "  Error: %s\n" \
+			"`cat $tmpfile1`"
+	rm -f $tmpfile1
+	quit 1
+fi
+rm -f $tmpfile1
+quit 0

@@ -1,0 +1,254 @@
+// **************************************************************
+// *								*
+// * Symbols for tr_TR.ISO8859-9 - Turkish for Turkey		*
+// *								*
+// **************************************************************
+
+// **************************************************************
+// *								*
+// * The VT108 layouts						*
+// *								*
+// * NOTES:  The "F" in Turkish F stands for <AD01> = [f,F].	*
+// *								*
+// **************************************************************
+xkb_symbols "vt108-tw" {
+    include "digital_vt(vt108)"
+
+    key <AE00> {
+	symbols[Group1]= [	      plus,	   asterisk ],
+	symbols[Group2]= [	numbersign,	 asciitilde ]
+    };
+    key <AE01> {       [	       1,	   exclam ] };
+    key <AE02> {       [	       2,     asciicircum ] };
+    key <AE03> {       [	       3,	 quotedbl ] };
+    key <AE04> {       [	       4,      apostrophe ] };
+    key <AE05> {       [	       5,	parenleft ] };
+    key <AE06> {       [	       6,	    slash ] };
+    key <AE07> {       [	       7,      parenright ] };
+    key <AE08> {       [	       8,	    minus ] };
+    key <AE09> {       [	       9,	  percent ] };
+    key <AE10> {       [	       0,	    colon ] };
+    key <AE11> {       [	  dollar,	       at ] };
+    key <AE12> {       [	   equal,      underscore ] };
+
+    key <AD01> {       [	       f,		F ] };
+    key <AD02> {       [	       g,		G ] };
+    key <AD03> {       [	  gbreve,	   Gbreve ] };
+    key <AD04> {
+	symbols[Group1]= [	  idotless,		  I ],
+	symbols[Group2]= [		 i,		  I ] 
+    };
+    key <AD05> {       [	       o,		O ] };
+    key <AD06> {       [	       d,		D ] };
+    key <AD07> {       [	       r,		R ] };
+    key <AD08> {       [	       n,		N ] };
+    key <AD09> {       [	       h,		H ] };
+    key <AD10> {       [	       p,		P ] };
+    key <AD11> {       [	       q,		Q ] };
+    key <AD12> {       [	       w,		W ] };
+
+    key <AC01> {       [	       u,		U ] };
+    key <AC02> {
+	symbols[Group1]= [	       i,	  Iabovedot ],
+	symbols[Group2]= [	 backslash,		bar ]
+    };
+    key <AC03> {      
+        symbols[Group1]= [             e,                 E ],
+        symbols[Group2]= [       EuroSign ]
+    };
+    key <AC04> {       [	       a,		A ] };
+    key <AC05> {       [      udiaeresis,      Udiaeresis ] };
+    key <AC06> {       [	       t,		T ] };
+    key <AC07> {       [	       k,		K ] };
+    key <AC08> {       [	       m,		M ] };
+    key <AC09> {       [	       l,		L ] };
+    key <AC10> {       [	       y,		Y ] };
+    key <AC11> {
+	symbols[Group1]= [	  scedilla,	   Scedilla ],
+	symbols[Group2]= [	  NoSymbol,	  ampersand ] 
+    };
+    key <BKSL> {       [	       x,		X ] };
+
+    key <AB00> {       [	    less,	  greater ] };
+    key <AB01> {       [	       j,		J ] };
+    key <AB02> {
+	symbols[Group1]= [	odiaeresis,	 Odiaeresis ],
+	symbols[Group2]= [     bracketleft,	  braceleft ]
+    };
+    key <AB03> {       [	       v,		V ] };
+    key <AB04> {       [	       c,		C ] };
+    key <AB05> {
+	symbols[Group1]= [	  ccedilla,	   Ccedilla ],
+	symbols[Group2]= [    bracketright,	 braceright ] 
+    };
+    key <AB06> {       [	       z,		Z ] };
+    key <AB07> {       [	       s,		S ] };
+    key <AB08> {       [	       b,		B ] };
+    key <AB09> {       [	  period,	 question ] };
+    key <AB10> {       [	   comma,	semicolon ] };
+};
+
+xkb_symbols "vt108-dp" { 
+    include "digital_turkish_f(vt108-tw)" 
+    replace key <AE00> {
+	symbols[Group1]= [	numbersign,	 asciitilde ],
+	symbols[Group2]= [	      plus,	   asterisk ]
+    };
+    replace key <AD04> {
+	symbols[Group1]= [		 i,		  I ],
+	symbols[Group2]= [	  idotless,		  I ]
+    };
+    replace key <AC02> {
+	symbols[Group1]= [     backslash,		bar ],
+	symbols[Group2]= [	       i,	  Iabovedot ]
+    };
+    replace key <AC11> {
+	symbols[Group1]= [	  NoSymbol,	  ampersand ],
+	symbols[Group2]= [	  scedilla,	   Scedilla ]
+    };
+    replace key <AB02> {
+	symbols[Group1]= [     bracketleft,	  braceleft ],
+	symbols[Group2]= [	odiaeresis,	 Odiaeresis ]
+    };
+    replace key <AB05> {
+	symbols[Group1]= [    bracketright,	 braceright ],
+	symbols[Group2]= [	  ccedilla,	   Ccedilla ]
+    };
+};
+
+xkb_symbols "vt108" { include "digital_turkish_f(vt108-tw)" };
+
+// **************************************************************
+// *								*
+// * The PCXAL layouts						*
+// *								*
+// **************************************************************
+xkb_symbols "pcxalmu" {
+    include "digital_pc(pc)"
+
+    key <AE00> {       [	quotedbl,	   eacute ] };
+    key <AE01> {       [	       1,	   exclam ] };
+    key <AE02> {
+	symbols[Group1]= [		 2,	 apostrophe ],
+	symbols[Group2]= [	  sterling ]
+    };
+    key <AE03> {
+	symbols[Group1]= [		 3,	asciicircum ],
+	symbols[Group2]= [	numbersign ]
+    };
+    key <AE04> {
+	symbols[Group1]= [		 4,	       plus ],
+	symbols[Group2]= [	    dollar ]
+    };
+    key <AE05> {       [	       5,	  percent ] };
+    key <AE06> {       [	       6,	ampersand ] };
+    key <AE07> {
+	symbols[Group1]= [		 7,	      slash ],
+	symbols[Group2]= [	 braceleft ]
+    };
+    key <AE08> {
+	symbols[Group1]= [		 8,	  parenleft ],
+	symbols[Group2]= [     bracketleft ]
+    };
+    key <AE09> {
+	symbols[Group1]= [		 9,	 parenright ],
+	symbols[Group2]= [    bracketright ]
+    };
+    key <AE10> {
+	symbols[Group1]= [		 0,	      equal ],
+	symbols[Group2]= [	braceright ]
+    };
+    key <AE11> {
+	symbols[Group1]= [	    period,	   question ],
+	symbols[Group2]= [	 backslash ]
+    };
+    key <AE12> {       [	   minus,      underscore ] };
+
+    key <AD01> {
+	symbols[Group1]= [		 f,		  F ],
+	symbols[Group2]= [		at ]
+    };
+    key <AD02> {       [	       g,		G ] };
+    key <AD03> {       [	     eth,	      Eth ] };
+    key <AD04> {       [	  yacute,		H ] };
+    key <AD05> {       [	       p,		P ] };
+    key <AD06> {       [	       d,		D ] };
+    key <AD07> {       [	       r,		R ] };
+    key <AD08> {       [	       n,		N ] };
+    key <AD09> {       [	       h,		H ] };
+    key <AD10> {       [	       p,		P ] };
+    key <AD11> {       [	       Q,	diaeresis ] };
+    key <AD12> {       [	       W,      asciitilde ] };
+
+    key <AC01> {       [	       u,		U ] };
+    key <AC02> {       [	       i,          Yacute ] };
+    key <AC03> { 
+        symbols[Group1]= [             e,                 E ],
+        symbols[Group2]= [       EuroSign ]
+    };
+    key <AC04> {       [	       a,		A ] };
+    key <AC05> {       [      udiaeresis,      Udiaeresis ] };
+    key <AC06> {       [	       t,		T ] };
+    key <AC07> {       [	       k,		K ] };
+    key <AC08> {       [	       m,		M ] };
+    key <AC09> {       [	       l,		L ] };
+    key <AC10> {       [	       Y,	    slash ] };
+    key <AC11> {       [	   thorn,	    THORN ] };
+    key <AC12> {       [	       x,	        X ] };
+
+    key <BKSL> {
+	symbols[Group1]= [	      less,	    greater ],
+	symbols[Group2]= [	       bar ]
+    };
+    key <AB01> {       [	       j,		J ] };
+    key <AB02> {       [      odiaeresis,      Odiaeresis ] };
+    key <AB03> {       [	       v,		V ] };
+    key <AB04> {       [	       c,		C ] };
+    key <AB05> {       [	ccedilla,	 Ccedilla ] };
+    key <AB06> {       [	       z,		Z ] };
+    key <AB07> {       [	       s,		S ] };
+    key <AB08> {       [               b,               B ] };
+    key <AB09> {       [	  period,	    colon ] };
+    key <AB10> {       [	   comma,	semicolon ] };
+};
+
+xkb_symbols "pcxal"   { include "digital_turkish_f(pcxalmu)" };
+xkb_symbols "lk44x"   { include "digital_turkish_f(pcxalmu)" };
+
+xkb_symbols "lk471bw" { 
+    include "digital_turkish_f(pcxalmu)" 
+
+    replace key <AE00> {        [       plus,   asterisk ] };
+    replace key <AE02> {        [          2,   quotedbl ] };
+    replace key <AE04> {        [          4,     dollar ] };
+    replace key <AE07> {
+        symbols[Group1] = [             7,        period ],
+        symbols[Group2] = [                    braceleft ]
+    };
+    replace key <AE11> {
+        symbols[Group1] = [         slash,       question ],
+        symbols[Group2] = [                     backslash ]
+    };
+    replace key <AD05> {        [       o,              O ] };
+    replace key <AD11> {
+        symbols[Group1] = [             q,              Q ],
+        symbols[Group2] = [                     diaeresis ]
+    };
+    replace key <AD12> {
+        symbols[Group1] = [             w,              W ],
+        symbols[Group2] = [                    asciitilde ]
+    };
+    replace key <AC10> {
+        symbols[Group1] = [             y,              Y ],
+        symbols[Group2] = [                         grave ]
+    };
+    replace key <AC11> {
+        symbols[Group1] = [         thorn,          THORN ],
+        symbols[Group2] = [                    numbersign ]
+    };
+    replace key <AC12> {
+        symbols[Group1] = [         x,          	X ],
+        symbols[Group2] = [                   apostrophe  ]
+    };
+};
+xkb_symbols "lk471"   { include "digital_turkish_f(lk471bw)" };

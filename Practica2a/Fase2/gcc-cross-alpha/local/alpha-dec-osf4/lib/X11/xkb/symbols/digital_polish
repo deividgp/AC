@@ -1,0 +1,307 @@
+// **************************************************************
+// *								*
+// * Symbols for po_PO.ISO8859-2 - Polish for Poland		*
+// *								*
+// **************************************************************
+
+// **************************************************************
+// *								*
+// * The VT108 layouts						*
+// *								*
+// * NOTES:  There isn't a VT105 (i.e. LK201) keyboard for	*
+// *	     po_PO.  In addition, there aren't any TW/DP keys	*
+// *	     for the VT108.  The Group Shift (i.e. Mode_switch)	*
+// *	     takes care of this.				*
+// *								*
+// **************************************************************
+xkb_symbols "vt108" {
+    include "digital_vt(vt108)"
+
+    key <AE00> {       [	   grave,      asciitilde ] };
+    key <AE01> {       [	       1,	   exclam ] };
+    key <AE02> {       [	       2,	       at ] };
+    key <AE03> {       [	       3,      numbersign ] };
+    key <AE04> {       [	       4,	   dollar ] };
+    key <AE05> {       [	       5,	  percent ] };
+    key <AE06> {       [	       6,     asciicircum ] };
+    key <AE07> {       [	       7,	ampersand ] };
+    key <AE08> {       [	       8,	 asterisk ] };
+    key <AE09> {       [	       9,	parenleft ] };
+    key <AE10> {       [	       0,      parenright ] };
+    key <AE11> {       [	   minus,      underscore ] };
+    key <AE12> {       [	   equal,	     plus ] };
+
+    key <AD01> {       [	       q,		Q ] };
+    key <AD02> {       [	       w,		W ] };
+    key <AD03> {
+	symbols[Group1]= [		 e,		  E ],
+	symbols[Group2]= [	   eogonek,	    Eogonek ]
+    };
+    key <AD04> {       [	       r,		R ] };
+    key <AD05> {       [	       t,		T ] };
+    key <AD06> {       [	       y,		Y ] };
+    key <AD07> {       
+	symbols[Group1]= [	       u,		U ],
+        symbols[Group2]= [       EuroSign ]
+    };
+    key <AD08> {       [	       i,		I ] };
+    key <AD09> {
+	symbols[Group1]= [		 o,		  O ],
+	symbols[Group2]= [	    oacute,	     Oacute ]
+    };
+    key <AD10> {       [	       p,		P ] };
+    key <AD11> {       [     bracketleft,	braceleft ] };
+    key <AD12> {       [    bracketright,      braceright ] };
+
+    key <AC01> {
+	symbols[Group1]= [		 a,		  A ],
+	symbols[Group2]= [	   aogonek,	    Aogonek ]
+    };
+    key <AC02> {
+	symbols[Group1]= [		 s,		  S ],
+	symbols[Group2]= [	    sacute,	     Sacute ]
+    };
+    key <AC03> {       [	       d,		D ] };
+    key <AC04> {       [	       f,		F ] };
+    key <AC05> {       [	       g,		G ] };
+    key <AC06> {       [	       h,		H ] };
+    key <AC07> {       [	       j,		J ] };
+    key <AC08> {       [	       k,		K ] };
+    key <AC09> {
+	symbols[Group1]= [		 l,		  L ],
+	symbols[Group2]= [	   lstroke,	    Lstroke ]
+    };
+    key <AC10> {       [       semicolon,	    colon ] };
+    key <AC11> {       [      apostrophe,	 quotedbl ] };
+    key <BKSL> {       [       backslash,	      bar ] };
+
+    key <AB00> {       [	    less,	  greater ] };
+    key <AB01> {
+	symbols[Group1]= [		 z,		  Z ],
+	symbols[Group2]= [	 zabovedot,	  Zabovedot ]
+    };
+    key <AB02> {
+	symbols[Group1]= [		 x,		  X ],
+	symbols[Group2]= [	    zacute,	     Zacute ]
+    };
+    key <AB03> {
+	symbols[Group1]= [		 c,		  C ],
+	symbols[Group2]= [	    cacute,	     Cacute ]
+    };
+    key <AB04> {       [	       v,		V ] };
+    key <AB05> {       [	       b,		B ] };
+    key <AB06> {
+	symbols[Group1]= [		 n,		  N ],
+	symbols[Group2]= [	    nacute,	     Nacute ]
+    };
+    key <AB07> {       [	       m,		M ] };
+    key <AB08> {       [	   comma,	     less ] };
+    key <AB09> {       [	  period,	  greater ] };
+    key <AB10> {       [	   slash,	 question ] };
+};
+
+xkb_symbols "vt108-tw" { include "digital_polish(vt108)" };
+xkb_symbols "vt108-dp" { include "digital_polish(vt108)" };
+
+// **************************************************************
+// *								*
+// * The PCXAL layouts (102-key)				*
+// *								*
+// **************************************************************
+xkb_symbols "pcxalhp" {
+    include "digital_pc(pc)"
+    replace key <KPDL> { [ KP_Delete, KP_Separator ] };
+
+    key <AE00> {       
+	symbols[Group1]= [	   grave,      asciitilde ],
+	symbols[Group2]= [	NoSymbol,	   degree ]
+    };
+    key <AE01> {       [	       1,	   exclam ] };
+    key <AE02> {
+	symbols[Group1]= [	       2,	 quotedbl ],
+	symbols[Group2]= [	       2,	       at ]
+    };
+    key <AE03> {
+	symbols[Group1]= [	       3,	    colon ],
+	symbols[Group2]= [	       3,      numbersign ]
+    };
+    key <AE04> {
+	symbols[Group1]= [	       4,	 question ],
+	symbols[Group2]= [	       4,	   dollar ] 
+    };
+    key <AE05> {       [	       5,	  percent ] };
+    key <AE06> {
+	symbols[Group1]= [	       6,	     plus ],
+	symbols[Group2]= [	       6,     asciicircum ] 
+    };
+    key <AE07> {
+	symbols[Group1]= [	       7,      underscore ],
+	symbols[Group2]= [	       7,	ampersand ] 
+    };
+    key <AE08> {
+	symbols[Group1]= [	       8,	parenleft ],
+	symbols[Group2]= [	       8,	 asterisk ] 
+    };
+    key <AE09> {       [	       9,      parenright ] };
+    key <AE10> {       [	       0,	    equal ] };
+    key <AE11> {       [       zabovedot,	Zabovedot ] };
+    // The following accents are dead keys according to VT510 specs,
+    // and compose file uses "ogonek" and "acute" symbols:
+    key <AE12> {       [	  ogonek,	    acute ] };
+
+    key <AD01> {       [	       q,		Q ] };
+    key <AD02> {       [	       w,		W ] };
+    key <AD03> {       [	       e,		E ] };
+    key <AD04> {       [	       r,		R ] };
+    key <AD05> {       [	       t,		T ] };
+    key <AD06> {       [	       y,		Y ] };
+    key <AD07> {       
+	symbols[Group1]= [	       u,		U ], 
+        symbols[Group2]= [       EuroSign ]
+    };
+    key <AD08> {       [	       i,		I ] };
+    key <AD09> {       [	       o,		O ] };
+    key <AD10> {       [	       p,		P ] };
+    key <AD11> {
+	symbols[Group1]= [	  oacute,	   zacute ],
+	symbols[Group2]= [   bracketleft,	braceleft ]
+    };
+    key <AD12> {
+	symbols[Group1]= [	   slash,	  section ],
+	symbols[Group2]= [  bracketright,      braceright ]
+    };
+
+    key <AC01> {       [	       a,		A ] };
+    key <AC02> {       [	       s,		S ] };
+    key <AC03> {       [	       d,		D ] };
+    key <AC04> {       [	       f,		F ] };
+    key <AC05> {       [	       g,		G ] };
+    key <AC06> {       [	       h,		H ] };
+    key <AC07> {       [	       j,		J ] };
+    key <AC08> {       [	       k,		K ] };
+    key <AC09> {       [	       l,		L ] };
+    key <AC10> {       [	 lstroke,	  Lstroke ] };
+    key <AC11> {
+	symbols[Group1]= [	 aogonek,	  eogonek ],
+	symbols[Group2]= [    apostrophe ]
+    };
+    key <AC12> {
+	symbols[Group1]= [     backslash,	semicolon ],
+	symbols[Group2]= [	currency,	      bar ]
+    };
+
+    key <BKSL> {       [	    less,	  greater ] };
+    key <AB01> {       [	       z,		Z ] };
+    key <AB02> {       [	       x,		X ] };
+    key <AB03> {       [	       c,		C ] };
+    key <AB04> {       [	       v,		V ] };
+    key <AB05> {       [	       b,		B ] };
+    key <AB06> {       [	       n,		N ] };
+    key <AB07> {       [	       m,		M ] };
+    key <AB08> {
+	symbols[Group1]= [	   comma,	   sacute ],
+	symbols[Group2]= [	   comma,	     less ]
+    };
+    key <AB09> {
+	symbols[Group1]= [	  period,	   nacute ],
+	symbols[Group2]= [	  period,	  greater ]
+    };
+    key <AB10> {
+	symbols[Group1]= [	   minus,	   cacute ] };
+};
+
+xkb_symbols "pcxal"   { include "digital_polish(pcxalhp)" };
+xkb_symbols "pcxalsp" { include "digital_polish(pcxalhp)" };
+xkb_symbols "lk44x"   { include "digital_polish(pcxalhp)" };
+
+xkb_symbols "pcxalpp" {
+	include "digital_pc(pc)"
+	replace key <KPDL> { [ KP_Delete, KP_Separator ] };
+
+	key <AE00> {		       [ ogonek,	abovedot ] };
+	key <AE01> { symbols[Group1] = [ 1,		exclam ],
+		     symbols[Group2] = [ asciitilde ] };
+	key <AE02> { symbols[Group1] = [ 2,		quotedbl ],
+		     symbols[Group2] = [ caron ] };
+	key <AE03> { symbols[Group1] = [ 3,		numbersign ],
+		     symbols[Group2] = [ asciicircum ] };
+	key <AE04> { symbols[Group1] = [ 4,		currency ],
+		     symbols[Group2] = [ breve ] };
+	key <AE05> { symbols[Group1] = [ 5,		percent ],
+		     symbols[Group2] = [ degree ] };
+	key <AE06> { symbols[Group1] = [ 6,		ampersand ],
+		     symbols[Group2] = [ ogonek ] };
+	key <AE07> { symbols[Group1] = [ 7,		slash ],
+		     symbols[Group2] = [ grave ] };
+	key <AE08> { symbols[Group1] = [ 8,		parenleft ],
+		     symbols[Group2] = [ abovedot ] };
+	key <AE09> { symbols[Group1] = [ 9,		parenright ],
+		     symbols[Group2] = [ acute ] };
+	key <AE10> { symbols[Group1] = [ 0,		equal ],
+		     symbols[Group2] = [ doubleacute ] };
+	key <AE11> { symbols[Group1] = [ plus,		question ],
+		     symbols[Group2] = [ diaeresis ] };
+	key <AE12> { symbols[Group1] = [ apostrophe,	asterisk ],
+		     symbols[Group2] = [ cedilla ] };
+
+	key <AD01> { symbols[Group1] = [ q,		Q ],
+		     symbols[Group2] = [ backslash ] };
+	key <AD02> { symbols[Group1] = [ w,		W ],
+		     symbols[Group2] = [ bar ] };
+	key <AD03> {		       [ e,		E ] };
+	key <AD04> {		       [ r,		R ] };
+	key <AD05> {		       [ t,		T ] };
+	key <AD06> {		       [ z,		Z ] };
+	key <AD07> { symbols[Group1] = [ u,		U ], 
+		     symbols[Group2] = [         EuroSign ] };
+	key <AD08> {		       [ i,		I ] };
+	key <AD09> {		       [ o,		O ] };
+	key <AD10> {		       [ p,		P ] };
+	key <AD11> { symbols[Group1] = [ zabovedot,	nacute ],
+		     symbols[Group2] = [ division,	Zabovedot ] };
+	key <AD12> { symbols[Group1] = [ sacute,	cacute ],
+		     symbols[Group2] = [ multiply,	Sacute ] };
+
+	key <AC01> {		       [ a,		A ] };
+	key <AC02> { symbols[Group1] = [ s,		S ],
+		     symbols[Group2] = [ dstroke ] };
+	key <AC03> { symbols[Group1] = [ d,		D ],
+		     symbols[Group2] = [ Dstroke ] };
+	key <AC04> { symbols[Group1] = [ f,		F ],
+		     symbols[Group2] = [ bracketleft ] };
+	key <AC05> { symbols[Group1] = [ g,		G ],
+		     symbols[Group2] = [ bracketright ] };
+	key <AC06> {		       [ h,		H ] };
+	key <AC07> {		       [ j,		J ] };
+	key <AC08> {		       [ k,		K ] };
+	key <AC09> {		       [ l,		L ] };
+	key <AC10> { symbols[Group1] = [ lstroke,	Lstroke ],
+		     symbols[Group2] = [ dollar ] };
+	key <AC11> { symbols[Group1] = [ aogonek,	eogonek ],
+		     symbols[Group2] = [ ssharp,	Aogonek ] };
+	key <AC12> { symbols[Group1] = [ oacute,	zacute ],
+		     symbols[Group2] = [ Oacute ] };
+
+	key <BKSL> {		       [ less,		greater ] };
+	key <AB01> {		       [ y,		Y ] };
+	key <AB02> {		       [ x,		X ] };
+	key <AB03> {		       [ c,		C ] };
+	key <AB04> { symbols[Group1] = [ v,		V ],
+		     symbols[Group2] = [ at ] };
+	key <AB05> { symbols[Group1] = [ b,		B ],
+		     symbols[Group2] = [ braceleft ] };
+	key <AB06> { symbols[Group1] = [ n,		N ],
+		     symbols[Group2] = [ braceright ] };
+	key <AB07> { symbols[Group1] = [ m,		M ],
+		     symbols[Group2] = [ section ] };
+	key <AB08> {		       [ comma,		semicolon ] };
+	key <AB09> {		       [ period,	colon ] };
+	key <AB10> {		       [ minus,		underscore ] };
+};
+
+xkb_symbols "lk471bp" { include "digital_polish(pcxalpp)" };
+xkb_symbols "lk471"   { include "digital_polish(lk471bp)" };
+
+xkb_symbols "lk97wbp" { include "digital_polish(lk471bp)" };
+xkb_symbols "lk97w"   { include "digital_polish(lk97wbp)" };
+

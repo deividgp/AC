@@ -1,0 +1,62 @@
+#/* @(#)@(#)help/dgOps.hlp	2.1 11 May 1993 19:04:09 -  */
+#ident  "@(#)va11:help/dgOps.hlp   2.1"
+#
+#
+Disk Group, diskGrp.hlp
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+Disk Group Initialize, dgInit.hlp
+Disk Group Import, dgImport.hlp
+Disk Group Deport, dgDeport.hlp
+Disk Group Add Disk, dgAdddsk.hlp
+Disk Group Remove Disks, dgRmdsk.hlp
+#########################################
+ADVANCED DISK GROUP OPERATIONS HELP
+
+This pulldown menu lets you manipulate Logical Storage Manager disk groups.  
+
+
+Initialize
+----------
+Initialize (create) a disk group.  One partition must be specified for this
+operation where the configuration data base for this disk group will
+reside.  A form is provided where you specify the name of the new disk
+group.
+
+Import Disk Groups
+------------------
+Import a disk group into this system that the system did not previously
+have access to.  The desired disk group name must be specified on a pop-up
+form.  A view is created for the new disk group.
+
+Deport Disk Groups
+------------------
+Deport a disk group from this system.  The disk group will not be
+accessible after the operation completes.  The desired disk group name must
+be specified on a pop-up form.  The view for this disk group will be
+automatically removed.
+
+Add Disks
+---------
+Add a disk to this disk group by creating a Disk Media Record.  One
+partition must be selected for this operation.  A form is presented where
+you specify the disk group to add to and the name of the DMR to create.
+
+Remove Disks
+------------
+Remove disk(s) from a disk group.  One or several LSM disks must be selected
+for this operation.  A form is presented where you specify the disk group
+to remove this LSM disk from.
+
+Disconnect Disks
+----------------
+The selected LSM disk(s) will be disabled for use within this disk group.
+This disk media record (DMR) will no longer point to the previous disk
+access record (DAR).  This means that the LSM disk still exists, but isn't
+usable.  One or more LSM disks must be selected for this operation.
+
+Reconnect Disks
+---------------
+A disk media record (DMR) is reconnected to a disk access record (DAR) that
+is to be created on a partition.  A disconnected LSM disk and a partition
+that isn't connected to a DMR must be selected for this operation.

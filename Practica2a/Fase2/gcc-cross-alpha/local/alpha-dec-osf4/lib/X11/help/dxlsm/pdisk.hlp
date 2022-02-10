@@ -1,0 +1,34 @@
+#/* @(#)@(#)help/pdisk.hlp	2.1 11 May 1993 19:05:30 -  */
+#ident  "@(#)va11:help/pdisk.hlp   2.1"
+#
+#
+Logical Storage Manager Disk, vdisk.hlp
+Partition, part.hlp
+Subdisk, subdisk.hlp
+Views, views.hlp
+#########################################
+PHYSICAL DISK HELP
+
+A physical disk is a mass storage device of individually-indexed readable
+and writable sectors.  A physical disk is used by the Logical Storage Manager
+after the following steps:
+
+1.  A unique disk header is written to the disk.
+2.  A disk access record is created that references the disk (or a
+    partition on the disk).
+3.  The disk is added to a disk group when a disk media record is created
+    that refers to the disk access record.
+4.  Subdisks are created on the disk using the disk media record.  These
+    are used, via plexes and volumes, by the Logical Storage Manager to write 
+    to the disk.
+
+Physical disks appear visually in the Visual Administrator as cylinders
+with single-dark outlines with a "PD" label at the top.  Rectangles within
+the icon represent partitions within the disk, or more formally, represent
+disk access records created on the partitions.
+
+Physical disk icons reside by default only in the Visual Administrator's
+View of Disks.  Logical Storage Manager operations cannot be performed on physical
+disks, but only on disk media records that refer to these disks (DARs are
+called "LSM Disks" in VA).  Therefore, these icons will not normally be used
+by most Visual Administrator users.

@@ -1,0 +1,44 @@
+#/* @(#)@(#)help/pdiskProp.hlp	2.1 11 May 1993 19:05:33 -  */
+#ident  "@(#)va11:help/pdiskProp.hlp   2.1"
+#
+#
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+Disk Group, diskGrp.hlp
+Volume, volume.hlp
+Plex, plex.hlp
+Subdisk, subdisk.hlp
+#########################################
+PHYSICAL DISK PROPERTIES FORM HELP
+
+This form displays information about physical disks on your system.  None
+of the fields on this form may be changed in any way.   Because of this,
+there is no apply or reset button; then only way to pop down the form is by
+pressing Cancel.
+
+
+
+Fields
+----------
+
+Device:
+	The block device node for this physical disk.
+
+Device Type:
+	A description of what type of device this is.  Possible device
+	types include "SCSI hard drive" and "Floppy."  
+
+Disk Heads:
+	Number of read/write heads on this disk.
+
+Cylinders:
+	Number of cylinders on this disk.
+
+Sectors:
+	Total number of sectors on this disk.  
+
+Sector Size:
+	The size, in bytes, of each sector on this disk.
+
+Total Size:
+	Total size of the disk, in sectors.

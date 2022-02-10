@@ -1,0 +1,376 @@
+// **************************************************************
+// *								*
+// * Symbols for iw_IL.ISO8859-8 - Hebrew for Israel		*
+// *								*
+// **************************************************************
+
+xkb_symbols "hebrew-vt" {
+    key <AE00> {
+	symbols[Group1]= [	     grave,	 asciitilde ],
+	symbols[Group2]= [	     slash,	 asciitilde ]
+    };
+    key <AE01> {       [	       1,	   exclam ] };
+    key <AE02> {       [	       2,	       at ] };
+    key <AE03> {       [	       3,      numbersign ] };
+    key <AE04> {       [	       4,	   dollar ] };
+    key <AE05> {       
+	symbols[Group1]= [	       5,	  percent ],
+        symbols[Group2]= [       EuroSign ]
+    };
+    key <AE06> {       [	       6,     asciicircum ] };
+    key <AE07> {       [	       7,	ampersand ] };
+    key <AE08> {       [	       8,	 asterisk ] };
+    key <AE09> {       [	       9,	parenleft ] };
+    key <AE10> {       [	       0,      parenright ] };
+    key <AE11> {       [	   minus,      underscore ] };
+    key <AE12> {       [	   equal,	     plus ] };
+
+    key <AD01> {       [	       q,		Q ] };
+    key <AD02> {
+	symbols[Group1]= [		 w,		  W ],
+	symbols[Group2]= [	apostrophe,		  W ]
+    };
+    key <AD03> {
+	symbols[Group1]= [		 e,		  E ],
+	symbols[Group2]= [     hebrew_qoph,		  E ]
+    };
+    key <AD04> {
+	symbols[Group1]= [		 r,		  R ],
+	symbols[Group2]= [     hebrew_resh,		  R ]
+    };
+    key <AD05> {
+	symbols[Group1]= [		 t,		  T ],
+	symbols[Group2]= [    hebrew_aleph,		  T ]
+    };
+    key <AD06> {
+	symbols[Group1]= [		 y,		  Y ],
+	symbols[Group2]= [	hebrew_tet,		  Y ]
+    };
+    key <AD07> {
+	symbols[Group1]= [		 u,		  U ],
+	symbols[Group2]= [	hebrew_waw,		  U ]
+    };
+    key <AD08> {
+	symbols[Group1]= [		 i,		  I ],
+	symbols[Group2]= [ hebrew_finalnun,		  I ]
+    };
+    key <AD09> {
+	symbols[Group1]= [		 o,		  O ],
+	symbols[Group2]= [ hebrew_finalmem,		  O ]
+    };
+    key <AD10> {
+	symbols[Group1]= [		 p,		  P ],
+	symbols[Group2]= [	 hebrew_pe,		  P ]
+    };
+    key <AD11> {       [     bracketleft,	braceleft ] };
+    key <AD12> {       [    bracketright,      braceright ] };
+
+    key <AC01> {
+	symbols[Group1]= [		 a,		  A ],
+	symbols[Group2]= [     hebrew_shin,		  A ]
+    };
+    key <AC02> {
+	symbols[Group1]= [		 s,		  S ],
+	symbols[Group2]= [    hebrew_dalet,		  S ]
+    };
+    key <AC03> {
+	symbols[Group1]= [		 d,		  D ],
+	symbols[Group2]= [    hebrew_gimel,		  D ]
+    };
+    key <AC04> {
+	symbols[Group1]= [		 f,		  F ],
+	symbols[Group2]= [     hebrew_kaph,		  F ]
+    };
+    key <AC05> {
+	symbols[Group1]= [		 g,		  G ],
+	symbols[Group2]= [     hebrew_ayin,		  G ]
+    };
+    key <AC06> {
+	symbols[Group1]= [		 h,		  H ],
+	symbols[Group2]= [	hebrew_yod,		  H ]
+    };
+    key <AC07> {
+	symbols[Group1]= [		 j,		  J ],
+	symbols[Group2]= [     hebrew_chet,		  J ]
+    };
+    key <AC08> {
+	symbols[Group1]= [		 k,		  K ],
+	symbols[Group2]= [    hebrew_lamed,		  K ]
+    };
+    key <AC09> {
+	symbols[Group1]= [		 l,		  L ],
+	symbols[Group2]= [ hebrew_finalkaph,		  L ]
+    };
+    key <AC10> {
+	symbols[Group1]= [	 semicolon,	      colon ],
+	symbols[Group2]= [  hebrew_finalpe,	      colon ]
+    };
+    key <AC11> {
+	symbols[Group1]= [	apostrophe,	   quotedbl ],
+	symbols[Group2]= [	     comma,	   quotedbl ]
+    };
+    key <BKSL> {
+	symbols[Group1]= [	 backslash,		bar ],
+	symbols[Group2]= [	 semicolon,		bar ]
+    };
+
+    key <AB00> {       [	    less,	  greater ] };
+    key <AB01> {
+	symbols[Group1]= [		 z,		  Z ],
+	symbols[Group2]= [     hebrew_zain,		  Z ]
+    };
+    key <AB02> {
+	symbols[Group1]= [		 x,		  X ],
+	symbols[Group2]= [   hebrew_samech,		  X ]
+    };
+    key <AB03> {
+	symbols[Group1]= [		 c,		  C ],
+	symbols[Group2]= [	hebrew_bet,		  C ]
+    };
+    key <AB04> {
+	symbols[Group1]= [		 v,		  V ],
+	symbols[Group2]= [	 hebrew_he,		  V ]
+    };
+    key <AB05> {
+	symbols[Group1]= [		 b,		  B ],
+	symbols[Group2]= [	hebrew_nun,		  B ]
+    };
+    key <AB06> {
+	symbols[Group1]= [		 n,		  N ],
+	symbols[Group2]= [	hebrew_mem,		  N ]
+    };
+    key <AB07> {
+	symbols[Group1]= [		 m,		  M ],
+	symbols[Group2]= [     hebrew_zade,		  M ]
+    };
+    key <AB08> {
+	symbols[Group1]= [	     comma,	      comma ],
+	symbols[Group2]= [	hebrew_taw,	      comma ]
+    };
+    key <AB09> {
+	symbols[Group1]= [	    period,	     period ],
+	symbols[Group2]= [ hebrew_finalzade,	     period ]
+    };
+    key <AB10> {
+	symbols[Group1]= [	     slash,	   question ],
+	symbols[Group2]= [	    period,	   question ]
+    };
+};
+
+// **************************************************************
+// *								*
+// * The VT105 layouts						*
+// *								*
+// * NOTES:  There aren't any TW/DP keys for the VT105.	 The	*
+// *	     input method takes care of this.			*
+// *								*
+// **************************************************************
+xkb_symbols "vt105" {
+    include "digital_vt(vt105)"
+    include "digital_hebrew(hebrew-vt)"
+};
+
+xkb_symbols "vt105-tw" { include "digital_hebrew(vt105)" };
+xkb_symbols "vt105-dp" { include "digital_hebrew(vt105)" };
+
+// **************************************************************
+// *								*
+// * The VT108 layouts						*
+// *								*
+// * NOTES:  There aren't any TW/DP keys for the VT108.	 The	*
+// *	     Group Shift (i.e. Mode_switch) takes care of this.	*
+// *								*
+// **************************************************************
+xkb_symbols "vt108" {
+    include "digital_vt(vt108)"
+    include "digital_hebrew(hebrew-vt)"
+
+// WDW - 14-Feb-1996.  Use KME syntax in the Hebrew keymaps because
+// of odd interactions with the Hebrew input method.
+    replace key <LCMP> { symbols[Group1]= [ Multi_key ] };
+
+};
+
+xkb_symbols "vt108-tw" { include "digital_hebrew(vt108)" };
+xkb_symbols "vt108-dp" { include "digital_hebrew(vt108)" };
+
+// **************************************************************
+// *								*
+// * The PCXAL layouts (101-key)				*
+// *								*
+// **************************************************************
+xkb_symbols "pcxalgt" {
+//  Group shifting (locking type) is obtained by using
+//  "Control_R" key, instead of "Alt_R":
+//  include "digital_pc(pc)"
+    include "digital_pc(mode_switch_pc)"
+
+    key <AE00> {
+	symbols[Group1]= [	     grave,	 asciitilde ],
+	symbols[Group2]= [	 semicolon ]
+    };
+    key <AE01> {       [	       1,	   exclam ] };
+    key <AE02> {       [	       2,	       at ] };
+    key <AE03> {       [	       3,      numbersign ] };
+    key <AE04> {       [	       4,	   dollar ] };
+    key <AE05> {       
+	symbols[Group1]= [	       5,	  percent ],
+        symbols[Group2]= [       EuroSign ]
+    };
+    key <AE06> {       [	       6,     asciicircum ] };
+    key <AE07> {       [	       7,	ampersand ] };
+    key <AE08> {       [	       8,	 asterisk ] };
+    key <AE09> {       [	       9,	parenleft ] };
+    key <AE10> {       [	       0,      parenright ] };
+    key <AE11> {       [	   minus,      underscore ] };
+    key <AE12> {       [	   equal,	     plus ] };
+
+    key <AD01> {
+	symbols[Group1]= [		 q,		  Q ],
+	symbols[Group2]= [	     slash,		  Q ]
+    };
+    key <AD02> {
+	symbols[Group1]= [		 w,		  W ],
+	symbols[Group2]= [	apostrophe,		  W ]
+    };
+    key <AD03> {
+	symbols[Group1]= [		 e,		  E ],
+	symbols[Group2]= [     hebrew_qoph,		  E ]
+    };
+    key <AD04> {
+	symbols[Group1]= [		 r,		  R ],
+	symbols[Group2]= [     hebrew_resh,		  R ]
+    };
+    key <AD05> {
+	symbols[Group1]= [		 t,		  T ],
+	symbols[Group2]= [    hebrew_aleph,		  T ]
+    };
+    key <AD06> {
+	symbols[Group1]= [		 y,		  Y ],
+	symbols[Group2]= [	hebrew_tet,		  Y ]
+    };
+    key <AD07> {
+	symbols[Group1]= [		 u,		  U ],
+	symbols[Group2]= [	hebrew_waw,		  U ]
+    };
+    key <AD08> {
+	symbols[Group1]= [		 i,		  I ],
+	symbols[Group2]= [ hebrew_finalnun,		  I ]
+    };
+    key <AD09> {
+	symbols[Group1]= [		 o,		  O ],
+	symbols[Group2]= [ hebrew_finalmem,		  O ]
+    };
+    key <AD10> {
+	symbols[Group1]= [		 p,		  P ],
+	symbols[Group2]= [	 hebrew_pe,		  P ]
+    };
+    key <AD11> {       [     bracketleft,	braceleft ] };
+    key <AD12> {       [    bracketright,      braceright ] };
+
+    key <AC01> {
+	symbols[Group1]= [		 a,		  A ],
+	symbols[Group2]= [     hebrew_shin,		  A ]
+    };
+    key <AC02> {
+	symbols[Group1]= [		 s,		  S ],
+	symbols[Group2]= [    hebrew_dalet,		  S ]
+    };
+    key <AC03> {
+	symbols[Group1]= [		 d,		  D ],
+	symbols[Group2]= [    hebrew_gimel,		  D ]
+    };
+    key <AC04> {
+	symbols[Group1]= [		 f,		  F ],
+	symbols[Group2]= [     hebrew_kaph,		  F ]
+    };
+    key <AC05> {
+	symbols[Group1]= [		 g,		  G ],
+	symbols[Group2]= [     hebrew_ayin,		  G ]
+    };
+    key <AC06> {
+	symbols[Group1]= [		 h,		  H ],
+	symbols[Group2]= [	hebrew_yod,		  H ]
+    };
+    key <AC07> {
+	symbols[Group1]= [		 j,		  J ],
+	symbols[Group2]= [     hebrew_chet,		  J ]
+    };
+    key <AC08> {
+	symbols[Group1]= [		 k,		  K ],
+	symbols[Group2]= [    hebrew_lamed,		  K ]
+    };
+    key <AC09> {
+	symbols[Group1]= [		 l,		  L ],
+	symbols[Group2]= [ hebrew_finalkaph,		  L ]
+    };
+    key <AC10> {
+	symbols[Group1]= [	 semicolon,	      colon ],
+	symbols[Group2]= [  hebrew_finalpe,	      colon ]
+    };
+    key <AC11> {
+	symbols[Group1]= [	apostrophe,	   quotedbl ],
+	symbols[Group2]= [	     comma,	   quotedbl ]
+    };
+    key <AC12> {       [       backslash,             bar ] };
+    key <BKSL> {       [       backslash,	      bar ] };
+
+    key <AB01> {
+	symbols[Group1]= [		 z,		  Z ],
+	symbols[Group2]= [     hebrew_zain,		  Z ]
+    };
+    key <AB02> {
+	symbols[Group1]= [		 x,		  X ],
+	symbols[Group2]= [   hebrew_samech,		  X ]
+    };
+    key <AB03> {
+	symbols[Group1]= [		 c,		  C ],
+	symbols[Group2]= [	hebrew_bet,		  C ]
+    };
+    key <AB04> {
+	symbols[Group1]= [		 v,		  V ],
+	symbols[Group2]= [	 hebrew_he,		  V ]
+    };
+    key <AB05> {
+	symbols[Group1]= [		 b,		  B ],
+	symbols[Group2]= [	hebrew_nun,		  B ]
+    };
+    key <AB06> {
+	symbols[Group1]= [		 n,		  N ],
+	symbols[Group2]= [	hebrew_mem,		  N ]
+    };
+    key <AB07> {
+	symbols[Group1]= [		 m,		  M ],
+	symbols[Group2]= [     hebrew_zade,		  M ]
+    };
+    key <AB08> {
+	symbols[Group1]= [	     comma,	       less ],
+	symbols[Group2]= [	hebrew_taw,	       less ]
+    };
+    key <AB09> {
+	symbols[Group1]= [	    period,	    greater ],
+	symbols[Group2]= [ hebrew_finalzade,	    greater ]
+    };
+    key <AB10> {
+	symbols[Group1]= [	     slash,	   question ],
+	symbols[Group2]= [	    period,	   question ]
+    };
+};
+
+xkb_symbols "pcxal"   { include "digital_hebrew(pcxalgt)" };
+xkb_symbols "pcxalat" { include "digital_hebrew(pcxalgt)" };
+xkb_symbols "pcxalkt" { include "digital_hebrew(pcxalgt)" };
+xkb_symbols "lk44x"   { include "digital_hebrew(pcxalgt)" };
+
+xkb_symbols "lk471at" { include "digital_hebrew(pcxalgt)" };
+xkb_symbols "lk471"   { include "digital_hebrew(lk471at)" };
+
+xkb_symbols "lk97wat" { 
+    include "digital_hebrew(lk471)"   
+    
+    replace key <AE00> {
+	symbols[Group1]= [	     grave,	 asciitilde ],
+	symbols[Group2]= [	 semicolon,      asciitilde ]
+    };
+};
+xkb_symbols "lk97w"   { include "digital_hebrew(lk97wat)" };

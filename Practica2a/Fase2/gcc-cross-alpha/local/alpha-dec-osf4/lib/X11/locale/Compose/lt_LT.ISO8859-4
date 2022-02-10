@@ -1,0 +1,1005 @@
+# Copyright (c) Digital Equipment Corporation, 1992,1993
+# All Rights Reserved.  Unpublished rights reserved
+# under the copyright laws of the United States.
+#
+# The software contained on this media is proprietary to
+# and embodies the confidential technology of Digital
+# Equipment Corporation.  Possession, use, duplication
+# or dissemination of the software and media is
+# authorized only pursuant to a valid written license
+# from Digital Equipment Corporation.
+#
+# RESTRICTED RIGHTS LEGEND Use, duplication, or
+# disclosure by the U.S. Government is subject to
+# restrictions as set forth in Subparagraph (c)(1)(ii)
+# of DFARS 252.227-7013, or in FAR 52.227-19, as
+# applicable.
+#
+<Multi_key> <plus> <plus>                          : "\43"      numbersign
+Alt ~Ctrl ~Shift <space> <plus> <plus>             : "\43"      numbersign
+#
+<Multi_key> <s> <bar>                              : "\44"      dollar
+<Multi_key> <bar> <s>                              : "\44"      dollar
+<Multi_key> <S> <bar>                              : "\44"      dollar
+<Multi_key> <bar> <S>                              : "\44"      dollar
+Alt ~Ctrl ~Shift <space> <s> <bar>                 : "\44"      dollar
+Alt ~Ctrl ~Shift <space> <bar> <s>                 : "\44"      dollar
+Alt ~Ctrl ~Shift <space> <S> <bar>                 : "\44"      dollar
+Alt ~Ctrl ~Shift <space> <bar> <S>                 : "\44"      dollar
+#
+<Multi_key> <n> <d>                                : "\46"      ampersand
+<Multi_key> <N> <d>                                : "\46"      ampersand
+<Multi_key> <n> <D>                                : "\46"      ampersand
+<Multi_key> <N> <D>                                : "\46"      ampersand
+Alt ~Ctrl ~Shift <space> <n> <d>                   : "\46"      ampersand
+Alt ~Ctrl ~Shift <space> <N> <d>                   : "\46"      ampersand
+Alt ~Ctrl ~Shift <space> <n> <D>                   : "\46"      ampersand
+Alt ~Ctrl ~Shift <space> <N> <D>                   : "\46"      ampersand
+#
+<Multi_key> <A> <A>                                : "\100"     at
+<Multi_key> <A> <a>                                : "\100"     at
+<Multi_key> <a> <A>                                : "\100"     at
+<Multi_key> <a> <a>                                : "\100"     at
+Alt ~Ctrl ~Shift <space> <A> <A>                   : "\100"     at
+Alt ~Ctrl ~Shift <space> <A> <a>                   : "\100"     at
+Alt ~Ctrl ~Shift <space> <a> <A>                   : "\100"     at
+Alt ~Ctrl ~Shift <space> <a> <a>                   : "\100"     at
+#
+<Multi_key> <parenleft> <parenleft>                : "\133"     bracketleft
+Alt ~Ctrl ~Shift <space> <parenleft> <parenleft>   : "\133"     bracketleft
+#
+<Multi_key> <slash> <slash>                        : "\134"     backslash
+<Multi_key> <slash> <less>                         : "\134"     backslash
+<Multi_key> <less> <slash>                         : "\134"     backslash
+Alt ~Ctrl ~Shift <space> <slash> <slash>           : "\134"     backslash
+Alt ~Ctrl ~Shift <space> <slash> <less>            : "\134"     backslash
+Alt ~Ctrl ~Shift <space> <less> <slash>            : "\134"     backslash
+#
+<Multi_key> <parenright> <parenright>              : "\135"     bracketright
+Alt ~Ctrl ~Shift <space> <parenright> <parenright> : "\135"     bracketright
+#
+<Dgrave_accent> <space>                            : "\140"     grave
+<Multi_key> <space> <Dgrave_accent>                : "\140"     grave
+<Multi_key> <Dgrave_accent> <space>                : "\140"     grave
+Alt ~Ctrl ~Shift <space> <space> <Dgrave_accent>   : "\140"     grave
+Alt ~Ctrl ~Shift <space> <Dgrave_accent> <space>   : "\140"     grave
+#
+<Multi_key> <parenleft> <minus>                    : "\173"     braceleft
+<Multi_key> <minus> <parenleft>                    : "\173"     braceleft
+Alt ~Ctrl ~Shift <space> <parenleft> <minus>       : "\173"     braceleft
+Alt ~Ctrl ~Shift <space> <minus> <parenleft>       : "\173"     braceleft
+#
+#<asciicircum> <slash>                              : "\174"     bar		LK401 compatibility
+<Multi_key> <slash> <asciicircum>                  : "\174"     bar
+<Multi_key> <asciicircum> <slash>                  : "\174"     bar
+Alt ~Ctrl ~Shift <space> <slash> <asciicircum>     : "\174"     bar
+Alt ~Ctrl ~Shift <space> <asciicircum> <slash>     : "\174"     bar
+#
+<Multi_key> <parenright> <minus>                   : "\175"     braceright
+<Multi_key> <minus> <parenright>                   : "\175"     braceright
+Alt ~Ctrl ~Shift <space> <parenright> <minus>      : "\175"     braceright
+Alt ~Ctrl ~Shift <space> <minus> <parenright>      : "\175"     braceright
+#
+<Dtilde> <space>			           : "\176"     asciitilde
+<Multi_key> <space> <Dtilde>                   	   : "\176"     asciitilde
+<Multi_key> <Dtilde> <space>                       : "\176"     asciitilde
+Alt ~Ctrl ~Shift <space> <space> <Dtilde>          : "\176"     asciitilde
+Alt ~Ctrl ~Shift <space> <Dtilde> <space>          : "\176"     asciitilde
+#
+<Multi_key> <A> <Dtilde>                           : "\303"     Atilde
+<Multi_key> <a> <Dtilde>                           : "\343"     atilde
+<Multi_key> <Dtilde> <A>                           : "\303"     Atilde
+<Multi_key> <Dtilde> <a>                           : "\343"     atilde
+Alt ~Ctrl ~Shift <space> <A> <Dtilde>              : "\303"     Atilde
+Alt ~Ctrl ~Shift <space> <a> <Dtilde>              : "\343"     atilde
+Alt ~Ctrl ~Shift <space> <Dtilde> <A>              : "\303"     Atilde
+Alt ~Ctrl ~Shift <space> <Dtilde> <a>              : "\343"     atilde
+#
+<Multi_key> <O> <Dtilde>                           : "\325"     Otilde
+<Multi_key> <o> <Dtilde>                           : "\365"     otilde
+<Multi_key> <Dtilde> <O>                           : "\325"     Otilde
+<Multi_key> <Dtilde> <o>                           : "\365"     otilde
+Alt ~Ctrl ~Shift <space> <O> <Dtilde>              : "\325"     Otilde
+Alt ~Ctrl ~Shift <space> <o> <Dtilde>              : "\365"     otilde
+Alt ~Ctrl ~Shift <space> <Dtilde> <O>              : "\325"     Otilde
+Alt ~Ctrl ~Shift <space> <Dtilde> <o>              : "\365"     otilde
+#
+<Multi_key> <U> <Dtilde>                           : "\335"     Utilde
+<Multi_key> <u> <Dtilde>                           : "\375"     utilde
+<Multi_key> <Dtilde> <U>                           : "\335"     Utilde
+<Multi_key> <Dtilde> <u>                           : "\375"     utilde
+Alt ~Ctrl ~Shift <space> <U> <Dtilde>              : "\335"     Utilde
+Alt ~Ctrl ~Shift <space> <u> <Dtilde>              : "\375"     utilde
+Alt ~Ctrl ~Shift <space> <Dtilde> <U>              : "\335"     Utilde
+Alt ~Ctrl ~Shift <space> <Dtilde> <u>              : "\375"     utilde
+#
+<Multi_key> <I> <Dtilde>                           : "\245"     Itilde
+<Multi_key> <i> <Dtilde>                           : "\265"     itilde
+<Multi_key> <Dtilde> <I>                           : "\245"     Itilde
+<Multi_key> <Dtilde> <i>                           : "\265"     itilde
+Alt ~Ctrl ~Shift <space> <I> <Dtilde>              : "\245"     Itilde
+Alt ~Ctrl ~Shift <space> <i> <Dtilde>              : "\265"     itilde
+Alt ~Ctrl ~Shift <space> <Dtilde> <I>              : "\245"     Itilde
+Alt ~Ctrl ~Shift <space> <Dtilde> <i>              : "\265"     itilde
+#
+<Multi_key> <space> <space>                        : "\240"     nobreakspace
+Alt ~Ctrl ~Shift <space> <space> <space>           : "\240"     nobreakspace
+#
+<acute> <space>                                    : "\264"     acute
+<Multi_key> <space> <acute>                        : "\264"     acute
+<Multi_key> <acute> <space>                        : "\264"     acute
+<Multi_key> <apostrophe> <apostrophe>              : "\264"     acute
+Alt ~Ctrl ~Shift <space> <space> <acute>           : "\264"     acute
+Alt ~Ctrl ~Shift <space> <acute> <space>           : "\264"     acute
+Alt ~Ctrl ~Shift <space> <apostrophe> <apostrophe> : "\264"     acute
+#
+<acute> <A>                                        : "\301"     Aacute
+<acute> <a>                                        : "\341"     aacute
+<Multi_key> <A> <acute>                            : "\301"     Aacute
+<Multi_key> <a> <acute>                            : "\341"     aacute
+<Multi_key> <acute> <A>                            : "\301"     Aacute
+<Multi_key> <acute> <a>                            : "\341"     aacute
+<Multi_key> <A> <apostrophe>                       : "\301"     Aacute
+<Multi_key> <a> <apostrophe>                       : "\341"     aacute
+<Multi_key> <apostrophe> <A>                       : "\301"     Aacute
+<Multi_key> <apostrophe> <a>                       : "\341"     aacute
+Alt ~Ctrl ~Shift <space> <A> <acute>               : "\301"     Aacute
+Alt ~Ctrl ~Shift <space> <a> <acute>               : "\341"     aacute
+Alt ~Ctrl ~Shift <space> <acute> <A>               : "\301"     Aacute
+Alt ~Ctrl ~Shift <space> <acute> <a>               : "\341"     aacute
+Alt ~Ctrl ~Shift <space> <A> <apostrophe>          : "\301"     Aacute
+Alt ~Ctrl ~Shift <space> <a> <apostrophe>          : "\341"     aacute
+Alt ~Ctrl ~Shift <space> <apostrophe> <A>          : "\301"     Aacute
+Alt ~Ctrl ~Shift <space> <apostrophe> <a>          : "\341"     aacute
+#
+<acute> <E>                                        : "\311"     Eacute
+<acute> <e>                                        : "\351"     eacute
+<Multi_key> <E> <acute>                            : "\311"     Eacute
+<Multi_key> <e> <acute>                            : "\351"     eacute
+<Multi_key> <acute> <E>                            : "\311"     Eacute
+<Multi_key> <acute> <e>                            : "\351"     eacute
+<Multi_key> <E> <apostrophe>                       : "\311"     Eacute
+<Multi_key> <e> <apostrophe>                       : "\351"     eacute
+<Multi_key> <apostrophe> <E>                       : "\311"     Eacute
+<Multi_key> <apostrophe> <e>                       : "\351"     eacute
+Alt ~Ctrl ~Shift <space> <E> <acute>               : "\311"     Eacute
+Alt ~Ctrl ~Shift <space> <e> <acute>               : "\351"     eacute
+Alt ~Ctrl ~Shift <space> <acute> <E>               : "\311"     Eacute
+Alt ~Ctrl ~Shift <space> <acute> <e>               : "\351"     eacute
+Alt ~Ctrl ~Shift <space> <E> <apostrophe>          : "\311"     Eacute
+Alt ~Ctrl ~Shift <space> <e> <apostrophe>          : "\351"     eacute
+Alt ~Ctrl ~Shift <space> <apostrophe> <E>          : "\311"     Eacute
+Alt ~Ctrl ~Shift <space> <apostrophe> <e>          : "\351"     eacute
+#
+<acute> <I>                                        : "\315"     Iacute
+<acute> <i>                                        : "\355"     iacute
+<Multi_key> <I> <acute>                            : "\315"     Iacute
+<Multi_key> <i> <acute>                            : "\355"     iacute
+<Multi_key> <acute> <I>                            : "\315"     Iacute
+<Multi_key> <acute> <i>                            : "\355"     iacute
+<Multi_key> <I> <apostrophe>                       : "\315"     Iacute
+<Multi_key> <i> <apostrophe>                       : "\355"     iacute
+<Multi_key> <apostrophe> <I>                       : "\315"     Iacute
+<Multi_key> <apostrophe> <i>                       : "\355"     iacute
+Alt ~Ctrl ~Shift <space> <I> <acute>               : "\315"     Iacute
+Alt ~Ctrl ~Shift <space> <i> <acute>               : "\355"     iacute
+Alt ~Ctrl ~Shift <space> <acute> <I>               : "\315"     Iacute
+Alt ~Ctrl ~Shift <space> <acute> <i>               : "\355"     iacute
+Alt ~Ctrl ~Shift <space> <I> <apostrophe>          : "\315"     Iacute
+Alt ~Ctrl ~Shift <space> <i> <apostrophe>          : "\355"     iacute
+Alt ~Ctrl ~Shift <space> <apostrophe> <I>          : "\315"     Iacute
+Alt ~Ctrl ~Shift <space> <apostrophe> <i>          : "\355"     iacute
+#
+<acute> <U>                                        : "\332"     Uacute
+<acute> <u>                                        : "\372"     uacute
+<Multi_key> <U> <acute>                            : "\332"     Uacute
+<Multi_key> <u> <acute>                            : "\372"     uacute
+<Multi_key> <acute> <U>                            : "\332"     Uacute
+<Multi_key> <acute> <u>                            : "\372"     uacute
+<Multi_key> <U> <apostrophe>                       : "\332"     Uacute
+<Multi_key> <u> <apostrophe>                       : "\372"     uacute
+<Multi_key> <apostrophe> <U>                       : "\332"     Uacute
+<Multi_key> <apostrophe> <u>                       : "\372"     uacute
+Alt ~Ctrl ~Shift <space> <U> <acute>               : "\332"     Uacute
+Alt ~Ctrl ~Shift <space> <u> <acute>               : "\372"     uacute
+Alt ~Ctrl ~Shift <space> <acute> <U>               : "\332"     Uacute
+Alt ~Ctrl ~Shift <space> <acute> <u>               : "\372"     uacute
+Alt ~Ctrl ~Shift <space> <U> <apostrophe>          : "\332"     Uacute
+Alt ~Ctrl ~Shift <space> <u> <apostrophe>          : "\372"     uacute
+Alt ~Ctrl ~Shift <space> <apostrophe> <U>          : "\332"     Uacute
+Alt ~Ctrl ~Shift <space> <apostrophe> <u>          : "\372"     uacute
+#
+#<asciicircum> <space>                              : "\136"     asciicircum	LK401 compatibility
+<Multi_key> <asciicircum> <space>                  : "\136"     asciicircum
+<Multi_key> <space> <asciicircum>                  : "\136"     asciicircum
+Alt ~Ctrl ~Shift <space> <asciicircum> <space>     : "\136"     asciicircum
+Alt ~Ctrl ~Shift <space> <space> <asciicircum>     : "\136"     asciicircum
+#
+#<asciicircum> <A>                                  : "\302"     Acircumflex	LK401 compatibility
+#<asciicircum> <a>                                  : "\342"     acircumflex	LK401 compatibility
+<Multi_key> <A> <asciicircum>                      : "\302"     Acircumflex
+<Multi_key> <a> <asciicircum>                      : "\342"     acircumflex
+<Multi_key> <asciicircum> <A>                      : "\302"     Acircumflex
+<Multi_key> <asciicircum> <a>                      : "\342"     acircumflex
+Alt ~Ctrl ~Shift <space> <A> <asciicircum>         : "\302"     Acircumflex
+Alt ~Ctrl ~Shift <space> <a> <asciicircum>         : "\342"     acircumflex
+Alt ~Ctrl ~Shift <space> <asciicircum> <A>         : "\302"     Acircumflex
+Alt ~Ctrl ~Shift <space> <asciicircum> <a>         : "\342"     acircumflex
+#
+#<asciicircum> <I>                                  : "\316"     Icircumflex	LK401 compatibility
+#<asciicircum> <i>                                  : "\356"     icircumflex	LK401 compatibility
+<Multi_key> <I> <asciicircum>                      : "\316"     Icircumflex
+<Multi_key> <i> <asciicircum>                      : "\356"     icircumflex
+<Multi_key> <asciicircum> <I>                      : "\316"     Icircumflex
+<Multi_key> <asciicircum> <i>                      : "\356"     icircumflex
+Alt ~Ctrl ~Shift <space> <I> <asciicircum>         : "\316"     Icircumflex
+Alt ~Ctrl ~Shift <space> <i> <asciicircum>         : "\356"     icircumflex
+Alt ~Ctrl ~Shift <space> <asciicircum> <I>         : "\316"     Icircumflex
+Alt ~Ctrl ~Shift <space> <asciicircum> <i>         : "\356"     icircumflex
+#
+#<asciicircum> <O>                                  : "\324"     Ocircumflex	LK401 compatibility
+#<asciicircum> <o>                                  : "\364"     ocircumflex	LK401 compatibility
+<Multi_key> <O> <asciicircum>                      : "\324"     Ocircumflex
+<Multi_key> <o> <asciicircum>                      : "\364"     ocircumflex
+<Multi_key> <asciicircum> <O>                      : "\324"     Ocircumflex
+<Multi_key> <asciicircum> <o>                      : "\364"     ocircumflex
+Alt ~Ctrl ~Shift <space> <O> <asciicircum>         : "\324"     Ocircumflex
+Alt ~Ctrl ~Shift <space> <o> <asciicircum>         : "\364"     ocircumflex
+Alt ~Ctrl ~Shift <space> <asciicircum> <O>         : "\324"     Ocircumflex
+Alt ~Ctrl ~Shift <space> <asciicircum> <o>         : "\364"     ocircumflex
+#
+#<asciicircum> <U>                                  : "\333"     Ucircumflex	LK401 compatibility
+#<asciicircum> <u>                                  : "\373"     ucircumflex	LK401 compatibility
+<Multi_key> <U> <asciicircum>                      : "\333"     Ucircumflex
+<Multi_key> <u> <asciicircum>                      : "\373"     ucircumflex
+<Multi_key> <asciicircum> <U>                      : "\333"     Ucircumflex
+<Multi_key> <asciicircum> <u>                      : "\373"     ucircumflex
+Alt ~Ctrl ~Shift <space> <U> <asciicircum>         : "\333"     Ucircumflex
+Alt ~Ctrl ~Shift <space> <u> <asciicircum>         : "\373"     ucircumflex
+Alt ~Ctrl ~Shift <space> <asciicircum> <U>         : "\333"     Ucircumflex
+Alt ~Ctrl ~Shift <space> <asciicircum> <u>         : "\373"     ucircumflex
+#
+<diaeresis> <space>                                : "\250"     diaeresis	
+<Multi_key> <space> <diaeresis>                    : "\250"     diaeresis	
+<Multi_key> <diaeresis> <space>                    : "\250"     diaeresis	
+<Multi_key> <space> <quotedbl>                     : "\250"     diaeresis	
+<Multi_key> <quotedbl> <space>                     : "\250"     diaeresis	
+Alt ~Ctrl ~Shift <space> <space> <diaeresis>       : "\250"     diaeresis	
+Alt ~Ctrl ~Shift <space> <diaeresis> <space>       : "\250"     diaeresis	
+Alt ~Ctrl ~Shift <space> <space> <quotedbl>        : "\250"     diaeresis	
+Alt ~Ctrl ~Shift <space> <quotedbl> <space>        : "\250"     diaeresis	
+#
+<diaeresis> <A>                                    : "\304"     Adiaeresis
+<diaeresis> <a>                                    : "\344"     adiaeresis
+<Multi_key> <A> <diaeresis>                        : "\304"     Adiaeresis
+<Multi_key> <a> <diaeresis>                        : "\344"     adiaeresis
+<Multi_key> <diaeresis> <A>                        : "\304"     Adiaeresis
+<Multi_key> <diaeresis> <a>                        : "\344"     adiaeresis
+<Multi_key> <A> <quotedbl>                         : "\304"     Adiaeresis
+<Multi_key> <a> <quotedbl>                         : "\344"     adiaeresis
+<Multi_key> <quotedbl> <A>                         : "\304"     Adiaeresis
+<Multi_key> <quotedbl> <a>                         : "\344"     adiaeresis
+Alt ~Ctrl ~Shift <space> <A> <diaeresis>           : "\304"     Adiaeresis
+Alt ~Ctrl ~Shift <space> <a> <diaeresis>           : "\344"     adiaeresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <A>           : "\304"     Adiaeresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <a>           : "\344"     adiaeresis
+Alt ~Ctrl ~Shift <space> <A> <quotedbl>            : "\304"     Adiaeresis
+Alt ~Ctrl ~Shift <space> <a> <quotedbl>            : "\344"     adiaeresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <A>            : "\304"     Adiaeresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <a>            : "\344"     adiaeresis
+#
+<diaeresis> <E>                                    : "\313"     Ediaeresis
+<diaeresis> <e>                                    : "\353"     ediaeresis
+<Multi_key> <E> <diaeresis>                        : "\313"     Ediaeresis
+<Multi_key> <e> <diaeresis>                        : "\353"     ediaeresis
+<Multi_key> <diaeresis> <E>                        : "\313"     Ediaeresis
+<Multi_key> <diaeresis> <e>                        : "\353"     ediaeresis
+<Multi_key> <E> <quotedbl>                         : "\313"     Ediaeresis
+<Multi_key> <e> <quotedbl>                         : "\353"     ediaeresis
+<Multi_key> <quotedbl> <E>                         : "\313"     Ediaeresis
+<Multi_key> <quotedbl> <e>                         : "\353"     ediaeresis
+Alt ~Ctrl ~Shift <space> <E> <diaeresis>           : "\313"     Ediaeresis
+Alt ~Ctrl ~Shift <space> <e> <diaeresis>           : "\353"     ediaeresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <E>           : "\313"     Ediaeresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <e>           : "\353"     ediaeresis
+Alt ~Ctrl ~Shift <space> <E> <quotedbl>            : "\313"     Ediaeresis
+Alt ~Ctrl ~Shift <space> <e> <quotedbl>            : "\353"     ediaeresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <E>            : "\313"     Ediaeresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <e>            : "\353"     ediaeresis
+#
+<diaeresis> <O>                                    : "\326"     Odiaeresis
+<diaeresis> <o>                                    : "\366"     odiaeresis
+<Multi_key> <O> <diaeresis>                        : "\326"     Odiaeresis
+<Multi_key> <o> <diaeresis>                        : "\366"     odiaeresis
+<Multi_key> <diaeresis> <O>                        : "\326"     Odiaeresis
+<Multi_key> <diaeresis> <o>                        : "\366"     odiaeresis
+<Multi_key> <O> <quotedbl>                         : "\326"     Odiaeresis
+<Multi_key> <o> <quotedbl>                         : "\366"     odiaeresis
+<Multi_key> <quotedbl> <O>                         : "\326"     Odiaeresis
+<Multi_key> <quotedbl> <o>                         : "\366"     odiaeresis
+Alt ~Ctrl ~Shift <space> <O> <diaeresis>           : "\326"     Odiaeresis
+Alt ~Ctrl ~Shift <space> <o> <diaeresis>           : "\366"     odiaeresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <O>           : "\326"     Odiaeresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <o>           : "\366"     odiaeresis
+Alt ~Ctrl ~Shift <space> <O> <quotedbl>            : "\326"     Odiaeresis
+Alt ~Ctrl ~Shift <space> <o> <quotedbl>            : "\366"     odiaeresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <O>            : "\326"     Odiaeresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <o>            : "\366"     odiaeresis
+#
+<diaeresis> <U>                                    : "\334"     Udiaeresis
+<diaeresis> <u>                                    : "\374"     udiaeresis
+<Multi_key> <U> <diaeresis>                        : "\334"     Udiaeresis
+<Multi_key> <u> <diaeresis>                        : "\374"     udiaeresis
+<Multi_key> <diaeresis> <U>                        : "\334"     Udiaeresis
+<Multi_key> <diaeresis> <u>                        : "\374"     udiaeresis
+<Multi_key> <U> <quotedbl>                         : "\334"     Udiaeresis
+<Multi_key> <u> <quotedbl>                         : "\374"     udiaeresis
+<Multi_key> <quotedbl> <U>                         : "\334"     Udiaeresis
+<Multi_key> <quotedbl> <u>                         : "\374"     udiaeresis
+Alt ~Ctrl ~Shift <space> <U> <diaeresis>           : "\334"     Udiaeresis
+Alt ~Ctrl ~Shift <space> <u> <diaeresis>           : "\374"     udiaeresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <U>           : "\334"     Udiaeresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <u>           : "\374"     udiaeresis
+Alt ~Ctrl ~Shift <space> <U> <quotedbl>            : "\334"     Udiaeresis
+Alt ~Ctrl ~Shift <space> <u> <quotedbl>            : "\374"     udiaeresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <U>            : "\334"     Udiaeresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <u>            : "\374"     udiaeresis
+#
+<cedilla> <space>                                  : "\270"     cedilla
+<Multi_key> <cedilla> <space>                      : "\270"     cedilla
+<Multi_key> <space> <cedilla>                      : "\270"     cedilla
+<Multi_key> <comma> <comma>                        : "\270"     cedilla
+Alt ~Ctrl ~Shift <space> <cedilla> <space>         : "\270"     cedilla
+Alt ~Ctrl ~Shift <space> <space> <cedilla>         : "\270"     cedilla
+Alt ~Ctrl ~Shift <space> <comma> <comma>           : "\270"     cedilla
+#
+<cedilla> <G>                                      : "\253"     Gcedilla
+<cedilla> <g>                                      : "\273"     gcedilla
+<Multi_key> <G> <cedilla>                          : "\253"     Gcedilla
+<Multi_key> <g> <cedilla>                          : "\273"     gcedilla
+<Multi_key> <cedilla> <G>                          : "\253"     Gcedilla
+<Multi_key> <cedilla> <g>                          : "\273"     gcedilla
+<Multi_key> <G> <comma>                            : "\253"     Gcedilla
+<Multi_key> <g> <comma>                            : "\273"     gcedilla
+<Multi_key> <comma> <G>                            : "\253"     Gcedilla
+<Multi_key> <comma> <g>                            : "\273"     gcedilla
+Alt ~Ctrl ~Shift <space> <G> <cedilla>             : "\253"     Gcedilla
+Alt ~Ctrl ~Shift <space> <g> <cedilla>             : "\273"     gcedilla
+Alt ~Ctrl ~Shift <space> <cedilla> <G>             : "\253"     Gcedilla
+Alt ~Ctrl ~Shift <space> <cedilla> <g>             : "\273"     gcedilla
+Alt ~Ctrl ~Shift <space> <G> <comma>               : "\253"     Gcedilla
+Alt ~Ctrl ~Shift <space> <g> <comma>               : "\273"     gcedilla
+Alt ~Ctrl ~Shift <space> <comma> <G>               : "\253"     Gcedilla
+Alt ~Ctrl ~Shift <space> <comma> <g>               : "\273"     gcedilla
+#
+<cedilla> <K>                                      : "\323"     Kcedilla
+<cedilla> <k>                                      : "\363"     kcedilla
+<Multi_key> <K> <cedilla>                          : "\323"     Kcedilla
+<Multi_key> <k> <cedilla>                          : "\363"     kcedilla
+<Multi_key> <cedilla> <K>                          : "\323"     Kcedilla
+<Multi_key> <cedilla> <k>                          : "\363"     kcedilla
+<Multi_key> <K> <comma>                            : "\323"     Kcedilla
+<Multi_key> <k> <comma>                            : "\363"     kcedilla
+<Multi_key> <comma> <K>                            : "\323"     Kcedilla
+<Multi_key> <comma> <k>                            : "\363"     kcedilla
+Alt ~Ctrl ~Shift <space> <K> <cedilla>             : "\323"     Kcedilla
+Alt ~Ctrl ~Shift <space> <k> <cedilla>             : "\363"     kcedilla
+Alt ~Ctrl ~Shift <space> <cedilla> <K>             : "\323"     Kcedilla
+Alt ~Ctrl ~Shift <space> <cedilla> <k>             : "\363"     kcedilla
+Alt ~Ctrl ~Shift <space> <K> <comma>               : "\323"     Kcedilla
+Alt ~Ctrl ~Shift <space> <k> <comma>               : "\363"     kcedilla
+Alt ~Ctrl ~Shift <space> <comma> <K>               : "\323"     Kcedilla
+Alt ~Ctrl ~Shift <space> <comma> <k>               : "\363"     kcedilla
+#
+<cedilla> <L>                                      : "\246"     Lcedilla
+<cedilla> <l>                                      : "\266"     lcedilla
+<Multi_key> <L> <cedilla>                          : "\246"     Lcedilla
+<Multi_key> <l> <cedilla>                          : "\266"     lcedilla
+<Multi_key> <cedilla> <L>                          : "\246"     Lcedilla
+<Multi_key> <cedilla> <l>                          : "\266"     lcedilla
+<Multi_key> <L> <comma>                            : "\246"     Lcedilla
+<Multi_key> <l> <comma>                            : "\266"     lcedilla
+<Multi_key> <comma> <L>                            : "\246"     Lcedilla
+<Multi_key> <comma> <l>                            : "\266"     lcedilla
+Alt ~Ctrl ~Shift <space> <L> <cedilla>             : "\246"     Lcedilla
+Alt ~Ctrl ~Shift <space> <L> <cedilla>             : "\266"     lcedilla
+Alt ~Ctrl ~Shift <space> <cedilla> <L>             : "\246"     Lcedilla
+Alt ~Ctrl ~Shift <space> <cedilla> <l>             : "\266"     lcedilla
+Alt ~Ctrl ~Shift <space> <L> <comma>               : "\246"     Lcedilla
+Alt ~Ctrl ~Shift <space> <l> <comma>               : "\266"     lcedilla
+Alt ~Ctrl ~Shift <space> <comma> <L>               : "\246"     Lcedilla
+Alt ~Ctrl ~Shift <space> <comma> <l>               : "\266"     lcedilla
+#
+<cedilla> <N>                                      : "\321"     Ncedilla
+<cedilla> <n>                                      : "\361"     ncedilla
+<Multi_key> <N> <cedilla>                          : "\321"     Ncedilla
+<Multi_key> <n> <cedilla>                          : "\361"     ncedilla
+<Multi_key> <cedilla> <N>                          : "\321"     Ncedilla
+<Multi_key> <cedilla> <n>                          : "\361"     ncedilla
+<Multi_key> <N> <comma>                            : "\321"     Ncedilla
+<Multi_key> <n> <comma>                            : "\361"     ncedilla
+<Multi_key> <comma> <N>                            : "\321"     Ncedilla
+<Multi_key> <comma> <n>                            : "\361"     ncedilla
+Alt ~Ctrl ~Shift <space> <N> <cedilla>             : "\321"     Ncedilla
+Alt ~Ctrl ~Shift <space> <n> <cedilla>             : "\361"     ncedilla
+Alt ~Ctrl ~Shift <space> <cedilla> <N>             : "\321"     Ncedilla
+Alt ~Ctrl ~Shift <space> <cedilla> <n>             : "\361"     ncedilla
+Alt ~Ctrl ~Shift <space> <N> <comma>               : "\321"     Ncedilla
+Alt ~Ctrl ~Shift <space> <n> <comma>               : "\361"     ncedilla
+Alt ~Ctrl ~Shift <space> <comma> <N>               : "\321"     Ncedilla
+Alt ~Ctrl ~Shift <space> <comma> <n>               : "\361"     ncedilla
+#
+<cedilla> <R>                                      : "\243"     Rcedilla
+<cedilla> <r>                                      : "\263"     rcedilla
+<Multi_key> <R> <cedilla>                          : "\243"     Rcedilla
+<Multi_key> <r> <cedilla>                          : "\263"     rcedilla
+<Multi_key> <cedilla> <R>                          : "\243"     Rcedilla
+<Multi_key> <cedilla> <r>                          : "\263"     rcedilla
+<Multi_key> <R> <comma>                            : "\243"     Rcedilla
+<Multi_key> <r> <comma>                            : "\263"     rcedilla
+<Multi_key> <comma> <R>                            : "\243"     Rcedilla
+<Multi_key> <comma> <r>                            : "\263"     rcedilla
+Alt ~Ctrl ~Shift <space> <R> <cedilla>             : "\243"     Rcedilla
+Alt ~Ctrl ~Shift <space> <r> <cedilla>             : "\263"     rcedilla
+Alt ~Ctrl ~Shift <space> <cedilla> <R>             : "\243"     Rcedilla
+Alt ~Ctrl ~Shift <space> <cedilla> <r>             : "\263"     rcedilla
+Alt ~Ctrl ~Shift <space> <R> <comma>               : "\243"     Rcedilla
+Alt ~Ctrl ~Shift <space> <r> <comma>               : "\263"     rcedilla
+Alt ~Ctrl ~Shift <space> <comma> <R>               : "\243"     Rcedilla
+Alt ~Ctrl ~Shift <space> <comma> <r>               : "\263"     rcedilla
+#
+<caron> <space>                                    : "\267"     caron
+<Multi_key> <space> <caron>                        : "\267"     caron
+<Multi_key> <caron> <space>                        : "\267"     caron
+<Multi_key> <backslash> <slash>                    : "\267"     caron
+<Multi_key> <v> <asciicircum>                      : "\267"     caron
+<Multi_key> <asciicircum> <v>                      : "\267"     caron
+<Multi_key> <V> <asciicircum>                      : "\267"     caron
+<Multi_key> <asciicircum> <V>                      : "\267"     caron
+Alt ~Ctrl ~Shift <space> <space> <caron>           : "\267"     caron
+Alt ~Ctrl ~Shift <space> <caron> <space>           : "\267"     caron
+Alt ~Ctrl ~Shift <space> <backslash> <slash>       : "\267"     caron
+Alt ~Ctrl ~Shift <space> <v> <asciicircum>         : "\267"     caron
+Alt ~Ctrl ~Shift <space> <asciicircum> <v>         : "\267"     caron
+Alt ~Ctrl ~Shift <space> <V> <asciicircum>         : "\267"     caron
+Alt ~Ctrl ~Shift <space> <asciicircum> <V>         : "\267"     caron
+#
+<caron> <S>                                        : "\251"     Scaron
+<caron> <s>                                        : "\271"     scaron
+<Multi_key> <S> <caron>                            : "\251"     Scaron
+<Multi_key> <s> <caron>                            : "\271"     scaron
+<Multi_key> <caron> <S>                            : "\251"     Scaron
+<Multi_key> <caron> <s>                            : "\271"     scaron
+<Multi_key> <S> <v>                                : "\251"     Scaron
+<Multi_key> <s> <v>                                : "\271"     scaron
+<Multi_key> <v> <S>                                : "\251"     Scaron
+<Multi_key> <v> <s>                                : "\271"     scaron
+<Multi_key> <S> <V>                                : "\251"     Scaron
+<Multi_key> <s> <V>                                : "\271"     scaron
+<Multi_key> <V> <S>                                : "\251"     Scaron
+<Multi_key> <V> <s>                                : "\271"     scaron
+Alt ~Ctrl ~Shift <space> <S> <caron>               : "\251"     Scaron
+Alt ~Ctrl ~Shift <space> <s> <caron>               : "\271"     scaron
+Alt ~Ctrl ~Shift <space> <caron> <S>               : "\251"     Scaron
+Alt ~Ctrl ~Shift <space> <caron> <s>               : "\271"     scaron
+Alt ~Ctrl ~Shift <space> <S> <v>                   : "\251"     Scaron
+Alt ~Ctrl ~Shift <space> <s> <v>                   : "\271"     scaron
+Alt ~Ctrl ~Shift <space> <v> <S>                   : "\251"     Scaron
+Alt ~Ctrl ~Shift <space> <v> <s>                   : "\271"     scaron
+Alt ~Ctrl ~Shift <space> <S> <V>                   : "\251"     Scaron
+Alt ~Ctrl ~Shift <space> <s> <V>                   : "\271"     scaron
+Alt ~Ctrl ~Shift <space> <V> <S>                   : "\251"     Scaron
+Alt ~Ctrl ~Shift <space> <V> <s>                   : "\271"     scaron
+#
+<caron> <Z>                                        : "\256"     Zcaron
+<caron> <z>                                        : "\276"     zcaron
+<Multi_key> <Z> <caron>                            : "\256"     Zcaron
+<Multi_key> <z> <caron>                            : "\276"     zcaron
+<Multi_key> <caron> <Z>                            : "\256"     Zcaron
+<Multi_key> <caron> <z>                            : "\276"     zcaron
+<Multi_key> <Z> <v>                                : "\256"     Zcaron
+<Multi_key> <z> <v>                                : "\276"     zcaron
+<Multi_key> <v> <Z>                                : "\256"     Zcaron
+<Multi_key> <v> <z>                                : "\276"     zcaron
+<Multi_key> <Z> <V>                                : "\256"     Zcaron
+<Multi_key> <z> <V>                                : "\276"     zcaron
+<Multi_key> <V> <Z>                                : "\256"     Zcaron
+<Multi_key> <V> <z>                                : "\276"     zcaron
+Alt ~Ctrl ~Shift <space> <Z> <caron>               : "\256"     Zcaron
+Alt ~Ctrl ~Shift <space> <z> <caron>               : "\276"     zcaron
+Alt ~Ctrl ~Shift <space> <caron> <Z>               : "\256"     Zcaron
+Alt ~Ctrl ~Shift <space> <caron> <z>               : "\276"     zcaron
+Alt ~Ctrl ~Shift <space> <Z> <v>                   : "\256"     Zcaron
+Alt ~Ctrl ~Shift <space> <z> <v>                   : "\276"     zcaron
+Alt ~Ctrl ~Shift <space> <v> <Z>                   : "\256"     Zcaron
+Alt ~Ctrl ~Shift <space> <v> <z>                   : "\276"     zcaron
+Alt ~Ctrl ~Shift <space> <Z> <V>                   : "\256"     Zcaron
+Alt ~Ctrl ~Shift <space> <z> <V>                   : "\276"     zcaron
+Alt ~Ctrl ~Shift <space> <V> <Z>                   : "\256"     Zcaron
+Alt ~Ctrl ~Shift <space> <V> <z>                   : "\276"     zcaron
+#
+<caron> <C>                                        : "\310"     Ccaron
+<caron> <c>                                        : "\350"     ccaron
+<Multi_key> <C> <caron>                            : "\310"     Ccaron
+<Multi_key> <c> <caron>                            : "\350"     ccaron
+<Multi_key> <caron> <C>                            : "\310"     Ccaron
+<Multi_key> <caron> <c>                            : "\350"     ccaron
+<Multi_key> <C> <v>                                : "\310"     Ccaron
+<Multi_key> <c> <v>                                : "\350"     ccaron
+<Multi_key> <v> <C>                                : "\310"     Ccaron
+<Multi_key> <v> <c>                                : "\350"     ccaron
+<Multi_key> <C> <V>                                : "\310"     Ccaron
+<Multi_key> <c> <V>                                : "\350"     ccaron
+<Multi_key> <V> <C>                                : "\310"     Ccaron
+<Multi_key> <V> <c>                                : "\350"     ccaron
+Alt ~Ctrl ~Shift <space> <C> <caron>               : "\310"     Ccaron
+Alt ~Ctrl ~Shift <space> <c> <caron>               : "\350"     ccaron
+Alt ~Ctrl ~Shift <space> <caron> <C>               : "\310"     Ccaron
+Alt ~Ctrl ~Shift <space> <caron> <c>               : "\350"     ccaron
+Alt ~Ctrl ~Shift <space> <C> <v>                   : "\310"     Ccaron
+Alt ~Ctrl ~Shift <space> <c> <v>                   : "\350"     ccaron
+Alt ~Ctrl ~Shift <space> <v> <C>                   : "\310"     Ccaron
+Alt ~Ctrl ~Shift <space> <v> <c>                   : "\350"     ccaron
+Alt ~Ctrl ~Shift <space> <C> <V>                   : "\310"     Ccaron
+Alt ~Ctrl ~Shift <space> <c> <V>                   : "\350"     ccaron
+Alt ~Ctrl ~Shift <space> <V> <C>                   : "\310"     Ccaron
+Alt ~Ctrl ~Shift <space> <V> <c>                   : "\350"     ccaron
+#
+<degree> <space>                                   : "\260"     degree
+<Multi_key> <space> <degree>                       : "\260"     degree
+<Multi_key> <degree> <space>                       : "\260"     degree
+<Multi_key> <space> <asterisk>                     : "\260"     degree
+<Multi_key> <asterisk> <space>                     : "\260"     degree
+<Multi_key> <asciicircum> <0>                      : "\260"     degree
+<Multi_key> <0> <asciicircum>                      : "\260"     degree
+Alt ~Ctrl ~Shift <space> <space> <degree>          : "\260"     degree
+Alt ~Ctrl ~Shift <space> <degree> <space>          : "\260"     degree
+Alt ~Ctrl ~Shift <space> <space> <asterisk>        : "\260"     degree
+Alt ~Ctrl ~Shift <space> <asterisk> <space>        : "\260"     degree
+Alt ~Ctrl ~Shift <space> <asciicircum> <0>         : "\260"     degree
+Alt ~Ctrl ~Shift <space> <0> <asciicircum>         : "\260"     degree
+#
+<degree> <A>                                       : "\305"     Aring
+<degree> <a>                                       : "\345"     aring
+<Multi_key> <A> <degree>                           : "\305"     Aring
+<Multi_key> <a> <degree>                           : "\345"     aring
+<Multi_key> <degree> <A>                           : "\305"     Aring
+<Multi_key> <degree> <a>                           : "\345"     aring
+<Multi_key> <A> <asterisk>                         : "\305"     Aring
+<Multi_key> <a> <asterisk>                         : "\345"     aring
+<Multi_key> <asterisk> <A>                         : "\305"     Aring
+<Multi_key> <asterisk> <a>                         : "\345"     aring
+Alt ~Ctrl ~Shift <space> <A> <degree>              : "\305"     Aring
+Alt ~Ctrl ~Shift <space> <a> <degree>              : "\345"     aring
+Alt ~Ctrl ~Shift <space> <degree> <A>              : "\305"     Aring
+Alt ~Ctrl ~Shift <space> <degree> <a>              : "\345"     aring
+Alt ~Ctrl ~Shift <space> <A> <asterisk>            : "\305"     Aring
+Alt ~Ctrl ~Shift <space> <a> <asterisk>            : "\345"     aring
+Alt ~Ctrl ~Shift <space> <asterisk> <A>            : "\305"     Aring
+Alt ~Ctrl ~Shift <space> <asterisk> <a>            : "\345"     aring
+#
+<ogonek> <space>                                   : "\262"     ogonek
+<Multi_key> <ogonek> <space>                       : "\262"     ogonek
+<Multi_key> <space> <ogonek>                       : "\262"     ogonek
+<Multi_key> <comma> <greater>                      : "\262"     ogonek
+<Multi_key> <greater> <comma>                      : "\262"     ogonek
+Alt ~Ctrl ~Shift <space> <ogonek> <space>          : "\262"     ogonek
+Alt ~Ctrl ~Shift <space> <space> <ogonek>          : "\262"     ogonek
+Alt ~Ctrl ~Shift <space> <comma> <greater>         : "\262"     ogonek
+Alt ~Ctrl ~Shift <space> <greater> <comma>         : "\262"     ogonek
+#
+<ogonek> <A>                                       : "\241"     Aogonek
+<ogonek> <a>                                       : "\261"     aogonek
+<Multi_key> <A> <ogonek>                           : "\241"     Aogonek
+<Multi_key> <a> <ogonek>                           : "\261"     aogonek
+<Multi_key> <ogonek> <A>                           : "\241"     Aogonek
+<Multi_key> <ogonek> <a>                           : "\261"     aogonek
+<Multi_key> <A> <comma>                            : "\241"     Aogonek
+<Multi_key> <a> <comma>                            : "\261"     aogonek
+<Multi_key> <comma> <A>                            : "\241"     Aogonek
+<Multi_key> <comma> <a>                            : "\261"     aogonek
+Alt ~Ctrl ~Shift <space> <A> <ogonek>              : "\241"     Aogonek
+Alt ~Ctrl ~Shift <space> <a> <ogonek>              : "\261"     aogonek
+Alt ~Ctrl ~Shift <space> <ogonek> <A>              : "\241"     Aogonek
+Alt ~Ctrl ~Shift <space> <ogonek> <a>              : "\261"     aogonek
+Alt ~Ctrl ~Shift <space> <A> <comma>               : "\241"     Aogonek
+Alt ~Ctrl ~Shift <space> <a> <comma>               : "\261"     aogonek
+Alt ~Ctrl ~Shift <space> <comma> <A>               : "\241"     Aogonek
+Alt ~Ctrl ~Shift <space> <comma> <a>               : "\261"     aogonek
+#
+<ogonek> <E>                                       : "\312"     Eogonek
+<ogonek> <e>                                       : "\352"     eogonek
+<Multi_key> <E> <ogonek>                           : "\312"     Eogonek
+<Multi_key> <e> <ogonek>                           : "\352"     eogonek
+<Multi_key> <ogonek> <E>                           : "\312"     Eogonek
+<Multi_key> <ogonek> <e>                           : "\352"     eogonek
+<Multi_key> <E> <comma>                            : "\312"     Eogonek
+<Multi_key> <e> <comma>                            : "\352"     eogonek
+<Multi_key> <comma> <E>                            : "\312"     Eogonek
+<Multi_key> <comma> <e>                            : "\352"     eogonek
+Alt ~Ctrl ~Shift <space> <E> <ogonek>              : "\312"     Eogonek
+Alt ~Ctrl ~Shift <space> <e> <ogonek>              : "\352"     eogonek
+Alt ~Ctrl ~Shift <space> <ogonek> <E>              : "\312"     Eogonek
+Alt ~Ctrl ~Shift <space> <ogonek> <e>              : "\352"     eogonek
+Alt ~Ctrl ~Shift <space> <E> <comma>               : "\312"     Eogonek
+Alt ~Ctrl ~Shift <space> <e> <comma>               : "\352"     eogonek
+Alt ~Ctrl ~Shift <space> <comma> <E>               : "\312"     Eogonek
+Alt ~Ctrl ~Shift <space> <comma> <e>               : "\352"     eogonek
+#
+<ogonek> <I>                                       : "\307"     Iogonek
+<ogonek> <i>                                       : "\347"     iogonek
+<Multi_key> <I> <ogonek>                           : "\307"     Iogonek
+<Multi_key> <i> <ogonek>                           : "\347"     iogonek
+<Multi_key> <ogonek> <I>                           : "\307"     Iogonek
+<Multi_key> <ogonek> <i>                           : "\347"     iogonek
+<Multi_key> <I> <comma>                            : "\307"     Iogonek
+<Multi_key> <i> <comma>                            : "\347"     iogonek
+<Multi_key> <comma> <I>                            : "\307"     Iogonek
+<Multi_key> <comma> <i>                            : "\347"     iogonek
+Alt ~Ctrl ~Shift <space> <I> <ogonek>              : "\307"     Iogonek
+Alt ~Ctrl ~Shift <space> <i> <ogonek>              : "\347"     iogonek
+Alt ~Ctrl ~Shift <space> <ogonek> <I>              : "\307"     Iogonek
+Alt ~Ctrl ~Shift <space> <ogonek> <i>              : "\347"     iogonek
+Alt ~Ctrl ~Shift <space> <I> <comma>               : "\307"     Iogonek
+Alt ~Ctrl ~Shift <space> <i> <comma>               : "\347"     iogonek
+Alt ~Ctrl ~Shift <space> <comma> <I>               : "\307"     Iogonek
+Alt ~Ctrl ~Shift <space> <comma> <i>               : "\347"     iogonek
+#
+<ogonek> <U>                                       : "\331"     Uogonek
+<ogonek> <u>                                       : "\371"     uogonek
+<Multi_key> <U> <ogonek>                           : "\331"     Uogonek
+<Multi_key> <u> <ogonek>                           : "\371"     uogonek
+<Multi_key> <ogonek> <U>                           : "\331"     Uogonek
+<Multi_key> <ogonek> <u>                           : "\371"     uogonek
+<Multi_key> <U> <comma>                            : "\331"     Uogonek
+<Multi_key> <u> <comma>                            : "\371"     uogonek
+<Multi_key> <comma> <U>                            : "\331"     Uogonek
+<Multi_key> <comma> <u>                            : "\371"     uogonek
+Alt ~Ctrl ~Shift <space> <U> <ogonek>              : "\331"     Uogonek
+Alt ~Ctrl ~Shift <space> <u> <ogonek>              : "\371"     uogonek
+Alt ~Ctrl ~Shift <space> <ogonek> <U>              : "\331"     Uogonek
+Alt ~Ctrl ~Shift <space> <ogonek> <u>              : "\371"     uogonek
+Alt ~Ctrl ~Shift <space> <U> <comma>               : "\331"     Uogonek
+Alt ~Ctrl ~Shift <space> <u> <comma>               : "\371"     uogonek
+Alt ~Ctrl ~Shift <space> <comma> <U>               : "\331"     Uogonek
+Alt ~Ctrl ~Shift <space> <comma> <u>               : "\371"     uogonek
+#
+<macron> <space>                                   : "\257"     macron
+<Multi_key> <space> <macron>                       : "\257"     macron
+<Multi_key> <macron> <space>                       : "\257"     macron
+<Multi_key> <minus> <asciicircum>                  : "\257"     macron
+<Multi_key> <asciicircum> <minus>                  : "\257"     macron
+Alt ~Ctrl ~Shift <space> <space> <macron>          : "\257"     macron
+Alt ~Ctrl ~Shift <space> <macron> <space>          : "\257"     macron
+Alt ~Ctrl ~Shift <space> <minus> <asciicircum>     : "\257"     macron
+Alt ~Ctrl ~Shift <space> <asciicircum> <minus>     : "\257"     macron
+#
+<macron> <A>                                       : "\300"     Amacron
+<macron> <a>                                       : "\340"     amacron
+<Multi_key> <A> <macron>                           : "\300"     Amacron
+<Multi_key> <a> <macron>                           : "\340"     amacron
+<Multi_key> <macron> <A>                           : "\300"     Amacron
+<Multi_key> <macron> <a>                           : "\340"     amacron
+<Multi_key> <A> <minus>                            : "\300"     Amacron
+<Multi_key> <a> <minus>                            : "\340"     amacron
+<Multi_key> <minus> <A>                            : "\300"     Amacron
+<Multi_key> <minus> <a>                            : "\340"     amacron
+Alt ~Ctrl ~Shift <space> <A> <macron>              : "\300"     Amacron
+Alt ~Ctrl ~Shift <space> <a> <macron>              : "\340"     amacron
+Alt ~Ctrl ~Shift <space> <macron> <A>              : "\300"     Amacron
+Alt ~Ctrl ~Shift <space> <macron> <a>              : "\340"     amacron
+Alt ~Ctrl ~Shift <space> <A> <minus>               : "\300"     Amacron
+Alt ~Ctrl ~Shift <space> <a> <minus>               : "\340"     amacron
+Alt ~Ctrl ~Shift <space> <minus> <A>               : "\300"     Amacron
+Alt ~Ctrl ~Shift <space> <minus> <a>               : "\340"     amacron
+#
+<macron> <E>                                       : "\252"     Emacron
+<macron> <e>                                       : "\272"     emacron
+<Multi_key> <E> <macron>                           : "\252"     Emacron
+<Multi_key> <e> <macron>                           : "\272"     emacron
+<Multi_key> <macron> <E>                           : "\252"     Emacron
+<Multi_key> <macron> <e>                           : "\272"     emacron
+<Multi_key> <E> <minus>                            : "\252"     Emacron
+<Multi_key> <e> <minus>                            : "\272"     emacron
+<Multi_key> <minus> <E>                            : "\252"     Emacron
+<Multi_key> <minus> <e>                            : "\272"     emacron
+Alt ~Ctrl ~Shift <space> <E> <macron>              : "\252"     Emacron
+Alt ~Ctrl ~Shift <space> <e> <macron>              : "\272"     emacron
+Alt ~Ctrl ~Shift <space> <macron> <E>              : "\252"     Emacron
+Alt ~Ctrl ~Shift <space> <macron> <e>              : "\272"     emacron
+Alt ~Ctrl ~Shift <space> <E> <minus>               : "\252"     Emacron
+Alt ~Ctrl ~Shift <space> <e> <minus>               : "\272"     emacron
+Alt ~Ctrl ~Shift <space> <minus> <E>               : "\252"     Emacron
+Alt ~Ctrl ~Shift <space> <minus> <e>               : "\272"     emacron
+#
+<macron> <O>                                       : "\322"     Omacron
+<macron> <o>                                       : "\362"     omacron
+<Multi_key> <O> <macron>                           : "\322"     Omacron
+<Multi_key> <o> <macron>                           : "\362"     omacron
+<Multi_key> <macron> <O>                           : "\322"     Omacron
+<Multi_key> <macron> <o>                           : "\362"     omacron
+<Multi_key> <O> <minus>                            : "\322"     Omacron
+<Multi_key> <o> <minus>                            : "\362"     omacron
+<Multi_key> <minus> <O>                            : "\322"     Omacron
+<Multi_key> <minus> <o>                            : "\362"     omacron
+Alt ~Ctrl ~Shift <space> <O> <macron>              : "\322"     Omacron
+Alt ~Ctrl ~Shift <space> <o> <macron>              : "\362"     omacron
+Alt ~Ctrl ~Shift <space> <macron> <O>              : "\322"     Omacron
+Alt ~Ctrl ~Shift <space> <macron> <o>              : "\362"     omacron
+Alt ~Ctrl ~Shift <space> <O> <minus>               : "\322"     Omacron
+Alt ~Ctrl ~Shift <space> <o> <minus>               : "\362"     omacron
+Alt ~Ctrl ~Shift <space> <minus> <O>               : "\322"     Omacron
+Alt ~Ctrl ~Shift <space> <minus> <o>               : "\362"     omacron
+#
+<macron> <I>                                       : "\317"     Imacron
+<macron> <i>                                       : "\357"     imacron
+<Multi_key> <I> <macron>                           : "\317"     Imacron
+<Multi_key> <i> <macron>                           : "\357"     imacron
+<Multi_key> <macron> <I>                           : "\317"     Imacron
+<Multi_key> <macron> <i>                           : "\357"     imacron
+<Multi_key> <I> <minus>                            : "\317"     Imacron
+<Multi_key> <i> <minus>                            : "\357"     imacron
+<Multi_key> <minus> <I>                            : "\317"     Imacron
+<Multi_key> <minus> <i>                            : "\357"     imacron
+Alt ~Ctrl ~Shift <space> <I> <macron>              : "\317"     Imacron
+Alt ~Ctrl ~Shift <space> <i> <macron>              : "\357"     imacron
+Alt ~Ctrl ~Shift <space> <macron> <I>              : "\317"     Imacron
+Alt ~Ctrl ~Shift <space> <macron> <i>              : "\357"     imacron
+Alt ~Ctrl ~Shift <space> <I> <minus>               : "\317"     Imacron
+Alt ~Ctrl ~Shift <space> <i> <minus>               : "\357"     imacron
+Alt ~Ctrl ~Shift <space> <minus> <I>               : "\317"     Imacron
+Alt ~Ctrl ~Shift <space> <minus> <i>               : "\357"     imacron
+#
+<macron> <U>                                       : "\336"     Umacron
+<macron> <u>                                       : "\376"     umacron
+<Multi_key> <U> <macron>                           : "\336"     Umacron
+<Multi_key> <u> <macron>                           : "\376"     umacron
+<Multi_key> <macron> <U>                           : "\336"     Umacron
+<Multi_key> <macron> <u>                           : "\376"     umacron
+<Multi_key> <U> <minus>                            : "\336"     Umacron
+<Multi_key> <u> <minus>                            : "\376"     umacron
+<Multi_key> <minus> <U>                            : "\336"     Umacron
+<Multi_key> <minus> <u>                            : "\376"     umacron
+Alt ~Ctrl ~Shift <space> <U> <macron>              : "\336"     Umacron
+Alt ~Ctrl ~Shift <space> <u> <macron>              : "\376"     umacron
+Alt ~Ctrl ~Shift <space> <macron> <U>              : "\336"     Umacron
+Alt ~Ctrl ~Shift <space> <macron> <u>              : "\376"     umacron
+Alt ~Ctrl ~Shift <space> <U> <minus>               : "\336"     Umacron
+Alt ~Ctrl ~Shift <space> <u> <minus>               : "\376"     umacron
+Alt ~Ctrl ~Shift <space> <minus> <U>               : "\336"     Umacron
+Alt ~Ctrl ~Shift <space> <minus> <u>               : "\376"     umacron
+#
+<Multi_key> <T> <minus>                            : "\254"     Tslash
+<Multi_key> <t> <minus>                            : "\274"     tslash
+<Multi_key> <minus> <T>                            : "\254"     Tslash
+<Multi_key> <minus> <t>                            : "\274"     tslash
+<Multi_key> <T> <slash>                            : "\254"     Tslash
+<Multi_key> <t> <slash>                            : "\274"     tslash
+<Multi_key> <slash> <T>                            : "\254"     Tslash
+<Multi_key> <slash> <t>                            : "\274"     tslash
+Alt ~Ctrl ~Shift <space> <T> <minus>               : "\254"     Tslash
+Alt ~Ctrl ~Shift <space> <t> <minus>               : "\274"     tslash
+Alt ~Ctrl ~Shift <space> <minus> <T>               : "\254"     Tslash
+Alt ~Ctrl ~Shift <space> <minus> <t>               : "\274"     tslash
+Alt ~Ctrl ~Shift <space> <T> <slash>               : "\254"     Tslash
+Alt ~Ctrl ~Shift <space> <t> <slash>               : "\274"     tslash
+Alt ~Ctrl ~Shift <space> <slash> <T>               : "\254"     Tslash
+Alt ~Ctrl ~Shift <space> <slash> <t>               : "\274"     tslash
+#
+<Multi_key> <D> <minus>                            : "\320"     Dstroke
+<Multi_key> <d> <minus>                            : "\360"     dstroke
+<Multi_key> <minus> <D>                            : "\320"     Dstroke
+<Multi_key> <minus> <d>                            : "\360"     dstroke
+Alt ~Ctrl ~Shift <space> <D> <minus>               : "\320"     Dstroke
+Alt ~Ctrl ~Shift <space> <d> <minus>               : "\360"     dstroke
+Alt ~Ctrl ~Shift <space> <minus> <D>               : "\320"     Dstroke
+Alt ~Ctrl ~Shift <space> <minus> <d>               : "\360"     dstroke
+#
+<Multi_key> <A> <E>                                : "\306"     AE
+<Multi_key> <a> <e>                                : "\346"     ae
+Alt ~Ctrl ~Shift <space> <A> <E>                   : "\306"     AE
+Alt ~Ctrl ~Shift <space> <a> <e>                   : "\346"     ae
+#
+<Multi_key> <slash> <O>                            : "\330"     Ooblique
+<Multi_key> <slash> <o>                            : "\370"     oslash
+<Multi_key> <O> <slash>                            : "\330"     Ooblique
+<Multi_key> <o> <slash>                            : "\370"     oslash
+Alt ~Ctrl ~Shift <space> <slash> <O>               : "\330"     Ooblique
+Alt ~Ctrl ~Shift <space> <slash> <o>               : "\370"     oslash
+Alt ~Ctrl ~Shift <space> <O> <slash>               : "\330"     Ooblique
+Alt ~Ctrl ~Shift <space> <o> <slash>               : "\370"     oslash
+#
+<Multi_key> <N> <G>                                : "\275"     ENGlappish
+<Multi_key> <n> <g>                                : "\277"     englappish
+Alt ~Ctrl ~Shift <space> <N> <G>                   : "\275"     ENGlappish
+Alt ~Ctrl ~Shift <space> <n> <g>                   : "\277"     englappish
+#
+<Multi_key> <k> <r>                                : "\242"     kragreenlandic
+Alt ~Ctrl ~Shift <space> <k> <r>                   : "\242"     kragreenlandic
+#
+<Multi_key> <S> <S>                                : "\337"     ssharp
+<Multi_key> <s> <S>                                : "\337"     ssharp
+<Multi_key> <S> <s>                                : "\337"     ssharp
+<Multi_key> <s> <s>                                : "\337"     ssharp
+Alt ~Ctrl ~Shift <space> <S> <S>                   : "\337"     ssharp
+Alt ~Ctrl ~Shift <space> <s> <S>                   : "\337"     ssharp
+Alt ~Ctrl ~Shift <space> <S> <s>                   : "\337"     ssharp
+Alt ~Ctrl ~Shift <space> <s> <s>                   : "\337"     ssharp
+#
+<abovedot> <space>                                 : "\377"     abovedot
+<Multi_key> <abovedot> <space>                     : "\377"     abovedot
+<Multi_key> <space> <abovedot>                     : "\377"     abovedot
+<Multi_key> <period> <period>                      : "\377"     abovedot
+<Multi_key> <period> <asciicircum>                 : "\377"     abovedot
+<Multi_key> <asciicircum> <period>                 : "\377"     abovedot
+Alt ~Ctrl ~Shift <space> <abovedot> <space>        : "\377"     abovedot
+Alt ~Ctrl ~Shift <space> <space> <abovedot>        : "\377"     abovedot
+Alt ~Ctrl ~Shift <space> <period> <period>         : "\377"     abovedot
+Alt ~Ctrl ~Shift <space> <period> <asciicircum>    : "\377"     abovedot
+Alt ~Ctrl ~Shift <space> <asciicircum> <period>    : "\377"     abovedot
+#
+<abovedot> <E>                                     : "\314"     Eabovedot
+<abovedot> <e>                                     : "\354"     eabovedot
+<Multi_key> <E> <abovedot>                         : "\314"     Eabovedot
+<Multi_key> <e> <abovedot>                         : "\354"     eabovedot
+<Multi_key> <abovedot> <E>                         : "\314"     Eabovedot
+<Multi_key> <abovedot> <e>                         : "\354"     eabovedot
+<Multi_key> <E> <period>                           : "\314"     Eabovedot
+<Multi_key> <e> <period>                           : "\354"     eabovedot
+<Multi_key> <period> <E>                           : "\314"     Eabovedot
+<Multi_key> <period> <e>                           : "\354"     eabovedot
+Alt ~Ctrl ~Shift <space> <E> <period>              : "\314"     Eabovedot
+Alt ~Ctrl ~Shift <space> <e> <period>              : "\354"     eabovedot
+Alt ~Ctrl ~Shift <space> <period> <E>              : "\314"     Eabovedot
+Alt ~Ctrl ~Shift <space> <period> <e>              : "\354"     eabovedot
+Alt ~Ctrl ~Shift <space> <E> <abovedot>            : "\314"     Eabovedot
+Alt ~Ctrl ~Shift <space> <e> <abovedot>            : "\354"     eabovedot
+Alt ~Ctrl ~Shift <space> <abovedot> <E>            : "\314"     Eabovedot
+Alt ~Ctrl ~Shift <space> <abovedot> <e>            : "\354"     eabovedot
+#
+<Multi_key> <0> <X>                                : "\244"     currency
+<Multi_key> <0> <x>                                : "\244"     currency
+<Multi_key> <O> <X>                                : "\244"     currency
+<Multi_key> <O> <x>                                : "\244"     currency
+<Multi_key> <o> <X>                                : "\244"     currency
+<Multi_key> <o> <x>                                : "\244"     currency
+<Multi_key> <X> <0>                                : "\244"     currency
+<Multi_key> <x> <0>                                : "\244"     currency
+<Multi_key> <X> <O>                                : "\244"     currency
+<Multi_key> <X> <o>                                : "\244"     currency
+<Multi_key> <x> <O>                                : "\244"     currency
+<Multi_key> <x> <o>                                : "\244"     currency
+Alt ~Ctrl ~Shift <space> <0> <X>                   : "\244"     currency
+Alt ~Ctrl ~Shift <space> <0> <x>                   : "\244"     currency
+Alt ~Ctrl ~Shift <space> <O> <X>                   : "\244"     currency
+Alt ~Ctrl ~Shift <space> <O> <x>                   : "\244"     currency
+Alt ~Ctrl ~Shift <space> <o> <X>                   : "\244"     currency
+Alt ~Ctrl ~Shift <space> <o> <x>                   : "\244"     currency
+Alt ~Ctrl ~Shift <space> <X> <0>                   : "\244"     currency
+Alt ~Ctrl ~Shift <space> <x> <0>                   : "\244"     currency
+Alt ~Ctrl ~Shift <space> <X> <O>                   : "\244"     currency
+Alt ~Ctrl ~Shift <space> <x> <O>                   : "\244"     currency
+Alt ~Ctrl ~Shift <space> <X> <o>                   : "\244"     currency
+Alt ~Ctrl ~Shift <space> <x> <o>                   : "\244"     currency
+#
+<Multi_key> <exclam> <S>                           : "\247"     section
+<Multi_key> <exclam> <s>                           : "\247"     section
+<Multi_key> <S> <exclam>                           : "\247"     section
+<Multi_key> <s> <exclam>                           : "\247"     section
+<Multi_key> <0> <S>                                : "\247"     section
+<Multi_key> <0> <s>                                : "\247"     section
+<Multi_key> <O> <S>                                : "\247"     section
+<Multi_key> <O> <s>                                : "\247"     section
+<Multi_key> <o> <S>                                : "\247"     section
+<Multi_key> <o> <s>                                : "\247"     section
+<Multi_key> <S> <0>                                : "\247"     section
+<Multi_key> <s> <0>                                : "\247"     section
+<Multi_key> <S> <O>                                : "\247"     section
+<Multi_key> <s> <O>                                : "\247"     section
+<Multi_key> <S> <o>                                : "\247"     section
+<Multi_key> <s> <o>                                : "\247"     section
+Alt ~Ctrl ~Shift <space> <exclam> <S>              : "\247"     section
+Alt ~Ctrl ~Shift <space> <exclam> <s>              : "\247"     section
+Alt ~Ctrl ~Shift <space> <S> <exclam>              : "\247"     section
+Alt ~Ctrl ~Shift <space> <s> <exclam>              : "\247"     section
+Alt ~Ctrl ~Shift <space> <0> <S>                   : "\247"     section
+Alt ~Ctrl ~Shift <space> <0> <s>                   : "\247"     section
+Alt ~Ctrl ~Shift <space> <O> <S>                   : "\247"     section
+Alt ~Ctrl ~Shift <space> <O> <s>                   : "\247"     section
+Alt ~Ctrl ~Shift <space> <o> <S>                   : "\247"     section
+Alt ~Ctrl ~Shift <space> <o> <s>                   : "\247"     section
+Alt ~Ctrl ~Shift <space> <S> <0>                   : "\247"     section
+Alt ~Ctrl ~Shift <space> <s> <0>                   : "\247"     section
+Alt ~Ctrl ~Shift <space> <S> <O>                   : "\247"     section
+Alt ~Ctrl ~Shift <space> <s> <O>                   : "\247"     section
+Alt ~Ctrl ~Shift <space> <S> <o>                   : "\247"     section
+Alt ~Ctrl ~Shift <space> <s> <o>                   : "\247"     section
+#
+<Multi_key> <minus> <minus>                        : "\255"     hyphen
+Alt ~Ctrl ~Shift <space> <minus> <minus>           : "\255"     hyphen
+#
+<Multi_key> <X> <X>                                : "\327"     multiply
+<Multi_key> <X> <x>                                : "\327"     multiply
+<Multi_key> <x> <X>                                : "\327"     multiply
+<Multi_key> <x> <x>                                : "\327"     multiply
+Alt ~Ctrl ~Shift <space> <X> <X>                   : "\327"     multiply
+Alt ~Ctrl ~Shift <space> <X> <x>                   : "\327"     multiply
+Alt ~Ctrl ~Shift <space> <x> <X>                   : "\327"     multiply
+Alt ~Ctrl ~Shift <space> <x> <x>                   : "\327"     multiply
+#
+<Multi_key> <minus> <colon>                        : "\367"     division
+<Multi_key> <colon> <minus>                        : "\367"     division
+Alt ~Ctrl ~Shift <space> <minus> <colon>           : "\367"     division
+Alt ~Ctrl ~Shift <space> <colon> <minus>           : "\367"     division
+
+#
+# Additions for latin 1 codes
+#
+<Aogonek>                                          : "\241"     Aogonek
+<aogonek>                                          : "\261"     aogonek
+<currency>                                         : "\244"     currency
+<section>                                          : "\247"	section
+<diaeresis>                                        : "\250"	diaeresis
+<Scaron>                                           : "\251"     Scaron
+<scaron>                                           : "\271"     scaron
+<hyphen>                                           : "\255"     hyphen
+<Zcaron>                                           : "\256"     Zcaron
+<zcaron>                                           : "\276"     zcaron
+<macron>                                           : "\257"     macron
+<degree>                                           : "\260"     degree
+<ogonek>                                           : "\262"     ogonek
+<acute>                                            : "\264"     acute
+<caron>                                            : "\267"     caron
+<cedilla>                                          : "\270"     cedilla
+#
+<Aacute>                                           : "\301"	Aacute
+<aacute>                                           : "\341"	aacute
+<Acircumflex>                                      : "\302"     Acircumflex
+<acircumflex>                                      : "\342"     acircumflex
+<Atilde>                                           : "\303"     Atilde
+<atilde>                                           : "\343"     atilde
+<Adiaeresis>                                       : "\304"	Adiaeresis
+<adiaeresis>                                       : "\344"	adiaeresis
+<Aring>                                            : "\305"     Aring
+<aring>                                            : "\345"     aring
+<AE>                                               : "\306"     AE
+<ae>                                               : "\346"     ae
+#
+<Ccaron>                                           : "\310"     Ccaron
+<ccaron>                                           : "\350"     ccaron
+#
+<Eacute>                                           : "\311"	Eacute
+<eacute>                                           : "\351"	eacute
+<Eogonek>                                          : "\312"     Eogonek
+<eogonek>                                          : "\352"     eogonek
+<Ediaeresis>                                       : "\313"     Ediaeresis
+<ediaeresis>                                       : "\353"     ediaeresis
+#
+<Iacute>                                           : "\315"	Iacute
+<iacute>                                           : "\355"	iacute
+<Icircumflex>                                      : "\316"     Icircumflex
+<icircumflex>                                      : "\356"     icircumflex
+#
+<ETH>                                              : "\320"     Dstroke
+<eth>                                              : "\360"     dstroke
+#
+<Ocircumflex>                                      : "\324"     Ocircumflex
+<ocircumflex>                                      : "\364"     ocircumflex
+<Otilde>                                           : "\325"     Otilde
+<otilde>                                           : "\365"     otilde
+<Odiaeresis>                                       : "\326"	Odiaeresis
+<odiaeresis>                                       : "\366"	odiaeresis
+<Ooblique>                                         : "\330"     Ooblique
+<oslash>                                           : "\370"     oslash
+#
+<Uacute>                                           : "\332"	Uacute
+<uacute>                                           : "\372"	uacute
+<Ucircumflex>                                      : "\333"     Ucircumflex
+<ucircumflex>                                      : "\373"     ucircumflex
+<Udiaeresis>                                       : "\334"	Udiaeresis
+<udiaeresis>                                       : "\374"	udiaeresis
+#
+<ssharp>                                           : "\337"     ssharp
+<multiply>                                         : "\327"     multiply
+<division>                                         : "\367"     division
+<abovedot>                                         : "\377"     abovedot

@@ -1,0 +1,6 @@
+default xkb_types "default" {
+    include "basic"
+    include "pc"
+    include "iso9995"
+    include "mousekeys"
+};

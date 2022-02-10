@@ -1,0 +1,1 @@
+#define NVB 0

@@ -1,0 +1,2548 @@
+
+ace_data.o ace_data.ln: ../include/dirent.h ../include/hal/82357_pic.h
+ace_data.o ace_data.ln: ../include/hal/cpuconf.h
+ace_data.o ace_data.ln: ../include/io/common/devdriver.h
+ace_data.o ace_data.ln: ../include/io/common/devio.h
+ace_data.o ace_data.ln: ../include/io/common/handler.h
+ace_data.o ace_data.ln: ../include/io/dec/eisa/aceregs.h
+ace_data.o ace_data.ln: ../include/io/dec/uba/ubavar.h ../include/kern/assert.h
+ace_data.o ace_data.ln: ../include/kern/ast.h ../include/kern/event.h
+ace_data.o ace_data.ln: ../include/kern/host.h ../include/kern/kern_msg.h
+ace_data.o ace_data.ln: ../include/kern/kern_obj.h ../include/kern/kern_set.h
+ace_data.o ace_data.ln: ../include/kern/lock.h ../include/kern/mach_param.h
+ace_data.o ace_data.ln: ../include/kern/macro_help.h
+ace_data.o ace_data.ln: ../include/kern/msg_queue.h ../include/kern/parallel.h
+ace_data.o ace_data.ln: ../include/kern/processor.h ../include/kern/queue.h
+ace_data.o ace_data.ln: ../include/kern/sched.h ../include/kern/spl.h
+ace_data.o ace_data.ln: ../include/kern/syscall_emulation.h
+ace_data.o ace_data.ln: ../include/kern/task.h ../include/kern/thread.h
+ace_data.o ace_data.ln: ../include/kern/thread_modes.h ../include/kern/timer.h
+ace_data.o ace_data.ln: ../include/kern/xpr.h ../include/mach/alpha/vm_param.h
+ace_data.o ace_data.ln: ../include/mach/boolean.h ../include/mach/events_info.h
+ace_data.o ace_data.ln: ../include/mach/kern_return.h
+ace_data.o ace_data.ln: ../include/mach/mach_param.h
+ace_data.o ace_data.ln: ../include/mach/machine/boolean.h
+ace_data.o ace_data.ln: ../include/mach/machine/kern_return.h
+ace_data.o ace_data.ln: ../include/mach/machine/thread_status.h
+ace_data.o ace_data.ln: ../include/mach/machine/vm_param.h
+ace_data.o ace_data.ln: ../include/mach/machine/vm_statistics.h
+ace_data.o ace_data.ln: ../include/mach/machine/vm_types.h
+ace_data.o ace_data.ln: ../include/mach/memory_object.h
+ace_data.o ace_data.ln: ../include/mach/message.h ../include/mach/policy.h
+ace_data.o ace_data.ln: ../include/mach/port.h ../include/mach/task_info.h
+ace_data.o ace_data.ln: ../include/mach/thread_status.h
+ace_data.o ace_data.ln: ../include/mach/time_value.h
+ace_data.o ace_data.ln: ../include/mach/vm_inherit.h ../include/mach/vm_param.h
+ace_data.o ace_data.ln: ../include/mach/vm_prot.h
+ace_data.o ace_data.ln: ../include/mach/vm_statistics.h
+ace_data.o ace_data.ln: ../include/machine/context.h
+ace_data.o ace_data.ln: ../include/machine/counters.h ../include/machine/cpu.h
+ace_data.o ace_data.ln: ../include/machine/endian.h ../include/machine/inst.h
+ace_data.o ace_data.ln: ../include/machine/machlimits.h
+ace_data.o ace_data.ln: ../include/machine/machparam.h
+ace_data.o ace_data.ln: ../include/machine/machtime.h ../include/machine/nxm.h
+ace_data.o ace_data.ln: ../include/machine/pcb.h ../include/machine/pmap.h
+ace_data.o ace_data.ln: ../include/machine/signal.h ../include/machine/spl.h
+ace_data.o ace_data.ln: ../include/machine/thread.h
+ace_data.o ace_data.ln: ../include/machine/vmparam.h ../include/machine/xpr.h
+ace_data.o ace_data.ln: ../include/netinet/ip_stat.h
+ace_data.o ace_data.ln: ../include/netinet/tcp_stat.h
+ace_data.o ace_data.ln: ../include/procfs/procfs.h ../include/s5fs/s5dir.h
+ace_data.o ace_data.ln: ../include/s5fs/s5ino.h ../include/s5fs/s5param.h
+ace_data.o ace_data.ln: ../include/standards.h ../include/sys/access.h
+ace_data.o ace_data.ln: ../include/sys/acl.h ../include/sys/acl_def.h
+ace_data.o ace_data.ln: ../include/sys/audit.h ../include/sys/buf.h
+ace_data.o ace_data.ln: ../include/sys/callout.h ../include/sys/conf.h
+ace_data.o ace_data.ln: ../include/sys/devio.h ../include/sys/disklabel.h
+ace_data.o ace_data.ln: ../include/sys/errno.h ../include/sys/fcntl.h
+ace_data.o ace_data.ln: ../include/sys/file.h ../include/sys/filsys.h
+ace_data.o ace_data.ln: ../include/sys/habitat.h ../include/sys/ioctl.h
+ace_data.o ace_data.ln: ../include/sys/ioctl_compat.h ../include/sys/ipc.h
+ace_data.o ace_data.ln: ../include/sys/kernel.h ../include/sys/limits.h
+ace_data.o ace_data.ln: ../include/sys/lock.h ../include/sys/lwc.h
+ace_data.o ace_data.ln: ../include/sys/map.h ../include/sys/mode.h
+ace_data.o ace_data.ln: ../include/sys/mount.h ../include/sys/namei.h
+ace_data.o ace_data.ln: ../include/sys/param.h ../include/sys/proc.h
+ace_data.o ace_data.ln: ../include/sys/proplist.h ../include/sys/resource.h
+ace_data.o ace_data.ln: ../include/sys/rt_limits.h ../include/sys/sec_objects.h
+ace_data.o ace_data.ln: ../include/sys/secdefines.h ../include/sys/secpolicy.h
+ace_data.o ace_data.ln: ../include/sys/security.h ../include/sys/seek.h
+ace_data.o ace_data.ln: ../include/sys/select.h ../include/sys/sem.h
+ace_data.o ace_data.ln: ../include/sys/siginfo.h ../include/sys/signal.h
+ace_data.o ace_data.ln: ../include/sys/sp_attr.h ../include/sys/syscall.h
+ace_data.o ace_data.ln: ../include/sys/syslimits.h ../include/sys/sysmisc.h
+ace_data.o ace_data.ln: ../include/sys/systm.h ../include/sys/termios.h
+ace_data.o ace_data.ln: ../include/sys/time.h ../include/sys/tty.h
+ace_data.o ace_data.ln: ../include/sys/ttychars.h ../include/sys/ttydefaults.h
+ace_data.o ace_data.ln: ../include/sys/ttydev.h ../include/sys/types.h
+ace_data.o ace_data.ln: ../include/sys/ucred.h ../include/sys/uio.h
+ace_data.o ace_data.ln: ../include/sys/unix_defs.h ../include/sys/user.h
+ace_data.o ace_data.ln: ../include/sys/vm.h ../include/sys/vmmac.h
+ace_data.o ace_data.ln: ../include/sys/vmparam.h ../include/sys/vnode.h
+ace_data.o ace_data.ln: ../include/sys/vp_swap.h ../include/tty/tty_common.h
+ace_data.o ace_data.ln: ../include/ufs/dir.h ../include/vm/pmap.h
+ace_data.o ace_data.ln: ../include/vm/vm_control.h ../include/vm/vm_fault.h
+ace_data.o ace_data.ln: ../include/vm/vm_kern.h ../include/vm/vm_map.h
+ace_data.o ace_data.ln: ../include/vm/vm_object.h ../include/vm/vmparam.h
+ace_data.o ace_data.ln: ../include/vm/vpage.h ./ace.h ./bin_compat.h
+ace_data.o ace_data.ln: ./bogus_memory.h ./cpus.h ./hw_ast.h ./mach_assert.h
+ace_data.o ace_data.ln: ./mach_emulation.h ./mach_host.h ./mach_ipc_tcache.h
+ace_data.o ace_data.ln: ./mach_km.h ./mach_ldebug.h ./rt_preempt.h ./rt_sched.h
+ace_data.o ace_data.ln: ./rt_sched_rq.h ./rt_timer.h ./sec_acl_posix.h
+ace_data.o ace_data.ln: ./sec_base.h ./sec_cmw.h ./sec_mac_ob.h ./sec_ncav.h
+ace_data.o ace_data.ln: ./sec_net.h ./sec_nfs.h ./sec_priv.h ./sec_shw.h
+ace_data.o ace_data.ln: ./ser_compat.h ./simple_clock.h ./stat_time.h
+ace_data.o ace_data.ln: ./unix_locks.h ./unix_uni.h ./vague_stats.h
+ace_data.o ace_data.ln: ./xpr_debug.h data/ace_data.c
+
+audit_data.o audit_data.ln: ../include/dirent.h ../include/kern/assert.h
+audit_data.o audit_data.ln: ../include/kern/ast.h ../include/kern/event.h
+audit_data.o audit_data.ln: ../include/kern/host.h ../include/kern/kern_msg.h
+audit_data.o audit_data.ln: ../include/kern/kern_obj.h
+audit_data.o audit_data.ln: ../include/kern/kern_set.h ../include/kern/lock.h
+audit_data.o audit_data.ln: ../include/kern/mach_param.h
+audit_data.o audit_data.ln: ../include/kern/macro_help.h
+audit_data.o audit_data.ln: ../include/kern/msg_queue.h
+audit_data.o audit_data.ln: ../include/kern/processor.h ../include/kern/queue.h
+audit_data.o audit_data.ln: ../include/kern/sched.h ../include/kern/spl.h
+audit_data.o audit_data.ln: ../include/kern/syscall_emulation.h
+audit_data.o audit_data.ln: ../include/kern/task.h ../include/kern/thread.h
+audit_data.o audit_data.ln: ../include/kern/thread_modes.h
+audit_data.o audit_data.ln: ../include/kern/timer.h
+audit_data.o audit_data.ln: ../include/mach/alpha/vm_param.h
+audit_data.o audit_data.ln: ../include/mach/boolean.h
+audit_data.o audit_data.ln: ../include/mach/events_info.h
+audit_data.o audit_data.ln: ../include/mach/kern_return.h
+audit_data.o audit_data.ln: ../include/mach/mach_param.h
+audit_data.o audit_data.ln: ../include/mach/machine/boolean.h
+audit_data.o audit_data.ln: ../include/mach/machine/kern_return.h
+audit_data.o audit_data.ln: ../include/mach/machine/thread_status.h
+audit_data.o audit_data.ln: ../include/mach/machine/vm_param.h
+audit_data.o audit_data.ln: ../include/mach/machine/vm_statistics.h
+audit_data.o audit_data.ln: ../include/mach/machine/vm_types.h
+audit_data.o audit_data.ln: ../include/mach/memory_object.h
+audit_data.o audit_data.ln: ../include/mach/message.h ../include/mach/policy.h
+audit_data.o audit_data.ln: ../include/mach/port.h ../include/mach/task_info.h
+audit_data.o audit_data.ln: ../include/mach/thread_status.h
+audit_data.o audit_data.ln: ../include/mach/time_value.h
+audit_data.o audit_data.ln: ../include/mach/vm_inherit.h
+audit_data.o audit_data.ln: ../include/mach/vm_param.h
+audit_data.o audit_data.ln: ../include/mach/vm_prot.h
+audit_data.o audit_data.ln: ../include/mach/vm_statistics.h
+audit_data.o audit_data.ln: ../include/machine/context.h
+audit_data.o audit_data.ln: ../include/machine/counters.h
+audit_data.o audit_data.ln: ../include/machine/cpu.h
+audit_data.o audit_data.ln: ../include/machine/endian.h
+audit_data.o audit_data.ln: ../include/machine/machlimits.h
+audit_data.o audit_data.ln: ../include/machine/machparam.h
+audit_data.o audit_data.ln: ../include/machine/machtime.h
+audit_data.o audit_data.ln: ../include/machine/nxm.h ../include/machine/pcb.h
+audit_data.o audit_data.ln: ../include/machine/pmap.h
+audit_data.o audit_data.ln: ../include/machine/signal.h
+audit_data.o audit_data.ln: ../include/machine/spl.h
+audit_data.o audit_data.ln: ../include/machine/thread.h
+audit_data.o audit_data.ln: ../include/netinet/ip_stat.h
+audit_data.o audit_data.ln: ../include/netinet/tcp_stat.h
+audit_data.o audit_data.ln: ../include/procfs/procfs.h ../include/s5fs/s5dir.h
+audit_data.o audit_data.ln: ../include/s5fs/s5param.h ../include/standards.h
+audit_data.o audit_data.ln: ../include/sys/acl.h ../include/sys/acl_def.h
+audit_data.o audit_data.ln: ../include/sys/audit.h ../include/sys/callout.h
+audit_data.o audit_data.ln: ../include/sys/errno.h ../include/sys/habitat.h
+audit_data.o audit_data.ln: ../include/sys/ipc.h ../include/sys/limits.h
+audit_data.o audit_data.ln: ../include/sys/lock.h ../include/sys/lwc.h
+audit_data.o audit_data.ln: ../include/sys/mount.h ../include/sys/namei.h
+audit_data.o audit_data.ln: ../include/sys/param.h ../include/sys/proc.h
+audit_data.o audit_data.ln: ../include/sys/proplist.h ../include/sys/resource.h
+audit_data.o audit_data.ln: ../include/sys/rt_limits.h
+audit_data.o audit_data.ln: ../include/sys/sec_objects.h
+audit_data.o audit_data.ln: ../include/sys/secdefines.h
+audit_data.o audit_data.ln: ../include/sys/secpolicy.h
+audit_data.o audit_data.ln: ../include/sys/security.h ../include/sys/select.h
+audit_data.o audit_data.ln: ../include/sys/sem.h ../include/sys/siginfo.h
+audit_data.o audit_data.ln: ../include/sys/signal.h ../include/sys/sp_attr.h
+audit_data.o audit_data.ln: ../include/sys/syscall.h ../include/sys/syslimits.h
+audit_data.o audit_data.ln: ../include/sys/sysmisc.h ../include/sys/systm.h
+audit_data.o audit_data.ln: ../include/sys/time.h ../include/sys/types.h
+audit_data.o audit_data.ln: ../include/sys/ucred.h ../include/sys/uio.h
+audit_data.o audit_data.ln: ../include/sys/unix_defs.h ../include/sys/user.h
+audit_data.o audit_data.ln: ../include/sys/vnode.h ../include/sys/vp_swap.h
+audit_data.o audit_data.ln: ../include/ufs/dir.h ../include/vm/pmap.h
+audit_data.o audit_data.ln: ../include/vm/vm_control.h ../include/vm/vm_fault.h
+audit_data.o audit_data.ln: ../include/vm/vm_map.h ../include/vm/vm_object.h
+audit_data.o audit_data.ln: ../include/vm/vmparam.h ../include/vm/vpage.h
+audit_data.o audit_data.ln: ./bin_compat.h ./bogus_memory.h ./cpus.h
+audit_data.o audit_data.ln: ./dec_audit.h ./hw_ast.h ./mach_assert.h
+audit_data.o audit_data.ln: ./mach_emulation.h ./mach_host.h
+audit_data.o audit_data.ln: ./mach_ipc_tcache.h ./mach_km.h ./mach_ldebug.h
+audit_data.o audit_data.ln: ./rt_preempt.h ./rt_sched.h ./rt_sched_rq.h
+audit_data.o audit_data.ln: ./sec_acl_posix.h ./sec_base.h ./sec_cmw.h
+audit_data.o audit_data.ln: ./sec_mac_ob.h ./sec_ncav.h ./sec_net.h ./sec_nfs.h
+audit_data.o audit_data.ln: ./sec_priv.h ./sec_shw.h ./ser_compat.h
+audit_data.o audit_data.ln: ./simple_clock.h ./stat_time.h ./unix_locks.h
+audit_data.o audit_data.ln: ./unix_uni.h ./vague_stats.h data/audit_data.c
+
+autoconf_data.o autoconf_data.ln: ../include/dirent.h ../include/hal/cpuconf.h
+autoconf_data.o autoconf_data.ln: ../include/io/dec/bi/bireg.h
+autoconf_data.o autoconf_data.ln: ../include/io/dec/bi/buareg.h
+autoconf_data.o autoconf_data.ln: ../include/io/dec/scs/sca.h
+autoconf_data.o autoconf_data.ln: ../include/io/dec/uba/ubareg.h
+autoconf_data.o autoconf_data.ln: ../include/io/dec/uba/ubavar.h
+autoconf_data.o autoconf_data.ln: ../include/kern/assert.h
+autoconf_data.o autoconf_data.ln: ../include/kern/ast.h ../include/kern/event.h
+autoconf_data.o autoconf_data.ln: ../include/kern/host.h
+autoconf_data.o autoconf_data.ln: ../include/kern/kern_msg.h
+autoconf_data.o autoconf_data.ln: ../include/kern/kern_obj.h
+autoconf_data.o autoconf_data.ln: ../include/kern/kern_set.h
+autoconf_data.o autoconf_data.ln: ../include/kern/lock.h
+autoconf_data.o autoconf_data.ln: ../include/kern/mach_param.h
+autoconf_data.o autoconf_data.ln: ../include/kern/macro_help.h
+autoconf_data.o autoconf_data.ln: ../include/kern/msg_queue.h
+autoconf_data.o autoconf_data.ln: ../include/kern/parallel.h
+autoconf_data.o autoconf_data.ln: ../include/kern/processor.h
+autoconf_data.o autoconf_data.ln: ../include/kern/queue.h
+autoconf_data.o autoconf_data.ln: ../include/kern/sched.h
+autoconf_data.o autoconf_data.ln: ../include/kern/sched_prim.h
+autoconf_data.o autoconf_data.ln: ../include/kern/spl.h
+autoconf_data.o autoconf_data.ln: ../include/kern/syscall_emulation.h
+autoconf_data.o autoconf_data.ln: ../include/kern/task.h
+autoconf_data.o autoconf_data.ln: ../include/kern/thread.h
+autoconf_data.o autoconf_data.ln: ../include/kern/thread_modes.h
+autoconf_data.o autoconf_data.ln: ../include/kern/timer.h
+autoconf_data.o autoconf_data.ln: ../include/mach/alpha/vm_param.h
+autoconf_data.o autoconf_data.ln: ../include/mach/boolean.h
+autoconf_data.o autoconf_data.ln: ../include/mach/events_info.h
+autoconf_data.o autoconf_data.ln: ../include/mach/kern_return.h
+autoconf_data.o autoconf_data.ln: ../include/mach/mach_param.h
+autoconf_data.o autoconf_data.ln: ../include/mach/machine/boolean.h
+autoconf_data.o autoconf_data.ln: ../include/mach/machine/kern_return.h
+autoconf_data.o autoconf_data.ln: ../include/mach/machine/thread_status.h
+autoconf_data.o autoconf_data.ln: ../include/mach/machine/vm_param.h
+autoconf_data.o autoconf_data.ln: ../include/mach/machine/vm_statistics.h
+autoconf_data.o autoconf_data.ln: ../include/mach/machine/vm_types.h
+autoconf_data.o autoconf_data.ln: ../include/mach/memory_object.h
+autoconf_data.o autoconf_data.ln: ../include/mach/message.h
+autoconf_data.o autoconf_data.ln: ../include/mach/policy.h
+autoconf_data.o autoconf_data.ln: ../include/mach/port.h
+autoconf_data.o autoconf_data.ln: ../include/mach/task_info.h
+autoconf_data.o autoconf_data.ln: ../include/mach/thread_status.h
+autoconf_data.o autoconf_data.ln: ../include/mach/time_value.h
+autoconf_data.o autoconf_data.ln: ../include/mach/vm_inherit.h
+autoconf_data.o autoconf_data.ln: ../include/mach/vm_param.h
+autoconf_data.o autoconf_data.ln: ../include/mach/vm_prot.h
+autoconf_data.o autoconf_data.ln: ../include/mach/vm_statistics.h
+autoconf_data.o autoconf_data.ln: ../include/machine/context.h
+autoconf_data.o autoconf_data.ln: ../include/machine/counters.h
+autoconf_data.o autoconf_data.ln: ../include/machine/cpu.h
+autoconf_data.o autoconf_data.ln: ../include/machine/endian.h
+autoconf_data.o autoconf_data.ln: ../include/machine/inst.h
+autoconf_data.o autoconf_data.ln: ../include/machine/machlimits.h
+autoconf_data.o autoconf_data.ln: ../include/machine/machparam.h
+autoconf_data.o autoconf_data.ln: ../include/machine/machtime.h
+autoconf_data.o autoconf_data.ln: ../include/machine/nxm.h
+autoconf_data.o autoconf_data.ln: ../include/machine/pcb.h
+autoconf_data.o autoconf_data.ln: ../include/machine/pmap.h
+autoconf_data.o autoconf_data.ln: ../include/machine/scb.h
+autoconf_data.o autoconf_data.ln: ../include/machine/signal.h
+autoconf_data.o autoconf_data.ln: ../include/machine/spl.h
+autoconf_data.o autoconf_data.ln: ../include/machine/thread.h
+autoconf_data.o autoconf_data.ln: ../include/machine/vmparam.h
+autoconf_data.o autoconf_data.ln: ../include/netinet/ip_stat.h
+autoconf_data.o autoconf_data.ln: ../include/netinet/tcp_stat.h
+autoconf_data.o autoconf_data.ln: ../include/procfs/procfs.h
+autoconf_data.o autoconf_data.ln: ../include/s5fs/s5dir.h
+autoconf_data.o autoconf_data.ln: ../include/s5fs/s5ino.h
+autoconf_data.o autoconf_data.ln: ../include/s5fs/s5param.h
+autoconf_data.o autoconf_data.ln: ../include/standards.h ../include/sys/acl.h
+autoconf_data.o autoconf_data.ln: ../include/sys/acl_def.h
+autoconf_data.o autoconf_data.ln: ../include/sys/audit.h ../include/sys/buf.h
+autoconf_data.o autoconf_data.ln: ../include/sys/callout.h
+autoconf_data.o autoconf_data.ln: ../include/sys/conf.h ../include/sys/dk.h
+autoconf_data.o autoconf_data.ln: ../include/sys/errno.h
+autoconf_data.o autoconf_data.ln: ../include/sys/filsys.h
+autoconf_data.o autoconf_data.ln: ../include/sys/habitat.h ../include/sys/ipc.h
+autoconf_data.o autoconf_data.ln: ../include/sys/limits.h ../include/sys/lock.h
+autoconf_data.o autoconf_data.ln: ../include/sys/lwc.h ../include/sys/map.h
+autoconf_data.o autoconf_data.ln: ../include/sys/mount.h ../include/sys/namei.h
+autoconf_data.o autoconf_data.ln: ../include/sys/param.h ../include/sys/proc.h
+autoconf_data.o autoconf_data.ln: ../include/sys/proplist.h
+autoconf_data.o autoconf_data.ln: ../include/sys/reboot.h
+autoconf_data.o autoconf_data.ln: ../include/sys/resource.h
+autoconf_data.o autoconf_data.ln: ../include/sys/rt_limits.h
+autoconf_data.o autoconf_data.ln: ../include/sys/sec_objects.h
+autoconf_data.o autoconf_data.ln: ../include/sys/secdefines.h
+autoconf_data.o autoconf_data.ln: ../include/sys/secpolicy.h
+autoconf_data.o autoconf_data.ln: ../include/sys/security.h
+autoconf_data.o autoconf_data.ln: ../include/sys/select.h ../include/sys/sem.h
+autoconf_data.o autoconf_data.ln: ../include/sys/siginfo.h
+autoconf_data.o autoconf_data.ln: ../include/sys/signal.h
+autoconf_data.o autoconf_data.ln: ../include/sys/sp_attr.h
+autoconf_data.o autoconf_data.ln: ../include/sys/syscall.h
+autoconf_data.o autoconf_data.ln: ../include/sys/syslimits.h
+autoconf_data.o autoconf_data.ln: ../include/sys/sysmisc.h
+autoconf_data.o autoconf_data.ln: ../include/sys/systm.h ../include/sys/time.h
+autoconf_data.o autoconf_data.ln: ../include/sys/types.h ../include/sys/ucred.h
+autoconf_data.o autoconf_data.ln: ../include/sys/uio.h
+autoconf_data.o autoconf_data.ln: ../include/sys/unix_defs.h
+autoconf_data.o autoconf_data.ln: ../include/sys/user.h ../include/sys/vm.h
+autoconf_data.o autoconf_data.ln: ../include/sys/vmmac.h
+autoconf_data.o autoconf_data.ln: ../include/sys/vmparam.h
+autoconf_data.o autoconf_data.ln: ../include/sys/vnode.h
+autoconf_data.o autoconf_data.ln: ../include/sys/vp_swap.h ../include/ufs/dir.h
+autoconf_data.o autoconf_data.ln: ../include/vm/pmap.h
+autoconf_data.o autoconf_data.ln: ../include/vm/vm_control.h
+autoconf_data.o autoconf_data.ln: ../include/vm/vm_fault.h
+autoconf_data.o autoconf_data.ln: ../include/vm/vm_map.h
+autoconf_data.o autoconf_data.ln: ../include/vm/vm_object.h
+autoconf_data.o autoconf_data.ln: ../include/vm/vmparam.h ../include/vm/vpage.h
+autoconf_data.o autoconf_data.ln: ./bin_compat.h ./bogus_memory.h ./ci.h
+autoconf_data.o autoconf_data.ln: ./cpus.h ./hw_ast.h ./kdm.h ./ln.h
+autoconf_data.o autoconf_data.ln: ./mach_assert.h ./mach_emulation.h
+autoconf_data.o autoconf_data.ln: ./mach_host.h ./mach_ipc_tcache.h
+autoconf_data.o autoconf_data.ln: ./mach_kdb.h ./mach_km.h ./mach_ldebug.h
+autoconf_data.o autoconf_data.ln: ./rt_preempt.h ./rt_sched.h ./rt_sched_rq.h
+autoconf_data.o autoconf_data.ln: ./sec_acl_posix.h ./sec_base.h ./sec_cmw.h
+autoconf_data.o autoconf_data.ln: ./sec_mac_ob.h ./sec_ncav.h ./sec_net.h
+autoconf_data.o autoconf_data.ln: ./sec_nfs.h ./sec_priv.h ./sec_shw.h
+autoconf_data.o autoconf_data.ln: ./ser_compat.h ./simple_clock.h ./stat_time.h
+autoconf_data.o autoconf_data.ln: ./uba.h ./unix_locks.h ./unix_uni.h ./uq.h
+autoconf_data.o autoconf_data.ln: ./vague_stats.h ./xmi.h data/autoconf_data.c
+
+binlog_data.o binlog_data.ln: ../include/dec/binlog/binlog.h
+binlog_data.o binlog_data.ln: ../include/kern/assert.h ../include/kern/event.h
+binlog_data.o binlog_data.ln: ../include/kern/lock.h
+binlog_data.o binlog_data.ln: ../include/kern/macro_help.h
+binlog_data.o binlog_data.ln: ../include/kern/queue.h ../include/kern/spl.h
+binlog_data.o binlog_data.ln: ../include/mach/boolean.h
+binlog_data.o binlog_data.ln: ../include/mach/machine/boolean.h
+binlog_data.o binlog_data.ln: ../include/mach/machine/vm_types.h
+binlog_data.o binlog_data.ln: ../include/machine/context.h
+binlog_data.o binlog_data.ln: ../include/machine/machlimits.h
+binlog_data.o binlog_data.ln: ../include/machine/machtime.h
+binlog_data.o binlog_data.ln: ../include/machine/signal.h
+binlog_data.o binlog_data.ln: ../include/machine/spl.h ../include/standards.h
+binlog_data.o binlog_data.ln: ../include/sys/limits.h
+binlog_data.o binlog_data.ln: ../include/sys/rt_limits.h
+binlog_data.o binlog_data.ln: ../include/sys/select.h ../include/sys/siginfo.h
+binlog_data.o binlog_data.ln: ../include/sys/signal.h
+binlog_data.o binlog_data.ln: ../include/sys/syslimits.h
+binlog_data.o binlog_data.ln: ../include/sys/sysmisc.h ../include/sys/time.h
+binlog_data.o binlog_data.ln: ../include/sys/types.h ../include/sys/unix_defs.h
+binlog_data.o binlog_data.ln: ./bogus_memory.h ./cpus.h ./mach_assert.h
+binlog_data.o binlog_data.ln: ./mach_ldebug.h ./rt_preempt.h ./ser_compat.h
+binlog_data.o binlog_data.ln: ./unix_locks.h ./unix_uni.h ./vague_stats.h
+binlog_data.o binlog_data.ln: data/binlog_data.c
+
+cam_config.o cam_config.ln: ../include/dirent.h ../include/hal/cpuconf.h
+cam_config.o cam_config.ln: ../include/io/cam/cam.h
+cam_config.o cam_config.ln: ../include/io/cam/cam_config.h
+cam_config.o cam_config.ln: ../include/io/cam/cam_debug.h
+cam_config.o cam_config.ln: ../include/io/cam/dec_cam.h
+cam_config.o cam_config.ln: ../include/io/cam/sim_config.h
+cam_config.o cam_config.ln: ../include/io/common/devdriver.h
+cam_config.o cam_config.ln: ../include/io/common/devio.h
+cam_config.o cam_config.ln: ../include/io/common/handler.h
+cam_config.o cam_config.ln: ../include/io/common/iotypes.h
+cam_config.o cam_config.ln: ../include/kern/assert.h ../include/kern/ast.h
+cam_config.o cam_config.ln: ../include/kern/event.h ../include/kern/host.h
+cam_config.o cam_config.ln: ../include/kern/kern_msg.h
+cam_config.o cam_config.ln: ../include/kern/kern_obj.h
+cam_config.o cam_config.ln: ../include/kern/kern_set.h ../include/kern/lock.h
+cam_config.o cam_config.ln: ../include/kern/mach_param.h
+cam_config.o cam_config.ln: ../include/kern/macro_help.h
+cam_config.o cam_config.ln: ../include/kern/msg_queue.h
+cam_config.o cam_config.ln: ../include/kern/processor.h ../include/kern/queue.h
+cam_config.o cam_config.ln: ../include/kern/sched.h ../include/kern/spl.h
+cam_config.o cam_config.ln: ../include/kern/syscall_emulation.h
+cam_config.o cam_config.ln: ../include/kern/task.h ../include/kern/thread.h
+cam_config.o cam_config.ln: ../include/kern/thread_modes.h
+cam_config.o cam_config.ln: ../include/kern/timer.h
+cam_config.o cam_config.ln: ../include/mach/alpha/vm_param.h
+cam_config.o cam_config.ln: ../include/mach/boolean.h
+cam_config.o cam_config.ln: ../include/mach/events_info.h
+cam_config.o cam_config.ln: ../include/mach/kern_return.h
+cam_config.o cam_config.ln: ../include/mach/mach_param.h
+cam_config.o cam_config.ln: ../include/mach/machine/boolean.h
+cam_config.o cam_config.ln: ../include/mach/machine/kern_return.h
+cam_config.o cam_config.ln: ../include/mach/machine/thread_status.h
+cam_config.o cam_config.ln: ../include/mach/machine/vm_param.h
+cam_config.o cam_config.ln: ../include/mach/machine/vm_statistics.h
+cam_config.o cam_config.ln: ../include/mach/machine/vm_types.h
+cam_config.o cam_config.ln: ../include/mach/memory_object.h
+cam_config.o cam_config.ln: ../include/mach/message.h ../include/mach/policy.h
+cam_config.o cam_config.ln: ../include/mach/port.h ../include/mach/task_info.h
+cam_config.o cam_config.ln: ../include/mach/thread_status.h
+cam_config.o cam_config.ln: ../include/mach/time_value.h
+cam_config.o cam_config.ln: ../include/mach/vm_inherit.h
+cam_config.o cam_config.ln: ../include/mach/vm_param.h
+cam_config.o cam_config.ln: ../include/mach/vm_prot.h
+cam_config.o cam_config.ln: ../include/mach/vm_statistics.h
+cam_config.o cam_config.ln: ../include/machine/context.h
+cam_config.o cam_config.ln: ../include/machine/counters.h
+cam_config.o cam_config.ln: ../include/machine/cpu.h
+cam_config.o cam_config.ln: ../include/machine/endian.h
+cam_config.o cam_config.ln: ../include/machine/inst.h
+cam_config.o cam_config.ln: ../include/machine/machlimits.h
+cam_config.o cam_config.ln: ../include/machine/machparam.h
+cam_config.o cam_config.ln: ../include/machine/machtime.h
+cam_config.o cam_config.ln: ../include/machine/nxm.h ../include/machine/pcb.h
+cam_config.o cam_config.ln: ../include/machine/pmap.h
+cam_config.o cam_config.ln: ../include/machine/signal.h
+cam_config.o cam_config.ln: ../include/machine/spl.h
+cam_config.o cam_config.ln: ../include/machine/thread.h
+cam_config.o cam_config.ln: ../include/netinet/ip_stat.h
+cam_config.o cam_config.ln: ../include/netinet/tcp_stat.h
+cam_config.o cam_config.ln: ../include/procfs/procfs.h ../include/s5fs/s5dir.h
+cam_config.o cam_config.ln: ../include/s5fs/s5ino.h ../include/s5fs/s5param.h
+cam_config.o cam_config.ln: ../include/standards.h ../include/sys/acl.h
+cam_config.o cam_config.ln: ../include/sys/acl_def.h ../include/sys/audit.h
+cam_config.o cam_config.ln: ../include/sys/buf.h ../include/sys/callout.h
+cam_config.o cam_config.ln: ../include/sys/disklabel.h ../include/sys/errno.h
+cam_config.o cam_config.ln: ../include/sys/filsys.h ../include/sys/habitat.h
+cam_config.o cam_config.ln: ../include/sys/ipc.h ../include/sys/limits.h
+cam_config.o cam_config.ln: ../include/sys/lock.h ../include/sys/lwc.h
+cam_config.o cam_config.ln: ../include/sys/mount.h ../include/sys/namei.h
+cam_config.o cam_config.ln: ../include/sys/param.h ../include/sys/proc.h
+cam_config.o cam_config.ln: ../include/sys/proplist.h ../include/sys/resource.h
+cam_config.o cam_config.ln: ../include/sys/rt_limits.h
+cam_config.o cam_config.ln: ../include/sys/sec_objects.h
+cam_config.o cam_config.ln: ../include/sys/secdefines.h
+cam_config.o cam_config.ln: ../include/sys/secpolicy.h
+cam_config.o cam_config.ln: ../include/sys/security.h ../include/sys/select.h
+cam_config.o cam_config.ln: ../include/sys/sem.h ../include/sys/siginfo.h
+cam_config.o cam_config.ln: ../include/sys/signal.h ../include/sys/sp_attr.h
+cam_config.o cam_config.ln: ../include/sys/syscall.h ../include/sys/syslimits.h
+cam_config.o cam_config.ln: ../include/sys/sysmisc.h ../include/sys/systm.h
+cam_config.o cam_config.ln: ../include/sys/time.h ../include/sys/types.h
+cam_config.o cam_config.ln: ../include/sys/ucred.h ../include/sys/uio.h
+cam_config.o cam_config.ln: ../include/sys/unix_defs.h ../include/sys/user.h
+cam_config.o cam_config.ln: ../include/sys/vnode.h ../include/sys/vp_swap.h
+cam_config.o cam_config.ln: ../include/ufs/dir.h ../include/vm/pmap.h
+cam_config.o cam_config.ln: ../include/vm/vm_control.h ../include/vm/vm_fault.h
+cam_config.o cam_config.ln: ../include/vm/vm_map.h ../include/vm/vm_object.h
+cam_config.o cam_config.ln: ../include/vm/vmparam.h ../include/vm/vpage.h
+cam_config.o cam_config.ln: ./aha.h ./asc.h ./ata.h ./bin_compat.h
+cam_config.o cam_config.ln: ./bogus_memory.h ./cpus.h ./hw_ast.h ./isp.h
+cam_config.o cam_config.ln: ./itpsa.h ./mach_assert.h ./mach_emulation.h
+cam_config.o cam_config.ln: ./mach_host.h ./mach_ipc_tcache.h ./mach_km.h
+cam_config.o cam_config.ln: ./mach_ldebug.h ./psiop.h ./pza.h ./rt_preempt.h
+cam_config.o cam_config.ln: ./rt_sched.h ./rt_sched_rq.h ./scsi.h
+cam_config.o cam_config.ln: ./sec_acl_posix.h ./sec_base.h ./sec_cmw.h
+cam_config.o cam_config.ln: ./sec_mac_ob.h ./sec_ncav.h ./sec_net.h ./sec_nfs.h
+cam_config.o cam_config.ln: ./sec_priv.h ./sec_shw.h ./ser_compat.h
+cam_config.o cam_config.ln: ./simple_clock.h ./siop.h ./stat_time.h ./tcds.h
+cam_config.o cam_config.ln: ./tza.h ./unix_locks.h ./unix_uni.h ./vague_stats.h
+cam_config.o cam_config.ln: ./xza.h io/cam/cam_config.c
+
+cam_data.o cam_data.ln: ../include/dirent.h ../include/io/cam/ata/sim_ata.h
+cam_data.o cam_data.ln: ../include/io/cam/cam.h ../include/io/cam/cam_debug.h
+cam_data.o cam_data.ln: ../include/io/cam/cam_tape.h ../include/io/cam/camdb.h
+cam_data.o cam_data.ln: ../include/io/cam/ccfg.h ../include/io/cam/cdrom.h
+cam_data.o cam_data.ln: ../include/io/cam/dec_cam.h ../include/io/cam/dme.h
+cam_data.o cam_data.ln: ../include/io/cam/pdrv.h ../include/io/cam/scsi_all.h
+cam_data.o cam_data.ln: ../include/io/cam/scsi_direct.h
+cam_data.o cam_data.ln: ../include/io/cam/scsi_sequential.h
+cam_data.o cam_data.ln: ../include/io/cam/sim.h ../include/io/cam/sim_94.h
+cam_data.o cam_data.ln: ../include/io/cam/sim_cirq.h
+cam_data.o cam_data.ln: ../include/io/cam/sim_target.h
+cam_data.o cam_data.ln: ../include/io/cam/siop/psiopdefs.h
+cam_data.o cam_data.ln: ../include/io/cam/tcds_adapt.h ../include/io/cam/uagt.h
+cam_data.o cam_data.ln: ../include/io/cam/xpt.h
+cam_data.o cam_data.ln: ../include/io/common/devdriver.h
+cam_data.o cam_data.ln: ../include/io/common/deveei.h
+cam_data.o cam_data.ln: ../include/io/common/devgetinfo.h
+cam_data.o cam_data.ln: ../include/io/common/devio.h
+cam_data.o cam_data.ln: ../include/io/common/handler.h
+cam_data.o cam_data.ln: ../include/io/common/iotypes.h
+cam_data.o cam_data.ln: ../include/io/common/kds.h ../include/kern/assert.h
+cam_data.o cam_data.ln: ../include/kern/ast.h ../include/kern/event.h
+cam_data.o cam_data.ln: ../include/kern/host.h ../include/kern/kern_msg.h
+cam_data.o cam_data.ln: ../include/kern/kern_obj.h ../include/kern/kern_set.h
+cam_data.o cam_data.ln: ../include/kern/lock.h ../include/kern/mach_param.h
+cam_data.o cam_data.ln: ../include/kern/macro_help.h
+cam_data.o cam_data.ln: ../include/kern/msg_queue.h ../include/kern/processor.h
+cam_data.o cam_data.ln: ../include/kern/queue.h ../include/kern/sched.h
+cam_data.o cam_data.ln: ../include/kern/spl.h
+cam_data.o cam_data.ln: ../include/kern/syscall_emulation.h
+cam_data.o cam_data.ln: ../include/kern/task.h ../include/kern/thread.h
+cam_data.o cam_data.ln: ../include/kern/thread_modes.h ../include/kern/timer.h
+cam_data.o cam_data.ln: ../include/mach/alpha/vm_param.h
+cam_data.o cam_data.ln: ../include/mach/boolean.h ../include/mach/events_info.h
+cam_data.o cam_data.ln: ../include/mach/kern_return.h
+cam_data.o cam_data.ln: ../include/mach/mach_param.h
+cam_data.o cam_data.ln: ../include/mach/machine/boolean.h
+cam_data.o cam_data.ln: ../include/mach/machine/kern_return.h
+cam_data.o cam_data.ln: ../include/mach/machine/thread_status.h
+cam_data.o cam_data.ln: ../include/mach/machine/vm_param.h
+cam_data.o cam_data.ln: ../include/mach/machine/vm_statistics.h
+cam_data.o cam_data.ln: ../include/mach/machine/vm_types.h
+cam_data.o cam_data.ln: ../include/mach/memory_object.h
+cam_data.o cam_data.ln: ../include/mach/message.h ../include/mach/policy.h
+cam_data.o cam_data.ln: ../include/mach/port.h ../include/mach/task_info.h
+cam_data.o cam_data.ln: ../include/mach/thread_status.h
+cam_data.o cam_data.ln: ../include/mach/time_value.h
+cam_data.o cam_data.ln: ../include/mach/vm_inherit.h ../include/mach/vm_param.h
+cam_data.o cam_data.ln: ../include/mach/vm_prot.h
+cam_data.o cam_data.ln: ../include/mach/vm_statistics.h
+cam_data.o cam_data.ln: ../include/machine/context.h
+cam_data.o cam_data.ln: ../include/machine/counters.h ../include/machine/cpu.h
+cam_data.o cam_data.ln: ../include/machine/endian.h
+cam_data.o cam_data.ln: ../include/machine/machlimits.h
+cam_data.o cam_data.ln: ../include/machine/machparam.h
+cam_data.o cam_data.ln: ../include/machine/machtime.h ../include/machine/nxm.h
+cam_data.o cam_data.ln: ../include/machine/pcb.h ../include/machine/pmap.h
+cam_data.o cam_data.ln: ../include/machine/signal.h ../include/machine/spl.h
+cam_data.o cam_data.ln: ../include/machine/thread.h
+cam_data.o cam_data.ln: ../include/netinet/ip_stat.h
+cam_data.o cam_data.ln: ../include/netinet/tcp_stat.h
+cam_data.o cam_data.ln: ../include/procfs/procfs.h ../include/s5fs/s5dir.h
+cam_data.o cam_data.ln: ../include/s5fs/s5param.h ../include/standards.h
+cam_data.o cam_data.ln: ../include/sys/acl.h ../include/sys/acl_def.h
+cam_data.o cam_data.ln: ../include/sys/audit.h ../include/sys/callout.h
+cam_data.o cam_data.ln: ../include/sys/disklabel.h ../include/sys/errno.h
+cam_data.o cam_data.ln: ../include/sys/habitat.h ../include/sys/ioctl.h
+cam_data.o cam_data.ln: ../include/sys/ioctl_compat.h ../include/sys/ipc.h
+cam_data.o cam_data.ln: ../include/sys/limits.h ../include/sys/lock.h
+cam_data.o cam_data.ln: ../include/sys/lwc.h ../include/sys/mount.h
+cam_data.o cam_data.ln: ../include/sys/namei.h ../include/sys/param.h
+cam_data.o cam_data.ln: ../include/sys/proc.h ../include/sys/proplist.h
+cam_data.o cam_data.ln: ../include/sys/resource.h ../include/sys/rt_limits.h
+cam_data.o cam_data.ln: ../include/sys/sec_objects.h
+cam_data.o cam_data.ln: ../include/sys/secdefines.h ../include/sys/secpolicy.h
+cam_data.o cam_data.ln: ../include/sys/security.h ../include/sys/select.h
+cam_data.o cam_data.ln: ../include/sys/sem.h ../include/sys/siginfo.h
+cam_data.o cam_data.ln: ../include/sys/signal.h ../include/sys/sp_attr.h
+cam_data.o cam_data.ln: ../include/sys/syscall.h ../include/sys/syslimits.h
+cam_data.o cam_data.ln: ../include/sys/sysmisc.h ../include/sys/systm.h
+cam_data.o cam_data.ln: ../include/sys/time.h ../include/sys/ttychars.h
+cam_data.o cam_data.ln: ../include/sys/ttydev.h ../include/sys/types.h
+cam_data.o cam_data.ln: ../include/sys/ucred.h ../include/sys/uio.h
+cam_data.o cam_data.ln: ../include/sys/unix_defs.h ../include/sys/user.h
+cam_data.o cam_data.ln: ../include/sys/vnode.h ../include/sys/vp_swap.h
+cam_data.o cam_data.ln: ../include/ufs/dir.h ../include/vm/pmap.h
+cam_data.o cam_data.ln: ../include/vm/vm_control.h ../include/vm/vm_fault.h
+cam_data.o cam_data.ln: ../include/vm/vm_map.h ../include/vm/vm_object.h
+cam_data.o cam_data.ln: ../include/vm/vmparam.h ../include/vm/vpage.h ./aha.h
+cam_data.o cam_data.ln: ./asc.h ./ata.h ./bin_compat.h ./bogus_memory.h
+cam_data.o cam_data.ln: ./cpus.h ./hw_ast.h ./isp.h ./itpsa.h ./mach_assert.h
+cam_data.o cam_data.ln: ./mach_emulation.h ./mach_host.h ./mach_ipc_tcache.h
+cam_data.o cam_data.ln: ./mach_km.h ./mach_ldebug.h ./psiop.h ./pza.h
+cam_data.o cam_data.ln: ./rt_preempt.h ./rt_sched.h ./rt_sched_rq.h ./scsi.h
+cam_data.o cam_data.ln: ./sec_acl_posix.h ./sec_base.h ./sec_cmw.h
+cam_data.o cam_data.ln: ./sec_mac_ob.h ./sec_ncav.h ./sec_net.h ./sec_nfs.h
+cam_data.o cam_data.ln: ./sec_priv.h ./sec_shw.h ./ser_compat.h
+cam_data.o cam_data.ln: ./simple_clock.h ./siop.h ./stat_time.h ./tcds.h
+cam_data.o cam_data.ln: ./tza.h ./unix_locks.h ./unix_uni.h ./vague_stats.h
+cam_data.o cam_data.ln: ./xza.h data/cam_data.c
+
+cam_debug.o cam_debug.ln: ../include/io/cam/cam.h ../include/io/cam/cam_debug.h
+cam_debug.o cam_debug.ln: ../include/io/cam/camdb.h ../include/io/cam/dec_cam.h
+cam_debug.o cam_debug.ln: ../include/io/cam/pdrv.h ../include/io/cam/scsi_all.h
+cam_debug.o cam_debug.ln: ../include/io/cam/scsi_cdbs.h
+cam_debug.o cam_debug.ln: ../include/io/cam/scsi_status.h
+cam_debug.o cam_debug.ln: ../include/io/common/deveei.h
+cam_debug.o cam_debug.ln: ../include/io/common/devgetinfo.h
+cam_debug.o cam_debug.ln: ../include/io/common/iotypes.h
+cam_debug.o cam_debug.ln: ../include/io/common/kds.h ../include/kern/assert.h
+cam_debug.o cam_debug.ln: ../include/kern/event.h ../include/kern/lock.h
+cam_debug.o cam_debug.ln: ../include/kern/macro_help.h ../include/kern/queue.h
+cam_debug.o cam_debug.ln: ../include/kern/spl.h ../include/mach/boolean.h
+cam_debug.o cam_debug.ln: ../include/mach/kern_return.h
+cam_debug.o cam_debug.ln: ../include/mach/machine/boolean.h
+cam_debug.o cam_debug.ln: ../include/mach/machine/kern_return.h
+cam_debug.o cam_debug.ln: ../include/mach/machine/vm_param.h
+cam_debug.o cam_debug.ln: ../include/mach/machine/vm_types.h
+cam_debug.o cam_debug.ln: ../include/mach/vm_param.h
+cam_debug.o cam_debug.ln: ../include/machine/context.h
+cam_debug.o cam_debug.ln: ../include/machine/machlimits.h
+cam_debug.o cam_debug.ln: ../include/machine/machtime.h
+cam_debug.o cam_debug.ln: ../include/machine/signal.h ../include/machine/spl.h
+cam_debug.o cam_debug.ln: ../include/standards.h ../include/sys/errno.h
+cam_debug.o cam_debug.ln: ../include/sys/limits.h ../include/sys/rt_limits.h
+cam_debug.o cam_debug.ln: ../include/sys/select.h ../include/sys/siginfo.h
+cam_debug.o cam_debug.ln: ../include/sys/signal.h ../include/sys/syslimits.h
+cam_debug.o cam_debug.ln: ../include/sys/sysmisc.h ../include/sys/time.h
+cam_debug.o cam_debug.ln: ../include/sys/types.h ../include/sys/unix_defs.h
+cam_debug.o cam_debug.ln: ./bogus_memory.h ./cpus.h ./mach_assert.h
+cam_debug.o cam_debug.ln: ./mach_ldebug.h ./rt_preempt.h ./ser_compat.h
+cam_debug.o cam_debug.ln: ./unix_locks.h ./unix_uni.h ./vague_stats.h
+cam_debug.o cam_debug.ln: ./xpr_debug.h io/cam/cam_debug.c
+
+cam_special_data.o cam_special_data.ln: ../include/io/cam/cam.h
+cam_special_data.o cam_special_data.ln: ../include/io/cam/cam_special.h
+cam_special_data.o cam_special_data.ln: ../include/io/cam/cdrom.h
+cam_special_data.o cam_special_data.ln: ../include/io/cam/dec_cam.h
+cam_special_data.o cam_special_data.ln: ../include/io/cam/rzdisk.h
+cam_special_data.o cam_special_data.ln: ../include/io/cam/scsi_all.h
+cam_special_data.o cam_special_data.ln: ../include/io/cam/scsi_direct.h
+cam_special_data.o cam_special_data.ln: ../include/io/cam/scsi_rodirect.h
+cam_special_data.o cam_special_data.ln: ../include/io/cam/scsi_sequential.h
+cam_special_data.o cam_special_data.ln: ../include/io/cam/scsi_special.h
+cam_special_data.o cam_special_data.ln: ../include/io/common/devio.h
+cam_special_data.o cam_special_data.ln: ../include/io/common/iotypes.h
+cam_special_data.o cam_special_data.ln: ../include/kern/assert.h
+cam_special_data.o cam_special_data.ln: ../include/kern/event.h
+cam_special_data.o cam_special_data.ln: ../include/kern/lock.h
+cam_special_data.o cam_special_data.ln: ../include/kern/macro_help.h
+cam_special_data.o cam_special_data.ln: ../include/kern/processor.h
+cam_special_data.o cam_special_data.ln: ../include/kern/queue.h
+cam_special_data.o cam_special_data.ln: ../include/kern/sched.h
+cam_special_data.o cam_special_data.ln: ../include/kern/spl.h
+cam_special_data.o cam_special_data.ln: ../include/mach/alpha/vm_param.h
+cam_special_data.o cam_special_data.ln: ../include/mach/boolean.h
+cam_special_data.o cam_special_data.ln: ../include/mach/machine/boolean.h
+cam_special_data.o cam_special_data.ln: ../include/mach/machine/vm_param.h
+cam_special_data.o cam_special_data.ln: ../include/mach/machine/vm_statistics.h
+cam_special_data.o cam_special_data.ln: ../include/mach/machine/vm_types.h
+cam_special_data.o cam_special_data.ln: ../include/mach/policy.h
+cam_special_data.o cam_special_data.ln: ../include/mach/port.h
+cam_special_data.o cam_special_data.ln: ../include/mach/vm_prot.h
+cam_special_data.o cam_special_data.ln: ../include/mach/vm_statistics.h
+cam_special_data.o cam_special_data.ln: ../include/machine/context.h
+cam_special_data.o cam_special_data.ln: ../include/machine/counters.h
+cam_special_data.o cam_special_data.ln: ../include/machine/cpu.h
+cam_special_data.o cam_special_data.ln: ../include/machine/endian.h
+cam_special_data.o cam_special_data.ln: ../include/machine/machlimits.h
+cam_special_data.o cam_special_data.ln: ../include/machine/machparam.h
+cam_special_data.o cam_special_data.ln: ../include/machine/machtime.h
+cam_special_data.o cam_special_data.ln: ../include/machine/pmap.h
+cam_special_data.o cam_special_data.ln: ../include/machine/signal.h
+cam_special_data.o cam_special_data.ln: ../include/machine/spl.h
+cam_special_data.o cam_special_data.ln: ../include/netinet/ip_stat.h
+cam_special_data.o cam_special_data.ln: ../include/netinet/tcp_stat.h
+cam_special_data.o cam_special_data.ln: ../include/standards.h
+cam_special_data.o cam_special_data.ln: ../include/sys/access.h
+cam_special_data.o cam_special_data.ln: ../include/sys/callout.h
+cam_special_data.o cam_special_data.ln: ../include/sys/deveei.h
+cam_special_data.o cam_special_data.ln: ../include/sys/fcntl.h
+cam_special_data.o cam_special_data.ln: ../include/sys/file.h
+cam_special_data.o cam_special_data.ln: ../include/sys/ioctl.h
+cam_special_data.o cam_special_data.ln: ../include/sys/ioctl_compat.h
+cam_special_data.o cam_special_data.ln: ../include/sys/limits.h
+cam_special_data.o cam_special_data.ln: ../include/sys/lwc.h
+cam_special_data.o cam_special_data.ln: ../include/sys/mode.h
+cam_special_data.o cam_special_data.ln: ../include/sys/mtio.h
+cam_special_data.o cam_special_data.ln: ../include/sys/param.h
+cam_special_data.o cam_special_data.ln: ../include/sys/rt_limits.h
+cam_special_data.o cam_special_data.ln: ../include/sys/secdefines.h
+cam_special_data.o cam_special_data.ln: ../include/sys/seek.h
+cam_special_data.o cam_special_data.ln: ../include/sys/select.h
+cam_special_data.o cam_special_data.ln: ../include/sys/siginfo.h
+cam_special_data.o cam_special_data.ln: ../include/sys/signal.h
+cam_special_data.o cam_special_data.ln: ../include/sys/syslimits.h
+cam_special_data.o cam_special_data.ln: ../include/sys/sysmisc.h
+cam_special_data.o cam_special_data.ln: ../include/sys/time.h
+cam_special_data.o cam_special_data.ln: ../include/sys/ttychars.h
+cam_special_data.o cam_special_data.ln: ../include/sys/ttydev.h
+cam_special_data.o cam_special_data.ln: ../include/sys/types.h
+cam_special_data.o cam_special_data.ln: ../include/sys/unix_defs.h
+cam_special_data.o cam_special_data.ln: ./bogus_memory.h ./cpus.h
+cam_special_data.o cam_special_data.ln: ./mach_assert.h ./mach_ldebug.h
+cam_special_data.o cam_special_data.ln: ./rt_preempt.h ./rt_sched.h
+cam_special_data.o cam_special_data.ln: ./rt_sched_rq.h ./sec_acl_posix.h
+cam_special_data.o cam_special_data.ln: ./sec_base.h ./sec_cmw.h ./sec_mac_ob.h
+cam_special_data.o cam_special_data.ln: ./sec_ncav.h ./sec_net.h ./sec_nfs.h
+cam_special_data.o cam_special_data.ln: ./sec_priv.h ./sec_shw.h ./ser_compat.h
+cam_special_data.o cam_special_data.ln: ./simple_clock.h ./stat_time.h
+cam_special_data.o cam_special_data.ln: ./unix_locks.h ./unix_uni.h
+cam_special_data.o cam_special_data.ln: ./vague_stats.h data/cam_special_data.c
+
+cm_data.o cm_data.ln: ../include/kern/event.h ../include/kern/lock.h
+cm_data.o cm_data.ln: ../include/kern/macro_help.h ../include/kern/queue.h
+cm_data.o cm_data.ln: ../include/kern/spl.h ../include/mach/boolean.h
+cm_data.o cm_data.ln: ../include/mach/machine/boolean.h
+cm_data.o cm_data.ln: ../include/mach/machine/vm_types.h
+cm_data.o cm_data.ln: ../include/machine/spl.h ../include/standards.h
+cm_data.o cm_data.ln: ../include/sys/habitat.h ../include/sys/select.h
+cm_data.o cm_data.ln: ../include/sys/systm.h ../include/sys/types.h ./cpus.h
+cm_data.o cm_data.ln: ./mach_ldebug.h ./rt_preempt.h ./soe_two_hab.h
+cm_data.o cm_data.ln: ./svid_three_hab.h ./svr_four_hab.h ./sysv_hab.h
+cm_data.o cm_data.ln: data/cm_data.c
+
+conf.o conf.ln: ../include/dirent.h ../include/io/common/devdriver.h
+conf.o conf.ln: ../include/io/common/devio.h ../include/io/common/handler.h
+conf.o conf.ln: ../include/io/dec/scs/sca.h ../include/io/dec/uba/ubavar.h
+conf.o conf.ln: ../include/kern/assert.h ../include/kern/ast.h
+conf.o conf.ln: ../include/kern/event.h ../include/kern/host.h
+conf.o conf.ln: ../include/kern/kern_msg.h ../include/kern/kern_obj.h
+conf.o conf.ln: ../include/kern/kern_set.h ../include/kern/lock.h
+conf.o conf.ln: ../include/kern/lockdev.h ../include/kern/mach_param.h
+conf.o conf.ln: ../include/kern/macro_help.h ../include/kern/msg_queue.h
+conf.o conf.ln: ../include/kern/parallel.h ../include/kern/processor.h
+conf.o conf.ln: ../include/kern/queue.h ../include/kern/sched.h
+conf.o conf.ln: ../include/kern/sched_prim.h ../include/kern/spl.h
+conf.o conf.ln: ../include/kern/syscall_emulation.h ../include/kern/task.h
+conf.o conf.ln: ../include/kern/thread.h ../include/kern/thread_modes.h
+conf.o conf.ln: ../include/kern/threadcall.h ../include/kern/timer.h
+conf.o conf.ln: ../include/lvm/ltg.h ../include/lvm/lv_defect.h
+conf.o conf.ln: ../include/lvm/lv_pvq.h ../include/lvm/lv_q.h
+conf.o conf.ln: ../include/lvm/lv_qmacros.h ../include/lvm/lvm.h
+conf.o conf.ln: ../include/lvm/lvmd.h ../include/lvm/pvres.h
+conf.o conf.ln: ../include/lvm/vgres.h ../include/lvm/vgsa.h
+conf.o conf.ln: ../include/mach/alpha/vm_param.h ../include/mach/boolean.h
+conf.o conf.ln: ../include/mach/events_info.h ../include/mach/kern_return.h
+conf.o conf.ln: ../include/mach/mach_param.h ../include/mach/machine/boolean.h
+conf.o conf.ln: ../include/mach/machine/kern_return.h
+conf.o conf.ln: ../include/mach/machine/thread_status.h
+conf.o conf.ln: ../include/mach/machine/vm_param.h
+conf.o conf.ln: ../include/mach/machine/vm_statistics.h
+conf.o conf.ln: ../include/mach/machine/vm_types.h
+conf.o conf.ln: ../include/mach/memory_object.h ../include/mach/message.h
+conf.o conf.ln: ../include/mach/policy.h ../include/mach/port.h
+conf.o conf.ln: ../include/mach/task_info.h ../include/mach/thread_status.h
+conf.o conf.ln: ../include/mach/time_value.h ../include/mach/vm_inherit.h
+conf.o conf.ln: ../include/mach/vm_param.h ../include/mach/vm_prot.h
+conf.o conf.ln: ../include/mach/vm_statistics.h ../include/machine/context.h
+conf.o conf.ln: ../include/machine/counters.h ../include/machine/cpu.h
+conf.o conf.ln: ../include/machine/endian.h ../include/machine/machlimits.h
+conf.o conf.ln: ../include/machine/machparam.h ../include/machine/machtime.h
+conf.o conf.ln: ../include/machine/nxm.h ../include/machine/pcb.h
+conf.o conf.ln: ../include/machine/pmap.h ../include/machine/signal.h
+conf.o conf.ln: ../include/machine/spl.h ../include/machine/thread.h
+conf.o conf.ln: ../include/netinet/ip_stat.h ../include/netinet/tcp_stat.h
+conf.o conf.ln: ../include/procfs/procfs.h ../include/s5fs/s5dir.h
+conf.o conf.ln: ../include/s5fs/s5ino.h ../include/s5fs/s5param.h
+conf.o conf.ln: ../include/standards.h ../include/sys/acl.h
+conf.o conf.ln: ../include/sys/acl_def.h ../include/sys/audit.h
+conf.o conf.ln: ../include/sys/buf.h ../include/sys/callout.h
+conf.o conf.ln: ../include/sys/conf.h ../include/sys/disklabel.h
+conf.o conf.ln: ../include/sys/errno.h ../include/sys/filsys.h
+conf.o conf.ln: ../include/sys/habitat.h ../include/sys/ioctl.h
+conf.o conf.ln: ../include/sys/ioctl_compat.h ../include/sys/ipc.h
+conf.o conf.ln: ../include/sys/limits.h ../include/sys/lock.h
+conf.o conf.ln: ../include/sys/lock_types.h ../include/sys/lwc.h
+conf.o conf.ln: ../include/sys/mount.h ../include/sys/namei.h
+conf.o conf.ln: ../include/sys/param.h ../include/sys/presto.h
+conf.o conf.ln: ../include/sys/prestoioctl.h ../include/sys/proc.h
+conf.o conf.ln: ../include/sys/proplist.h ../include/sys/resource.h
+conf.o conf.ln: ../include/sys/rt_limits.h ../include/sys/sec_objects.h
+conf.o conf.ln: ../include/sys/secdefines.h ../include/sys/secpolicy.h
+conf.o conf.ln: ../include/sys/security.h ../include/sys/select.h
+conf.o conf.ln: ../include/sys/sem.h ../include/sys/siginfo.h
+conf.o conf.ln: ../include/sys/signal.h ../include/sys/sp_attr.h
+conf.o conf.ln: ../include/sys/syscall.h ../include/sys/sysconfig.h
+conf.o conf.ln: ../include/sys/syslimits.h ../include/sys/sysmisc.h
+conf.o conf.ln: ../include/sys/systm.h ../include/sys/termios.h
+conf.o conf.ln: ../include/sys/time.h ../include/sys/tty.h
+conf.o conf.ln: ../include/sys/ttychars.h ../include/sys/ttydefaults.h
+conf.o conf.ln: ../include/sys/ttydev.h ../include/sys/types.h
+conf.o conf.ln: ../include/sys/ucred.h ../include/sys/uio.h
+conf.o conf.ln: ../include/sys/unix_defs.h ../include/sys/user.h
+conf.o conf.ln: ../include/sys/vnode.h ../include/sys/vp_swap.h
+conf.o conf.ln: ../include/tty/tty_common.h ../include/ufs/dir.h
+conf.o conf.ln: ../include/vm/pmap.h ../include/vm/vm_control.h
+conf.o conf.ln: ../include/vm/vm_fault.h ../include/vm/vm_map.h
+conf.o conf.ln: ../include/vm/vm_object.h ../include/vm/vmparam.h
+conf.o conf.ln: ../include/vm/vpage.h ./ace.h ./aha.h ./asc.h ./atm.h
+conf.o conf.ln: ./bin_compat.h ./bogus_memory.h ./cpus.h ./dec_audit.h ./eisa.h
+conf.o conf.ln: ./fdi.h ./hw_ast.h ./isa.h ./iscc.h ./kdebug.h ./lp.h ./lsm.h
+conf.o conf.ln: ./lv.h ./mach_assert.h ./mach_emulation.h ./mach_host.h
+conf.o conf.ln: ./mach_ipc_tcache.h ./mach_km.h ./mach_ldebug.h ./memd.h
+conf.o conf.ln: ./mlog.h ./pcmcia.h ./pfm.h ./presto.h ./prf.h ./pty.h
+conf.o conf.ln: ./pwrmgr_enabled.h ./rt_preempt.h ./rt_sched.h ./rt_sched_rq.h
+conf.o conf.ln: ./sas.h ./scc.h ./scsi.h ./sec_acl_posix.h ./sec_base.h
+conf.o conf.ln: ./sec_cmw.h ./sec_mac_ob.h ./sec_ncav.h ./sec_net.h ./sec_nfs.h
+conf.o conf.ln: ./sec_priv.h ./sec_shw.h ./ser_compat.h ./simple_clock.h
+conf.o conf.ln: ./siop.h ./spd.h ./stat_time.h ./tc.h ./tcds.h ./tza.h
+conf.o conf.ln: ./unix_locks.h ./unix_uni.h ./vague_stats.h ./ws.h bba.h ci.h
+conf.o conf.ln: conf.c dcedfs.h dlb.h dlpi.h dssc.h hsc.h lat.h ldtty.h lta.h
+conf.o conf.ln: mscp.h packetfilter.h pckt.h rpty.h snmpinfo.h streams.h
+conf.o conf.ln: strifnet.h strkinfo.h svvs.h timod.h tirdwr.h uba.h uq.h xcr.h
+conf.o conf.ln: xtiso.h
+
+cons_sw_data.o cons_sw_data.ln: ../include/hal/cons_sw.h ./fb.h ./pv.h ./pvl.h
+cons_sw_data.o cons_sw_data.ln: ./ws.h data/cons_sw_data.c
+
+cpuconf.o cpuconf.ln: ../include/hal/cpuconf.h ../include/kern/assert.h
+cpuconf.o cpuconf.ln: ../include/kern/event.h ../include/kern/lock.h
+cpuconf.o cpuconf.ln: ../include/kern/macro_help.h ../include/kern/processor.h
+cpuconf.o cpuconf.ln: ../include/kern/queue.h ../include/kern/sched.h
+cpuconf.o cpuconf.ln: ../include/kern/spl.h ../include/mach/alpha/vm_param.h
+cpuconf.o cpuconf.ln: ../include/mach/boolean.h
+cpuconf.o cpuconf.ln: ../include/mach/machine/boolean.h
+cpuconf.o cpuconf.ln: ../include/mach/machine/vm_param.h
+cpuconf.o cpuconf.ln: ../include/mach/machine/vm_statistics.h
+cpuconf.o cpuconf.ln: ../include/mach/machine/vm_types.h
+cpuconf.o cpuconf.ln: ../include/mach/policy.h ../include/mach/port.h
+cpuconf.o cpuconf.ln: ../include/mach/vm_prot.h ../include/mach/vm_statistics.h
+cpuconf.o cpuconf.ln: ../include/machine/context.h
+cpuconf.o cpuconf.ln: ../include/machine/counters.h ../include/machine/cpu.h
+cpuconf.o cpuconf.ln: ../include/machine/endian.h ../include/machine/inst.h
+cpuconf.o cpuconf.ln: ../include/machine/machlimits.h
+cpuconf.o cpuconf.ln: ../include/machine/machparam.h
+cpuconf.o cpuconf.ln: ../include/machine/machtime.h ../include/machine/pmap.h
+cpuconf.o cpuconf.ln: ../include/machine/signal.h ../include/machine/spl.h
+cpuconf.o cpuconf.ln: ../include/netinet/ip_stat.h
+cpuconf.o cpuconf.ln: ../include/netinet/tcp_stat.h ../include/standards.h
+cpuconf.o cpuconf.ln: ../include/sys/callout.h ../include/sys/limits.h
+cpuconf.o cpuconf.ln: ../include/sys/lwc.h ../include/sys/param.h
+cpuconf.o cpuconf.ln: ../include/sys/rt_limits.h ../include/sys/select.h
+cpuconf.o cpuconf.ln: ../include/sys/siginfo.h ../include/sys/signal.h
+cpuconf.o cpuconf.ln: ../include/sys/syslimits.h ../include/sys/sysmisc.h
+cpuconf.o cpuconf.ln: ../include/sys/time.h ../include/sys/types.h
+cpuconf.o cpuconf.ln: ../include/sys/unix_defs.h ./bogus_memory.h ./cpus.h
+cpuconf.o cpuconf.ln: ./mach_assert.h ./mach_ldebug.h ./rt_preempt.h
+cpuconf.o cpuconf.ln: ./rt_sched.h ./rt_sched_rq.h ./ser_compat.h
+cpuconf.o cpuconf.ln: ./simple_clock.h ./stat_time.h ./unix_locks.h
+cpuconf.o cpuconf.ln: ./unix_uni.h ./vague_stats.h arch/alpha/hal/cpuconf.c
+
+dcedfs_data.o dcedfs_data.ln: ../include/dirent.h ../include/kern/assert.h
+dcedfs_data.o dcedfs_data.ln: ../include/kern/event.h ../include/kern/lock.h
+dcedfs_data.o dcedfs_data.ln: ../include/kern/macro_help.h
+dcedfs_data.o dcedfs_data.ln: ../include/kern/processor.h
+dcedfs_data.o dcedfs_data.ln: ../include/kern/queue.h ../include/kern/sched.h
+dcedfs_data.o dcedfs_data.ln: ../include/kern/spl.h
+dcedfs_data.o dcedfs_data.ln: ../include/mach/alpha/vm_param.h
+dcedfs_data.o dcedfs_data.ln: ../include/mach/boolean.h
+dcedfs_data.o dcedfs_data.ln: ../include/mach/kern_return.h
+dcedfs_data.o dcedfs_data.ln: ../include/mach/machine/boolean.h
+dcedfs_data.o dcedfs_data.ln: ../include/mach/machine/kern_return.h
+dcedfs_data.o dcedfs_data.ln: ../include/mach/machine/vm_param.h
+dcedfs_data.o dcedfs_data.ln: ../include/mach/machine/vm_statistics.h
+dcedfs_data.o dcedfs_data.ln: ../include/mach/machine/vm_types.h
+dcedfs_data.o dcedfs_data.ln: ../include/mach/policy.h ../include/mach/port.h
+dcedfs_data.o dcedfs_data.ln: ../include/mach/vm_param.h
+dcedfs_data.o dcedfs_data.ln: ../include/mach/vm_prot.h
+dcedfs_data.o dcedfs_data.ln: ../include/mach/vm_statistics.h
+dcedfs_data.o dcedfs_data.ln: ../include/machine/context.h
+dcedfs_data.o dcedfs_data.ln: ../include/machine/counters.h
+dcedfs_data.o dcedfs_data.ln: ../include/machine/cpu.h
+dcedfs_data.o dcedfs_data.ln: ../include/machine/endian.h
+dcedfs_data.o dcedfs_data.ln: ../include/machine/machlimits.h
+dcedfs_data.o dcedfs_data.ln: ../include/machine/machparam.h
+dcedfs_data.o dcedfs_data.ln: ../include/machine/machtime.h
+dcedfs_data.o dcedfs_data.ln: ../include/machine/pmap.h
+dcedfs_data.o dcedfs_data.ln: ../include/machine/signal.h
+dcedfs_data.o dcedfs_data.ln: ../include/machine/spl.h
+dcedfs_data.o dcedfs_data.ln: ../include/netinet/ip_stat.h
+dcedfs_data.o dcedfs_data.ln: ../include/netinet/tcp_stat.h
+dcedfs_data.o dcedfs_data.ln: ../include/s5fs/s5dir.h ../include/s5fs/s5ino.h
+dcedfs_data.o dcedfs_data.ln: ../include/s5fs/s5param.h ../include/standards.h
+dcedfs_data.o dcedfs_data.ln: ../include/sys/acl_def.h
+dcedfs_data.o dcedfs_data.ln: ../include/sys/biostats.h ../include/sys/buf.h
+dcedfs_data.o dcedfs_data.ln: ../include/sys/callout.h ../include/sys/errno.h
+dcedfs_data.o dcedfs_data.ln: ../include/sys/filsys.h ../include/sys/kernel.h
+dcedfs_data.o dcedfs_data.ln: ../include/sys/limits.h ../include/sys/lwc.h
+dcedfs_data.o dcedfs_data.ln: ../include/sys/mount.h ../include/sys/namei.h
+dcedfs_data.o dcedfs_data.ln: ../include/sys/param.h ../include/sys/rt_limits.h
+dcedfs_data.o dcedfs_data.ln: ../include/sys/secdefines.h
+dcedfs_data.o dcedfs_data.ln: ../include/sys/select.h ../include/sys/siginfo.h
+dcedfs_data.o dcedfs_data.ln: ../include/sys/signal.h ../include/sys/sp_attr.h
+dcedfs_data.o dcedfs_data.ln: ../include/sys/specdev.h
+dcedfs_data.o dcedfs_data.ln: ../include/sys/syslimits.h
+dcedfs_data.o dcedfs_data.ln: ../include/sys/sysmisc.h ../include/sys/systm.h
+dcedfs_data.o dcedfs_data.ln: ../include/sys/time.h ../include/sys/types.h
+dcedfs_data.o dcedfs_data.ln: ../include/sys/ucred.h ../include/sys/uio.h
+dcedfs_data.o dcedfs_data.ln: ../include/sys/unix_defs.h ../include/sys/vnode.h
+dcedfs_data.o dcedfs_data.ln: ../include/sys/vp_swap.h ../include/ufs/dir.h
+dcedfs_data.o dcedfs_data.ln: ../include/vm/vmparam.h ./bogus_memory.h ./cpus.h
+dcedfs_data.o dcedfs_data.ln: ./dcedfs.h ./mach_assert.h ./mach_ldebug.h
+dcedfs_data.o dcedfs_data.ln: ./rt_preempt.h ./rt_sched.h ./rt_sched_rq.h
+dcedfs_data.o dcedfs_data.ln: ./rt_timer.h ./sec_acl_posix.h ./sec_base.h
+dcedfs_data.o dcedfs_data.ln: ./sec_cmw.h ./sec_mac_ob.h ./sec_ncav.h
+dcedfs_data.o dcedfs_data.ln: ./sec_net.h ./sec_nfs.h ./sec_priv.h ./sec_shw.h
+dcedfs_data.o dcedfs_data.ln: ./ser_compat.h ./simple_clock.h ./stat_time.h
+dcedfs_data.o dcedfs_data.ln: ./unix_locks.h ./unix_uni.h ./vague_stats.h
+dcedfs_data.o dcedfs_data.ln: data/dcedfs_data.c
+
+genassym.o genassym.ln: ../include/dirent.h ../include/kern/assert.h
+genassym.o genassym.ln: ../include/kern/ast.h ../include/kern/event.h
+genassym.o genassym.ln: ../include/kern/host.h ../include/kern/kern_msg.h
+genassym.o genassym.ln: ../include/kern/kern_obj.h ../include/kern/kern_set.h
+genassym.o genassym.ln: ../include/kern/lock.h ../include/kern/mach_param.h
+genassym.o genassym.ln: ../include/kern/macro_help.h
+genassym.o genassym.ln: ../include/kern/msg_queue.h ../include/kern/processor.h
+genassym.o genassym.ln: ../include/kern/queue.h ../include/kern/sched.h
+genassym.o genassym.ln: ../include/kern/spl.h
+genassym.o genassym.ln: ../include/kern/syscall_emulation.h
+genassym.o genassym.ln: ../include/kern/task.h ../include/kern/thread.h
+genassym.o genassym.ln: ../include/kern/thread_modes.h ../include/kern/timer.h
+genassym.o genassym.ln: ../include/mach/alpha/vm_param.h
+genassym.o genassym.ln: ../include/mach/boolean.h ../include/mach/events_info.h
+genassym.o genassym.ln: ../include/mach/kern_return.h
+genassym.o genassym.ln: ../include/mach/mach_param.h ../include/mach/machine.h
+genassym.o genassym.ln: ../include/mach/machine/boolean.h
+genassym.o genassym.ln: ../include/mach/machine/kern_return.h
+genassym.o genassym.ln: ../include/mach/machine/thread_status.h
+genassym.o genassym.ln: ../include/mach/machine/vm_param.h
+genassym.o genassym.ln: ../include/mach/machine/vm_statistics.h
+genassym.o genassym.ln: ../include/mach/machine/vm_types.h
+genassym.o genassym.ln: ../include/mach/memory_object.h
+genassym.o genassym.ln: ../include/mach/message.h ../include/mach/policy.h
+genassym.o genassym.ln: ../include/mach/port.h ../include/mach/task_info.h
+genassym.o genassym.ln: ../include/mach/thread_status.h
+genassym.o genassym.ln: ../include/mach/time_value.h
+genassym.o genassym.ln: ../include/mach/vm_inherit.h ../include/mach/vm_param.h
+genassym.o genassym.ln: ../include/mach/vm_prot.h
+genassym.o genassym.ln: ../include/mach/vm_statistics.h
+genassym.o genassym.ln: ../include/machine/context.h
+genassym.o genassym.ln: ../include/machine/counters.h ../include/machine/cpu.h
+genassym.o genassym.ln: ../include/machine/endian.h
+genassym.o genassym.ln: ../include/machine/machlimits.h
+genassym.o genassym.ln: ../include/machine/machparam.h
+genassym.o genassym.ln: ../include/machine/machtime.h ../include/machine/nxm.h
+genassym.o genassym.ln: ../include/machine/pcb.h ../include/machine/pmap.h
+genassym.o genassym.ln: ../include/machine/rpb.h ../include/machine/signal.h
+genassym.o genassym.ln: ../include/machine/spl.h ../include/machine/thread.h
+genassym.o genassym.ln: ../include/netinet/ip_stat.h
+genassym.o genassym.ln: ../include/netinet/tcp_stat.h
+genassym.o genassym.ln: ../include/procfs/procfs.h ../include/s5fs/s5dir.h
+genassym.o genassym.ln: ../include/s5fs/s5param.h ../include/standards.h
+genassym.o genassym.ln: ../include/svr4/sar.h ../include/sys/acl.h
+genassym.o genassym.ln: ../include/sys/acl_def.h ../include/sys/audit.h
+genassym.o genassym.ln: ../include/sys/callout.h ../include/sys/errno.h
+genassym.o genassym.ln: ../include/sys/habitat.h ../include/sys/ipc.h
+genassym.o genassym.ln: ../include/sys/limits.h ../include/sys/lock.h
+genassym.o genassym.ln: ../include/sys/lwc.h ../include/sys/mount.h
+genassym.o genassym.ln: ../include/sys/namei.h ../include/sys/param.h
+genassym.o genassym.ln: ../include/sys/proc.h ../include/sys/proplist.h
+genassym.o genassym.ln: ../include/sys/resource.h ../include/sys/rt_limits.h
+genassym.o genassym.ln: ../include/sys/sec_objects.h
+genassym.o genassym.ln: ../include/sys/secdefines.h ../include/sys/secpolicy.h
+genassym.o genassym.ln: ../include/sys/security.h ../include/sys/select.h
+genassym.o genassym.ln: ../include/sys/sem.h ../include/sys/siginfo.h
+genassym.o genassym.ln: ../include/sys/signal.h ../include/sys/sp_attr.h
+genassym.o genassym.ln: ../include/sys/syscall.h ../include/sys/syslimits.h
+genassym.o genassym.ln: ../include/sys/sysmisc.h ../include/sys/systm.h
+genassym.o genassym.ln: ../include/sys/time.h ../include/sys/types.h
+genassym.o genassym.ln: ../include/sys/ucred.h ../include/sys/uio.h
+genassym.o genassym.ln: ../include/sys/unix_defs.h ../include/sys/user.h
+genassym.o genassym.ln: ../include/sys/vnode.h ../include/sys/vp_swap.h
+genassym.o genassym.ln: ../include/ufs/dir.h ../include/vm/pmap.h
+genassym.o genassym.ln: ../include/vm/vm_control.h ../include/vm/vm_fault.h
+genassym.o genassym.ln: ../include/vm/vm_map.h ../include/vm/vm_object.h
+genassym.o genassym.ln: ../include/vm/vmparam.h ../include/vm/vpage.h
+genassym.o genassym.ln: ./bin_compat.h ./bogus_memory.h ./cpus.h ./hw_ast.h
+genassym.o genassym.ln: ./mach_assert.h ./mach_emulation.h ./mach_host.h
+genassym.o genassym.ln: ./mach_ipc_tcache.h ./mach_km.h ./mach_ldebug.h
+genassym.o genassym.ln: ./rt_preempt.h ./rt_sched.h ./rt_sched_rq.h
+genassym.o genassym.ln: ./sec_acl_posix.h ./sec_base.h ./sec_cmw.h
+genassym.o genassym.ln: ./sec_mac_ob.h ./sec_ncav.h ./sec_net.h ./sec_nfs.h
+genassym.o genassym.ln: ./sec_priv.h ./sec_shw.h ./ser_compat.h
+genassym.o genassym.ln: ./simple_clock.h ./stat_time.h ./unix_locks.h
+genassym.o genassym.ln: ./unix_uni.h ./vague_stats.h arch/alpha/genassym.c
+
+gw_screen_data.o gw_screen_data.ln: ../include/dirent.h
+gw_screen_data.o gw_screen_data.ln: ../include/io/common/devio.h
+gw_screen_data.o gw_screen_data.ln: ../include/kern/assert.h
+gw_screen_data.o gw_screen_data.ln: ../include/kern/ast.h
+gw_screen_data.o gw_screen_data.ln: ../include/kern/event.h
+gw_screen_data.o gw_screen_data.ln: ../include/kern/host.h
+gw_screen_data.o gw_screen_data.ln: ../include/kern/kern_msg.h
+gw_screen_data.o gw_screen_data.ln: ../include/kern/kern_obj.h
+gw_screen_data.o gw_screen_data.ln: ../include/kern/kern_set.h
+gw_screen_data.o gw_screen_data.ln: ../include/kern/lock.h
+gw_screen_data.o gw_screen_data.ln: ../include/kern/mach_param.h
+gw_screen_data.o gw_screen_data.ln: ../include/kern/macro_help.h
+gw_screen_data.o gw_screen_data.ln: ../include/kern/msg_queue.h
+gw_screen_data.o gw_screen_data.ln: ../include/kern/processor.h
+gw_screen_data.o gw_screen_data.ln: ../include/kern/queue.h
+gw_screen_data.o gw_screen_data.ln: ../include/kern/sched.h
+gw_screen_data.o gw_screen_data.ln: ../include/kern/sched_prim.h
+gw_screen_data.o gw_screen_data.ln: ../include/kern/spl.h
+gw_screen_data.o gw_screen_data.ln: ../include/kern/syscall_emulation.h
+gw_screen_data.o gw_screen_data.ln: ../include/kern/task.h
+gw_screen_data.o gw_screen_data.ln: ../include/kern/thread.h
+gw_screen_data.o gw_screen_data.ln: ../include/kern/thread_modes.h
+gw_screen_data.o gw_screen_data.ln: ../include/kern/timer.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/alpha/vm_param.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/boolean.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/events_info.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/kern_return.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/mach_param.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/machine/boolean.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/machine/kern_return.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/machine/thread_status.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/machine/vm_param.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/machine/vm_statistics.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/machine/vm_types.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/memory_object.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/message.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/policy.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/port.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/task_info.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/thread_status.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/time_value.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/vm_inherit.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/vm_param.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/vm_prot.h
+gw_screen_data.o gw_screen_data.ln: ../include/mach/vm_statistics.h
+gw_screen_data.o gw_screen_data.ln: ../include/machine/context.h
+gw_screen_data.o gw_screen_data.ln: ../include/machine/counters.h
+gw_screen_data.o gw_screen_data.ln: ../include/machine/cpu.h
+gw_screen_data.o gw_screen_data.ln: ../include/machine/endian.h
+gw_screen_data.o gw_screen_data.ln: ../include/machine/machlimits.h
+gw_screen_data.o gw_screen_data.ln: ../include/machine/machparam.h
+gw_screen_data.o gw_screen_data.ln: ../include/machine/machtime.h
+gw_screen_data.o gw_screen_data.ln: ../include/machine/nxm.h
+gw_screen_data.o gw_screen_data.ln: ../include/machine/pcb.h
+gw_screen_data.o gw_screen_data.ln: ../include/machine/pmap.h
+gw_screen_data.o gw_screen_data.ln: ../include/machine/signal.h
+gw_screen_data.o gw_screen_data.ln: ../include/machine/spl.h
+gw_screen_data.o gw_screen_data.ln: ../include/machine/thread.h
+gw_screen_data.o gw_screen_data.ln: ../include/net/gw_screen.h
+gw_screen_data.o gw_screen_data.ln: ../include/net/net_globals.h
+gw_screen_data.o gw_screen_data.ln: ../include/net/net_malloc.h
+gw_screen_data.o gw_screen_data.ln: ../include/net/proto_net.h
+gw_screen_data.o gw_screen_data.ln: ../include/net/proto_uipc.h
+gw_screen_data.o gw_screen_data.ln: ../include/netinet/ip_stat.h
+gw_screen_data.o gw_screen_data.ln: ../include/netinet/tcp_stat.h
+gw_screen_data.o gw_screen_data.ln: ../include/procfs/procfs.h
+gw_screen_data.o gw_screen_data.ln: ../include/s5fs/s5dir.h
+gw_screen_data.o gw_screen_data.ln: ../include/s5fs/s5param.h
+gw_screen_data.o gw_screen_data.ln: ../include/standards.h ../include/sys/acl.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/acl_def.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/audit.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/callout.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/errno.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/habitat.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/ioctl.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/ioctl_compat.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/ipc.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/kernel.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/limits.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/lock.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/lock_types.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/lwc.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/malloc.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/mbuf.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/mount.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/namei.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/param.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/proc.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/proplist.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/resource.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/rt_limits.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/sec_objects.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/secdefines.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/secpolicy.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/security.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/select.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/sem.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/siginfo.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/signal.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/socket.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/sp_attr.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/syscall.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/syslimits.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/sysmisc.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/systm.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/time.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/ttychars.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/ttydev.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/types.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/ucred.h ../include/sys/uio.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/unix_defs.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/user.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/vnode.h
+gw_screen_data.o gw_screen_data.ln: ../include/sys/vp_swap.h
+gw_screen_data.o gw_screen_data.ln: ../include/ufs/dir.h ../include/vm/pmap.h
+gw_screen_data.o gw_screen_data.ln: ../include/vm/vm_control.h
+gw_screen_data.o gw_screen_data.ln: ../include/vm/vm_fault.h
+gw_screen_data.o gw_screen_data.ln: ../include/vm/vm_map.h
+gw_screen_data.o gw_screen_data.ln: ../include/vm/vm_object.h
+gw_screen_data.o gw_screen_data.ln: ../include/vm/vmparam.h
+gw_screen_data.o gw_screen_data.ln: ../include/vm/vpage.h ./bin_compat.h
+gw_screen_data.o gw_screen_data.ln: ./bogus_memory.h ./cpus.h ./gwscreen.h
+gw_screen_data.o gw_screen_data.ln: ./hw_ast.h ./mach_assert.h
+gw_screen_data.o gw_screen_data.ln: ./mach_emulation.h ./mach_host.h
+gw_screen_data.o gw_screen_data.ln: ./mach_ipc_tcache.h ./mach_km.h
+gw_screen_data.o gw_screen_data.ln: ./mach_ldebug.h ./rt_preempt.h ./rt_sched.h
+gw_screen_data.o gw_screen_data.ln: ./rt_sched_rq.h ./rt_timer.h
+gw_screen_data.o gw_screen_data.ln: ./sec_acl_posix.h ./sec_base.h ./sec_cmw.h
+gw_screen_data.o gw_screen_data.ln: ./sec_mac_ob.h ./sec_ncav.h ./sec_net.h
+gw_screen_data.o gw_screen_data.ln: ./sec_nfs.h ./sec_priv.h ./sec_shw.h
+gw_screen_data.o gw_screen_data.ln: ./ser_compat.h ./simple_clock.h
+gw_screen_data.o gw_screen_data.ln: ./stat_time.h ./unix_locks.h ./unix_uni.h
+gw_screen_data.o gw_screen_data.ln: ./vague_stats.h data/gw_screen_data.c
+
+if_tu_data.o if_tu_data.ln: ../include/arch/alpha/hal/shared_intr.h
+if_tu_data.o if_tu_data.ln: ../include/dirent.h ../include/hal/cpuconf.h
+if_tu_data.o if_tu_data.ln: ../include/io/common/devdriver.h
+if_tu_data.o if_tu_data.ln: ../include/io/common/devio.h
+if_tu_data.o if_tu_data.ln: ../include/io/common/handler.h
+if_tu_data.o if_tu_data.ln: ../include/io/dec/eisa/eisa.h
+if_tu_data.o if_tu_data.ln: ../include/io/dec/netif/if_tureg.h
+if_tu_data.o if_tu_data.ln: ../include/io/dec/netif/lan_common.h
+if_tu_data.o if_tu_data.ln: ../include/io/dec/pci/pci.h
+if_tu_data.o if_tu_data.ln: ../include/kern/assert.h ../include/kern/ast.h
+if_tu_data.o if_tu_data.ln: ../include/kern/event.h ../include/kern/host.h
+if_tu_data.o if_tu_data.ln: ../include/kern/kern_msg.h
+if_tu_data.o if_tu_data.ln: ../include/kern/kern_obj.h
+if_tu_data.o if_tu_data.ln: ../include/kern/kern_set.h ../include/kern/lock.h
+if_tu_data.o if_tu_data.ln: ../include/kern/mach_param.h
+if_tu_data.o if_tu_data.ln: ../include/kern/macro_help.h
+if_tu_data.o if_tu_data.ln: ../include/kern/msg_queue.h
+if_tu_data.o if_tu_data.ln: ../include/kern/processor.h ../include/kern/queue.h
+if_tu_data.o if_tu_data.ln: ../include/kern/sched.h
+if_tu_data.o if_tu_data.ln: ../include/kern/sched_prim.h ../include/kern/spl.h
+if_tu_data.o if_tu_data.ln: ../include/kern/syscall_emulation.h
+if_tu_data.o if_tu_data.ln: ../include/kern/task.h ../include/kern/thread.h
+if_tu_data.o if_tu_data.ln: ../include/kern/thread_modes.h
+if_tu_data.o if_tu_data.ln: ../include/kern/timer.h
+if_tu_data.o if_tu_data.ln: ../include/mach/alpha/vm_param.h
+if_tu_data.o if_tu_data.ln: ../include/mach/boolean.h
+if_tu_data.o if_tu_data.ln: ../include/mach/events_info.h
+if_tu_data.o if_tu_data.ln: ../include/mach/kern_return.h
+if_tu_data.o if_tu_data.ln: ../include/mach/mach_param.h
+if_tu_data.o if_tu_data.ln: ../include/mach/machine/boolean.h
+if_tu_data.o if_tu_data.ln: ../include/mach/machine/kern_return.h
+if_tu_data.o if_tu_data.ln: ../include/mach/machine/thread_status.h
+if_tu_data.o if_tu_data.ln: ../include/mach/machine/vm_param.h
+if_tu_data.o if_tu_data.ln: ../include/mach/machine/vm_statistics.h
+if_tu_data.o if_tu_data.ln: ../include/mach/machine/vm_types.h
+if_tu_data.o if_tu_data.ln: ../include/mach/memory_object.h
+if_tu_data.o if_tu_data.ln: ../include/mach/message.h ../include/mach/policy.h
+if_tu_data.o if_tu_data.ln: ../include/mach/port.h ../include/mach/task_info.h
+if_tu_data.o if_tu_data.ln: ../include/mach/thread_status.h
+if_tu_data.o if_tu_data.ln: ../include/mach/time_value.h
+if_tu_data.o if_tu_data.ln: ../include/mach/vm_inherit.h
+if_tu_data.o if_tu_data.ln: ../include/mach/vm_param.h
+if_tu_data.o if_tu_data.ln: ../include/mach/vm_prot.h
+if_tu_data.o if_tu_data.ln: ../include/mach/vm_statistics.h
+if_tu_data.o if_tu_data.ln: ../include/machine/context.h
+if_tu_data.o if_tu_data.ln: ../include/machine/counters.h
+if_tu_data.o if_tu_data.ln: ../include/machine/cpu.h
+if_tu_data.o if_tu_data.ln: ../include/machine/endian.h
+if_tu_data.o if_tu_data.ln: ../include/machine/inst.h
+if_tu_data.o if_tu_data.ln: ../include/machine/machlimits.h
+if_tu_data.o if_tu_data.ln: ../include/machine/machparam.h
+if_tu_data.o if_tu_data.ln: ../include/machine/machtime.h
+if_tu_data.o if_tu_data.ln: ../include/machine/nxm.h ../include/machine/pcb.h
+if_tu_data.o if_tu_data.ln: ../include/machine/pmap.h
+if_tu_data.o if_tu_data.ln: ../include/machine/signal.h
+if_tu_data.o if_tu_data.ln: ../include/machine/spl.h
+if_tu_data.o if_tu_data.ln: ../include/machine/thread.h
+if_tu_data.o if_tu_data.ln: ../include/net/ether_driver.h ../include/net/if.h
+if_tu_data.o if_tu_data.ln: ../include/net/if_arp.h ../include/net/if_types.h
+if_tu_data.o if_tu_data.ln: ../include/net/net_globals.h
+if_tu_data.o if_tu_data.ln: ../include/net/net_malloc.h ../include/net/netisr.h
+if_tu_data.o if_tu_data.ln: ../include/net/proto_net.h
+if_tu_data.o if_tu_data.ln: ../include/net/proto_uipc.h ../include/net/radix.h
+if_tu_data.o if_tu_data.ln: ../include/net/route.h
+if_tu_data.o if_tu_data.ln: ../include/netinet/if_ether.h
+if_tu_data.o if_tu_data.ln: ../include/netinet/if_trnstat.h
+if_tu_data.o if_tu_data.ln: ../include/netinet/in.h
+if_tu_data.o if_tu_data.ln: ../include/netinet/in_systm.h
+if_tu_data.o if_tu_data.ln: ../include/netinet/in_var.h ../include/netinet/ip.h
+if_tu_data.o if_tu_data.ln: ../include/netinet/ip_stat.h
+if_tu_data.o if_tu_data.ln: ../include/netinet/ip_var.h
+if_tu_data.o if_tu_data.ln: ../include/netinet/proto_inet.h
+if_tu_data.o if_tu_data.ln: ../include/netinet/tcp_stat.h
+if_tu_data.o if_tu_data.ln: ../include/procfs/procfs.h ../include/s5fs/s5dir.h
+if_tu_data.o if_tu_data.ln: ../include/s5fs/s5ino.h ../include/s5fs/s5param.h
+if_tu_data.o if_tu_data.ln: ../include/standards.h ../include/sys/acl.h
+if_tu_data.o if_tu_data.ln: ../include/sys/acl_def.h ../include/sys/audit.h
+if_tu_data.o if_tu_data.ln: ../include/sys/buf.h ../include/sys/callout.h
+if_tu_data.o if_tu_data.ln: ../include/sys/disklabel.h ../include/sys/errno.h
+if_tu_data.o if_tu_data.ln: ../include/sys/filsys.h ../include/sys/habitat.h
+if_tu_data.o if_tu_data.ln: ../include/sys/ioctl.h
+if_tu_data.o if_tu_data.ln: ../include/sys/ioctl_compat.h ../include/sys/ipc.h
+if_tu_data.o if_tu_data.ln: ../include/sys/kernel.h ../include/sys/limits.h
+if_tu_data.o if_tu_data.ln: ../include/sys/lock.h ../include/sys/lock_types.h
+if_tu_data.o if_tu_data.ln: ../include/sys/lwc.h ../include/sys/malloc.h
+if_tu_data.o if_tu_data.ln: ../include/sys/mbuf.h ../include/sys/mount.h
+if_tu_data.o if_tu_data.ln: ../include/sys/namei.h ../include/sys/param.h
+if_tu_data.o if_tu_data.ln: ../include/sys/proc.h ../include/sys/proplist.h
+if_tu_data.o if_tu_data.ln: ../include/sys/protosw.h ../include/sys/resource.h
+if_tu_data.o if_tu_data.ln: ../include/sys/rt_limits.h
+if_tu_data.o if_tu_data.ln: ../include/sys/sec_objects.h
+if_tu_data.o if_tu_data.ln: ../include/sys/secdefines.h
+if_tu_data.o if_tu_data.ln: ../include/sys/secpolicy.h
+if_tu_data.o if_tu_data.ln: ../include/sys/security.h ../include/sys/select.h
+if_tu_data.o if_tu_data.ln: ../include/sys/sem.h ../include/sys/siginfo.h
+if_tu_data.o if_tu_data.ln: ../include/sys/signal.h ../include/sys/socket.h
+if_tu_data.o if_tu_data.ln: ../include/sys/sp_attr.h ../include/sys/syscall.h
+if_tu_data.o if_tu_data.ln: ../include/sys/syslimits.h ../include/sys/sysmisc.h
+if_tu_data.o if_tu_data.ln: ../include/sys/systm.h ../include/sys/time.h
+if_tu_data.o if_tu_data.ln: ../include/sys/ttychars.h ../include/sys/ttydev.h
+if_tu_data.o if_tu_data.ln: ../include/sys/types.h ../include/sys/ucred.h
+if_tu_data.o if_tu_data.ln: ../include/sys/uio.h ../include/sys/unix_defs.h
+if_tu_data.o if_tu_data.ln: ../include/sys/user.h ../include/sys/vmmac.h
+if_tu_data.o if_tu_data.ln: ../include/sys/vnode.h ../include/sys/vp_swap.h
+if_tu_data.o if_tu_data.ln: ../include/ufs/dir.h ../include/vm/pmap.h
+if_tu_data.o if_tu_data.ln: ../include/vm/vm_control.h ../include/vm/vm_fault.h
+if_tu_data.o if_tu_data.ln: ../include/vm/vm_kern.h ../include/vm/vm_map.h
+if_tu_data.o if_tu_data.ln: ../include/vm/vm_object.h ../include/vm/vmparam.h
+if_tu_data.o if_tu_data.ln: ../include/vm/vpage.h ./bin_compat.h
+if_tu_data.o if_tu_data.ln: ./bogus_memory.h ./cpus.h ./hw_ast.h ./inet.h
+if_tu_data.o if_tu_data.ln: ./mach_assert.h ./mach_emulation.h ./mach_host.h
+if_tu_data.o if_tu_data.ln: ./mach_ipc_tcache.h ./mach_km.h ./mach_ldebug.h
+if_tu_data.o if_tu_data.ln: ./rt_preempt.h ./rt_sched.h ./rt_sched_rq.h
+if_tu_data.o if_tu_data.ln: ./rt_timer.h ./sec_acl_posix.h ./sec_base.h
+if_tu_data.o if_tu_data.ln: ./sec_cmw.h ./sec_mac_ob.h ./sec_ncav.h ./sec_net.h
+if_tu_data.o if_tu_data.ln: ./sec_nfs.h ./sec_priv.h ./sec_shw.h ./ser_compat.h
+if_tu_data.o if_tu_data.ln: ./simple_clock.h ./stat_time.h ./tu.h
+if_tu_data.o if_tu_data.ln: ./unix_locks.h ./unix_uni.h ./vague_stats.h
+if_tu_data.o if_tu_data.ln: data/if_tu_data.c
+
+ioconf.o ioconf.ln: ../include/dirent.h ../include/io/common/devdriver.h
+ioconf.o ioconf.ln: ../include/io/common/devio.h ../include/io/common/handler.h
+ioconf.o ioconf.ln: ../include/io/dec/uba/ubavar.h ../include/kern/assert.h
+ioconf.o ioconf.ln: ../include/kern/ast.h ../include/kern/event.h
+ioconf.o ioconf.ln: ../include/kern/host.h ../include/kern/kern_msg.h
+ioconf.o ioconf.ln: ../include/kern/kern_obj.h ../include/kern/kern_set.h
+ioconf.o ioconf.ln: ../include/kern/lock.h ../include/kern/mach_param.h
+ioconf.o ioconf.ln: ../include/kern/macro_help.h ../include/kern/msg_queue.h
+ioconf.o ioconf.ln: ../include/kern/processor.h ../include/kern/queue.h
+ioconf.o ioconf.ln: ../include/kern/sched.h ../include/kern/spl.h
+ioconf.o ioconf.ln: ../include/kern/syscall_emulation.h ../include/kern/task.h
+ioconf.o ioconf.ln: ../include/kern/thread.h ../include/kern/thread_modes.h
+ioconf.o ioconf.ln: ../include/kern/timer.h ../include/mach/alpha/vm_param.h
+ioconf.o ioconf.ln: ../include/mach/boolean.h ../include/mach/events_info.h
+ioconf.o ioconf.ln: ../include/mach/kern_return.h ../include/mach/mach_param.h
+ioconf.o ioconf.ln: ../include/mach/machine/boolean.h
+ioconf.o ioconf.ln: ../include/mach/machine/kern_return.h
+ioconf.o ioconf.ln: ../include/mach/machine/thread_status.h
+ioconf.o ioconf.ln: ../include/mach/machine/vm_param.h
+ioconf.o ioconf.ln: ../include/mach/machine/vm_statistics.h
+ioconf.o ioconf.ln: ../include/mach/machine/vm_types.h
+ioconf.o ioconf.ln: ../include/mach/memory_object.h ../include/mach/message.h
+ioconf.o ioconf.ln: ../include/mach/policy.h ../include/mach/port.h
+ioconf.o ioconf.ln: ../include/mach/task_info.h ../include/mach/thread_status.h
+ioconf.o ioconf.ln: ../include/mach/time_value.h ../include/mach/vm_inherit.h
+ioconf.o ioconf.ln: ../include/mach/vm_param.h ../include/mach/vm_prot.h
+ioconf.o ioconf.ln: ../include/mach/vm_statistics.h
+ioconf.o ioconf.ln: ../include/machine/context.h ../include/machine/counters.h
+ioconf.o ioconf.ln: ../include/machine/cpu.h ../include/machine/endian.h
+ioconf.o ioconf.ln: ../include/machine/machlimits.h
+ioconf.o ioconf.ln: ../include/machine/machparam.h
+ioconf.o ioconf.ln: ../include/machine/machtime.h ../include/machine/nxm.h
+ioconf.o ioconf.ln: ../include/machine/pcb.h ../include/machine/pmap.h
+ioconf.o ioconf.ln: ../include/machine/signal.h ../include/machine/spl.h
+ioconf.o ioconf.ln: ../include/machine/thread.h ../include/machine/vmparam.h
+ioconf.o ioconf.ln: ../include/netinet/ip_stat.h ../include/netinet/tcp_stat.h
+ioconf.o ioconf.ln: ../include/procfs/procfs.h ../include/s5fs/s5dir.h
+ioconf.o ioconf.ln: ../include/s5fs/s5ino.h ../include/s5fs/s5param.h
+ioconf.o ioconf.ln: ../include/standards.h ../include/sys/acl.h
+ioconf.o ioconf.ln: ../include/sys/acl_def.h ../include/sys/audit.h
+ioconf.o ioconf.ln: ../include/sys/buf.h ../include/sys/callout.h
+ioconf.o ioconf.ln: ../include/sys/config.h ../include/sys/disklabel.h
+ioconf.o ioconf.ln: ../include/sys/errno.h ../include/sys/filsys.h
+ioconf.o ioconf.ln: ../include/sys/habitat.h ../include/sys/ipc.h
+ioconf.o ioconf.ln: ../include/sys/limits.h ../include/sys/lock.h
+ioconf.o ioconf.ln: ../include/sys/lwc.h ../include/sys/map.h
+ioconf.o ioconf.ln: ../include/sys/mount.h ../include/sys/namei.h
+ioconf.o ioconf.ln: ../include/sys/param.h ../include/sys/proc.h
+ioconf.o ioconf.ln: ../include/sys/proplist.h ../include/sys/resource.h
+ioconf.o ioconf.ln: ../include/sys/rt_limits.h ../include/sys/sec_objects.h
+ioconf.o ioconf.ln: ../include/sys/secdefines.h ../include/sys/secpolicy.h
+ioconf.o ioconf.ln: ../include/sys/security.h ../include/sys/select.h
+ioconf.o ioconf.ln: ../include/sys/sem.h ../include/sys/siginfo.h
+ioconf.o ioconf.ln: ../include/sys/signal.h ../include/sys/sp_attr.h
+ioconf.o ioconf.ln: ../include/sys/syscall.h ../include/sys/syslimits.h
+ioconf.o ioconf.ln: ../include/sys/sysmisc.h ../include/sys/systm.h
+ioconf.o ioconf.ln: ../include/sys/time.h ../include/sys/types.h
+ioconf.o ioconf.ln: ../include/sys/ucred.h ../include/sys/uio.h
+ioconf.o ioconf.ln: ../include/sys/unix_defs.h ../include/sys/user.h
+ioconf.o ioconf.ln: ../include/sys/vm.h ../include/sys/vmmac.h
+ioconf.o ioconf.ln: ../include/sys/vmparam.h ../include/sys/vnode.h
+ioconf.o ioconf.ln: ../include/sys/vp_swap.h ../include/ufs/dir.h
+ioconf.o ioconf.ln: ../include/vm/pmap.h ../include/vm/vm_control.h
+ioconf.o ioconf.ln: ../include/vm/vm_fault.h ../include/vm/vm_map.h
+ioconf.o ioconf.ln: ../include/vm/vm_object.h ../include/vm/vmparam.h
+ioconf.o ioconf.ln: ../include/vm/vpage.h ./bin_compat.h ./bogus_memory.h
+ioconf.o ioconf.ln: ./cpus.h ./hw_ast.h ./mach_assert.h ./mach_emulation.h
+ioconf.o ioconf.ln: ./mach_host.h ./mach_ipc_tcache.h ./mach_km.h
+ioconf.o ioconf.ln: ./mach_ldebug.h ./rt_preempt.h ./rt_sched.h ./rt_sched_rq.h
+ioconf.o ioconf.ln: ./sec_acl_posix.h ./sec_base.h ./sec_cmw.h ./sec_mac_ob.h
+ioconf.o ioconf.ln: ./sec_ncav.h ./sec_net.h ./sec_nfs.h ./sec_priv.h
+ioconf.o ioconf.ln: ./sec_shw.h ./ser_compat.h ./simple_clock.h ./stat_time.h
+ioconf.o ioconf.ln: ./unix_locks.h ./unix_uni.h ./vague_stats.h ioconf.c
+
+isa_option_data.o isa_option_data.ln: ../include/dirent.h
+isa_option_data.o isa_option_data.ln: ../include/io/common/devdriver.h
+isa_option_data.o isa_option_data.ln: ../include/io/common/devio.h
+isa_option_data.o isa_option_data.ln: ../include/io/common/handler.h
+isa_option_data.o isa_option_data.ln: ../include/io/dec/eisa/eisa.h
+isa_option_data.o isa_option_data.ln: ../include/io/dec/eisa/isa.h
+isa_option_data.o isa_option_data.ln: ../include/kern/assert.h
+isa_option_data.o isa_option_data.ln: ../include/kern/ast.h
+isa_option_data.o isa_option_data.ln: ../include/kern/event.h
+isa_option_data.o isa_option_data.ln: ../include/kern/host.h
+isa_option_data.o isa_option_data.ln: ../include/kern/kern_msg.h
+isa_option_data.o isa_option_data.ln: ../include/kern/kern_obj.h
+isa_option_data.o isa_option_data.ln: ../include/kern/kern_set.h
+isa_option_data.o isa_option_data.ln: ../include/kern/lock.h
+isa_option_data.o isa_option_data.ln: ../include/kern/mach_param.h
+isa_option_data.o isa_option_data.ln: ../include/kern/macro_help.h
+isa_option_data.o isa_option_data.ln: ../include/kern/msg_queue.h
+isa_option_data.o isa_option_data.ln: ../include/kern/processor.h
+isa_option_data.o isa_option_data.ln: ../include/kern/queue.h
+isa_option_data.o isa_option_data.ln: ../include/kern/sched.h
+isa_option_data.o isa_option_data.ln: ../include/kern/spl.h
+isa_option_data.o isa_option_data.ln: ../include/kern/syscall_emulation.h
+isa_option_data.o isa_option_data.ln: ../include/kern/task.h
+isa_option_data.o isa_option_data.ln: ../include/kern/thread.h
+isa_option_data.o isa_option_data.ln: ../include/kern/thread_modes.h
+isa_option_data.o isa_option_data.ln: ../include/kern/timer.h
+isa_option_data.o isa_option_data.ln: ../include/mach/alpha/vm_param.h
+isa_option_data.o isa_option_data.ln: ../include/mach/boolean.h
+isa_option_data.o isa_option_data.ln: ../include/mach/events_info.h
+isa_option_data.o isa_option_data.ln: ../include/mach/kern_return.h
+isa_option_data.o isa_option_data.ln: ../include/mach/mach_param.h
+isa_option_data.o isa_option_data.ln: ../include/mach/machine/boolean.h
+isa_option_data.o isa_option_data.ln: ../include/mach/machine/kern_return.h
+isa_option_data.o isa_option_data.ln: ../include/mach/machine/thread_status.h
+isa_option_data.o isa_option_data.ln: ../include/mach/machine/vm_param.h
+isa_option_data.o isa_option_data.ln: ../include/mach/machine/vm_statistics.h
+isa_option_data.o isa_option_data.ln: ../include/mach/machine/vm_types.h
+isa_option_data.o isa_option_data.ln: ../include/mach/memory_object.h
+isa_option_data.o isa_option_data.ln: ../include/mach/message.h
+isa_option_data.o isa_option_data.ln: ../include/mach/policy.h
+isa_option_data.o isa_option_data.ln: ../include/mach/port.h
+isa_option_data.o isa_option_data.ln: ../include/mach/task_info.h
+isa_option_data.o isa_option_data.ln: ../include/mach/thread_status.h
+isa_option_data.o isa_option_data.ln: ../include/mach/time_value.h
+isa_option_data.o isa_option_data.ln: ../include/mach/vm_inherit.h
+isa_option_data.o isa_option_data.ln: ../include/mach/vm_param.h
+isa_option_data.o isa_option_data.ln: ../include/mach/vm_prot.h
+isa_option_data.o isa_option_data.ln: ../include/mach/vm_statistics.h
+isa_option_data.o isa_option_data.ln: ../include/machine/context.h
+isa_option_data.o isa_option_data.ln: ../include/machine/counters.h
+isa_option_data.o isa_option_data.ln: ../include/machine/cpu.h
+isa_option_data.o isa_option_data.ln: ../include/machine/endian.h
+isa_option_data.o isa_option_data.ln: ../include/machine/machlimits.h
+isa_option_data.o isa_option_data.ln: ../include/machine/machparam.h
+isa_option_data.o isa_option_data.ln: ../include/machine/machtime.h
+isa_option_data.o isa_option_data.ln: ../include/machine/nxm.h
+isa_option_data.o isa_option_data.ln: ../include/machine/pcb.h
+isa_option_data.o isa_option_data.ln: ../include/machine/pmap.h
+isa_option_data.o isa_option_data.ln: ../include/machine/signal.h
+isa_option_data.o isa_option_data.ln: ../include/machine/spl.h
+isa_option_data.o isa_option_data.ln: ../include/machine/thread.h
+isa_option_data.o isa_option_data.ln: ../include/netinet/ip_stat.h
+isa_option_data.o isa_option_data.ln: ../include/netinet/tcp_stat.h
+isa_option_data.o isa_option_data.ln: ../include/procfs/procfs.h
+isa_option_data.o isa_option_data.ln: ../include/s5fs/s5dir.h
+isa_option_data.o isa_option_data.ln: ../include/s5fs/s5param.h
+isa_option_data.o isa_option_data.ln: ../include/standards.h
+isa_option_data.o isa_option_data.ln: ../include/sys/acl.h
+isa_option_data.o isa_option_data.ln: ../include/sys/acl_def.h
+isa_option_data.o isa_option_data.ln: ../include/sys/audit.h
+isa_option_data.o isa_option_data.ln: ../include/sys/callout.h
+isa_option_data.o isa_option_data.ln: ../include/sys/disklabel.h
+isa_option_data.o isa_option_data.ln: ../include/sys/errno.h
+isa_option_data.o isa_option_data.ln: ../include/sys/habitat.h
+isa_option_data.o isa_option_data.ln: ../include/sys/ipc.h
+isa_option_data.o isa_option_data.ln: ../include/sys/limits.h
+isa_option_data.o isa_option_data.ln: ../include/sys/lock.h
+isa_option_data.o isa_option_data.ln: ../include/sys/lwc.h
+isa_option_data.o isa_option_data.ln: ../include/sys/mount.h
+isa_option_data.o isa_option_data.ln: ../include/sys/namei.h
+isa_option_data.o isa_option_data.ln: ../include/sys/param.h
+isa_option_data.o isa_option_data.ln: ../include/sys/proc.h
+isa_option_data.o isa_option_data.ln: ../include/sys/proplist.h
+isa_option_data.o isa_option_data.ln: ../include/sys/resource.h
+isa_option_data.o isa_option_data.ln: ../include/sys/rt_limits.h
+isa_option_data.o isa_option_data.ln: ../include/sys/sec_objects.h
+isa_option_data.o isa_option_data.ln: ../include/sys/secdefines.h
+isa_option_data.o isa_option_data.ln: ../include/sys/secpolicy.h
+isa_option_data.o isa_option_data.ln: ../include/sys/security.h
+isa_option_data.o isa_option_data.ln: ../include/sys/select.h
+isa_option_data.o isa_option_data.ln: ../include/sys/sem.h
+isa_option_data.o isa_option_data.ln: ../include/sys/siginfo.h
+isa_option_data.o isa_option_data.ln: ../include/sys/signal.h
+isa_option_data.o isa_option_data.ln: ../include/sys/sp_attr.h
+isa_option_data.o isa_option_data.ln: ../include/sys/syscall.h
+isa_option_data.o isa_option_data.ln: ../include/sys/syslimits.h
+isa_option_data.o isa_option_data.ln: ../include/sys/sysmisc.h
+isa_option_data.o isa_option_data.ln: ../include/sys/systm.h
+isa_option_data.o isa_option_data.ln: ../include/sys/time.h
+isa_option_data.o isa_option_data.ln: ../include/sys/types.h
+isa_option_data.o isa_option_data.ln: ../include/sys/ucred.h
+isa_option_data.o isa_option_data.ln: ../include/sys/uio.h
+isa_option_data.o isa_option_data.ln: ../include/sys/unix_defs.h
+isa_option_data.o isa_option_data.ln: ../include/sys/user.h
+isa_option_data.o isa_option_data.ln: ../include/sys/vnode.h
+isa_option_data.o isa_option_data.ln: ../include/sys/vp_swap.h
+isa_option_data.o isa_option_data.ln: ../include/ufs/dir.h ../include/vm/pmap.h
+isa_option_data.o isa_option_data.ln: ../include/vm/vm_control.h
+isa_option_data.o isa_option_data.ln: ../include/vm/vm_fault.h
+isa_option_data.o isa_option_data.ln: ../include/vm/vm_map.h
+isa_option_data.o isa_option_data.ln: ../include/vm/vm_object.h
+isa_option_data.o isa_option_data.ln: ../include/vm/vmparam.h
+isa_option_data.o isa_option_data.ln: ../include/vm/vpage.h ./bin_compat.h
+isa_option_data.o isa_option_data.ln: ./bogus_memory.h ./cpus.h ./hw_ast.h
+isa_option_data.o isa_option_data.ln: ./mach_assert.h ./mach_emulation.h
+isa_option_data.o isa_option_data.ln: ./mach_host.h ./mach_ipc_tcache.h
+isa_option_data.o isa_option_data.ln: ./mach_km.h ./mach_ldebug.h
+isa_option_data.o isa_option_data.ln: ./rt_preempt.h ./rt_sched.h
+isa_option_data.o isa_option_data.ln: ./rt_sched_rq.h ./sec_acl_posix.h
+isa_option_data.o isa_option_data.ln: ./sec_base.h ./sec_cmw.h ./sec_mac_ob.h
+isa_option_data.o isa_option_data.ln: ./sec_ncav.h ./sec_net.h ./sec_nfs.h
+isa_option_data.o isa_option_data.ln: ./sec_priv.h ./sec_shw.h ./ser_compat.h
+isa_option_data.o isa_option_data.ln: ./simple_clock.h ./stat_time.h
+isa_option_data.o isa_option_data.ln: ./unix_locks.h ./unix_uni.h
+isa_option_data.o isa_option_data.ln: ./vague_stats.h isa_option_data.c
+isa_option_data.o isa_option_data.ln: pcmcia.h
+
+lockinfo.o lockinfo.ln: ../include/kern/assert.h ../include/kern/event.h
+lockinfo.o lockinfo.ln: ../include/kern/lock.h ../include/kern/macro_help.h
+lockinfo.o lockinfo.ln: ../include/kern/queue.h ../include/kern/spl.h
+lockinfo.o lockinfo.ln: ../include/mach/alpha/vm_param.h
+lockinfo.o lockinfo.ln: ../include/mach/boolean.h
+lockinfo.o lockinfo.ln: ../include/mach/machine/boolean.h
+lockinfo.o lockinfo.ln: ../include/mach/machine/vm_types.h
+lockinfo.o lockinfo.ln: ../include/machine/cpu.h ../include/machine/spl.h
+lockinfo.o lockinfo.ln: ../include/net/net_globals.h ../include/net/proto_net.h
+lockinfo.o lockinfo.ln: ../include/net/proto_uipc.h ../include/standards.h
+lockinfo.o lockinfo.ln: ../include/sys/lock_probe.h ../include/sys/lock_types.h
+lockinfo.o lockinfo.ln: ../include/sys/select.h ../include/sys/types.h ./aha.h
+lockinfo.o lockinfo.ln: ./atm.h ./atmilmi3x.h ./atmip.h ./atmuni.h ./ccomsub.h
+lockinfo.o lockinfo.ln: ./cdfs.h ./ci.h ./cpus.h ./dec_audit.h ./dlb.h ./dli.h
+lockinfo.o lockinfo.ln: ./dlm.h ./dlmsl.h ./dlpi.h ./drd.h ./envram.h ./faa.h
+lockinfo.o lockinfo.ln: ./ffm_fs.h ./fta.h ./gwscreen.h ./isp.h ./ldtty.h
+lockinfo.o lockinfo.ln: ./lsm.h ./lta.h ./mach_assert.h ./mach_ldebug.h
+lockinfo.o lockinfo.ln: ./mcnet.h ./mfa.h ./mlog.h ./msfs.h ./packetfilter.h
+lockinfo.o lockinfo.ln: ./pci.h ./pnvram.h ./ppp.h ./procfs.h ./psiop.h ./pty.h
+lockinfo.o lockinfo.ln: ./pwrmgr_enabled.h ./pza.h ./rm.h ./rmvm.h ./rpty.h
+lockinfo.o lockinfo.ln: ./rt_csem.h ./rt_ipc.h ./rt_preempt.h ./sas.h ./scsi.h
+lockinfo.o lockinfo.ln: ./siop.h ./streams.h ./strifnet.h ./tcds.h ./te.h
+lockinfo.o lockinfo.ln: ./tra.h ./trsrcf.h ./tu.h ./tza.h ./uni3x.h
+lockinfo.o lockinfo.ln: ./unix_locks.h ./uq.h ./usb.h ./vague_stats.h ./xcr.h
+lockinfo.o lockinfo.ln: ./xna.h ./xtiso.h ./xza.h kern/lockinfo.c
+
+netaf_config.o netaf_config.ln: ../include/kern/event.h ../include/kern/lock.h
+netaf_config.o netaf_config.ln: ../include/kern/macro_help.h
+netaf_config.o netaf_config.ln: ../include/kern/queue.h ../include/kern/spl.h
+netaf_config.o netaf_config.ln: ../include/mach/boolean.h
+netaf_config.o netaf_config.ln: ../include/mach/machine/boolean.h
+netaf_config.o netaf_config.ln: ../include/mach/machine/vm_types.h
+netaf_config.o netaf_config.ln: ../include/machine/spl.h ../include/standards.h
+netaf_config.o netaf_config.ln: ../include/sys/errno.h ../include/sys/select.h
+netaf_config.o netaf_config.ln: ../include/sys/sysconfig.h
+netaf_config.o netaf_config.ln: ../include/sys/types.h ./cpus.h ./mach_ldebug.h
+netaf_config.o netaf_config.ln: ./rt_preempt.h net/netaf_config.c
+
+param.o param.ln: ../include/dirent.h ../include/io/common/iotypes.h
+param.o param.ln: ../include/kern/assert.h ../include/kern/ast.h
+param.o param.ln: ../include/kern/event.h ../include/kern/host.h
+param.o param.ln: ../include/kern/kern_msg.h ../include/kern/kern_obj.h
+param.o param.ln: ../include/kern/kern_set.h ../include/kern/lock.h
+param.o param.ln: ../include/kern/mach_param.h ../include/kern/macro_help.h
+param.o param.ln: ../include/kern/msg_queue.h ../include/kern/processor.h
+param.o param.ln: ../include/kern/queue.h ../include/kern/sched.h
+param.o param.ln: ../include/kern/sched_prim.h ../include/kern/spl.h
+param.o param.ln: ../include/kern/syscall_emulation.h ../include/kern/task.h
+param.o param.ln: ../include/kern/thread.h ../include/kern/thread_modes.h
+param.o param.ln: ../include/kern/timer.h ../include/mach/alpha/vm_param.h
+param.o param.ln: ../include/mach/boolean.h ../include/mach/events_info.h
+param.o param.ln: ../include/mach/kern_return.h ../include/mach/mach_param.h
+param.o param.ln: ../include/mach/machine/boolean.h
+param.o param.ln: ../include/mach/machine/kern_return.h
+param.o param.ln: ../include/mach/machine/thread_status.h
+param.o param.ln: ../include/mach/machine/vm_param.h
+param.o param.ln: ../include/mach/machine/vm_statistics.h
+param.o param.ln: ../include/mach/machine/vm_types.h
+param.o param.ln: ../include/mach/memory_object.h ../include/mach/message.h
+param.o param.ln: ../include/mach/policy.h ../include/mach/port.h
+param.o param.ln: ../include/mach/task_info.h ../include/mach/thread_status.h
+param.o param.ln: ../include/mach/time_value.h ../include/mach/vm_inherit.h
+param.o param.ln: ../include/mach/vm_param.h ../include/mach/vm_prot.h
+param.o param.ln: ../include/mach/vm_statistics.h ../include/machine/context.h
+param.o param.ln: ../include/machine/counters.h ../include/machine/cpu.h
+param.o param.ln: ../include/machine/endian.h ../include/machine/machlimits.h
+param.o param.ln: ../include/machine/machparam.h ../include/machine/machtime.h
+param.o param.ln: ../include/machine/nxm.h ../include/machine/pcb.h
+param.o param.ln: ../include/machine/pmap.h ../include/machine/signal.h
+param.o param.ln: ../include/machine/spl.h ../include/machine/thread.h
+param.o param.ln: ../include/machine/vmparam.h ../include/net/net_globals.h
+param.o param.ln: ../include/net/net_malloc.h ../include/net/proto_net.h
+param.o param.ln: ../include/net/proto_uipc.h ../include/netinet/ip_stat.h
+param.o param.ln: ../include/netinet/tcp_stat.h ../include/procfs/procfs.h
+param.o param.ln: ../include/s5fs/s5dir.h ../include/s5fs/s5param.h
+param.o param.ln: ../include/standards.h ../include/sys/access.h
+param.o param.ln: ../include/sys/acl.h ../include/sys/acl_def.h
+param.o param.ln: ../include/sys/audit.h ../include/sys/callout.h
+param.o param.ln: ../include/sys/clist.h ../include/sys/errno.h
+param.o param.ln: ../include/sys/fcntl.h ../include/sys/file.h
+param.o param.ln: ../include/sys/habitat.h ../include/sys/ipc.h
+param.o param.ln: ../include/sys/kernel.h ../include/sys/limits.h
+param.o param.ln: ../include/sys/lock.h ../include/sys/lock_types.h
+param.o param.ln: ../include/sys/lwc.h ../include/sys/malloc.h
+param.o param.ln: ../include/sys/mbuf.h ../include/sys/mode.h
+param.o param.ln: ../include/sys/mount.h ../include/sys/msg.h
+param.o param.ln: ../include/sys/namei.h ../include/sys/param.h
+param.o param.ln: ../include/sys/proc.h ../include/sys/proplist.h
+param.o param.ln: ../include/sys/resource.h ../include/sys/rt_limits.h
+param.o param.ln: ../include/sys/rtpriocntl.h ../include/sys/sec_objects.h
+param.o param.ln: ../include/sys/secdefines.h ../include/sys/secpolicy.h
+param.o param.ln: ../include/sys/security.h ../include/sys/seek.h
+param.o param.ln: ../include/sys/select.h ../include/sys/sem.h
+param.o param.ln: ../include/sys/shm.h ../include/sys/siginfo.h
+param.o param.ln: ../include/sys/signal.h ../include/sys/socket.h
+param.o param.ln: ../include/sys/sp_attr.h ../include/sys/syscall.h
+param.o param.ln: ../include/sys/syslimits.h ../include/sys/sysmisc.h
+param.o param.ln: ../include/sys/systm.h ../include/sys/time.h
+param.o param.ln: ../include/sys/types.h ../include/sys/ucred.h
+param.o param.ln: ../include/sys/uio.h ../include/sys/unix_defs.h
+param.o param.ln: ../include/sys/user.h ../include/sys/utsname.h
+param.o param.ln: ../include/sys/vmparam.h ../include/sys/vnode.h
+param.o param.ln: ../include/sys/vp_swap.h ../include/ufs/dir.h
+param.o param.ln: ../include/ufs/quota.h ../include/vm/pmap.h
+param.o param.ln: ../include/vm/vm_control.h ../include/vm/vm_fault.h
+param.o param.ln: ../include/vm/vm_map.h ../include/vm/vm_object.h
+param.o param.ln: ../include/vm/vm_tune.h ../include/vm/vmparam.h
+param.o param.ln: ../include/vm/vpage.h ./bin_compat.h ./bogus_memory.h
+param.o param.ln: ./confdep.h ./cpus.h ./hw_ast.h ./mach_assert.h
+param.o param.ln: ./mach_emulation.h ./mach_host.h ./mach_ipc_tcache.h
+param.o param.ln: ./mach_km.h ./mach_ldebug.h ./pty.h ./quota.h ./rt_preempt.h
+param.o param.ln: ./rt_sched.h ./rt_sched_rq.h ./rt_timer.h ./sec_acl_posix.h
+param.o param.ln: ./sec_base.h ./sec_cmw.h ./sec_mac_ob.h ./sec_ncav.h
+param.o param.ln: ./sec_net.h ./sec_nfs.h ./sec_priv.h ./sec_shw.h
+param.o param.ln: ./ser_compat.h ./simple_clock.h ./stat_time.h ./unix_locks.h
+param.o param.ln: ./unix_uni.h ./vague_stats.h param.c
+
+pci_option_data.o pci_option_data.ln: ../include/arch/alpha/hal/shared_intr.h
+pci_option_data.o pci_option_data.ln: ../include/dirent.h
+pci_option_data.o pci_option_data.ln: ../include/io/common/devdriver.h
+pci_option_data.o pci_option_data.ln: ../include/io/common/devio.h
+pci_option_data.o pci_option_data.ln: ../include/io/common/handler.h
+pci_option_data.o pci_option_data.ln: ../include/io/dec/eisa/eisa.h
+pci_option_data.o pci_option_data.ln: ../include/io/dec/pci/pci.h
+pci_option_data.o pci_option_data.ln: ../include/io/dec/pci/pci_debug.h
+pci_option_data.o pci_option_data.ln: ../include/kern/assert.h
+pci_option_data.o pci_option_data.ln: ../include/kern/ast.h
+pci_option_data.o pci_option_data.ln: ../include/kern/event.h
+pci_option_data.o pci_option_data.ln: ../include/kern/host.h
+pci_option_data.o pci_option_data.ln: ../include/kern/kern_msg.h
+pci_option_data.o pci_option_data.ln: ../include/kern/kern_obj.h
+pci_option_data.o pci_option_data.ln: ../include/kern/kern_set.h
+pci_option_data.o pci_option_data.ln: ../include/kern/lock.h
+pci_option_data.o pci_option_data.ln: ../include/kern/mach_param.h
+pci_option_data.o pci_option_data.ln: ../include/kern/macro_help.h
+pci_option_data.o pci_option_data.ln: ../include/kern/msg_queue.h
+pci_option_data.o pci_option_data.ln: ../include/kern/processor.h
+pci_option_data.o pci_option_data.ln: ../include/kern/queue.h
+pci_option_data.o pci_option_data.ln: ../include/kern/sched.h
+pci_option_data.o pci_option_data.ln: ../include/kern/spl.h
+pci_option_data.o pci_option_data.ln: ../include/kern/syscall_emulation.h
+pci_option_data.o pci_option_data.ln: ../include/kern/task.h
+pci_option_data.o pci_option_data.ln: ../include/kern/thread.h
+pci_option_data.o pci_option_data.ln: ../include/kern/thread_modes.h
+pci_option_data.o pci_option_data.ln: ../include/kern/timer.h
+pci_option_data.o pci_option_data.ln: ../include/mach/alpha/vm_param.h
+pci_option_data.o pci_option_data.ln: ../include/mach/boolean.h
+pci_option_data.o pci_option_data.ln: ../include/mach/events_info.h
+pci_option_data.o pci_option_data.ln: ../include/mach/kern_return.h
+pci_option_data.o pci_option_data.ln: ../include/mach/mach_param.h
+pci_option_data.o pci_option_data.ln: ../include/mach/machine/boolean.h
+pci_option_data.o pci_option_data.ln: ../include/mach/machine/kern_return.h
+pci_option_data.o pci_option_data.ln: ../include/mach/machine/thread_status.h
+pci_option_data.o pci_option_data.ln: ../include/mach/machine/vm_param.h
+pci_option_data.o pci_option_data.ln: ../include/mach/machine/vm_statistics.h
+pci_option_data.o pci_option_data.ln: ../include/mach/machine/vm_types.h
+pci_option_data.o pci_option_data.ln: ../include/mach/memory_object.h
+pci_option_data.o pci_option_data.ln: ../include/mach/message.h
+pci_option_data.o pci_option_data.ln: ../include/mach/policy.h
+pci_option_data.o pci_option_data.ln: ../include/mach/port.h
+pci_option_data.o pci_option_data.ln: ../include/mach/task_info.h
+pci_option_data.o pci_option_data.ln: ../include/mach/thread_status.h
+pci_option_data.o pci_option_data.ln: ../include/mach/time_value.h
+pci_option_data.o pci_option_data.ln: ../include/mach/vm_inherit.h
+pci_option_data.o pci_option_data.ln: ../include/mach/vm_param.h
+pci_option_data.o pci_option_data.ln: ../include/mach/vm_prot.h
+pci_option_data.o pci_option_data.ln: ../include/mach/vm_statistics.h
+pci_option_data.o pci_option_data.ln: ../include/machine/context.h
+pci_option_data.o pci_option_data.ln: ../include/machine/counters.h
+pci_option_data.o pci_option_data.ln: ../include/machine/cpu.h
+pci_option_data.o pci_option_data.ln: ../include/machine/endian.h
+pci_option_data.o pci_option_data.ln: ../include/machine/machlimits.h
+pci_option_data.o pci_option_data.ln: ../include/machine/machparam.h
+pci_option_data.o pci_option_data.ln: ../include/machine/machtime.h
+pci_option_data.o pci_option_data.ln: ../include/machine/nxm.h
+pci_option_data.o pci_option_data.ln: ../include/machine/pcb.h
+pci_option_data.o pci_option_data.ln: ../include/machine/pmap.h
+pci_option_data.o pci_option_data.ln: ../include/machine/signal.h
+pci_option_data.o pci_option_data.ln: ../include/machine/spl.h
+pci_option_data.o pci_option_data.ln: ../include/machine/thread.h
+pci_option_data.o pci_option_data.ln: ../include/netinet/ip_stat.h
+pci_option_data.o pci_option_data.ln: ../include/netinet/tcp_stat.h
+pci_option_data.o pci_option_data.ln: ../include/procfs/procfs.h
+pci_option_data.o pci_option_data.ln: ../include/s5fs/s5dir.h
+pci_option_data.o pci_option_data.ln: ../include/s5fs/s5param.h
+pci_option_data.o pci_option_data.ln: ../include/standards.h
+pci_option_data.o pci_option_data.ln: ../include/sys/acl.h
+pci_option_data.o pci_option_data.ln: ../include/sys/acl_def.h
+pci_option_data.o pci_option_data.ln: ../include/sys/audit.h
+pci_option_data.o pci_option_data.ln: ../include/sys/callout.h
+pci_option_data.o pci_option_data.ln: ../include/sys/disklabel.h
+pci_option_data.o pci_option_data.ln: ../include/sys/errno.h
+pci_option_data.o pci_option_data.ln: ../include/sys/habitat.h
+pci_option_data.o pci_option_data.ln: ../include/sys/ipc.h
+pci_option_data.o pci_option_data.ln: ../include/sys/limits.h
+pci_option_data.o pci_option_data.ln: ../include/sys/lock.h
+pci_option_data.o pci_option_data.ln: ../include/sys/lwc.h
+pci_option_data.o pci_option_data.ln: ../include/sys/mount.h
+pci_option_data.o pci_option_data.ln: ../include/sys/namei.h
+pci_option_data.o pci_option_data.ln: ../include/sys/param.h
+pci_option_data.o pci_option_data.ln: ../include/sys/proc.h
+pci_option_data.o pci_option_data.ln: ../include/sys/proplist.h
+pci_option_data.o pci_option_data.ln: ../include/sys/resource.h
+pci_option_data.o pci_option_data.ln: ../include/sys/rt_limits.h
+pci_option_data.o pci_option_data.ln: ../include/sys/sec_objects.h
+pci_option_data.o pci_option_data.ln: ../include/sys/secdefines.h
+pci_option_data.o pci_option_data.ln: ../include/sys/secpolicy.h
+pci_option_data.o pci_option_data.ln: ../include/sys/security.h
+pci_option_data.o pci_option_data.ln: ../include/sys/select.h
+pci_option_data.o pci_option_data.ln: ../include/sys/sem.h
+pci_option_data.o pci_option_data.ln: ../include/sys/siginfo.h
+pci_option_data.o pci_option_data.ln: ../include/sys/signal.h
+pci_option_data.o pci_option_data.ln: ../include/sys/sp_attr.h
+pci_option_data.o pci_option_data.ln: ../include/sys/syscall.h
+pci_option_data.o pci_option_data.ln: ../include/sys/syslimits.h
+pci_option_data.o pci_option_data.ln: ../include/sys/sysmisc.h
+pci_option_data.o pci_option_data.ln: ../include/sys/systm.h
+pci_option_data.o pci_option_data.ln: ../include/sys/time.h
+pci_option_data.o pci_option_data.ln: ../include/sys/types.h
+pci_option_data.o pci_option_data.ln: ../include/sys/ucred.h
+pci_option_data.o pci_option_data.ln: ../include/sys/uio.h
+pci_option_data.o pci_option_data.ln: ../include/sys/unix_defs.h
+pci_option_data.o pci_option_data.ln: ../include/sys/user.h
+pci_option_data.o pci_option_data.ln: ../include/sys/vnode.h
+pci_option_data.o pci_option_data.ln: ../include/sys/vp_swap.h
+pci_option_data.o pci_option_data.ln: ../include/ufs/dir.h ../include/vm/pmap.h
+pci_option_data.o pci_option_data.ln: ../include/vm/vm_control.h
+pci_option_data.o pci_option_data.ln: ../include/vm/vm_fault.h
+pci_option_data.o pci_option_data.ln: ../include/vm/vm_map.h
+pci_option_data.o pci_option_data.ln: ../include/vm/vm_object.h
+pci_option_data.o pci_option_data.ln: ../include/vm/vmparam.h
+pci_option_data.o pci_option_data.ln: ../include/vm/vpage.h ./bin_compat.h
+pci_option_data.o pci_option_data.ln: ./bogus_memory.h ./cpus.h ./hw_ast.h
+pci_option_data.o pci_option_data.ln: ./mach_assert.h ./mach_emulation.h
+pci_option_data.o pci_option_data.ln: ./mach_host.h ./mach_ipc_tcache.h
+pci_option_data.o pci_option_data.ln: ./mach_km.h ./mach_ldebug.h
+pci_option_data.o pci_option_data.ln: ./rt_preempt.h ./rt_sched.h
+pci_option_data.o pci_option_data.ln: ./rt_sched_rq.h ./sec_acl_posix.h
+pci_option_data.o pci_option_data.ln: ./sec_base.h ./sec_cmw.h ./sec_mac_ob.h
+pci_option_data.o pci_option_data.ln: ./sec_ncav.h ./sec_net.h ./sec_nfs.h
+pci_option_data.o pci_option_data.ln: ./sec_priv.h ./sec_shw.h ./ser_compat.h
+pci_option_data.o pci_option_data.ln: ./simple_clock.h ./stat_time.h
+pci_option_data.o pci_option_data.ln: ./unix_locks.h ./unix_uni.h
+pci_option_data.o pci_option_data.ln: ./vague_stats.h ata.h eisa.h i2o.h isa.h
+pci_option_data.o pci_option_data.ln: pci_option_data.c pcmcia.h vba.h
+
+pcxal_data.o pcxal_data.ln: ../include/io/dec/ws/pcxal.h
+pcxal_data.o pcxal_data.ln: ../include/kern/event.h ../include/kern/lock.h
+pcxal_data.o pcxal_data.ln: ../include/kern/macro_help.h
+pcxal_data.o pcxal_data.ln: ../include/kern/queue.h ../include/kern/spl.h
+pcxal_data.o pcxal_data.ln: ../include/mach/boolean.h
+pcxal_data.o pcxal_data.ln: ../include/mach/machine/boolean.h
+pcxal_data.o pcxal_data.ln: ../include/mach/machine/vm_types.h
+pcxal_data.o pcxal_data.ln: ../include/machine/hal/console.h
+pcxal_data.o pcxal_data.ln: ../include/machine/spl.h ../include/standards.h
+pcxal_data.o pcxal_data.ln: ../include/sys/inputdevice.h
+pcxal_data.o pcxal_data.ln: ../include/sys/keysyms.h ../include/sys/select.h
+pcxal_data.o pcxal_data.ln: ../include/sys/types.h ../include/sys/workstation.h
+pcxal_data.o pcxal_data.ln: ../include/sys/wsdevice.h ./cpus.h ./mach_ldebug.h
+pcxal_data.o pcxal_data.ln: ./rt_preempt.h data/pcxal_data.c
+
+pcxas_data.o pcxas_data.ln: ../include/io/common/devio.h
+pcxas_data.o pcxas_data.ln: ../include/io/dec/ws/pcxal.h
+pcxas_data.o pcxas_data.ln: ../include/io/dec/ws/pcxas.h
+pcxas_data.o pcxas_data.ln: ../include/kern/assert.h ../include/kern/event.h
+pcxas_data.o pcxas_data.ln: ../include/kern/lock.h ../include/kern/macro_help.h
+pcxas_data.o pcxas_data.ln: ../include/kern/processor.h ../include/kern/queue.h
+pcxas_data.o pcxas_data.ln: ../include/kern/sched.h ../include/kern/spl.h
+pcxas_data.o pcxas_data.ln: ../include/mach/alpha/vm_param.h
+pcxas_data.o pcxas_data.ln: ../include/mach/boolean.h
+pcxas_data.o pcxas_data.ln: ../include/mach/machine/boolean.h
+pcxas_data.o pcxas_data.ln: ../include/mach/machine/vm_param.h
+pcxas_data.o pcxas_data.ln: ../include/mach/machine/vm_statistics.h
+pcxas_data.o pcxas_data.ln: ../include/mach/machine/vm_types.h
+pcxas_data.o pcxas_data.ln: ../include/mach/policy.h ../include/mach/port.h
+pcxas_data.o pcxas_data.ln: ../include/mach/vm_prot.h
+pcxas_data.o pcxas_data.ln: ../include/mach/vm_statistics.h
+pcxas_data.o pcxas_data.ln: ../include/machine/context.h
+pcxas_data.o pcxas_data.ln: ../include/machine/counters.h
+pcxas_data.o pcxas_data.ln: ../include/machine/cpu.h
+pcxas_data.o pcxas_data.ln: ../include/machine/endian.h
+pcxas_data.o pcxas_data.ln: ../include/machine/hal/console.h
+pcxas_data.o pcxas_data.ln: ../include/machine/machlimits.h
+pcxas_data.o pcxas_data.ln: ../include/machine/machparam.h
+pcxas_data.o pcxas_data.ln: ../include/machine/machtime.h
+pcxas_data.o pcxas_data.ln: ../include/machine/pmap.h
+pcxas_data.o pcxas_data.ln: ../include/machine/signal.h
+pcxas_data.o pcxas_data.ln: ../include/machine/spl.h
+pcxas_data.o pcxas_data.ln: ../include/netinet/ip_stat.h
+pcxas_data.o pcxas_data.ln: ../include/netinet/tcp_stat.h
+pcxas_data.o pcxas_data.ln: ../include/s5fs/s5ino.h ../include/standards.h
+pcxas_data.o pcxas_data.ln: ../include/sys/buf.h ../include/sys/callout.h
+pcxas_data.o pcxas_data.ln: ../include/sys/errno.h ../include/sys/filsys.h
+pcxas_data.o pcxas_data.ln: ../include/sys/inputdevice.h
+pcxas_data.o pcxas_data.ln: ../include/sys/limits.h ../include/sys/lwc.h
+pcxas_data.o pcxas_data.ln: ../include/sys/param.h ../include/sys/rt_limits.h
+pcxas_data.o pcxas_data.ln: ../include/sys/select.h ../include/sys/siginfo.h
+pcxas_data.o pcxas_data.ln: ../include/sys/signal.h ../include/sys/syslimits.h
+pcxas_data.o pcxas_data.ln: ../include/sys/sysmisc.h ../include/sys/time.h
+pcxas_data.o pcxas_data.ln: ../include/sys/types.h ../include/sys/unix_defs.h
+pcxas_data.o pcxas_data.ln: ../include/sys/workstation.h
+pcxas_data.o pcxas_data.ln: ../include/sys/wsdevice.h ./bogus_memory.h ./cpus.h
+pcxas_data.o pcxas_data.ln: ./mach_assert.h ./mach_ldebug.h ./rt_preempt.h
+pcxas_data.o pcxas_data.ln: ./rt_sched.h ./rt_sched_rq.h ./ser_compat.h
+pcxas_data.o pcxas_data.ln: ./simple_clock.h ./stat_time.h ./unix_locks.h
+pcxas_data.o pcxas_data.ln: ./unix_uni.h ./vague_stats.h data/pcxas_data.c
+
+pmap_data.o pmap_data.ln: ../include/kern/assert.h ../include/kern/event.h
+pmap_data.o pmap_data.ln: ../include/kern/lock.h ../include/kern/macro_help.h
+pmap_data.o pmap_data.ln: ../include/kern/processor.h ../include/kern/queue.h
+pmap_data.o pmap_data.ln: ../include/kern/sched.h ../include/kern/spl.h
+pmap_data.o pmap_data.ln: ../include/mach/alpha/vm_param.h
+pmap_data.o pmap_data.ln: ../include/mach/boolean.h
+pmap_data.o pmap_data.ln: ../include/mach/machine/boolean.h
+pmap_data.o pmap_data.ln: ../include/mach/machine/vm_param.h
+pmap_data.o pmap_data.ln: ../include/mach/machine/vm_statistics.h
+pmap_data.o pmap_data.ln: ../include/mach/machine/vm_types.h
+pmap_data.o pmap_data.ln: ../include/mach/policy.h ../include/mach/port.h
+pmap_data.o pmap_data.ln: ../include/mach/vm_prot.h
+pmap_data.o pmap_data.ln: ../include/mach/vm_statistics.h
+pmap_data.o pmap_data.ln: ../include/machine/context.h
+pmap_data.o pmap_data.ln: ../include/machine/counters.h
+pmap_data.o pmap_data.ln: ../include/machine/cpu.h
+pmap_data.o pmap_data.ln: ../include/machine/machlimits.h
+pmap_data.o pmap_data.ln: ../include/machine/machtime.h
+pmap_data.o pmap_data.ln: ../include/machine/pmap.h ../include/machine/signal.h
+pmap_data.o pmap_data.ln: ../include/machine/spl.h ../include/netinet/ip_stat.h
+pmap_data.o pmap_data.ln: ../include/netinet/tcp_stat.h ../include/standards.h
+pmap_data.o pmap_data.ln: ../include/sys/callout.h ../include/sys/limits.h
+pmap_data.o pmap_data.ln: ../include/sys/lwc.h ../include/sys/rt_limits.h
+pmap_data.o pmap_data.ln: ../include/sys/select.h ../include/sys/siginfo.h
+pmap_data.o pmap_data.ln: ../include/sys/signal.h ../include/sys/syslimits.h
+pmap_data.o pmap_data.ln: ../include/sys/sysmisc.h ../include/sys/time.h
+pmap_data.o pmap_data.ln: ../include/sys/types.h ../include/sys/unix_defs.h
+pmap_data.o pmap_data.ln: ./bogus_memory.h ./cpus.h ./mach_assert.h
+pmap_data.o pmap_data.ln: ./mach_ldebug.h ./memd.h ./rt_preempt.h ./rt_sched.h
+pmap_data.o pmap_data.ln: ./rt_sched_rq.h ./ser_compat.h ./simple_clock.h
+pmap_data.o pmap_data.ln: ./stat_time.h ./unix_locks.h ./unix_uni.h
+pmap_data.o pmap_data.ln: ./vague_stats.h data/pmap_data.c
+
+presto_data.o presto_data.ln: ./presto.h data/presto_data.c
+
+sec_data.o sec_data.ln: ../include/dirent.h ../include/kern/assert.h
+sec_data.o sec_data.ln: ../include/kern/ast.h ../include/kern/event.h
+sec_data.o sec_data.ln: ../include/kern/host.h ../include/kern/kern_msg.h
+sec_data.o sec_data.ln: ../include/kern/kern_obj.h ../include/kern/kern_set.h
+sec_data.o sec_data.ln: ../include/kern/lock.h ../include/kern/mach_param.h
+sec_data.o sec_data.ln: ../include/kern/macro_help.h
+sec_data.o sec_data.ln: ../include/kern/msg_queue.h ../include/kern/parallel.h
+sec_data.o sec_data.ln: ../include/kern/processor.h ../include/kern/queue.h
+sec_data.o sec_data.ln: ../include/kern/sched.h ../include/kern/spl.h
+sec_data.o sec_data.ln: ../include/kern/syscall_emulation.h
+sec_data.o sec_data.ln: ../include/kern/task.h ../include/kern/thread.h
+sec_data.o sec_data.ln: ../include/kern/thread_modes.h ../include/kern/timer.h
+sec_data.o sec_data.ln: ../include/mach/alpha/vm_param.h
+sec_data.o sec_data.ln: ../include/mach/boolean.h ../include/mach/events_info.h
+sec_data.o sec_data.ln: ../include/mach/kern_return.h
+sec_data.o sec_data.ln: ../include/mach/mach_param.h
+sec_data.o sec_data.ln: ../include/mach/machine/boolean.h
+sec_data.o sec_data.ln: ../include/mach/machine/kern_return.h
+sec_data.o sec_data.ln: ../include/mach/machine/thread_status.h
+sec_data.o sec_data.ln: ../include/mach/machine/vm_param.h
+sec_data.o sec_data.ln: ../include/mach/machine/vm_statistics.h
+sec_data.o sec_data.ln: ../include/mach/machine/vm_types.h
+sec_data.o sec_data.ln: ../include/mach/memory_object.h
+sec_data.o sec_data.ln: ../include/mach/message.h ../include/mach/policy.h
+sec_data.o sec_data.ln: ../include/mach/port.h ../include/mach/task_info.h
+sec_data.o sec_data.ln: ../include/mach/thread_status.h
+sec_data.o sec_data.ln: ../include/mach/time_value.h
+sec_data.o sec_data.ln: ../include/mach/vm_inherit.h ../include/mach/vm_param.h
+sec_data.o sec_data.ln: ../include/mach/vm_prot.h
+sec_data.o sec_data.ln: ../include/mach/vm_statistics.h
+sec_data.o sec_data.ln: ../include/machine/context.h
+sec_data.o sec_data.ln: ../include/machine/counters.h ../include/machine/cpu.h
+sec_data.o sec_data.ln: ../include/machine/endian.h
+sec_data.o sec_data.ln: ../include/machine/machlimits.h
+sec_data.o sec_data.ln: ../include/machine/machparam.h
+sec_data.o sec_data.ln: ../include/machine/machtime.h ../include/machine/nxm.h
+sec_data.o sec_data.ln: ../include/machine/pcb.h ../include/machine/pmap.h
+sec_data.o sec_data.ln: ../include/machine/signal.h ../include/machine/spl.h
+sec_data.o sec_data.ln: ../include/machine/thread.h
+sec_data.o sec_data.ln: ../include/net/net_globals.h ../include/net/proto_net.h
+sec_data.o sec_data.ln: ../include/net/proto_uipc.h
+sec_data.o sec_data.ln: ../include/netinet/ip_stat.h
+sec_data.o sec_data.ln: ../include/netinet/tcp_stat.h
+sec_data.o sec_data.ln: ../include/procfs/procfs.h ../include/s5fs/s5dir.h
+sec_data.o sec_data.ln: ../include/s5fs/s5param.h ../include/standards.h
+sec_data.o sec_data.ln: ../include/sys/access.h ../include/sys/acl.h
+sec_data.o sec_data.ln: ../include/sys/acl_def.h ../include/sys/audit.h
+sec_data.o sec_data.ln: ../include/sys/callout.h ../include/sys/conf.h
+sec_data.o sec_data.ln: ../include/sys/errno.h ../include/sys/fcntl.h
+sec_data.o sec_data.ln: ../include/sys/file.h ../include/sys/habitat.h
+sec_data.o sec_data.ln: ../include/sys/ipc.h ../include/sys/kernel.h
+sec_data.o sec_data.ln: ../include/sys/limits.h ../include/sys/lock.h
+sec_data.o sec_data.ln: ../include/sys/lock_types.h ../include/sys/lwc.h
+sec_data.o sec_data.ln: ../include/sys/mode.h ../include/sys/mount.h
+sec_data.o sec_data.ln: ../include/sys/msg.h ../include/sys/namei.h
+sec_data.o sec_data.ln: ../include/sys/param.h ../include/sys/proc.h
+sec_data.o sec_data.ln: ../include/sys/proplist.h ../include/sys/resource.h
+sec_data.o sec_data.ln: ../include/sys/rt_limits.h ../include/sys/sec_objects.h
+sec_data.o sec_data.ln: ../include/sys/secdefines.h ../include/sys/secioctl.h
+sec_data.o sec_data.ln: ../include/sys/secpolicy.h ../include/sys/security.h
+sec_data.o sec_data.ln: ../include/sys/seek.h ../include/sys/select.h
+sec_data.o sec_data.ln: ../include/sys/sem.h ../include/sys/shm.h
+sec_data.o sec_data.ln: ../include/sys/siginfo.h ../include/sys/signal.h
+sec_data.o sec_data.ln: ../include/sys/socket.h ../include/sys/socketvar.h
+sec_data.o sec_data.ln: ../include/sys/sp_attr.h ../include/sys/stat.h
+sec_data.o sec_data.ln: ../include/sys/syscall.h ../include/sys/syslimits.h
+sec_data.o sec_data.ln: ../include/sys/sysmisc.h ../include/sys/systm.h
+sec_data.o sec_data.ln: ../include/sys/time.h ../include/sys/types.h
+sec_data.o sec_data.ln: ../include/sys/ucred.h ../include/sys/uio.h
+sec_data.o sec_data.ln: ../include/sys/unix_defs.h ../include/sys/user.h
+sec_data.o sec_data.ln: ../include/sys/utsname.h ../include/sys/vnode.h
+sec_data.o sec_data.ln: ../include/sys/vp_swap.h ../include/ufs/dinode.h
+sec_data.o sec_data.ln: ../include/ufs/dir.h ../include/ufs/fs.h
+sec_data.o sec_data.ln: ../include/ufs/inode.h ../include/ufs/quota.h
+sec_data.o sec_data.ln: ../include/ufs/ufsmount.h ../include/vm/pmap.h
+sec_data.o sec_data.ln: ../include/vm/vm_control.h ../include/vm/vm_fault.h
+sec_data.o sec_data.ln: ../include/vm/vm_map.h ../include/vm/vm_object.h
+sec_data.o sec_data.ln: ../include/vm/vmparam.h ../include/vm/vpage.h
+sec_data.o sec_data.ln: ./bin_compat.h ./bogus_memory.h ./cpus.h ./hw_ast.h
+sec_data.o sec_data.ln: ./mach_assert.h ./mach_emulation.h ./mach_host.h
+sec_data.o sec_data.ln: ./mach_ipc_tcache.h ./mach_km.h ./mach_ldebug.h
+sec_data.o sec_data.ln: ./quota.h ./rt_preempt.h ./rt_sched.h ./rt_sched_rq.h
+sec_data.o sec_data.ln: ./rt_timer.h ./sec_acl_posix.h ./sec_base.h ./sec_cmw.h
+sec_data.o sec_data.ln: ./sec_mac_ob.h ./sec_ncav.h ./sec_net.h ./sec_nfs.h
+sec_data.o sec_data.ln: ./sec_priv.h ./sec_shw.h ./ser_compat.h
+sec_data.o sec_data.ln: ./simple_clock.h ./stat_time.h ./unix_locks.h
+sec_data.o sec_data.ln: ./unix_uni.h ./vague_stats.h data/sec_data.c
+sec_data.o sec_data.ln: include/sec/include_sec
+
+sim_config.o sim_config.ln: ../include/dirent.h ../include/hal/cpuconf.h
+sim_config.o sim_config.ln: ../include/io/cam/cam.h
+sim_config.o sim_config.ln: ../include/io/cam/cam_config.h
+sim_config.o sim_config.ln: ../include/io/cam/cam_debug.h
+sim_config.o sim_config.ln: ../include/io/cam/dec_cam.h ../include/io/cam/dme.h
+sim_config.o sim_config.ln: ../include/io/cam/dme_tcds_94_dma.h
+sim_config.o sim_config.ln: ../include/io/cam/scsi_all.h
+sim_config.o sim_config.ln: ../include/io/cam/scsi_status.h
+sim_config.o sim_config.ln: ../include/io/cam/sim.h ../include/io/cam/sim_94.h
+sim_config.o sim_config.ln: ../include/io/cam/sim_cirq.h
+sim_config.o sim_config.ln: ../include/io/cam/sim_common.h
+sim_config.o sim_config.ln: ../include/io/cam/sim_config.h
+sim_config.o sim_config.ln: ../include/io/cam/sim_target.h
+sim_config.o sim_config.ln: ../include/io/common/devdriver.h
+sim_config.o sim_config.ln: ../include/io/common/devio.h
+sim_config.o sim_config.ln: ../include/io/common/handler.h
+sim_config.o sim_config.ln: ../include/io/common/iotypes.h
+sim_config.o sim_config.ln: ../include/io/dec/tc/tc.h ../include/kern/assert.h
+sim_config.o sim_config.ln: ../include/kern/ast.h ../include/kern/event.h
+sim_config.o sim_config.ln: ../include/kern/host.h ../include/kern/kern_msg.h
+sim_config.o sim_config.ln: ../include/kern/kern_obj.h
+sim_config.o sim_config.ln: ../include/kern/kern_set.h ../include/kern/lock.h
+sim_config.o sim_config.ln: ../include/kern/mach_param.h
+sim_config.o sim_config.ln: ../include/kern/macro_help.h
+sim_config.o sim_config.ln: ../include/kern/msg_queue.h
+sim_config.o sim_config.ln: ../include/kern/processor.h ../include/kern/queue.h
+sim_config.o sim_config.ln: ../include/kern/sched.h ../include/kern/spl.h
+sim_config.o sim_config.ln: ../include/kern/syscall_emulation.h
+sim_config.o sim_config.ln: ../include/kern/task.h ../include/kern/thread.h
+sim_config.o sim_config.ln: ../include/kern/thread_modes.h
+sim_config.o sim_config.ln: ../include/kern/timer.h
+sim_config.o sim_config.ln: ../include/mach/alpha/vm_param.h
+sim_config.o sim_config.ln: ../include/mach/boolean.h
+sim_config.o sim_config.ln: ../include/mach/events_info.h
+sim_config.o sim_config.ln: ../include/mach/kern_return.h
+sim_config.o sim_config.ln: ../include/mach/mach_param.h
+sim_config.o sim_config.ln: ../include/mach/machine/boolean.h
+sim_config.o sim_config.ln: ../include/mach/machine/kern_return.h
+sim_config.o sim_config.ln: ../include/mach/machine/thread_status.h
+sim_config.o sim_config.ln: ../include/mach/machine/vm_param.h
+sim_config.o sim_config.ln: ../include/mach/machine/vm_statistics.h
+sim_config.o sim_config.ln: ../include/mach/machine/vm_types.h
+sim_config.o sim_config.ln: ../include/mach/memory_object.h
+sim_config.o sim_config.ln: ../include/mach/message.h ../include/mach/policy.h
+sim_config.o sim_config.ln: ../include/mach/port.h ../include/mach/task_info.h
+sim_config.o sim_config.ln: ../include/mach/thread_status.h
+sim_config.o sim_config.ln: ../include/mach/time_value.h
+sim_config.o sim_config.ln: ../include/mach/vm_inherit.h
+sim_config.o sim_config.ln: ../include/mach/vm_param.h
+sim_config.o sim_config.ln: ../include/mach/vm_prot.h
+sim_config.o sim_config.ln: ../include/mach/vm_statistics.h
+sim_config.o sim_config.ln: ../include/machine/context.h
+sim_config.o sim_config.ln: ../include/machine/counters.h
+sim_config.o sim_config.ln: ../include/machine/cpu.h
+sim_config.o sim_config.ln: ../include/machine/endian.h
+sim_config.o sim_config.ln: ../include/machine/inst.h
+sim_config.o sim_config.ln: ../include/machine/machlimits.h
+sim_config.o sim_config.ln: ../include/machine/machparam.h
+sim_config.o sim_config.ln: ../include/machine/machtime.h
+sim_config.o sim_config.ln: ../include/machine/nxm.h ../include/machine/pcb.h
+sim_config.o sim_config.ln: ../include/machine/pmap.h
+sim_config.o sim_config.ln: ../include/machine/signal.h
+sim_config.o sim_config.ln: ../include/machine/spl.h
+sim_config.o sim_config.ln: ../include/machine/thread.h
+sim_config.o sim_config.ln: ../include/netinet/ip_stat.h
+sim_config.o sim_config.ln: ../include/netinet/tcp_stat.h
+sim_config.o sim_config.ln: ../include/procfs/procfs.h ../include/s5fs/s5dir.h
+sim_config.o sim_config.ln: ../include/s5fs/s5ino.h ../include/s5fs/s5param.h
+sim_config.o sim_config.ln: ../include/standards.h ../include/sys/acl.h
+sim_config.o sim_config.ln: ../include/sys/acl_def.h ../include/sys/audit.h
+sim_config.o sim_config.ln: ../include/sys/buf.h ../include/sys/callout.h
+sim_config.o sim_config.ln: ../include/sys/disklabel.h ../include/sys/errno.h
+sim_config.o sim_config.ln: ../include/sys/filsys.h ../include/sys/habitat.h
+sim_config.o sim_config.ln: ../include/sys/ipc.h ../include/sys/limits.h
+sim_config.o sim_config.ln: ../include/sys/lock.h ../include/sys/lwc.h
+sim_config.o sim_config.ln: ../include/sys/mount.h ../include/sys/namei.h
+sim_config.o sim_config.ln: ../include/sys/param.h ../include/sys/proc.h
+sim_config.o sim_config.ln: ../include/sys/proplist.h ../include/sys/resource.h
+sim_config.o sim_config.ln: ../include/sys/rt_limits.h
+sim_config.o sim_config.ln: ../include/sys/sec_objects.h
+sim_config.o sim_config.ln: ../include/sys/secdefines.h
+sim_config.o sim_config.ln: ../include/sys/secpolicy.h
+sim_config.o sim_config.ln: ../include/sys/security.h ../include/sys/select.h
+sim_config.o sim_config.ln: ../include/sys/sem.h ../include/sys/siginfo.h
+sim_config.o sim_config.ln: ../include/sys/signal.h ../include/sys/sp_attr.h
+sim_config.o sim_config.ln: ../include/sys/syscall.h ../include/sys/syslimits.h
+sim_config.o sim_config.ln: ../include/sys/sysmisc.h ../include/sys/systm.h
+sim_config.o sim_config.ln: ../include/sys/time.h ../include/sys/types.h
+sim_config.o sim_config.ln: ../include/sys/ucred.h ../include/sys/uio.h
+sim_config.o sim_config.ln: ../include/sys/unix_defs.h ../include/sys/user.h
+sim_config.o sim_config.ln: ../include/sys/vnode.h ../include/sys/vp_swap.h
+sim_config.o sim_config.ln: ../include/ufs/dir.h ../include/vm/pmap.h
+sim_config.o sim_config.ln: ../include/vm/vm_control.h ../include/vm/vm_fault.h
+sim_config.o sim_config.ln: ../include/vm/vm_map.h ../include/vm/vm_object.h
+sim_config.o sim_config.ln: ../include/vm/vmparam.h ../include/vm/vpage.h
+sim_config.o sim_config.ln: ./aha.h ./asc.h ./ata.h ./bin_compat.h
+sim_config.o sim_config.ln: ./bogus_memory.h ./cpus.h ./hw_ast.h ./isp.h
+sim_config.o sim_config.ln: ./itpsa.h ./mach_assert.h ./mach_emulation.h
+sim_config.o sim_config.ln: ./mach_host.h ./mach_ipc_tcache.h ./mach_km.h
+sim_config.o sim_config.ln: ./mach_ldebug.h ./psiop.h ./pza.h ./rt_preempt.h
+sim_config.o sim_config.ln: ./rt_sched.h ./rt_sched_rq.h ./sec_acl_posix.h
+sim_config.o sim_config.ln: ./sec_base.h ./sec_cmw.h ./sec_mac_ob.h
+sim_config.o sim_config.ln: ./sec_ncav.h ./sec_net.h ./sec_nfs.h ./sec_priv.h
+sim_config.o sim_config.ln: ./sec_shw.h ./ser_compat.h ./simple_clock.h
+sim_config.o sim_config.ln: ./siop.h ./stat_time.h ./tcds.h ./tza.h
+sim_config.o sim_config.ln: ./unix_locks.h ./unix_uni.h ./vague_stats.h ./xza.h
+sim_config.o sim_config.ln: io/cam/sim_config.c
+
+steal_mem.o steal_mem.ln: ../include/dirent.h ../include/hal/cpuconf.h
+steal_mem.o steal_mem.ln: ../include/io/dec/netif/if_tereg.h
+steal_mem.o steal_mem.ln: ../include/kern/assert.h ../include/kern/ast.h
+steal_mem.o steal_mem.ln: ../include/kern/event.h ../include/kern/host.h
+steal_mem.o steal_mem.ln: ../include/kern/kern_msg.h ../include/kern/kern_obj.h
+steal_mem.o steal_mem.ln: ../include/kern/kern_set.h ../include/kern/lock.h
+steal_mem.o steal_mem.ln: ../include/kern/mach_param.h
+steal_mem.o steal_mem.ln: ../include/kern/macro_help.h
+steal_mem.o steal_mem.ln: ../include/kern/msg_queue.h
+steal_mem.o steal_mem.ln: ../include/kern/processor.h ../include/kern/queue.h
+steal_mem.o steal_mem.ln: ../include/kern/sched.h ../include/kern/sched_prim.h
+steal_mem.o steal_mem.ln: ../include/kern/spl.h
+steal_mem.o steal_mem.ln: ../include/kern/syscall_emulation.h
+steal_mem.o steal_mem.ln: ../include/kern/task.h ../include/kern/thread.h
+steal_mem.o steal_mem.ln: ../include/kern/thread_modes.h
+steal_mem.o steal_mem.ln: ../include/kern/timer.h
+steal_mem.o steal_mem.ln: ../include/mach/alpha/vm_param.h
+steal_mem.o steal_mem.ln: ../include/mach/boolean.h
+steal_mem.o steal_mem.ln: ../include/mach/events_info.h
+steal_mem.o steal_mem.ln: ../include/mach/kern_return.h
+steal_mem.o steal_mem.ln: ../include/mach/mach_param.h
+steal_mem.o steal_mem.ln: ../include/mach/machine/boolean.h
+steal_mem.o steal_mem.ln: ../include/mach/machine/kern_return.h
+steal_mem.o steal_mem.ln: ../include/mach/machine/thread_status.h
+steal_mem.o steal_mem.ln: ../include/mach/machine/vm_param.h
+steal_mem.o steal_mem.ln: ../include/mach/machine/vm_statistics.h
+steal_mem.o steal_mem.ln: ../include/mach/machine/vm_types.h
+steal_mem.o steal_mem.ln: ../include/mach/memory_object.h
+steal_mem.o steal_mem.ln: ../include/mach/message.h ../include/mach/policy.h
+steal_mem.o steal_mem.ln: ../include/mach/port.h ../include/mach/task_info.h
+steal_mem.o steal_mem.ln: ../include/mach/thread_status.h
+steal_mem.o steal_mem.ln: ../include/mach/time_value.h
+steal_mem.o steal_mem.ln: ../include/mach/vm_inherit.h
+steal_mem.o steal_mem.ln: ../include/mach/vm_param.h ../include/mach/vm_prot.h
+steal_mem.o steal_mem.ln: ../include/mach/vm_statistics.h
+steal_mem.o steal_mem.ln: ../include/machine/context.h
+steal_mem.o steal_mem.ln: ../include/machine/counters.h
+steal_mem.o steal_mem.ln: ../include/machine/cpu.h ../include/machine/endian.h
+steal_mem.o steal_mem.ln: ../include/machine/inst.h
+steal_mem.o steal_mem.ln: ../include/machine/machlimits.h
+steal_mem.o steal_mem.ln: ../include/machine/machparam.h
+steal_mem.o steal_mem.ln: ../include/machine/machtime.h
+steal_mem.o steal_mem.ln: ../include/machine/nxm.h ../include/machine/pcb.h
+steal_mem.o steal_mem.ln: ../include/machine/pmap.h ../include/machine/signal.h
+steal_mem.o steal_mem.ln: ../include/machine/spl.h ../include/machine/thread.h
+steal_mem.o steal_mem.ln: ../include/netinet/ip_stat.h
+steal_mem.o steal_mem.ln: ../include/netinet/tcp_stat.h
+steal_mem.o steal_mem.ln: ../include/procfs/procfs.h ../include/s5fs/s5dir.h
+steal_mem.o steal_mem.ln: ../include/s5fs/s5param.h ../include/standards.h
+steal_mem.o steal_mem.ln: ../include/sys/acl.h ../include/sys/acl_def.h
+steal_mem.o steal_mem.ln: ../include/sys/audit.h ../include/sys/callout.h
+steal_mem.o steal_mem.ln: ../include/sys/errno.h ../include/sys/habitat.h
+steal_mem.o steal_mem.ln: ../include/sys/ipc.h ../include/sys/limits.h
+steal_mem.o steal_mem.ln: ../include/sys/lock.h ../include/sys/lwc.h
+steal_mem.o steal_mem.ln: ../include/sys/malloc.h ../include/sys/mount.h
+steal_mem.o steal_mem.ln: ../include/sys/namei.h ../include/sys/param.h
+steal_mem.o steal_mem.ln: ../include/sys/proc.h ../include/sys/proplist.h
+steal_mem.o steal_mem.ln: ../include/sys/resource.h ../include/sys/rt_limits.h
+steal_mem.o steal_mem.ln: ../include/sys/sec_objects.h
+steal_mem.o steal_mem.ln: ../include/sys/secdefines.h
+steal_mem.o steal_mem.ln: ../include/sys/secpolicy.h ../include/sys/security.h
+steal_mem.o steal_mem.ln: ../include/sys/select.h ../include/sys/sem.h
+steal_mem.o steal_mem.ln: ../include/sys/siginfo.h ../include/sys/signal.h
+steal_mem.o steal_mem.ln: ../include/sys/sp_attr.h ../include/sys/syscall.h
+steal_mem.o steal_mem.ln: ../include/sys/syslimits.h ../include/sys/sysmisc.h
+steal_mem.o steal_mem.ln: ../include/sys/systm.h ../include/sys/time.h
+steal_mem.o steal_mem.ln: ../include/sys/types.h ../include/sys/ucred.h
+steal_mem.o steal_mem.ln: ../include/sys/uio.h ../include/sys/unix_defs.h
+steal_mem.o steal_mem.ln: ../include/sys/user.h ../include/sys/vnode.h
+steal_mem.o steal_mem.ln: ../include/sys/vp_swap.h ../include/ufs/dir.h
+steal_mem.o steal_mem.ln: ../include/vm/pmap.h ../include/vm/vm_control.h
+steal_mem.o steal_mem.ln: ../include/vm/vm_fault.h ../include/vm/vm_map.h
+steal_mem.o steal_mem.ln: ../include/vm/vm_object.h ../include/vm/vmparam.h
+steal_mem.o steal_mem.ln: ../include/vm/vpage.h ./bin_compat.h ./bogus_memory.h
+steal_mem.o steal_mem.ln: ./cpus.h ./hw_ast.h ./mach_assert.h
+steal_mem.o steal_mem.ln: ./mach_emulation.h ./mach_host.h ./mach_ipc_tcache.h
+steal_mem.o steal_mem.ln: ./mach_km.h ./mach_ldebug.h ./pv.h ./pvl.h
+steal_mem.o steal_mem.ln: ./rt_preempt.h ./rt_sched.h ./rt_sched_rq.h
+steal_mem.o steal_mem.ln: ./sec_acl_posix.h ./sec_base.h ./sec_cmw.h
+steal_mem.o steal_mem.ln: ./sec_mac_ob.h ./sec_ncav.h ./sec_net.h ./sec_nfs.h
+steal_mem.o steal_mem.ln: ./sec_priv.h ./sec_shw.h ./ser_compat.h
+steal_mem.o steal_mem.ln: ./simple_clock.h ./stat_time.h ./te.h ./unix_locks.h
+steal_mem.o steal_mem.ln: ./unix_uni.h ./vague_stats.h data/steal_mem.c
+
+str_config.o str_config.ln: ../include/dirent.h ../include/io/common/devio.h
+str_config.o str_config.ln: ../include/kern/assert.h ../include/kern/ast.h
+str_config.o str_config.ln: ../include/kern/event.h ../include/kern/host.h
+str_config.o str_config.ln: ../include/kern/kern_msg.h
+str_config.o str_config.ln: ../include/kern/kern_obj.h
+str_config.o str_config.ln: ../include/kern/kern_set.h ../include/kern/lock.h
+str_config.o str_config.ln: ../include/kern/mach_param.h
+str_config.o str_config.ln: ../include/kern/macro_help.h
+str_config.o str_config.ln: ../include/kern/msg_queue.h
+str_config.o str_config.ln: ../include/kern/parallel.h
+str_config.o str_config.ln: ../include/kern/processor.h ../include/kern/queue.h
+str_config.o str_config.ln: ../include/kern/sched.h
+str_config.o str_config.ln: ../include/kern/sched_prim.h ../include/kern/spl.h
+str_config.o str_config.ln: ../include/kern/syscall_emulation.h
+str_config.o str_config.ln: ../include/kern/task.h ../include/kern/thread.h
+str_config.o str_config.ln: ../include/kern/thread_modes.h
+str_config.o str_config.ln: ../include/kern/timer.h
+str_config.o str_config.ln: ../include/mach/alpha/vm_param.h
+str_config.o str_config.ln: ../include/mach/boolean.h
+str_config.o str_config.ln: ../include/mach/events_info.h
+str_config.o str_config.ln: ../include/mach/kern_return.h
+str_config.o str_config.ln: ../include/mach/mach_param.h
+str_config.o str_config.ln: ../include/mach/machine/boolean.h
+str_config.o str_config.ln: ../include/mach/machine/kern_return.h
+str_config.o str_config.ln: ../include/mach/machine/thread_status.h
+str_config.o str_config.ln: ../include/mach/machine/vm_param.h
+str_config.o str_config.ln: ../include/mach/machine/vm_statistics.h
+str_config.o str_config.ln: ../include/mach/machine/vm_types.h
+str_config.o str_config.ln: ../include/mach/memory_object.h
+str_config.o str_config.ln: ../include/mach/message.h ../include/mach/policy.h
+str_config.o str_config.ln: ../include/mach/port.h ../include/mach/task_info.h
+str_config.o str_config.ln: ../include/mach/thread_status.h
+str_config.o str_config.ln: ../include/mach/time_value.h
+str_config.o str_config.ln: ../include/mach/vm_inherit.h
+str_config.o str_config.ln: ../include/mach/vm_param.h
+str_config.o str_config.ln: ../include/mach/vm_prot.h
+str_config.o str_config.ln: ../include/mach/vm_statistics.h
+str_config.o str_config.ln: ../include/machine/context.h
+str_config.o str_config.ln: ../include/machine/counters.h
+str_config.o str_config.ln: ../include/machine/cpu.h
+str_config.o str_config.ln: ../include/machine/endian.h
+str_config.o str_config.ln: ../include/machine/machlimits.h
+str_config.o str_config.ln: ../include/machine/machparam.h
+str_config.o str_config.ln: ../include/machine/machtime.h
+str_config.o str_config.ln: ../include/machine/nxm.h ../include/machine/pcb.h
+str_config.o str_config.ln: ../include/machine/pmap.h
+str_config.o str_config.ln: ../include/machine/signal.h
+str_config.o str_config.ln: ../include/machine/spl.h
+str_config.o str_config.ln: ../include/machine/thread.h
+str_config.o str_config.ln: ../include/net/net_globals.h
+str_config.o str_config.ln: ../include/net/proto_net.h
+str_config.o str_config.ln: ../include/net/proto_uipc.h
+str_config.o str_config.ln: ../include/netinet/ip_stat.h
+str_config.o str_config.ln: ../include/netinet/tcp_stat.h
+str_config.o str_config.ln: ../include/procfs/procfs.h ../include/s5fs/s5dir.h
+str_config.o str_config.ln: ../include/s5fs/s5param.h ../include/standards.h
+str_config.o str_config.ln: ../include/streams/str_debug.h
+str_config.o str_config.ln: ../include/streams/str_stream.h
+str_config.o str_config.ln: ../include/sys/acl.h ../include/sys/acl_def.h
+str_config.o str_config.ln: ../include/sys/audit.h ../include/sys/callout.h
+str_config.o str_config.ln: ../include/sys/conf.h ../include/sys/cred.h
+str_config.o str_config.ln: ../include/sys/errno.h ../include/sys/habitat.h
+str_config.o str_config.ln: ../include/sys/ioctl.h
+str_config.o str_config.ln: ../include/sys/ioctl_compat.h ../include/sys/ipc.h
+str_config.o str_config.ln: ../include/sys/kernel.h ../include/sys/limits.h
+str_config.o str_config.ln: ../include/sys/lock.h ../include/sys/lock_types.h
+str_config.o str_config.ln: ../include/sys/lwc.h ../include/sys/malloc.h
+str_config.o str_config.ln: ../include/sys/mount.h ../include/sys/namei.h
+str_config.o str_config.ln: ../include/sys/param.h ../include/sys/proc.h
+str_config.o str_config.ln: ../include/sys/proplist.h ../include/sys/resource.h
+str_config.o str_config.ln: ../include/sys/rt_limits.h ../include/sys/sad.h
+str_config.o str_config.ln: ../include/sys/sec_objects.h
+str_config.o str_config.ln: ../include/sys/secdefines.h
+str_config.o str_config.ln: ../include/sys/secpolicy.h
+str_config.o str_config.ln: ../include/sys/security.h ../include/sys/select.h
+str_config.o str_config.ln: ../include/sys/sem.h ../include/sys/siginfo.h
+str_config.o str_config.ln: ../include/sys/signal.h ../include/sys/sp_attr.h
+str_config.o str_config.ln: ../include/sys/stream.h ../include/sys/stropts.h
+str_config.o str_config.ln: ../include/sys/syscall.h ../include/sys/sysconfig.h
+str_config.o str_config.ln: ../include/sys/syslimits.h ../include/sys/sysmisc.h
+str_config.o str_config.ln: ../include/sys/systm.h ../include/sys/time.h
+str_config.o str_config.ln: ../include/sys/ttychars.h ../include/sys/ttydev.h
+str_config.o str_config.ln: ../include/sys/types.h ../include/sys/ucred.h
+str_config.o str_config.ln: ../include/sys/uio.h ../include/sys/unix_defs.h
+str_config.o str_config.ln: ../include/sys/user.h ../include/sys/usercopy.h
+str_config.o str_config.ln: ../include/sys/vnode.h ../include/sys/vp_swap.h
+str_config.o str_config.ln: ../include/ufs/dir.h ../include/va_list.h
+str_config.o str_config.ln: ../include/varargs.h ../include/vm/pmap.h
+str_config.o str_config.ln: ../include/vm/vm_control.h ../include/vm/vm_fault.h
+str_config.o str_config.ln: ../include/vm/vm_map.h ../include/vm/vm_object.h
+str_config.o str_config.ln: ../include/vm/vmparam.h ../include/vm/vpage.h
+str_config.o str_config.ln: ./bin_compat.h ./bogus_memory.h ./cpus.h ./hw_ast.h
+str_config.o str_config.ln: ./mach_assert.h ./mach_emulation.h ./mach_host.h
+str_config.o str_config.ln: ./mach_ipc_tcache.h ./mach_km.h ./mach_ldebug.h
+str_config.o str_config.ln: ./rt_preempt.h ./rt_sched.h ./rt_sched_rq.h
+str_config.o str_config.ln: ./rt_timer.h ./sec_acl_posix.h ./sec_base.h
+str_config.o str_config.ln: ./sec_cmw.h ./sec_mac_ob.h ./sec_ncav.h ./sec_net.h
+str_config.o str_config.ln: ./sec_nfs.h ./sec_priv.h ./sec_shw.h ./ser_compat.h
+str_config.o str_config.ln: ./simple_clock.h ./stat_time.h ./streams_debug.h
+str_config.o str_config.ln: ./svvs.h ./unix_locks.h ./unix_uni.h
+str_config.o str_config.ln: ./vague_stats.h streams/str_config.c
+
+swapgeneric.o swapgeneric.ln: ../include/dirent.h ../include/hal/cpuconf.h
+swapgeneric.o swapgeneric.ln: ../include/io/common/devdriver.h
+swapgeneric.o swapgeneric.ln: ../include/io/common/devio.h
+swapgeneric.o swapgeneric.ln: ../include/io/common/handler.h
+swapgeneric.o swapgeneric.ln: ../include/io/dec/tc/tc.h
+swapgeneric.o swapgeneric.ln: ../include/kern/assert.h ../include/kern/ast.h
+swapgeneric.o swapgeneric.ln: ../include/kern/event.h ../include/kern/host.h
+swapgeneric.o swapgeneric.ln: ../include/kern/kern_msg.h
+swapgeneric.o swapgeneric.ln: ../include/kern/kern_obj.h
+swapgeneric.o swapgeneric.ln: ../include/kern/kern_set.h ../include/kern/lock.h
+swapgeneric.o swapgeneric.ln: ../include/kern/mach_param.h
+swapgeneric.o swapgeneric.ln: ../include/kern/macro_help.h
+swapgeneric.o swapgeneric.ln: ../include/kern/msg_queue.h
+swapgeneric.o swapgeneric.ln: ../include/kern/processor.h
+swapgeneric.o swapgeneric.ln: ../include/kern/queue.h ../include/kern/sched.h
+swapgeneric.o swapgeneric.ln: ../include/kern/spl.h
+swapgeneric.o swapgeneric.ln: ../include/kern/syscall_emulation.h
+swapgeneric.o swapgeneric.ln: ../include/kern/task.h ../include/kern/thread.h
+swapgeneric.o swapgeneric.ln: ../include/kern/thread_modes.h
+swapgeneric.o swapgeneric.ln: ../include/kern/timer.h
+swapgeneric.o swapgeneric.ln: ../include/mach/alpha/vm_param.h
+swapgeneric.o swapgeneric.ln: ../include/mach/boolean.h
+swapgeneric.o swapgeneric.ln: ../include/mach/events_info.h
+swapgeneric.o swapgeneric.ln: ../include/mach/kern_return.h
+swapgeneric.o swapgeneric.ln: ../include/mach/mach_param.h
+swapgeneric.o swapgeneric.ln: ../include/mach/machine/boolean.h
+swapgeneric.o swapgeneric.ln: ../include/mach/machine/kern_return.h
+swapgeneric.o swapgeneric.ln: ../include/mach/machine/thread_status.h
+swapgeneric.o swapgeneric.ln: ../include/mach/machine/vm_param.h
+swapgeneric.o swapgeneric.ln: ../include/mach/machine/vm_statistics.h
+swapgeneric.o swapgeneric.ln: ../include/mach/machine/vm_types.h
+swapgeneric.o swapgeneric.ln: ../include/mach/memory_object.h
+swapgeneric.o swapgeneric.ln: ../include/mach/message.h
+swapgeneric.o swapgeneric.ln: ../include/mach/policy.h ../include/mach/port.h
+swapgeneric.o swapgeneric.ln: ../include/mach/task_info.h
+swapgeneric.o swapgeneric.ln: ../include/mach/thread_status.h
+swapgeneric.o swapgeneric.ln: ../include/mach/time_value.h
+swapgeneric.o swapgeneric.ln: ../include/mach/vm_inherit.h
+swapgeneric.o swapgeneric.ln: ../include/mach/vm_param.h
+swapgeneric.o swapgeneric.ln: ../include/mach/vm_prot.h
+swapgeneric.o swapgeneric.ln: ../include/mach/vm_statistics.h
+swapgeneric.o swapgeneric.ln: ../include/machine/context.h
+swapgeneric.o swapgeneric.ln: ../include/machine/counters.h
+swapgeneric.o swapgeneric.ln: ../include/machine/cpu.h
+swapgeneric.o swapgeneric.ln: ../include/machine/endian.h
+swapgeneric.o swapgeneric.ln: ../include/machine/entrypt.h
+swapgeneric.o swapgeneric.ln: ../include/machine/inst.h
+swapgeneric.o swapgeneric.ln: ../include/machine/machlimits.h
+swapgeneric.o swapgeneric.ln: ../include/machine/machparam.h
+swapgeneric.o swapgeneric.ln: ../include/machine/machtime.h
+swapgeneric.o swapgeneric.ln: ../include/machine/nxm.h ../include/machine/pcb.h
+swapgeneric.o swapgeneric.ln: ../include/machine/pmap.h
+swapgeneric.o swapgeneric.ln: ../include/machine/rpb.h
+swapgeneric.o swapgeneric.ln: ../include/machine/signal.h
+swapgeneric.o swapgeneric.ln: ../include/machine/spl.h
+swapgeneric.o swapgeneric.ln: ../include/machine/thread.h
+swapgeneric.o swapgeneric.ln: ../include/netinet/ip_stat.h
+swapgeneric.o swapgeneric.ln: ../include/netinet/tcp_stat.h
+swapgeneric.o swapgeneric.ln: ../include/procfs/procfs.h
+swapgeneric.o swapgeneric.ln: ../include/s5fs/s5dir.h ../include/s5fs/s5param.h
+swapgeneric.o swapgeneric.ln: ../include/standards.h ../include/sys/acl.h
+swapgeneric.o swapgeneric.ln: ../include/sys/acl_def.h ../include/sys/audit.h
+swapgeneric.o swapgeneric.ln: ../include/sys/callout.h
+swapgeneric.o swapgeneric.ln: ../include/sys/disklabel.h ../include/sys/errno.h
+swapgeneric.o swapgeneric.ln: ../include/sys/habitat.h ../include/sys/ipc.h
+swapgeneric.o swapgeneric.ln: ../include/sys/limits.h ../include/sys/lock.h
+swapgeneric.o swapgeneric.ln: ../include/sys/lwc.h ../include/sys/mount.h
+swapgeneric.o swapgeneric.ln: ../include/sys/namei.h ../include/sys/param.h
+swapgeneric.o swapgeneric.ln: ../include/sys/proc.h ../include/sys/proplist.h
+swapgeneric.o swapgeneric.ln: ../include/sys/resource.h
+swapgeneric.o swapgeneric.ln: ../include/sys/rt_limits.h
+swapgeneric.o swapgeneric.ln: ../include/sys/sec_objects.h
+swapgeneric.o swapgeneric.ln: ../include/sys/secdefines.h
+swapgeneric.o swapgeneric.ln: ../include/sys/secpolicy.h
+swapgeneric.o swapgeneric.ln: ../include/sys/security.h ../include/sys/select.h
+swapgeneric.o swapgeneric.ln: ../include/sys/sem.h ../include/sys/siginfo.h
+swapgeneric.o swapgeneric.ln: ../include/sys/signal.h ../include/sys/sp_attr.h
+swapgeneric.o swapgeneric.ln: ../include/sys/syscall.h
+swapgeneric.o swapgeneric.ln: ../include/sys/syslimits.h
+swapgeneric.o swapgeneric.ln: ../include/sys/sysmisc.h ../include/sys/systm.h
+swapgeneric.o swapgeneric.ln: ../include/sys/time.h ../include/sys/types.h
+swapgeneric.o swapgeneric.ln: ../include/sys/ucred.h ../include/sys/uio.h
+swapgeneric.o swapgeneric.ln: ../include/sys/unix_defs.h ../include/sys/user.h
+swapgeneric.o swapgeneric.ln: ../include/sys/vnode.h ../include/sys/vp_swap.h
+swapgeneric.o swapgeneric.ln: ../include/ufs/dir.h ../include/vm/pmap.h
+swapgeneric.o swapgeneric.ln: ../include/vm/vm_control.h
+swapgeneric.o swapgeneric.ln: ../include/vm/vm_fault.h ../include/vm/vm_map.h
+swapgeneric.o swapgeneric.ln: ../include/vm/vm_object.h ../include/vm/vmparam.h
+swapgeneric.o swapgeneric.ln: ../include/vm/vpage.h ./bin_compat.h
+swapgeneric.o swapgeneric.ln: ./bogus_memory.h ./cpus.h ./hw_ast.h
+swapgeneric.o swapgeneric.ln: ./mach_assert.h ./mach_emulation.h ./mach_host.h
+swapgeneric.o swapgeneric.ln: ./mach_ipc_tcache.h ./mach_km.h ./mach_ldebug.h
+swapgeneric.o swapgeneric.ln: ./rt_preempt.h ./rt_sched.h ./rt_sched_rq.h
+swapgeneric.o swapgeneric.ln: ./sec_acl_posix.h ./sec_base.h ./sec_cmw.h
+swapgeneric.o swapgeneric.ln: ./sec_mac_ob.h ./sec_ncav.h ./sec_net.h
+swapgeneric.o swapgeneric.ln: ./sec_nfs.h ./sec_priv.h ./sec_shw.h
+swapgeneric.o swapgeneric.ln: ./ser_compat.h ./simple_clock.h ./stat_time.h
+swapgeneric.o swapgeneric.ln: ./unix_locks.h ./unix_uni.h ./vague_stats.h
+swapgeneric.o swapgeneric.ln: arch/alpha/swapgeneric.c
+
+time_data.o time_data.ln: ../include/standards.h ../include/sys/errno.h
+time_data.o time_data.ln: ./micro_time.h ./ntp_time.h data/time_data.c
+
+trn_sr_data.o trn_sr_data.ln: ../include/standards.h ../include/sys/errno.h
+trn_sr_data.o trn_sr_data.ln: ./tra.h ./trsrcf.h data/trn_sr_data.c
+
+tty_conf.o tty_conf.ln: ../include/io/common/devio.h ../include/kern/assert.h
+tty_conf.o tty_conf.ln: ../include/kern/event.h ../include/kern/lock.h
+tty_conf.o tty_conf.ln: ../include/kern/macro_help.h ../include/kern/parallel.h
+tty_conf.o tty_conf.ln: ../include/kern/processor.h ../include/kern/queue.h
+tty_conf.o tty_conf.ln: ../include/kern/sched.h ../include/kern/spl.h
+tty_conf.o tty_conf.ln: ../include/mach/alpha/vm_param.h
+tty_conf.o tty_conf.ln: ../include/mach/boolean.h
+tty_conf.o tty_conf.ln: ../include/mach/machine/boolean.h
+tty_conf.o tty_conf.ln: ../include/mach/machine/vm_param.h
+tty_conf.o tty_conf.ln: ../include/mach/machine/vm_statistics.h
+tty_conf.o tty_conf.ln: ../include/mach/machine/vm_types.h
+tty_conf.o tty_conf.ln: ../include/mach/policy.h ../include/mach/port.h
+tty_conf.o tty_conf.ln: ../include/mach/vm_prot.h
+tty_conf.o tty_conf.ln: ../include/mach/vm_statistics.h
+tty_conf.o tty_conf.ln: ../include/machine/context.h
+tty_conf.o tty_conf.ln: ../include/machine/counters.h ../include/machine/cpu.h
+tty_conf.o tty_conf.ln: ../include/machine/endian.h
+tty_conf.o tty_conf.ln: ../include/machine/machlimits.h
+tty_conf.o tty_conf.ln: ../include/machine/machparam.h
+tty_conf.o tty_conf.ln: ../include/machine/machtime.h ../include/machine/pmap.h
+tty_conf.o tty_conf.ln: ../include/machine/signal.h ../include/machine/spl.h
+tty_conf.o tty_conf.ln: ../include/netinet/ip_stat.h
+tty_conf.o tty_conf.ln: ../include/netinet/tcp_stat.h ../include/standards.h
+tty_conf.o tty_conf.ln: ../include/sys/callout.h ../include/sys/conf.h
+tty_conf.o tty_conf.ln: ../include/sys/ioctl.h ../include/sys/ioctl_compat.h
+tty_conf.o tty_conf.ln: ../include/sys/limits.h ../include/sys/lwc.h
+tty_conf.o tty_conf.ln: ../include/sys/param.h ../include/sys/rt_limits.h
+tty_conf.o tty_conf.ln: ../include/sys/secdefines.h ../include/sys/select.h
+tty_conf.o tty_conf.ln: ../include/sys/siginfo.h ../include/sys/signal.h
+tty_conf.o tty_conf.ln: ../include/sys/syslimits.h ../include/sys/sysmisc.h
+tty_conf.o tty_conf.ln: ../include/sys/systm.h ../include/sys/termios.h
+tty_conf.o tty_conf.ln: ../include/sys/time.h ../include/sys/tty.h
+tty_conf.o tty_conf.ln: ../include/sys/ttychars.h ../include/sys/ttydefaults.h
+tty_conf.o tty_conf.ln: ../include/sys/ttydev.h ../include/sys/types.h
+tty_conf.o tty_conf.ln: ../include/sys/unix_defs.h ../include/tty/tty_common.h
+tty_conf.o tty_conf.ln: ./bogus_memory.h ./cpus.h ./kdebug.h ./mach_assert.h
+tty_conf.o tty_conf.ln: ./mach_ldebug.h ./rt_preempt.h ./rt_sched.h
+tty_conf.o tty_conf.ln: ./rt_sched_rq.h ./sec_acl_posix.h ./sec_base.h
+tty_conf.o tty_conf.ln: ./sec_cmw.h ./sec_mac_ob.h ./sec_ncav.h ./sec_net.h
+tty_conf.o tty_conf.ln: ./sec_nfs.h ./sec_priv.h ./sec_shw.h ./ser_compat.h
+tty_conf.o tty_conf.ln: ./simple_clock.h ./sl.h ./stat_time.h ./unix_locks.h
+tty_conf.o tty_conf.ln: ./unix_uni.h ./vague_stats.h bsd/tty_conf.c
+
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/dirent.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/assert.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/ast.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/event.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/host.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/kalloc.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/kern_msg.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/kern_obj.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/kern_set.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/lock.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/mach_param.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/macro_help.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/msg_queue.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/processor.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/queue.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/sched.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/sched_prim.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/spl.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/syscall_emulation.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/task.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/thread.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/thread_modes.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/kern/timer.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/alpha/vm_param.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/boolean.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/events_info.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/kern_return.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/mach_param.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/machine/boolean.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/machine/kern_return.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/machine/thread_status.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/machine/vm_param.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/machine/vm_statistics.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/machine/vm_types.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/memory_object.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/message.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/policy.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/port.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/task_info.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/thread_status.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/time_value.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/vm_inherit.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/vm_param.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/vm_prot.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/mach/vm_statistics.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/machine/context.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/machine/counters.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/machine/cpu.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/machine/endian.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/machine/machlimits.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/machine/machparam.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/machine/machtime.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/machine/nxm.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/machine/pcb.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/machine/pmap.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/machine/signal.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/machine/spl.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/machine/thread.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/netinet/ip_stat.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/netinet/tcp_stat.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/procfs/procfs.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/s5fs/s5dir.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/s5fs/s5param.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/standards.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/access.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/acl.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/acl_def.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/audit.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/callout.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/errno.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/fcntl.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/file.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/habitat.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/ipc.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/kernel.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/limits.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/lock.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/lock_types.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/lwc.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/malloc.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/mode.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/mount.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/namei.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/param.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/proc.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/proplist.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/resource.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/rt_limits.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/sec_objects.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/secdefines.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/secpolicy.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/security.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/seek.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/select.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/sem.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/siginfo.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/signal.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/sp_attr.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/syscall.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/syslimits.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/sysmisc.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/systm.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/time.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/types.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/ucred.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/uio.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/unix_defs.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/user.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/vnode.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/sys/vp_swap.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/ufs/dinode.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/ufs/dir.h ../include/ufs/fs.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/ufs/fs_proto.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/ufs/inode.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/ufs/quota.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/ufs/ufsmount.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/vm/pmap.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/vm/vm_control.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/vm/vm_fault.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/vm/vm_map.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/vm/vm_object.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/vm/vmparam.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ../include/vm/vpage.h ./bin_compat.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ./bogus_memory.h ./cpus.h ./hw_ast.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ./mach_assert.h ./mach_emulation.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ./mach_host.h ./mach_ipc_tcache.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ./mach_km.h ./mach_ldebug.h ./quota.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ./rt_preempt.h ./rt_sched.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ./rt_sched_rq.h ./rt_timer.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ./sec_acl_posix.h ./sec_base.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ./sec_cmw.h ./sec_mac_ob.h ./sec_ncav.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ./sec_net.h ./sec_nfs.h ./sec_priv.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ./sec_shw.h ./ser_compat.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ./simple_clock.h ./stat_time.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ./unix_locks.h ./unix_uni.h
+ufs_quota_stubs.o ufs_quota_stubs.ln: ./vague_stats.h ufs/ufs_quota_stubs.c
+
+vfs_conf.o vfs_conf.ln: ../include/dirent.h ../include/kern/assert.h
+vfs_conf.o vfs_conf.ln: ../include/kern/ast.h ../include/kern/event.h
+vfs_conf.o vfs_conf.ln: ../include/kern/host.h ../include/kern/kern_msg.h
+vfs_conf.o vfs_conf.ln: ../include/kern/kern_obj.h ../include/kern/kern_set.h
+vfs_conf.o vfs_conf.ln: ../include/kern/lock.h ../include/kern/mach_param.h
+vfs_conf.o vfs_conf.ln: ../include/kern/macro_help.h
+vfs_conf.o vfs_conf.ln: ../include/kern/msg_queue.h ../include/kern/processor.h
+vfs_conf.o vfs_conf.ln: ../include/kern/queue.h ../include/kern/sched.h
+vfs_conf.o vfs_conf.ln: ../include/kern/sched_prim.h ../include/kern/spl.h
+vfs_conf.o vfs_conf.ln: ../include/kern/syscall_emulation.h
+vfs_conf.o vfs_conf.ln: ../include/kern/task.h ../include/kern/thread.h
+vfs_conf.o vfs_conf.ln: ../include/kern/thread_modes.h ../include/kern/timer.h
+vfs_conf.o vfs_conf.ln: ../include/mach/alpha/vm_param.h
+vfs_conf.o vfs_conf.ln: ../include/mach/boolean.h ../include/mach/events_info.h
+vfs_conf.o vfs_conf.ln: ../include/mach/kern_return.h
+vfs_conf.o vfs_conf.ln: ../include/mach/mach_param.h
+vfs_conf.o vfs_conf.ln: ../include/mach/machine/boolean.h
+vfs_conf.o vfs_conf.ln: ../include/mach/machine/kern_return.h
+vfs_conf.o vfs_conf.ln: ../include/mach/machine/thread_status.h
+vfs_conf.o vfs_conf.ln: ../include/mach/machine/vm_param.h
+vfs_conf.o vfs_conf.ln: ../include/mach/machine/vm_statistics.h
+vfs_conf.o vfs_conf.ln: ../include/mach/machine/vm_types.h
+vfs_conf.o vfs_conf.ln: ../include/mach/memory_object.h
+vfs_conf.o vfs_conf.ln: ../include/mach/message.h ../include/mach/policy.h
+vfs_conf.o vfs_conf.ln: ../include/mach/port.h ../include/mach/task_info.h
+vfs_conf.o vfs_conf.ln: ../include/mach/thread_status.h
+vfs_conf.o vfs_conf.ln: ../include/mach/time_value.h
+vfs_conf.o vfs_conf.ln: ../include/mach/vm_inherit.h ../include/mach/vm_param.h
+vfs_conf.o vfs_conf.ln: ../include/mach/vm_prot.h
+vfs_conf.o vfs_conf.ln: ../include/mach/vm_statistics.h
+vfs_conf.o vfs_conf.ln: ../include/machine/context.h
+vfs_conf.o vfs_conf.ln: ../include/machine/counters.h ../include/machine/cpu.h
+vfs_conf.o vfs_conf.ln: ../include/machine/endian.h
+vfs_conf.o vfs_conf.ln: ../include/machine/machlimits.h
+vfs_conf.o vfs_conf.ln: ../include/machine/machparam.h
+vfs_conf.o vfs_conf.ln: ../include/machine/machtime.h ../include/machine/nxm.h
+vfs_conf.o vfs_conf.ln: ../include/machine/pcb.h ../include/machine/pmap.h
+vfs_conf.o vfs_conf.ln: ../include/machine/signal.h ../include/machine/spl.h
+vfs_conf.o vfs_conf.ln: ../include/machine/thread.h ../include/machine/vm_ubc.h
+vfs_conf.o vfs_conf.ln: ../include/netinet/ip_stat.h
+vfs_conf.o vfs_conf.ln: ../include/netinet/tcp_stat.h
+vfs_conf.o vfs_conf.ln: ../include/procfs/procfs.h ../include/s5fs/s5dir.h
+vfs_conf.o vfs_conf.ln: ../include/s5fs/s5param.h ../include/standards.h
+vfs_conf.o vfs_conf.ln: ../include/sys/acl.h ../include/sys/acl_def.h
+vfs_conf.o vfs_conf.ln: ../include/sys/audit.h ../include/sys/callout.h
+vfs_conf.o vfs_conf.ln: ../include/sys/errno.h ../include/sys/habitat.h
+vfs_conf.o vfs_conf.ln: ../include/sys/ipc.h ../include/sys/limits.h
+vfs_conf.o vfs_conf.ln: ../include/sys/lock.h ../include/sys/lock_types.h
+vfs_conf.o vfs_conf.ln: ../include/sys/lwc.h ../include/sys/malloc.h
+vfs_conf.o vfs_conf.ln: ../include/sys/mount.h ../include/sys/namei.h
+vfs_conf.o vfs_conf.ln: ../include/sys/param.h ../include/sys/proc.h
+vfs_conf.o vfs_conf.ln: ../include/sys/proplist.h ../include/sys/resource.h
+vfs_conf.o vfs_conf.ln: ../include/sys/rt_limits.h ../include/sys/sec_objects.h
+vfs_conf.o vfs_conf.ln: ../include/sys/secdefines.h ../include/sys/secpolicy.h
+vfs_conf.o vfs_conf.ln: ../include/sys/security.h ../include/sys/select.h
+vfs_conf.o vfs_conf.ln: ../include/sys/sem.h ../include/sys/siginfo.h
+vfs_conf.o vfs_conf.ln: ../include/sys/signal.h ../include/sys/sp_attr.h
+vfs_conf.o vfs_conf.ln: ../include/sys/syscall.h ../include/sys/sysconfig.h
+vfs_conf.o vfs_conf.ln: ../include/sys/syslimits.h ../include/sys/sysmisc.h
+vfs_conf.o vfs_conf.ln: ../include/sys/systm.h ../include/sys/time.h
+vfs_conf.o vfs_conf.ln: ../include/sys/types.h ../include/sys/ucred.h
+vfs_conf.o vfs_conf.ln: ../include/sys/uio.h ../include/sys/unix_defs.h
+vfs_conf.o vfs_conf.ln: ../include/sys/user.h ../include/sys/vnode.h
+vfs_conf.o vfs_conf.ln: ../include/sys/vp_swap.h ../include/ufs/dir.h
+vfs_conf.o vfs_conf.ln: ../include/vm/pmap.h ../include/vm/vm_control.h
+vfs_conf.o vfs_conf.ln: ../include/vm/vm_debug.h ../include/vm/vm_fault.h
+vfs_conf.o vfs_conf.ln: ../include/vm/vm_map.h ../include/vm/vm_object.h
+vfs_conf.o vfs_conf.ln: ../include/vm/vm_ubc.h ../include/vm/vmparam.h
+vfs_conf.o vfs_conf.ln: ../include/vm/vpage.h ./bin_compat.h ./bogus_memory.h
+vfs_conf.o vfs_conf.ln: ./cdfs.h ./cpus.h ./dcedfs.h ./dceefs.h ./dvdfs.h
+vfs_conf.o vfs_conf.ln: ./ffm_fs.h ./hw_ast.h ./mach_assert.h
+vfs_conf.o vfs_conf.ln: ./mach_emulation.h ./mach_host.h ./mach_ipc_tcache.h
+vfs_conf.o vfs_conf.ln: ./mach_km.h ./mach_ldebug.h ./msfs.h ./nfs.h ./quota.h
+vfs_conf.o vfs_conf.ln: ./rt_preempt.h ./rt_sched.h ./rt_sched_rq.h
+vfs_conf.o vfs_conf.ln: ./sec_acl_posix.h ./sec_base.h ./sec_cmw.h
+vfs_conf.o vfs_conf.ln: ./sec_mac_ob.h ./sec_ncav.h ./sec_net.h ./sec_nfs.h
+vfs_conf.o vfs_conf.ln: ./sec_priv.h ./sec_shw.h ./ser_compat.h
+vfs_conf.o vfs_conf.ln: ./simple_clock.h ./stat_time.h ./unix_locks.h
+vfs_conf.o vfs_conf.ln: ./unix_uni.h ./vague_stats.h vfs/vfs_conf.c
+
+ws_data.o ws_data.ln: ../include/dirent.h ../include/io/common/devdriver.h
+ws_data.o ws_data.ln: ../include/io/common/devio.h
+ws_data.o ws_data.ln: ../include/io/common/handler.h ../include/io/dec/ws/slu.h
+ws_data.o ws_data.ln: ../include/io/dec/ws/vsxxx.h ../include/kern/assert.h
+ws_data.o ws_data.ln: ../include/kern/ast.h ../include/kern/event.h
+ws_data.o ws_data.ln: ../include/kern/host.h ../include/kern/kern_msg.h
+ws_data.o ws_data.ln: ../include/kern/kern_obj.h ../include/kern/kern_set.h
+ws_data.o ws_data.ln: ../include/kern/lock.h ../include/kern/mach_param.h
+ws_data.o ws_data.ln: ../include/kern/macro_help.h ../include/kern/msg_queue.h
+ws_data.o ws_data.ln: ../include/kern/processor.h ../include/kern/queue.h
+ws_data.o ws_data.ln: ../include/kern/sched.h ../include/kern/spl.h
+ws_data.o ws_data.ln: ../include/kern/syscall_emulation.h
+ws_data.o ws_data.ln: ../include/kern/task.h ../include/kern/thread.h
+ws_data.o ws_data.ln: ../include/kern/thread_modes.h ../include/kern/timer.h
+ws_data.o ws_data.ln: ../include/mach/alpha/vm_param.h
+ws_data.o ws_data.ln: ../include/mach/boolean.h ../include/mach/events_info.h
+ws_data.o ws_data.ln: ../include/mach/kern_return.h
+ws_data.o ws_data.ln: ../include/mach/mach_param.h
+ws_data.o ws_data.ln: ../include/mach/machine/boolean.h
+ws_data.o ws_data.ln: ../include/mach/machine/kern_return.h
+ws_data.o ws_data.ln: ../include/mach/machine/thread_status.h
+ws_data.o ws_data.ln: ../include/mach/machine/vm_param.h
+ws_data.o ws_data.ln: ../include/mach/machine/vm_statistics.h
+ws_data.o ws_data.ln: ../include/mach/machine/vm_types.h
+ws_data.o ws_data.ln: ../include/mach/memory_object.h ../include/mach/message.h
+ws_data.o ws_data.ln: ../include/mach/policy.h ../include/mach/port.h
+ws_data.o ws_data.ln: ../include/mach/task_info.h
+ws_data.o ws_data.ln: ../include/mach/thread_status.h
+ws_data.o ws_data.ln: ../include/mach/time_value.h ../include/mach/vm_inherit.h
+ws_data.o ws_data.ln: ../include/mach/vm_param.h ../include/mach/vm_prot.h
+ws_data.o ws_data.ln: ../include/mach/vm_statistics.h
+ws_data.o ws_data.ln: ../include/machine/context.h
+ws_data.o ws_data.ln: ../include/machine/counters.h ../include/machine/cpu.h
+ws_data.o ws_data.ln: ../include/machine/endian.h
+ws_data.o ws_data.ln: ../include/machine/hal/console.h
+ws_data.o ws_data.ln: ../include/machine/machlimits.h
+ws_data.o ws_data.ln: ../include/machine/machparam.h
+ws_data.o ws_data.ln: ../include/machine/machtime.h ../include/machine/nxm.h
+ws_data.o ws_data.ln: ../include/machine/pcb.h ../include/machine/pmap.h
+ws_data.o ws_data.ln: ../include/machine/signal.h ../include/machine/spl.h
+ws_data.o ws_data.ln: ../include/machine/thread.h ../include/netinet/ip_stat.h
+ws_data.o ws_data.ln: ../include/netinet/tcp_stat.h ../include/procfs/procfs.h
+ws_data.o ws_data.ln: ../include/s5fs/s5dir.h ../include/s5fs/s5ino.h
+ws_data.o ws_data.ln: ../include/s5fs/s5param.h ../include/standards.h
+ws_data.o ws_data.ln: ../include/sys/acl.h ../include/sys/acl_def.h
+ws_data.o ws_data.ln: ../include/sys/audit.h ../include/sys/buf.h
+ws_data.o ws_data.ln: ../include/sys/callout.h ../include/sys/disklabel.h
+ws_data.o ws_data.ln: ../include/sys/errno.h ../include/sys/filsys.h
+ws_data.o ws_data.ln: ../include/sys/habitat.h ../include/sys/inputdevice.h
+ws_data.o ws_data.ln: ../include/sys/ipc.h ../include/sys/keysyms.h
+ws_data.o ws_data.ln: ../include/sys/limits.h ../include/sys/lock.h
+ws_data.o ws_data.ln: ../include/sys/lwc.h ../include/sys/mount.h
+ws_data.o ws_data.ln: ../include/sys/namei.h ../include/sys/param.h
+ws_data.o ws_data.ln: ../include/sys/proc.h ../include/sys/proplist.h
+ws_data.o ws_data.ln: ../include/sys/resource.h ../include/sys/rt_limits.h
+ws_data.o ws_data.ln: ../include/sys/sec_objects.h ../include/sys/secdefines.h
+ws_data.o ws_data.ln: ../include/sys/secpolicy.h ../include/sys/security.h
+ws_data.o ws_data.ln: ../include/sys/select.h ../include/sys/sem.h
+ws_data.o ws_data.ln: ../include/sys/siginfo.h ../include/sys/signal.h
+ws_data.o ws_data.ln: ../include/sys/sp_attr.h ../include/sys/syscall.h
+ws_data.o ws_data.ln: ../include/sys/syslimits.h ../include/sys/sysmisc.h
+ws_data.o ws_data.ln: ../include/sys/systm.h ../include/sys/time.h
+ws_data.o ws_data.ln: ../include/sys/types.h ../include/sys/ucred.h
+ws_data.o ws_data.ln: ../include/sys/uio.h ../include/sys/unix_defs.h
+ws_data.o ws_data.ln: ../include/sys/user.h ../include/sys/vnode.h
+ws_data.o ws_data.ln: ../include/sys/vp_swap.h ../include/sys/workstation.h
+ws_data.o ws_data.ln: ../include/sys/wsdevice.h ../include/ufs/dir.h
+ws_data.o ws_data.ln: ../include/vm/pmap.h ../include/vm/vm_control.h
+ws_data.o ws_data.ln: ../include/vm/vm_fault.h ../include/vm/vm_map.h
+ws_data.o ws_data.ln: ../include/vm/vm_object.h ../include/vm/vmparam.h
+ws_data.o ws_data.ln: ../include/vm/vpage.h ./bin_compat.h ./bogus_memory.h
+ws_data.o ws_data.ln: ./cpus.h ./hw_ast.h ./mach_assert.h ./mach_emulation.h
+ws_data.o ws_data.ln: ./mach_host.h ./mach_ipc_tcache.h ./mach_km.h
+ws_data.o ws_data.ln: ./mach_ldebug.h ./rt_preempt.h ./rt_sched.h
+ws_data.o ws_data.ln: ./rt_sched_rq.h ./sec_acl_posix.h ./sec_base.h
+ws_data.o ws_data.ln: ./sec_cmw.h ./sec_mac_ob.h ./sec_ncav.h ./sec_net.h
+ws_data.o ws_data.ln: ./sec_nfs.h ./sec_priv.h ./sec_shw.h ./ser_compat.h
+ws_data.o ws_data.ln: ./simple_clock.h ./stat_time.h ./unix_locks.h
+ws_data.o ws_data.ln: ./unix_uni.h ./vague_stats.h ./ws.h data/ws_data.c

@@ -1,0 +1,47 @@
+#/* @(#)@(#)help/ezSnapshot.hlp	2.1 11 May 1993 19:04:25 -  */
+#ident  "@(#)va11:help/ezSnapshot.hlp   2.1"
+#
+#
+Volume, volume.hlp
+Plex, plex.hlp
+Subdisk, subdisk.hlp
+Mirroring, mirror.hlp
+#########################################
+VOLUME SNAPSHOT HELP
+
+This operation creates a new volume that is a snapshot of an existing
+volume.  This is done by creating a mirror of the existing volume (creating
+and associating a plex) using disk space from the pool of free disk space.
+The plex is brought up to date (this may take some time) and it is then 
+disassociated and attached to a separate volume.
+
+The resulting volume represents an consistent copy of the volume at the
+time the snapshot was begun.  This volume can be used to make a back up the
+original volume without stopping the original volume.  After the backup is
+made the snapshot volume can be removed without losing any data.
+
+
+Fields
+----------
+
+Selected volume:
+	The name of the volume that you selected to make a snapshot of.
+	This field cannot be changed. 
+
+Snapshot name:
+	This is the name of the volume that will be created as a snapshot
+	of the selected volume.  This field is required.  The maximum
+	length of the snapshot name is 14 characters. 
+
+
+Errors
+----------
+
+"The Snapshot name is required"
+The snapshot name field is required for this operation.  Enter a valid
+volume name in this field.
+
+"The Snapshot name exists already"
+The snapshot name field must contain a valid name for a volume.  This name
+cannot already be used in this disk group.  Enter a valid volume in this
+field.

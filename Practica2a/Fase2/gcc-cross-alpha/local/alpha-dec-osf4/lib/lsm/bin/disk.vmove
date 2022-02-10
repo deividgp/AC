@@ -1,0 +1,75 @@
+#!/sbin/sh -
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+# @(#)$RCSfile: disk.vmove.sh,v $ $Revision: 1.1.6.3 $ (DEC) $Date: 1995/08/01 19:59:43 $
+# @(#)src/common/cmd/vxvm/voladm/disk.vmove.sh	5.9 16 Mar 1993 01:20:09 - Copyright (c) 1993 VERITAS Software Corp.
+#ident	"@(#)vxvm:common/cmd/vxvm/voladm/disk.vmove.sh	5.9"
+
+
+DSPMSG="/sbin/lsm.d/bin/dspmsg -s 1 lsm_sh.cat"
+
+VOLADM_ROOT=${VOLADM_ROOT-/usr/lib/lsm}
+VOLADM_LIB=${VOLADM_LIB-$VOLADM_ROOT/lib}
+. $VOLADM_LIB/voladm_lib.sh
+
+voladm_menu_push Evacuate
+voladm_help_push disk.vmove.help
+
+while true
+do
+	voladm_begin_screen -M 3600 "Move volumes from a disk"
+	$DSPMSG 3601 "  Use this menu operation to move any volumes that are using a\n"
+	$DSPMSG 3602 "  disk onto other disks.  Use this menu immediately prior to\n"
+	$DSPMSG 3603 "  removing a disk, either permanently or for replacement.\n"
+	$DSPMSG 3605 "\n  NOTE:  Simply moving volumes off of a disk, without also removing\n"
+	$DSPMSG 3606 "         the disk, does not prevent volumes from being moved onto\n"
+	$DSPMSG 3607 "         the disk by future operations.  For example, using two\n"
+	$DSPMSG 3608 "         consecutive move operations may move volumes from the\n"
+	$DSPMSG 3609 "         second disk to the first.\n"
+
+	voladm_get_disk_dmname
+
+	$DSPMSG 3610 "\n  Requested operation is to move all volumes from disk %s in\n" \
+			"$dmname"
+	$DSPMSG 3611 "  group %s.\n" \
+			"$dgname"
+	$DSPMSG 3612 "\n  NOTE: This operation can take a long time to complete.\n"
+	voladm_yorn -M 3613 "Continue with operation?" y
+	if [ $? -ne 0 ]
+	then
+		voladm_yorn -M 3614 "Move volumes from a different disk?" n && continue
+		break
+	fi
+
+	writemsg
+	doit volevac $v_opt -V -g "$dgname" "$dmname"
+	if [ $? -eq 0 ]
+	then
+		$DSPMSG 3615 "  Evacuation of disk %s is complete.\n" \
+			"$dmname"
+		voladm_yorn -M 3616 "Move volumes from another disk?" n || break
+	else
+		$DSPMSG 3617 "  Operation failed.\n"
+		voladm_yorn -M 3614 "Move volumes from a different disk?" n || break
+	fi
+done
+
+quit 0

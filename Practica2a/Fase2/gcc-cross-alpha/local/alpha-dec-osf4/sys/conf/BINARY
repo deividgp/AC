@@ -1,0 +1,135 @@
+# 
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+#
+# HISTORY
+# 
+#
+# Alpha config file
+#
+#
+# (c) Copyright 1990, OPEN SOFTWARE FOUNDATION, INC.
+# ALL RIGHTS RESERVED
+#
+#
+# OSF/1 Release 1.0
+#
+# ***************************************************************
+# * This is the BINARY configuration file for the kernel.
+# ***************************************************************
+#
+# All options
+options		HW_AST
+options 	MACH
+options		OSF
+options		COMPAT_43
+options		BIN_COMPAT
+options		_LMF_
+options		BUFCACHE_STATS
+options		NFS
+options		CDFS
+options		DVDFS
+options		PACKETFILTER
+options		DCEDFS
+options		SYSV_COFF
+#options		SYSV_ELF
+options         FFM_FS
+#options		OSF_MACH_O
+options		INOCACHE_STATS
+#options		MACH_ASSERT
+#options		MACH_CO_INFO
+#options		MACH_CO_STATS
+#options		MACH_DEBUG
+#options		MACH_IPC_STATS
+options		MACH_IPC_TCACHE
+options		MACH_IPC_WWA
+options		MACH_IPC_XXXHACK
+#options 	MACH_KDB
+#options		MACH_LDEBUG
+#options		MACH_LTRACKS
+#options		MACH_SCTIMES
+#options		MACH_EMULATION
+options		QUOTA
+options		STAT_TIME
+options		STREAMS
+options		STRKINFO
+options		TIMOD
+options		TIRDWR
+options		STRIFNET
+options		XTISO
+options		BSD_TTY
+options		LDTTY
+options		UFS
+options		MSFS
+options		PCKT
+#options		XPR_DEBUG
+options		INET
+options		UIPC
+#options		NS
+options		DLI
+options		DLB
+options		DLPI
+options		LAT
+options		UNIX_LOCKS
+options		SER_COMPAT
+options		VAGUE_STATS
+options		LABELS
+options		KDEBUG
+options		DEC_ACL
+options		DEC_AUDIT
+#options		PROFILING
+options		TRN
+options         ATM
+options		ATMIP
+options		UNI3X
+options		LANE
+options         ATMIFMP
+options		NFS_SERVER
+options		PPP
+options		BPARM
+#
+# POSIX Realtime Enhancements.
+#
+# Other options depend on RT being on.
+# RT_SCHED_RQ depends on RT_SCHED being on.
+#
+# For RT_PREEMPT to work UNIX_LOCKS must also be turned on.
+#
+options		RT_PREEMPT
+#options		RT_PREEMPT_OPT
+options		RT_SCHED
+options		RT_SCHED_RQ
+options		RT_PML
+options		RT_TIMER
+options		RT_CSEM
+options		RT_IPC
+options		MACH_HOST
+
+#
+# Makefile options
+#
+#makeoptions	ASOPTS="-w"
+#makeoptions	LDOPTS="-x"
+#makeoptions	PROFOPTS="-DPROFTYPE=4"
+makeoptions	CDEBUGOPTS=-g1
+makeoptions	CCOMPRESS=-compress
+
+processors	16

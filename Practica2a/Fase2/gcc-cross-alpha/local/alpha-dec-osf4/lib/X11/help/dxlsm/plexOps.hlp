@@ -1,0 +1,63 @@
+#/* @(#)@(#)help/plexOps.hlp	2.1 11 May 1993 19:05:41 -  */
+#ident  "@(#)va11:help/plexOps.hlp   2.1"
+#
+#
+Pulldown Menu, pulldown.hlp
+Advanced Operations, advOps.hlp
+Basic Operations, simpleOps.hlp
+Volume, volume.hlp
+Plex, plex.hlp
+Subdisk, subdisk.hlp
+Disk Group, diskGrp.hlp
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+#########################################
+ADVANCED PLEX OPERATIONS HELP
+
+This pulldown menu lets you perform advanced operations on plexes.  The
+specific operations are listed below.
+
+
+Create
+------
+Bring up the Plex Create form where you can specify parameters to create
+a new plex.  If one or more subdisks have been selected, then these will be
+associated with the plex after creation.
+
+Remove Plexes
+-------------
+Permanently remove selected plex(s) from this disk group.  You cannot
+remove a plex that is associated with a volume -- dissociate it first.
+One or more plexes must be selected for this operation.
+
+Associate Plexes
+----------------
+Associate one or more plexes with a volume.  If the volume is started, then
+the Logical Storage Manager will begin to bring the plex up to date by copying all
+necessary data to the plex.  This operation may take some time.  You may
+only select one volume, but several plexes are allowed.
+
+Dissociate Plexes
+-----------------
+Dissociate one or more plexes from their parent volumes.  This operation
+will fail if the plex cannot be dissociated (the last plex in a started
+volume, for example).  One or more plexes must be selected for this
+operation.
+
+Attach Plexes
+-------------
+
+Attach one or more plexes to their parent volume(s).  This operation is for
+plexes that have been detached, either automatically by the Logical Storage 
+Manager or using the "detach Plexes" operation.  This operation may also be 
+thought of as "resynchronizing" the plex.  Data is copied from an active plex 
+on the volume to the attaching plex.  Once the attach is completed data will
+be mirrored across both plexes.  As this operation involves copying
+potentially large amounts of data, it may take some time.
+
+Detach Plexes
+-------------
+Detach one or more plexes from their parent volume(s).  A detached plex in
+inaccessible for reads and writes, but is still associated with the volume.
+This operation is not permitted when the specified plex is the last valid
+plex on the volume.

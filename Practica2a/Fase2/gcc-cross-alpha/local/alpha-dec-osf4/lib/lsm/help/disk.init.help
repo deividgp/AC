@@ -1,0 +1,92 @@
+# 
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+#
+# HISTORY
+# 
+# @(#)$RCSfile: disk.init.help,v $ $Revision: 1.1.6.2 $ (DEC) $Date: 1995/04/11 21:07:33 $
+# 
+# @(#)src/common/cmd/vxvm/voladm/disk.init.help	5.4 16 Mar 1993 01:19:15 - Copyright (c) 1993 VERITAS Software Corp.
+#ident	"@(#)vxvm:common/cmd/vxvm/voladm/disk.init.help	5.4"
+#
+# Copyright(C)1993 VERITAS Software Corporation.  ALL RIGHTS RESERVED.
+# UNPUBLISHED -- RIGHTS RESERVED UNDER THE COPYRIGHT
+# LAWS OF THE UNITED STATES.  USE OF A COPYRIGHT NOTICE
+# IS PRECAUTIONARY ONLY AND DOES NOT IMPLY PUBLICATION
+# OR DISCLOSURE.
+# 
+# THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION AND
+# TRADE SECRETS OF VERITAS SOFTWARE.  USE, DISCLOSURE,
+# OR REPRODUCTION IS PROHIBITED WITHOUT THE PRIOR
+# EXPRESS WRITTEN PERMISSION OF VERITAS SOFTWARE.
+# 
+#               RESTRICTED RIGHTS LEGEND
+# USE, DUPLICATION, OR DISCLOSURE BY THE GOVERNMENT IS
+# SUBJECT TO RESTRICTIONS AS SET FORTH IN SUBPARAGRAPH
+# (C) (1) (ii) OF THE RIGHTS IN TECHNICAL DATA AND
+# COMPUTER SOFTWARE CLAUSE AT DFARS 252.227-7013.
+#               VERITAS SOFTWARE
+# 4800 GREAT AMERICA PARKWAY, SANTA CLARA, CA 95054
+#
+  This operation can be used to do the following operations:
+
+  1.  Initialize a disk for use with Logical Storage Manager. 
+
+  2.  Add the disk to an existing disk group.
+
+  3.  Create a new disk group containing a given disk.
+
+  4.  Encapsulate a disk and add it to a disk group.  Encapsulation
+      is the process of converting a disk such that existing partitions
+      on the disk are replaced by volumes.
+
+  5.  Reattach a disk to a disk group, for disks that were temporarily
+      inaccessible (such as due to a temporary cabling failure).
+
+  This operation takes as input a disk name or a disk partition name.  
+
+  To determine whether a reattach is appropriate, the operation checks
+  the set of failed disks to see if any of them appear to match the
+  input disk device.  If there is a match, you are asked whether a
+  reattach operation is appropriate.  The reattach operation may fail,
+  due to corruption of the disk.  If so, you may want to start the
+  operation over and avoid trying a reattach.
+
+  If the disk is already initialized for use with Logical Storage Manager
+  you will be given the choice of reinitializing the disk.  You may
+  need to reinitialize the disk if it has been corrupted in some way.
+  Normally, it doesn't hurt to reinitialize the disk; however you should 
+  make sure that the disk does not contain any needed data. 
+
+  If the disk is already initialized, but not for use with the volume
+  manager, you can choose to encapsulate the disk and to add it to a
+  disk group.
+
+  If you do not choose to reattach the disk, you will be asked for a
+  disk group name to add the disk to.  The default is "rootdg", which
+  is the base system disk group.  You should not normally need to use
+  other disk groups.  If you want to create a new disk group, specify
+  the name of a disk group that does not yet exist.
+
+  You can choose not to add the disk to a disk group by specifying a
+  disk group name of "none".  If you choose "none" then the disk will
+  be available for use by a future disk replacement operation without
+  the need for repartitioning.

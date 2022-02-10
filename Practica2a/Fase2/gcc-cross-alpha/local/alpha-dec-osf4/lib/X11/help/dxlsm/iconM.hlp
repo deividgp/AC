@@ -1,0 +1,53 @@
+#/* @(#)@(#)help/iconM.hlp	2.1 11 May 1993 19:05:06 -  */
+#ident  "@(#)va11:help/iconM.hlp   2.1"
+#
+#
+Icons, icons.hlp
+Views, views.hlp
+#########################################
+ICON MENU HELP
+
+This menu lets you operate on icons.  The first three operations allow you
+to change the appearance of icons (minimized or maximized), and the second
+two allow for creation/removal of icons.
+
+Icons may be minimized in order to have them take up less space in the
+view.  This is especially useful for large icons where it isn't currently
+important to see what the internal structure of those icons are.
+Minimizing and Maximizing icons do not affect the Logical Storage Manager 
+entities itself, only their appearance in the view.
+
+Icons that are minimized appear with their name in reverse type.
+
+On user-created views you may create or remove icons.  On default
+views (world, volumes, disks, and disk group views) these options are
+unavailable because the user is not allowed to manually add or remove icons
+from these views; they are updated automatically.
+
+
+Maximize Icons
+--------------
+Maximized icons show all icons that are associated with (contained within)
+the selected icon.  One or more icons should be selected for this
+operation.
+
+Minimize Icons
+--------------
+Minimized icons do not show icons that are associated with (contained
+within) the selected icon.  One or more icons should be selected for this
+operation.
+
+Maximize All Icons
+------------------
+All icons in this view should
+
+Create Icons
+------------
+Create a copy of the selected icon (in another view) and place the new copy
+in this view.  This is only available for a user-created view.
+
+Remove Icons
+------------
+Remove the selected icon(s) from this view.  This has no effect on the
+objects the icons represent.  This is only available for a user-created
+view.

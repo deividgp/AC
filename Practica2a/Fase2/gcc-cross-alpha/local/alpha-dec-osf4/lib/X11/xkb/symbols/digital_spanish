@@ -1,0 +1,315 @@
+// **************************************************************
+// *								*
+// * Symbols for es_ES.ISO8859-1 - Spanish for Spain		*
+// *								*
+// **************************************************************
+
+xkb_symbols "spanish-tw" {
+    replace key <KPDL> { [ KP_Separator ] };
+    replace key <KPCO> { [ KP_Decimal ] };
+
+    key <AE00> { 
+	symbols[Group1]= [    questiondown,	 exclamdown ],
+	symbols[Group2]= [		at,	  backslash ]
+    };
+    key <AE01> {       [	       1,	   exclam ] };
+    key <AE02> {       [	       2,	 quotedbl ] };
+    key <AE03> {       [	       3,      numbersign ] };
+    key <AE04> {       [	       4,	   dollar ] };
+    key <AE05> {       [	       5,	  percent ] };
+    key <AE06> {       [	       6,	ampersand ] };
+    key <AE07> {       [	       7,	    slash ] };
+    key <AE08> {       [	       8,	parenleft ] };
+    key <AE09> {       [	       9,      parenright ] };
+    key <AE10> {       [	       0,	    equal ] };
+    key <AE11> {       [      apostrophe,	 question ] };
+    key <AE12> {
+	symbols[Group1]= [	 masculine,	ordfeminine ],
+	symbols[Group2]= [    bracketright,	bracketleft ]
+    };
+
+    key <AD01> {       [	       q,		Q ] };
+    key <AD02> {       [	       w,		W ] };
+    key <AD03> {  
+        symbols[Group1]= [             e,                 E ],
+        symbols[Group2]= [       EuroSign ]
+    };
+    key <AD04> {       [	       r,		R ] };
+    key <AD05> {       [	       t,		T ] };
+    key <AD06> {       [	       y,		Y ] };
+    key <AD07> {       [	       u,		U ] };
+    key <AD08> {       [	       i,		I ] };
+    key <AD09> {       [	       o,		O ] };
+    key <AD10> {       [	       p,		P ] };
+    key <AD11> {       [   Dgrave_accent, Dcircumflex_accent] };
+    key <AD12> {       [	    plus,	 asterisk ] };
+
+    key <AC01> {       [	       a,		A ] };
+    key <AC02> {       [	       s,		S ] };
+    key <AC03> {       [	       d,		D ] };
+    key <AC04> {       [	       f,		F ] };
+    key <AC05> {       [	       g,		G ] };
+    key <AC06> {       [	       h,		H ] };
+    key <AC07> {       [	       j,		J ] };
+    key <AC08> {       [	       k,		K ] };
+    key <AC09> {       [	       l,		L ] };
+    key <AC10> {       [	  ntilde,	   Ntilde ] };
+    key <AC11> {       [   Dacute_accent,      Ddiaeresis ] };
+    key <BKSL> {
+        symbols[Group1]= [	ccedilla,          Dtilde ],
+        symbols[Group2]= [           bar,        Ccedilla ]
+    };
+    key <AB00> {       [	    less,	  greater ] };
+    key <AB01> {       [	       z,		Z ] };
+    key <AB02> {       [	       x,		X ] };
+    key <AB03> {       [	       c,		C ] };
+    key <AB04> {       [	       v,		V ] };
+    key <AB05> {       [	       b,		B ] };
+    key <AB06> {       [	       n,		N ] };
+    key <AB07> {       [	       m,		M ] };
+    key <AB08> {       [	   comma,	semicolon ] };
+    key <AB09> {       [	  period,	    colon ] };
+    key <AB10> {       [	   minus,      underscore ] };
+};
+
+xkb_symbols "spanish-dp" { 
+    include "digital_spanish(spanish-tw)"
+    replace key <AE00> { 
+	symbols[Group1]= [		at,	  backslash ],
+	symbols[Group2]= [    questiondown,	 exclamdown ]
+    };
+    replace key <AE12> {
+	symbols[Group1]= [    bracketright,	bracketleft ],
+	symbols[Group2]= [	 masculine,	ordfeminine ]
+    };
+};
+
+// **************************************************************
+// *								*
+// * The VT105 layouts - based upon the LK201-AS		*
+// *								*
+// **************************************************************
+xkb_symbols "vt105-tw" { 
+    include "digital_vt(vt105)"
+    include "digital_spanish(spanish-tw)"
+};
+
+xkb_symbols "vt105-dp" {
+    include "digital_vt(vt105)"
+    include "digital_spanish(spanish-dp)"
+};
+
+xkb_symbols "vt105" { include "digital_spanish(vt105-tw)" };
+
+// **************************************************************
+// *								*
+// * The VT108 layouts - based upon the LK401-AS		*
+// *								*
+// **************************************************************
+xkb_symbols "vt108-tw" {
+    include "digital_vt(vt108)"
+    include "digital_spanish(spanish-tw)"
+
+    replace key <AC10> {
+	symbols[Group1]= [	    ntilde,	     Ntilde ],
+	symbols[Group2]= [	 braceleft,	 braceright ]
+    };
+    replace key <BKSL> {
+	symbols[Group1]= [	  ccedilla,	     Dtilde ],
+	symbols[Group2]= [	       bar,	     Dtilde ]
+    };
+};
+
+xkb_symbols "vt108-dp" {
+    include "digital_vt(vt108)"
+    include "digital_spanish(spanish-dp)"
+
+    replace key <AC10> {
+	symbols[Group1]= [	 braceleft,	 braceright ],
+	symbols[Group2]= [	    ntilde,	     Ntilde ]
+    };
+    replace key <BKSL> {
+	symbols[Group1]= [	       bar,	     Dtilde ],
+	symbols[Group2]= [	  ccedilla,	     Dtilde ]
+    };
+};
+
+xkb_symbols "vt108" { include "digital_spanish(vt108-tw)" };
+
+// **************************************************************
+// *								*
+// * The PCXAL layouts (102-key)				*
+// *								*
+// **************************************************************
+xkb_symbols "pcxalgs" {
+    include "digital_pc(pc)"
+
+    key <AE00> {
+	symbols[Group1]= [	 masculine,	ordfeminine ],
+	symbols[Group2]= [	 backslash ]
+    };
+    key <AE01> {
+	symbols[Group1]= [		 1,	     exclam ],
+	symbols[Group2]= [	       bar ]
+    };
+    key <AE02> {
+	symbols[Group1]= [		 2,	   quotedbl ],
+	symbols[Group2]= [		at ]
+    };
+    key <AE03> {
+	symbols[Group1]= [		 3,  periodcentered ],
+	symbols[Group2]= [	numbersign ]
+    };
+    key <AE04> {       [	       4,	   dollar ] };
+    key <AE05> {       [	       5,	  percent ] };
+    key <AE06> {
+	symbols[Group1]= [		 6,	  ampersand ],
+	symbols[Group2]= [	   notsign ]
+    };
+    key <AE07> {       [	       7,	    slash ] };
+    key <AE08> {       [	       8,	parenleft ] };
+    key <AE09> {       [	       9,      parenright ] };
+    key <AE10> {       [	       0,	    equal ] };
+    key <AE11> {       [      apostrophe,	 question ] };
+    key <AE12> {       [      exclamdown,    questiondown ] };
+
+    key <AD01> {       [	       q,		Q ] };
+    key <AD02> {       [	       w,		W ] };
+    key <AD03> {
+        symbols[Group1]= [             e,                 E ],
+        symbols[Group2]= [       EuroSign ]
+    };
+    key <AD04> {       [	       r,		R ] };
+    key <AD05> {       [	       t,		T ] };
+    key <AD06> {       [	       y,		Y ] };
+    key <AD07> {       [	       u,		U ] };
+    key <AD08> {       [	       i,		I ] };
+    key <AD09> {       [	       o,		O ] };
+    key <AD10> {       [	       p,		P ] };
+    key <AD11> {
+	symbols[Group1]= [ Dgrave_accent, Dcircumflex_accent ],
+	symbols[Group2]= [     bracketleft ]
+    };
+    key <AD12> {
+	symbols[Group1]= [	      plus,	   asterisk ],
+	symbols[Group2]= [    bracketright ]
+    };
+
+    key <AC01> {       [	       a,		A ] };
+    key <AC02> {       [	       s,		S ] };
+    key <AC03> {       [	       d,		D ] };
+    key <AC04> {       [	       f,		F ] };
+    key <AC05> {       [	       g,		G ] };
+    key <AC06> {       [	       h,		H ] };
+    key <AC07> {       [	       j,		J ] };
+    key <AC08> {       [	       k,		K ] };
+    key <AC09> {       [	       l,		L ] };
+    key <AC10> {       [	  ntilde,	   Ntilde ] };
+    key <AC11> {
+	symbols[Group1]= [  Dacute_accent,     Ddiaeresis ],
+	symbols[Group2]= [	 braceleft ]
+    };
+    key <AC12> {
+	symbols[Group1]= [	  ccedilla,	   Ccedilla ],
+	symbols[Group2]= [	braceright ]
+    };
+
+    key <BKSL> {       [	    less,	  greater ] };
+    key <AB01> {       [	       z,		Z ] };
+    key <AB02> {       [	       x,		X ] };
+    key <AB03> {       [	       c,		C ] };
+    key <AB04> {       [	       v,		V ] };
+    key <AB05> {       [	       b,		B ] };
+    key <AB06> {       [	       n,		N ] };
+    key <AB07> {       [	       m,		M ] };
+    key <AB08> {       [	   comma,	semicolon ] };
+    key <AB09> {       [	  period,	    colon ] };
+    key <AB10> {       [	   minus,      underscore ] };
+};
+
+xkb_symbols "pcxal"   { include "digital_spanish(pcxalgs)" };
+xkb_symbols "pcxalas" { include "digital_spanish(pcxalgs)" };
+xkb_symbols "pcxalfs" { include "digital_spanish(pcxalgs)" };
+xkb_symbols "pcxalks" { include "digital_spanish(pcxalgs)" };
+xkb_symbols "lk44x"   { include "digital_spanish(pcxalgs)" };
+
+xkb_symbols "lk471as" { include "digital_spanish(pcxalgs)" };
+xkb_symbols "lk471"   { include "digital_spanish(lk471as)" };
+
+xkb_symbols "lk471ar" {
+    include "digital_pc(pc)"
+
+    key <AE00> {
+	symbols[Group1]= [	       bar,	     degree ],
+	symbols[Group2]= [	   notsign ]
+    };
+    key <AE01> {       [		1,	   exclam ] };
+    key <AE02> {       [		2,	 quotedbl ] };
+    key <AE03> {       [		3,    numbersign ] };
+    key <AE04> {       [	        4,	   dollar ] };
+    key <AE05> {       [	        5,	  percent ] };
+    key <AE06> {       [		6,      ampersand ] };
+    key <AE07> {       [	        7,	    slash ] };
+    key <AE08> {       [	        8,	parenleft ] };
+    key <AE09> {       [	        9,      parenright ] };
+    key <AE10> {       [	        0,	    equal ] };
+    key <AE11> {       
+	symbols[Group1]= [       apostrophe,	 question ], 
+        symbols[Group2]= [      backslash ] 
+    };
+    key <AE12> {       [     questiondown,     exclamdown ] };
+
+    key <AD01> {       
+	symbols[Group1]= [	       q,		Q ],
+        symbols[Group2]= [             at ]
+    };
+    key <AD02> {       [	       w,		W ] };
+    key <AD03> {
+        symbols[Group1]= [             e,                 E ],
+        symbols[Group2]= [       EuroSign ]
+    };
+    key <AD04> {       [	       r,		R ] };
+    key <AD05> {       [	       t,		T ] };
+    key <AD06> {       [	       y,		Y ] };
+    key <AD07> {       [	       u,		U ] };
+    key <AD08> {       [	       i,		I ] };
+    key <AD09> {       [	       o,		O ] };
+    key <AD10> {       [	       p,		P ] };
+    key <AD11> {       [   Dacute_accent,      Ddiaeresis ] };
+    key <AD12> {
+	symbols[Group1]= [	      plus,	   asterisk ],
+	symbols[Group2]= [    asciitilde ]
+    };
+
+    key <AC01> {       [	       a,		A ] };
+    key <AC02> {       [	       s,		S ] };
+    key <AC03> {       [	       d,		D ] };
+    key <AC04> {       [	       f,		F ] };
+    key <AC05> {       [	       g,		G ] };
+    key <AC06> {       [	       h,		H ] };
+    key <AC07> {       [	       j,		J ] };
+    key <AC08> {       [	       k,		K ] };
+    key <AC09> {       [	       l,		L ] };
+    key <AC10> {       [	  ntilde,	   Ntilde ] };
+    key <AC11> {
+	symbols[Group1]= [     braceleft,    bracketleft  ],
+	symbols[Group2]= [ Dcircumflex_accent ]
+    };
+    key <AC12> {
+	symbols[Group1]= [     braceright,    bracketright  ], 
+	symbols[Group2]= [	Dgrave_accent ]
+    };
+
+    key <BKSL> {       [	    less,	  greater ] };
+    key <AB01> {       [	       z,		Z ] };
+    key <AB02> {       [	       x,		X ] };
+    key <AB03> {       [	       c,		C ] };
+    key <AB04> {       [	       v,		V ] };
+    key <AB05> {       [	       b,		B ] };
+    key <AB06> {       [	       n,		N ] };
+    key <AB07> {       [	       m,		M ] };
+    key <AB08> {       [	   comma,	semicolon ] };
+    key <AB09> {       [	  period,	    colon ] };
+    key <AB10> {       [	   minus,      underscore ] };
+};
+

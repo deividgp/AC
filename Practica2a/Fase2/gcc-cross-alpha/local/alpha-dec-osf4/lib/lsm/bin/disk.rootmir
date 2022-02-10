@@ -1,0 +1,63 @@
+#!/sbin/sh -
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+# @(#)$RCSfile: disk.rootmir.sh,v $ $Revision: 1.1.4.3 $ (DEC) $Date: 1995/08/01 19:59:42 $
+
+DSPMSG="/sbin/lsm.d/bin/dspmsg -s 1 lsm_sh.cat"
+
+VOLADM_ROOT=${VOLADM_ROOT-/usr/lib/lsm}
+VOLADM_LIB=${VOLADM_LIB-$VOLADM_ROOT/lib}
+. $VOLADM_LIB/voladm_lib.sh
+
+voladm_menu_push RootMirror
+voladm_help_push disk.rootmir.help
+
+while true
+do
+	voladm_begin_screen -M 3500 "Mirror root/swap volumes on a disk"
+	$DSPMSG 3501 "  This operation can be used to mirror root/swap volumes on a disk.\n"
+	$DSPMSG 3502 "  Mirroring volumes from the boot disk will produce a disk that\n"
+	$DSPMSG 3503 "  can be used as an alternate boot disk.\n"
+
+	voladm_disk_device -M 3504 "Select disk device on which to mirror root/swap vol"
+
+
+	$DSPMSG 3505 "\n  NOTE: This operation can take a long time to complete.\n"
+	voladm_yorn -M 3506 "Continue with operation?" y
+	if [ $? -ne 0 ]
+	then
+		voladm_yorn -M 3507 "Mirror root/swap volumes on a different disk?" n && continue
+		break
+	fi
+
+	doit /usr/sbin/volrootmir "$device"  2> $tmpfile1
+		
+	if [ $? -eq 0 ]
+	then
+		$DSPMSG 3508 "  Mirroring of rootvol and swapvol is complete.\n"
+		voladm_yorn -M 3509 "Go Back to Previous Menu ?" y && quit 0
+	else
+	 	$DSPMSG 3510 "\n  Mirroring of rootvol and swapvol failed.\n" 
+		voladm_yorn -M 3511 "Mirror rootvol and swapvol volumes on a different disk?" n || break
+	fi
+done
+
+quit 0

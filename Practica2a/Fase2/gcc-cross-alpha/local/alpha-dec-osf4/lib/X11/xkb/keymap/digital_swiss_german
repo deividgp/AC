@@ -1,0 +1,222 @@
+// **************************************************************
+// *								*
+// * Keymaps for de_CH.ISO8859-1 - German for Switzerland	*
+// *								*
+// **************************************************************
+
+xkb_keymap "lk201-tw" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk201)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(vt105-tw)"	};
+    xkb_geometry	{ description = "Digital Swiss German LK201 - Typewriter Keys";
+			  include "geometry/digital_lk(lk201)"		};
+};
+
+xkb_keymap "lk201-dp" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk201)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(vt105-dp)"	};
+    xkb_geometry	{ description = "Digital Swiss German LK201 - Data Processing Keys";
+			  include "geometry/digital_lk(lk201)"		};
+};
+
+xkb_keymap "lk201" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk201)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(vt105)"	};
+    xkb_geometry	{ description = "Digital Swiss German LK201";
+			  include "geometry/digital_lk(lk201)"		};
+};
+
+xkb_keymap "lk401-tw" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(vt108-tw)"	};
+    xkb_geometry	{ description = "Digital Swiss German LK401 - Typewriter Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk401-dp" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(vt108-dp)"	};
+    xkb_geometry	{ description = "Digital Swiss German LK401 - Data Processing Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk401" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(vt108)"	};
+    xkb_geometry	{ description = "Digital Swiss German LK401";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411-tw" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(vt108-tw)"	};
+    xkb_geometry	{ description = "Digital Swiss German LK411 - Typewriter Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411-dp" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(vt108-dp)"	};
+    xkb_geometry	{ description = "Digital Swiss German LK411 - Data Processing Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(vt108)"	};
+    xkb_geometry	{ description = "Digital Swiss German LK411";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461-tw" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(vt108-tw)"	};
+    xkb_geometry	{ description = "Digital Swiss German LK461 - Typewriter Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461-dp" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(vt108-dp)"	};
+    xkb_geometry	{ description = "Digital Swiss German LK461 - Data Processing Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(vt108)"	};
+    xkb_geometry	{ description = "Digital Swiss German LK461";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk442" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk444)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(lk44x)"	};
+    xkb_geometry	{ description = "Digital Swiss German LK442";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk444" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk444)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(lk44x)"	};
+    xkb_geometry	{ description = "Digital Swiss German LK444";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk44x" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk444)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(lk44x)"	};
+    xkb_geometry	{ description = "Digital Swiss German LK444";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk450" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk450)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(vt108)"	};
+    xkb_geometry	{ description = "Digital Swiss German LK450";
+			  include "geometry/digital_lk(lk450)"		};
+};
+
+xkb_keymap "pcxalgl" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(pcxalgl)"};
+    xkb_geometry	{ description = "Digital Swiss German PCXAL-GL";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxalmh" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(pcxalmh)"};
+    xkb_geometry	{ description = "Digital Swiss German PCXAL-MH";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxal" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(pcxal)"};
+    xkb_geometry	{ description = "Digital Swiss German PCXAL";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471al" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(lk471al)"};
+    xkb_geometry	{ description = "Digital Swiss German LK471-AL";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(lk471)"};
+    xkb_geometry	{ description = "Digital Swiss German LK471";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97wal" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(lk471al)"};
+    xkb_geometry	{ description = "Digital Swiss German LK97W-AL";
+			  include "geometry/digital_pc(pc105)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97w" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_german(lk471)"};
+    xkb_geometry	{ description = "Digital Swiss German LK97W";
+			  include "geometry/digital_pc(pc105)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};

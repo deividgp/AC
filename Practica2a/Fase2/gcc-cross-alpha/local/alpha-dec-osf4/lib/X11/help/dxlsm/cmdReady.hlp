@@ -1,0 +1,23 @@
+#/* @(#)@(#)help/cmdReady.hlp	2.1 11 May 1993 19:03:49 -  */
+#ident  "@(#)va11:help/cmdReady.hlp   2.1"
+#
+#
+Command Info Window, cmdInfo.hlp
+#########################################
+COMMAND READY MENU HELP
+
+This menu specified what the Visual Administrator should do when it is
+ready to execute a Logical Storage Manager or system command.
+
+
+Execute Commands
+----------------
+The Visual Administrator will automatically execute the command.  The
+command window will only pop up if there is an error.  This is the default
+behavior.
+
+Show Commands Only
+------------------
+Instead of executing the commands immediately the Visual Administrator will
+place them in the command window for you to inspect.  From the command
+window you may execute the commands manually.

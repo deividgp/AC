@@ -1,0 +1,1 @@
+#define NQVISION 0

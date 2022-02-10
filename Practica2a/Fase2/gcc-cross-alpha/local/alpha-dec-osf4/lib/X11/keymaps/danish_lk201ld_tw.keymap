@@ -1,0 +1,123 @@
+!
+! This is an `xmodmap' input file for the LK201 (Dansk) keyboard.
+! keymake automatically generated this file
+!
+keycode 86 =	F1 
+keycode 87 =	F2 
+keycode 88 =	F3 
+keycode 89 =	F4 
+keycode 90 =	F5 
+keycode 100 =	F6 
+keycode 101 =	F7 
+keycode 102 =	F8 
+keycode 103 =	F9 
+keycode 104 =	F10 
+keycode 113 =	Escape F11 
+keycode 114 =	F12 
+keycode 115 =	F13 
+keycode 116 =	F14 
+keycode 124 =	Help 
+keycode 125 =	Menu 
+keycode 128 =	F17 
+keycode 129 =	F18 
+keycode 130 =	F19 
+keycode 131 =	F20 
+keycode 138 =	Find 
+keycode 139 =	Insert 
+keycode 140 =	DRemove 
+keycode 141 =	Select 
+keycode 142 =	Prior 
+keycode 143 =	Next 
+keycode 146 =	KP_0 
+keycode 148 =	KP_Decimal 
+keycode 149 =	KP_Enter 
+keycode 150 =	KP_1 
+keycode 151 =	KP_2 
+keycode 152 =	KP_3 
+keycode 153 =	KP_4 
+keycode 154 =	KP_5 
+keycode 155 =	KP_6 
+keycode 156 =	KP_Separator 
+keycode 157 =	KP_7 
+keycode 158 =	KP_8 
+keycode 159 =	KP_9 
+keycode 160 =	KP_Subtract 
+keycode 161 =	KP_F1 
+keycode 162 =	KP_F2 
+keycode 163 =	KP_F3 
+keycode 164 =	KP_F4 
+keycode 167 =	Left 
+keycode 168 =	Right 
+keycode 169 =	Down 
+keycode 170 =	Up 
+keycode 171 =	Shift_R 
+keycode 174 =	Shift_L 
+keycode 175 =	Control_L 
+keycode 176 =	Caps_Lock 
+keycode 177 =	Alt_L Meta_L 
+keycode 188 =	Delete 
+keycode 189 =	Return 
+keycode 190 =	Tab 
+keycode 191 =	Dtilde degree 
+keycode 192 =	1 exclam 
+keycode 193 =	Q 
+keycode 194 =	A 
+keycode 195 =	Z 
+keycode 197 =	2 quotedbl 
+keycode 198 =	W 
+keycode 199 =	S 
+keycode 200 =	X 
+keycode 201 =	less greater 
+keycode 203 =	3 section 
+keycode 204 =	E 
+keycode 205 =	D 
+keycode 206 =	C 
+keycode 208 =	4 dollar 
+keycode 209 =	R 
+keycode 210 =	F 
+keycode 211 =	V 
+keycode 212 =	space 
+keycode 214 =	5 percent 
+keycode 215 =	T 
+keycode 216 =	G 
+keycode 217 =	B 
+keycode 219 =	6 ampersand 
+keycode 220 =	Y 
+keycode 221 =	H 
+keycode 222 =	N 
+keycode 224 =	7 slash 
+keycode 225 =	U 
+keycode 226 =	J 
+keycode 227 =	M 
+keycode 229 =	8 parenleft 
+keycode 230 =	I 
+keycode 231 =	K 
+keycode 232 =	comma semicolon 
+keycode 234 =	9 parenright 
+keycode 235 =	O 
+keycode 236 =	L 
+keycode 237 =	period colon 
+keycode 239 =	0 equal 
+keycode 240 =	P 
+keycode 242 =	AE 
+keycode 243 =	minus underscore 
+keycode 245 =	Dacute_accent Dgrave_accent 
+keycode 246 =	Ddiaeresis Dcircumflex_accent 
+keycode 247 =	apostrophe asterisk 
+keycode 249 =	plus question 
+keycode 250 =	Aring 
+keycode 251 =	Ooblique 
+
+clear Shift
+clear Lock
+clear Control
+clear Mod1
+clear Mod2
+clear Mod3
+clear Mod4
+clear Mod5
+
+add Shift	 = Shift_L Shift_R
+add Lock	 = Caps_Lock
+add Control	 = Control_L Control_R
+add Mod1	= Alt_L 

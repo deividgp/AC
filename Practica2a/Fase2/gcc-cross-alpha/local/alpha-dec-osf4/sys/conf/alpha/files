@@ -1,0 +1,1051 @@
+#
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+#
+# HISTORY
+# 
+#
+# (c) Copyright 1990, OPEN SOFTWARE FOUNDATION, INC.
+# ALL RIGHTS RESERVED
+#
+#
+# OSF/1 Release 1.0 (Alpha files)
+#
+#
+OPTIONS/labels			optional labels
+OPTIONS/micro_time		optional micro_time
+OPTIONS/trsrcf			optional trsrcf
+OPTIONS/multi_platform		optional multi_platform
+OPTIONS/distint			optional distint
+#
+MODULE/arch_alpha		standard Binary
+arch/alpha/alpha_exception.c	module arch_alpha
+arch/alpha/alpha_init.c		standard ordered Binary optimize -g3
+arch/alpha/alpha_ptrace.c	module arch_alpha
+arch/alpha/alpha_signal.c	module arch_alpha
+arch/alpha/atomic_ops.s		module arch_alpha
+arch/alpha/byte_swap.s		module arch_alpha
+arch/alpha/clock.c		module arch_alpha
+arch/alpha/coff_subr.c		module arch_alpha
+arch/alpha/context.s		module arch_alpha
+arch/alpha/copy.c		module arch_alpha device-driver
+arch/alpha/cpu.c		module arch_alpha optimize -g3
+arch/alpha/crc.c		module arch_alpha
+arch/alpha/__divl.s		module arch_alpha
+arch/alpha/__divq.s		module arch_alpha
+arch/alpha/__divlu.s		module arch_alpha
+arch/alpha/__divqu.s		module arch_alpha
+arch/alpha/__reml.s		module arch_alpha
+arch/alpha/__remq.s		module arch_alpha
+arch/alpha/__remlu.s		module arch_alpha
+arch/alpha/__remqu.s		module arch_alpha
+arch/alpha/ots_div_alpha.s	module arch_alpha
+arch/alpha/ots_div_data_alpha.s module arch_alpha
+arch/alpha/ots_extv_alpha.s	module arch_alpha
+arch/alpha/ots_extv_vol_alpha.s module arch_alpha
+arch/alpha/ots_extzv_alpha.s	module arch_alpha
+arch/alpha/ots_extzv_vol_alpha.s module arch_alpha
+arch/alpha/ots_insv_alpha.s	module arch_alpha
+arch/alpha/ots_insv_vol_alpha.s module arch_alpha
+arch/alpha/ots_location_alpha.s module arch_alpha
+arch/alpha/ots_move_alpha.s	module arch_alpha
+arch/alpha/ots_movem_alpha.s	module arch_alpha
+arch/alpha/ots_fill_alpha.s	module arch_alpha
+arch/alpha/ots_zero_alpha.s	module arch_alpha
+arch/alpha/ots_translate_alpha.s	module arch_alpha
+arch/alpha/ots_strcmp_eql_alpha.s	module arch_alpha
+arch/alpha/ots_strcmp_eqlp_alpha.s	module arch_alpha
+arch/alpha/ots_strcmp_leq_alpha.s	module arch_alpha
+arch/alpha/ots_strcmp_leqp_alpha.s	module arch_alpha
+arch/alpha/ots_strcmp_lss_alpha.s	module arch_alpha
+arch/alpha/ots_strcmp_lssp_alpha.s	module arch_alpha
+arch/alpha/dumpsys.c		module arch_alpha
+arch/alpha/entry.s		module arch_alpha
+arch/alpha/exec_config.c	module arch_alpha
+arch/alpha/exec_subr.c		module arch_alpha
+arch/alpha/fastcopy.s		module arch_alpha
+arch/alpha/in_checksum.s	module arch_alpha
+MODULE/in_cksum			optional inet Binary
+arch/alpha/in_cksum.c		module in_cksum
+arch/alpha/intr.c		module arch_alpha
+arch/alpha/kernargs.c		module arch_alpha
+arch/alpha/locore.s		module arch_alpha
+arch/alpha/lockprim.s		module arch_alpha
+arch/alpha/addupc.s		module arch_alpha
+arch/alpha/machdep.c		module arch_alpha optimize -g3
+arch/alpha/md.c			optional memd Notbinary
+arch/alpha/mem.c		module arch_alpha
+arch/alpha/micro_time.c		optional micro_time Binary optimize -g3
+MODULE/pfm			optional pfm Binary
+arch/alpha/pfm.c		module pfm
+arch/alpha/ovbcopy.c		module arch_alpha
+arch/alpha/pal_lib.s		module arch_alpha
+arch/alpha/pcb.c		module arch_alpha
+#
+MODULE/arch_alphapmap		standard Binary
+arch/alpha/pmap.c		module arch_alphapmap optimize -g3
+arch/alpha/pmap_debug.c		module arch_alphapmap
+arch/alpha/pmap_update.c	module arch_alphapmap optimize -g3
+arch/alpha/pmap_init.c		standard ordered Binary optimize -g3
+#
+arch/alpha/prom.c		module arch_alpha
+arch/alpha/startup.c		standard ordered Binary optimize -g3
+data/steal_mem.c		standard ordered Notbinary
+arch/alpha/scb.s		standard ordered Binary
+arch/alpha/spl.s		module arch_alpha
+arch/alpha/super.c		module arch_alpha
+arch/alpha/syscall_trap.c	module arch_alpha
+arch/alpha/trap.c		module arch_alpha optimize -g3
+arch/alpha/softfp.c		module arch_alpha
+arch/alpha/ieee_float_math.c	module arch_alpha
+arch/alpha/64bit_math.c		module arch_alpha
+#
+arch/alpha/bootio.c		module arch_alpha
+arch/alpha/bootio_subrs.c	standard ordered Binary
+dec/sas/bootio_net.c		standard ordered Binary
+dec/sas/io.c                    standard ordered Binary
+dec/sas/sys.c                   standard ordered Binary
+dec/sas/sys_advfs.c             standard ordered Binary
+dec/sas/sys_cdfs.c              standard ordered Binary
+#
+MODULE/fp			standard floating-point Binary
+arch/alpha/fp/fp_ieee.c		module fp
+arch/alpha/fp/fp_ieee_handler.c	module fp
+arch/alpha/fp/fp_ascii.c	module fp
+arch/alpha/fp/fp_result.c	module fp
+arch/alpha/fp/fp_scale.c	module fp
+arch/alpha/fp/fp_trigger.c	module fp
+arch/alpha/fp/fp_tables.c	module fp
+arch/alpha/fp/fp_emulator.c	module fp
+arch/alpha/fp/fp_emulate.s 	module fp
+#
+arch/alpha/ul.c			module arch_alpha
+arch/alpha/usercopy.s		module arch_alpha
+arch/alpha/nofault.s		module arch_alpha
+arch/alpha/vm_machdep.c		module arch_alpha
+MODULE/mcount 			optional profiling Binary
+arch/alpha/mcount.s             module mcount
+arch/alpha/alpha_scrub.s	optional cpu DEC4000 or cpu DEC21000 Binary
+#
+arch/alpha/lww.s                module arch_alpha
+arch/alpha/lwu.s                module arch_alpha
+#
+arch/alpha/hal/autoconf.c	module arch_alpha
+arch/alpha/hal/cons_sw.c	module arch_alpha
+arch/alpha/hal/console.c	module arch_alpha
+arch/alpha/hal/cpuconf.c	standard Notbinary
+arch/alpha/hal/cpusw.c		module arch_alpha
+arch/alpha/hal/platform_switch.c optional multi_platform Binary
+arch/alpha/hal/io_access.c	module arch_alpha
+#
+MODULE/STATIC/kn15aa_mult	optional cpu DEC3000_500 and multi_platform Binary
+arch/alpha/hal/kn15aa_mult.c	module kn15aa_mult
+#
+MODULE/kn15aa           	optional cpu DEC3000_500 and not multi_platform Binary
+arch/alpha/hal/kn15aa.c         module kn15aa
+#
+MODULE/STATIC/kn16aa_mult	optional cpu DEC3000_300 and multi_platform Binary
+arch/alpha/hal/kn16aa_mult.c	module kn16aa_mult
+#
+MODULE/kn16aa            	optional cpu DEC3000_300 and not multi_platform Binary
+arch/alpha/hal/kn16aa.c         module kn16aa
+#
+MODULE/STATIC/kn430_mult        optional cpu DEC4000 and multi_platform device-driver Binary
+arch/alpha/hal/kn430_mult.c     module kn430_mult
+#
+MODULE/kn430      	       	optional cpu DEC4000 and not multi_platform device-driver Binary
+arch/alpha/hal/kn430.c          module kn430
+MODULE/kn430_common		optional cpu DEC4000 device-driver Binary
+arch/alpha/hal/dec4000_cons.c   module kn430_common
+#
+MODULE/STATIC/kn7aa_mult        optional cpu DEC7000 and multi_platform device-driver Binary
+arch/alpha/hal/kn7aa_mult.c     module kn7aa_mult
+#
+MODULE/STATIC/kn7aa             optional cpu DEC7000 and not multi_platform device-driver Binary
+arch/alpha/hal/kn7aa.c          module kn7aa
+#
+MODULE/kn7aa_common		optional cpu DEC7000 device-driver Binary
+io/dec/lsb/lsbinit.c            module kn7aa_common
+io/dec/lsb/lsb_iop.c            module kn7aa_common
+#
+MODULE/STATIC/kn8ae_mult        optional cpu DEC21000 and multi_platform device-driver Binary
+arch/alpha/hal/kn8ae_mult.c     module kn8ae_mult
+#
+MODULE/STATIC/kn8ae            	optional cpu DEC21000 and not multi_platform device-driver Binary
+arch/alpha/hal/kn8ae.c          module kn8ae
+#
+MODULE/kn8ae_common		optional cpu DEC21000 device-driver Binary
+io/dec/lsb/tlsbinit.c           module kn8ae_common
+io/dec/lsb/tlsb_iop.c           module kn8ae_common
+#
+MODULE/dc21171_mult             optional cpu DECST30 and multi_platform or cpu DEC_KN20AA and multi_platform or cpu EB164 and multi_platform or cpu DECEV56_PBP and multi_platform or cpu DECALPHAVME_320 and multi_platform or cpu DEC1000_5 and multi_platform or cpu DEC1000A_5 and multi_platform device-driver Binary
+arch/alpha/hal/dc21171_mult.c   module dc21171_mult
+#
+MODULE/dc21171            	optional cpu DECST30 and not multi_platform or cpu DEC_KN20AA and not multi_platform or cpu EB164 and not multi_platform or cpu DECEV56_PBP and not multi_platform or cpu DECALPHAVME_320 and not multi_platform or cpu DEC1000_5 and not multi_platform or DEC1000A_5 and not multi_platform Binary
+arch/alpha/hal/dc21171.c        module dc21171
+#
+MODULE/STATIC/kn121_mult        optional cpu DEC2000_300 and multi_platform Binary
+arch/alpha/hal/kn121_mult.c     module kn121_mult
+#
+MODULE/kn121                    optional cpu DEC2000_300 and not multi_platform Binary
+arch/alpha/hal/kn121.c          module kn121
+#
+MODULE/STATIC/kn25_mult         optional cpu DEC2100_A50 and multi_platform device-driver Binary
+arch/alpha/hal/kn25_mult.c      module kn25_mult
+#
+MODULE/kn25                     optional cpu DEC2100_A50 and not multi_platform device-driver Binary
+arch/alpha/hal/kn25.c           module kn25
+#
+MODULE/STATIC/kn450_mult        optional cpu DEC2100_A500 and multi_platform Binary
+arch/alpha/hal/kn450_mult.c     module kn450_mult
+#
+MODULE/kn450                    optional cpu DEC2100_A500 and not multi_platform Binary
+arch/alpha/hal/kn450.c          module kn450
+#
+MODULE/cbus2_pci_mult           optional cpu DEC2100_A500 and multi_platform or DEC2100_C500 and multi_platform Binary
+arch/alpha/hal/cbus2_pci_mult.c module cbus2_pci_mult
+#
+MODULE/cbus2_pci                optional cpu DEC2100_A500 and not multi_platform or DEC2100_C500 and not multi_platform Binary
+arch/alpha/hal/cbus2_pci.c      module cbus2_pci
+#
+MODULE/STATIC/kn470_mult        optional cpu DEC2100_C500 and multi_platform Binary
+arch/alpha/hal/kn470_mult.c     module kn470_mult
+#
+MODULE/kn470                    optional cpu DEC2100_C500 and not multi_platform Binary
+arch/alpha/hal/kn470.c          module kn470
+#
+MODULE/STATIC/kn20aa_mult       optional cpu DEC_KN20AA and multi_platform or cpu DEC1000_5 and multi_platform or DEC1000A_5 and multi_platform device-driver Binary
+arch/alpha/hal/kn20aa_mult.c     module kn20aa_mult
+#
+MODULE/kn20aa                   optional cpu DEC_KN20AA and not multi_platform or cpu DEC1000_5 and not multi_platform or cpu DEC1000A_5 and not multi_platform device-driver Binary
+arch/alpha/hal/kn20aa.c         module kn20aa
+#
+MODULE/STATIC/kn22a_mult        optional cpu DEC1000 and multi_platform or cpu DEC1000A and multi_platform device-driver Binary
+arch/alpha/hal/kn22a_mult.c     module kn22a_mult
+#
+MODULE/kn22a                    optional cpu DEC1000 and not multi_platform or cpu DEC1000A and not multi_platform device-driver Binary
+arch/alpha/hal/kn22a.c          module kn22a
+#
+MODULE/STATIC/ebp10_mult        optional cpu DECAXPPCI_33 and multi_platform Binary
+arch/alpha/hal/ebp10_mult.c     module ebp10_mult
+#
+MODULE/ebp10                    optional cpu DECAXPPCI_33 and not multi_platform Binary
+arch/alpha/hal/ebp10.c          module ebp10
+#
+MODULE/STATIC/eb64p_mult        optional cpu ALPHAPC64 and multi_platform device-driver Binary
+arch/alpha/hal/eb64p_mult.c     module eb64p_mult
+#
+MODULE/eb64p                    optional cpu ALPHAPC64 and not multi_platform device-driver Binary
+arch/alpha/hal/eb64p.c          module eb64p
+#
+MODULE/eb64p_pallib	        optional cpu ALPHAPC64 device-driver Binary 
+arch/alpha/hal/eb64p_pallib.s   module eb64p_pallib 
+#
+MODULE/STATIC/eb66_mult         optional cpu EB66PLUS and multi_platform device-driver Binary
+arch/alpha/hal/eb66_mult.c      module eb66_mult
+#
+MODULE/eb66                     optional cpu EB66PLUS and not multi_platform device-driver Binary
+arch/alpha/hal/eb66.c           module eb66
+#
+MODULE/eb66_pallib              optional cpu EB66PLUS device-driver Binary
+arch/alpha/hal/eb66_pallib.s    module eb66_pallib
+#
+MODULE/STATIC/eb164_mult        optional cpu DECST30 and multi_platform or cpu EB164 and multi_platform device-driver Binary
+arch/alpha/hal/eb164_mult.c     module eb164_mult
+#
+MODULE/eb164                    optional cpu DECST30 and not multi_platform or cpu EB164 and not multi_platform device-driver Binary
+arch/alpha/hal/eb164.c          module eb164
+#
+MODULE/eb164_pallib             optional cpu DECST30 or cpu EB164 device-driver Binary
+arch/alpha/hal/eb164_pallib.s   module eb164_pallib
+#
+MODULE/STATIC/ebv10_mult        optional cpu DECAXPVME_64 and multi_platform Binary
+arch/alpha/hal/ebv10_mult.c     module ebv10_mult
+#
+MODULE/ebv10                    optional cpu DECAXPVME_64 and not multi_platform Binary
+arch/alpha/hal/ebv10.c          module ebv10
+#
+MODULE/ebv10_common		optional cpu DECAXPVME_64 Binary
+arch/alpha/hal/ebv10_pallib.s   module ebv10_common
+
+#
+MODULE/ds1386clock_mult   	optional cpu DECAXPVME_64 and multi_platform or cpu DECALPHAVME_224 and multi_platform or cpu DECALPHAVME_320 and multi_platform device-driver Binary
+arch/alpha/hal/ds1386clock_mult.c  module ds1386clock_mult  -optimize -O0
+
+MODULE/ds1386			optional cpu DECAXPVME_64 and not multi_platform or cpu DECALPHAVME_224 and not multi_platform or cpu DECALPHAVME_320 and not multi_platform device-driver Binary
+arch/alpha/hal/ds1386clock.c 	module ds1386  -optimize -O0
+
+
+#
+MODULE/STATIC/ebv14_mult        optional cpu DECALPHAVME_224 and multi_platform device-driver Binary
+arch/alpha/hal/ebv14_mult.c     module ebv14_mult
+#
+MODULE/ebv14                    optional cpu DECALPHAVME_224 and not multi_platform device-driver Binary
+arch/alpha/hal/ebv14.c          module ebv14
+#
+MODULE/ebv14_pallib	        optional cpu DECALPHAVME_224 device-driver Binary 
+arch/alpha/hal/ebv14_pallib.s   module ebv14_pallib 
+
+#
+MODULE/STATIC/ebv16_mult        optional cpu DECALPHAVME_320 and multi_platform device-driver Binary
+arch/alpha/hal/ebv16_mult.c     module ebv16_mult
+#
+MODULE/ebv16                    optional cpu DECALPHAVME_320 and not multi_platform device-driver Binary
+arch/alpha/hal/ebv16.c          module ebv16
+#
+MODULE/ebv16_pallib	        optional cpu DECALPHAVME_320 device-driver Binary 
+arch/alpha/hal/ebv16_pallib.s   module ebv16_pallib 
+
+#
+MODULE/STATIC/ebm10_mult	optional cpu DECEV45_PBP and multi_platform device-driver Binary
+arch/alpha/hal/ebm10_mult.c	module ebm10_mult
+#
+MODULE/ebm10			optional cpu DECEV45_PBP and not multi_platform device-driver Binary
+arch/alpha/hal/ebm10.c		module ebm10
+#
+MODULE/STATIC/ebm20_mult	optional cpu DECEV56_PBP and multi_platform device-driver Binary
+arch/alpha/hal/ebm20_mult.c	module ebm20_mult
+#
+MODULE/ebm20			optional cpu DECEV56_PBP and not multi_platform device-driver Binary
+arch/alpha/hal/ebm20.c		module ebm20
+#
+#
+arch/alpha/hal/dec7000_cons.c   optional cpu DEC21000 or cpu DEC7000 device-driver Binary
+#
+MODULE/ruby_common_mult         optional cpu DEC21000 and multi_platform or cpu DEC7000 and multi_platform device-driver Binary
+arch/alpha/hal/ruby_common_mult.c module ruby_common_mult
+#
+MODULE/ruby_common              optional cpu DEC21000 and not multi_platform or cpu DEC7000 and not multi_platform device-driver Binary
+arch/alpha/hal/ruby_common.c    module ruby_common
+#
+MODULE/STATIC/kn300_mult       optional cpu DEC4100 and multi_platform Binary
+arch/alpha/hal/kn300_mult.c    module kn300_mult optimize -O0
+#
+MODULE/kn300            	optional cpu DEC4100 and not multi_platform Binary
+arch/alpha/hal/kn300.c          module kn300 optimize -O0
+#
+#
+MODULE/STATIC/kn600_mult       optional cpu DEC6600 and multi_platform Binary
+arch/alpha/hal/kn600_mult.c    module kn600_mult optimize -O0
+#
+MODULE/STATIC/kn600            	optional cpu DEC6600 and not multi_platform Binary
+arch/alpha/hal/kn600.c          module kn600 optimize -O0
+#
+MODULE/STATIC/ebm30_mult	optional cpu DMCCEV6 and multi_platform Binary
+arch/alpha/hal/ebm30_mult.c	module ebm30_mult optimize -O0
+#
+MODULE/STATIC/ebm30		optional cpu DMCCEV6 and not multi_platform Binary
+arch/alpha/hal/ebm30.c		module ebm30 optimize -O0
+#
+MODULE/STATIC/alphabook_mult	optional cpu ALPHABOOK1 and multi_platform Binary
+arch/alpha/hal/alphabook_mult.c	module alphabook_mult
+#
+MODULE/STATIC/alphabook		optional cpu ALPHABOOK1 and not multi_platform Binary
+arch/alpha/hal/alphabook.c	module alphabook
+#
+MODULE/mcbus			optional cpu DEC4100 Binary
+arch/alpha/hal/mcbus.c		module mcbus optimize -O0
+#
+MODULE/mcpcia_mult              optional pci and cpu DEC4100 and multi_platform Binary
+io/dec/pci/mcpcia_mult.c        module mcpcia_mult
+#
+MODULE/mcpcia			optional pci and cpu DEC4100 and not multi_platform Binary
+io/dec/pci/mcpcia.c		module mcpcia
+#
+MODULE/STATIC/dc104x		optional cpu DEC6600 and not multi_platform or cpu DMCCEV6 and not multi_platform Binary
+arch/alpha/hal/dc104x.c		module dc104x
+#
+MODULE/dc104x_mult		optional cpu DEC6600 and multi_platform or cpu DMCCEV6 and multi_platform Binary
+arch/alpha/hal/dc104x_mult.c	module dc104x_mult
+#
+MODULE/linear_io_access		optional cpu DEC6600 and not multi_platform or cpu DMCCEV6 and not multi_platform Binary
+arch/alpha/hal/linear_io_access.c module linear_io_access 
+#
+MODULE/linear_io_access_mult	optional cpu DEC6600 and multi_platform or optional cpu DMCCEV6 and multi_platform Binary
+arch/alpha/hal/linear_io_access_mult.c module linear_io_access_mult 
+#
+arch/alpha/hal/hal_lmf.c	module arch_alpha
+arch/alpha/hal/hal_sysinfo.c	module arch_alpha
+#
+#
+MODULE/pc_bell_mult             optional cpu ALPHAPC64 and multi_platform or cpu EB66PLUS and multi_platform or cpu DECAXPPCI_33 and multi_platform or cpu DEC2000_300 and multi_platform or cpu DEC_KN20AA and multi_platform or cpu DEC1000 and multi_platform or cpu DEC1000_5 and multi_platform or cpu DEC2100_A50 and multi_platform or cpu DEC2100_A500 and multi_platform or cpu DEC2100_C500 and multi_platform or cpu DECST30 and multi_platform or cpu EB164 and multi_platform or cpu DEC1000A and multi_platform or DEC1000A_5 and multi_platform or cpu DECEV45_PBP and multi_platform or cpu DECALPHAVME_224 and multi_platform or cpu DECEV56_PBP and multi_platform or cpu DECALPHAVME_320 and multi_platform or cpu ALPHABOOK1 and multi_platform or cpu DEC4100 and multi_platform or cpu DEC6600 and multi_platform or cpu DMCCEV6 and multi_platform device-driver Binary
+arch/alpha/hal/pc_bell_mult.c   module pc_bell_mult
+#
+MODULE/pc_bell			optional cpu ALPHAPC64 and not multi_platform or cpu EB66PLUS and not multi_platform or cpu DECAXPPCI_33 and not multi_platform or cpu DEC2000_300 and not multi_platform or cpu DEC_KN20AA and not multi_platform or cpu DEC1000 and not multi_platform or cpu DEC1000_5 and not multi_platform or cpu DEC2100_A50 and not multi_platform or cpu DEC2100_A500 and not multi_platform or cpu DEC2100_C500 and not multi_platform or cpu DECST30 and not multi_platform or cpu EB164 and not multi_platform or cpu DEC1000A and not multi_platform or cpu DEC1000A_5 and not multi_platform or cpu DECEV45_PBP and not multi_platform or cpu DECALPHAVME_224 and not multi_platform or cpu DECALPHAVME_320 and not multi_platform or cpu DEC4100 and not multi_platform or cpu DEC6600 and not multi_platform or cpu DECEV56_PBP and not multi_platform or cpu ALPHABOOK1 and not multi_platform or cpu DMCCEV6 and not multi_platform device-driver Binary
+arch/alpha/hal/pc_bell.c	module pc_bell
+#
+MODULE/sio			optional cpu DEC2100_A50 or cpu DECAXPPCI_33 or cpu ALPHAPC64 or cpu EB66PLUS or cpu DECST30 or cpu EB164 or cpu DECEV45_PBP or cpu DECALPHAVME_224 or cpu DECALPHAVME_320 or cpu DECEV56_PBP or cpu ALPHABOOK1 or cpu DECAXPVME_64 or cpu DEC6600 or cpu DMCCEV6 device-driver Binary
+arch/alpha/hal/sio.c		module sio
+#
+arch/alpha/hal/dma_direct_map.c	optional eisa or pci or isa or tc Binary
+#
+MODULE/pic			optional cpu DEC2000_300 or cpu DECAXPPCI_33 or cpu DEC2100_A50 or cpu DEC1000 or cpu DEC1000_5 or cpu DEC2100_A500 or cpu DEC2100_C500 or cpu DEC_KN20AA or cpu ALPHAPC64 or cpu EB66PLUS or cpu DECST30 or cpu EB164 or cpu DEC1000A or cpu DEC1000A_5 or cpu DECEV45_PBP or cpu DEC4100 or cpu DEC6600 or cpu DECALPHAVME_224 or cpu DECALPHAVME_320 or cpu DECEV56_PBP or cpu ALPHABOOK1 or cpu DMCCEV6 device-driver Binary
+arch/alpha/hal/82357_pic.c	module pic
+#
+MODULE/mc146818_mult		optional cpu DECST30 and multi_platform or cpu DEC21000 and multi_platform or cpu DEC7000 and multi_platform or cpu DEC4000 and multi_platform or cpu DEC3000_500 and multi_platform or cpu DEC3000_300 and multi_platform or cpu DEC2000_300 and multi_platform or cpu DECAXPPCI_33 and multi_platform or cpu DEC2100_A50 and multi_platform or cpu DEC1000 and multi_platform or cpu DEC1000_5 and multi_platform or cpu DEC2100_A500 and multi_platform or cpu DEC2100_C500 and multi_platform or cpu DEC_KN20AA and multi_platform or cpu ALPHAPC64 and multi_platform or cpu EB66PLUS and multi_platform or cpu EB164 and multi_platform or cpu DEC1000A and multi_platform or cpu DEC1000A_5 and multi_platform or cpu DECEV45_PBP and multi_platform or cpu DEC4100 and multi_platform or cpu DEC6600 and multi_platform or cpu DECEV56_PBP and multi_platform or cpu ALPHABOOK1 and multi_platform or cpu DMCCEV6 and multi_platform device-driver Binary
+arch/alpha/hal/mc146818clock_mult.c module mc146818_mult
+#
+MODULE/mc146818                 optional cpu DECST30 and not multi_platform or cpu DEC21000 and not multi_platform or cpu DEC7000 and not multi_platform or cpu DEC4000 and not multi_platform or cpu DEC3000_500 and not multi_platform or cpu DEC3000_300 and not multi_platform or cpu DEC2000_300 and not multi_platform or cpu DECAXPPCI_33 and not multi_platform or cpu DEC2100_A50 and not multi_platform or cpu DEC1000 and not multi_platform or cpu DEC1000_5 and not multi_platform or cpu DEC2100_A500 and not multi_platform or cpu DEC2100_C500 and not multi_platform or cpu DEC_KN20AA and not multi_platform or cpu ALPHAPC64 and not multi_platform or cpu EB66PLUS and not multi_platform or cpu EB164 and not multi_platform or cpu DECEV56_PBP and not multi_platform or cpu ALPHABOOK1 and not multi_platform or cpu DEC1000A and not multi_platform or cpu DEC1000A_5 and not multi_platform or cpu DECEV45_PBP and not multi_platform or cpu DEC4100 and not multi_platform or cpu DEC6600 and not multi_platform or cpu DMCCEV6 and not multi_platform device-driver Binary
+arch/alpha/hal/mc146818clock.c   module mc146818
+#
+MODULE/lca_mult                 optional cpu DECAXPVME_64 and multi_platform or cpu DECAXPPCI_33 and multi_platform or cpu EB66PLUS and multi_platform or cpu ALPHABOOK1 and multi_platform device-driver Binary
+arch/alpha/hal/lca_mult.c       module lca_mult
+#
+MODULE/lca			optional cpu DECAXPVME_64 and not multi_platform or cpu DECAXPPCI_33 and not multi_platform or cpu EB66PLUS and not multi_platform or cpu ALPHABOOK1 and not multi_platform device-driver Binary
+arch/alpha/hal/lca.c		module lca
+#
+MODULE/apecs_mult               optional cpu DEC2100_A50 and multi_platform or cpu DEC1000 and multi_platform or cpu DEC1000A and multi_platform or cpu ALPHAPC64 and multi_platform or cpu DECEV45_PBP and multi_platform or cpu DECALPHAVME_224 and multi_platform device-driver Binary
+arch/alpha/hal/apecs_mult.c     module apecs_mult
+#
+MODULE/apecs			optional cpu DEC2100_A50 and not multi_platform or cpu DEC1000 and not multi_platform or cpu ALPHAPC64 and not multi_platform or cpu DEC1000A and not multi_platform or cpu DECEV45_PBP and not multi_platform or cpu DECALPHAVME_224 and not multi_platform device-driver Binary
+arch/alpha/hal/apecs.c		module apecs
+#
+MODULE/STATIC/vba_vipvic	optional pci and vba Binary
+io/dec/vme/ebv10_vme.c		module vba_vipvic
+#
+MODULE/STATIC/vba_univ		optional pci and vba Binary
+io/dec/vme/univ_vme.c		module vba_univ
+#
+arch/alpha/kdebug_ace_cons.c	module kdebug
+arch/alpha/kdebug_misc.c	module kdebug
+arch/alpha/kdebug_cobra_cons.c	module kdebug
+arch/alpha/kdebug_gbus_cons.c	module kdebug
+arch/alpha/kdebug_scc_cons.c	module kdebug
+arch/alpha/kdebug_iscc_cons.c   module kdebug
+arch/alpha/db_alpha_aout.c	module kdebug
+arch/alpha/db_alpha_inst.c	module kdebug
+arch/alpha/db_alpha_sym.c	module kdebug
+arch/alpha/db_commands.c	module kdebug
+arch/alpha/db_disasm.c		module kdebug
+arch/alpha/db_interface.c	module kdebug
+arch/alpha/db_trace.c		module kdebug
+#
+arch/alpha/devz.c               optional not sas Binary
+#
+io/common/driver_support.c	module arch_alpha
+io/common/ldbl_driver_support.c	module arch_alpha
+io/common/ldbl_controller_support.c module arch_alpha
+io/common/stanza_resolver.c	module arch_alpha
+io/common/topology.c		module arch_alpha
+io/common/handler.c		module arch_alpha
+io/common/tty_def.c		module arch_alpha
+io/common/io_resource.c		module arch_alpha
+#
+MODULE/lsbmem_mult              optional cpu DEC7000 and multi_platform or cpu DEC21000 and multi_platform Binary
+io/dec/lsb/lsbmem_mult.c        module lsbmem_mult
+#
+MODULE/lsbmem		        optional cpu DEC7000 and not multi_platform or cpu DEC21000 and not multi_platform Binary
+io/dec/lsb/lsbmem.c		module lsbmem
+#
+MODULE/STATIC/cma_dd            standard Binary
+io/common/cma_dd.c              module cma_dd
+#
+io/cam/cam_config.c		optional scsi device-driver optimize -O2 Notbinary
+io/cam/cam_debug.c		optional scsi device-driver optimize -O2 Notbinary
+io/cam/sim_config.c		optional scsi device-driver optimize -O2 Notbinary
+#
+MODULE/STATIC/cam_disk		optional scsi Binary
+io/cam/cam_disk.c		module cam_disk optimize -g3
+#
+MODULE/STATIC/cam_tape		optional scsi Binary
+io/cam/cam_tape.c		module cam_tape optimize -g3
+#
+MODULE/STATIC/cam		optional scsi device-driver Binary
+io/cam/cam_logger.c		module cam optimize -O2
+io/cam/cam_special.c		module cam optimize -O2
+io/cam/ccfg.c			module cam optimize -O2
+io/cam/camdb.c			module cam optimize -O2
+io/cam/pdrv_common.c		module cam optimize -g3
+io/cam/special_audio.c		module cam optimize -O2
+io/cam/special_direct.c		module cam optimize -O2
+io/cam/special_generic.c	module cam optimize -O2
+io/cam/special_sequential.c	module cam optimize -O2
+io/cam/uagt.c			module cam optimize -O2
+io/cam/xpt.c			module cam optimize -g3
+io/cam/dme_null.c		module cam optimize -O2
+io/cam/sim_common.c		module cam optimize -O2
+io/cam/cam_eei.c                module cam optimize -O2
+io/cam/cam_rci.c                module cam optimize -g3
+#
+MODULE/cam_sim			optional asc or tcds or psiop or siop or aha or xza or isp or ata or itpsa device-driver Binary
+io/cam/sim_xpt.c		module cam_sim optimize -g3
+io/cam/sim_htm.c		module cam_sim optimize -g3
+io/cam/sim_as.c			module cam_sim optimize -O2
+io/cam/sim_error.c		module cam_sim optimize -O2
+io/cam/sim_sched.c		module cam_sim optimize -O2
+io/cam/sim_sm.c			module cam_sim optimize -O2
+io/cam/sim_target.c		module cam_sim optimize -g3
+#
+MODULE/cam_tcds			optional tcds device-driver Binary
+io/cam/dme_tcds_94_dma.c	module cam_tcds optimize -g3
+io/cam/tcds_adapt.c		module cam_tcds
+#
+MODULE/cam_94			optional asc or tcds device-driver Binary
+io/cam/dme_turbo_94_ram.c	module cam_94
+io/cam/dme_common.c		module cam_94 optimize -g3
+io/cam/sim_94_fast.c		module cam_94
+io/cam/sim_94.c			module cam_94 optimize -g3
+io/cam/sim_kn02.c		module cam_94
+#
+MODULE/cam_aha1740              optional aha device-driver Binary optimize -g3
+io/cam/aha1740.c		module cam_aha1740
+#
+MODULE/cam_ata			optional ata device-driver Binary
+io/cam/ata/sim_ata.c		module cam_ata optimize -g3
+io/cam/ata/sim_ata_acer.c	module cam_ata
+io/cam/ata/sim_ata_cmd.c	module cam_ata
+io/cam/ata/sim_ata_cypress.c	module cam_ata
+io/cam/ata/sim_ata_datatech.c 	module cam_ata
+io/cam/ata/sim_ata_dma.c	module cam_ata optimize -g3
+io/cam/ata/sim_ata_symphony.c 	module cam_ata
+io/cam/ata/sim_ata_unknown.c	module cam_ata
+#
+MODULE/STATIC/isp               optional isp Binary
+io/cam/qlogic/isp1020.c         module isp optimize -g3
+#
+MODULE/itpsa			optional itpsa device-driver Binary
+io/cam/iti/itpsa.c		module itpsa optimize -g3
+io/cam/iti/itpsacfg.c		module itpsa
+io/cam/iti/itpsahtm.c		module itpsa
+#
+MODULE/cam_pza			optional pza device-driver Binary
+io/cam/spo/sim_pza.c		module cam_pza optimize -g3
+#
+MODULE/cam_tza			optional tza device-driver Binary
+io/cam/spo/sim_kztsa.c          module cam_tza optimize -g3
+#
+MODULE/cam_simport		optional tza or pza device-driver Binary
+io/cam/spo/simport.c		module cam_simport optimize -g3
+io/cam/spo/simport_htm.c	module cam_simport
+io/cam/spo/simport_dme.c	module cam_simport
+io/cam/spo/simport_subr.c	module cam_simport
+#
+MODULE/cam_psiop		optional psiop device-driver Binary
+io/cam/siop/psiop.c		module cam_psiop optimize -g3
+io/cam/siop/pci/psiop_pci.c	module cam_psiop
+#
+MODULE/cam_siop			optional cpu DEC4000 siop device-driver Binary
+io/cam/siop/siop.c		module cam_siop optimize -g3
+io/cam/siop/kn430/siop_kn430.c	module cam_siop
+#
+MODULE/cam_xza			optional xza device-driver Binary
+io/cam/xza/skz_config.c		module cam_xza
+io/cam/xza/skz_main.c		module cam_xza optimize -g3
+io/cam/xza/skz_dme.c		module cam_xza
+io/cam/xza/skz_error.c		module cam_xza
+io/cam/xza/skz_sched.c		module cam_xza
+io/cam/xza/skz_debug.c		module cam_xza
+io/cam/xza/skz_nport.c		module cam_xza
+io/cam/xza/skz_diag.c		module cam_xza
+io/cam/xza/skz_target.c		module cam_xza
+#
+io/cam/mips_dummy.c             module arch_alpha
+#
+io/dec/lsb/lsb_common.c		optional cpu DEC7000 or cpu DEC21000 device-driver Binary
+#
+MODULE/fbus			optional fbus device-driver Binary
+io/dec/fbus/fbus.c		module fbus
+io/dec/fbus/fbus_loadable.c	module fbus
+io/dec/fbus/flag.c		module fbus
+data/fbus_option_data.c		optional fbus Notbinary
+#
+MODULE/mbox			optional ibus or cpu DEC7000 or cpu DEC4000 or cpu DEC21000 device-driver Binary
+io/dec/mbox/mbox.c		module mbox
+#
+MODULE/ibus			optional ibus device-driver Binary
+io/dec/ibus/ibus.c	 	module ibus
+#
+MODULE/xmi			optional xmi device-driver Binary
+io/dec/xmi/xmiinit.c		module xmi
+io/dec/xmi/xlamb.c		module xmi
+#
+MODULE/xna			optional xna device-driver Binary
+io/dec/netif/if_xna.c		module xna
+#
+MODULE/mfa			optional mfa device-driver Binary
+io/dec/netif/if_mfa.c		module mfa
+#
+MODULE/STATIC/tc                optional tc device-driver Binary
+io/dec/tc/tc.c                  module tc
+io/dec/tc/tc_loadable.c         module tc
+#
+MODULE/STATIC/scc		optional scc device-driver Binary
+io/dec/tc/scc.c			module scc
+MODULE/nvtc			optional nvtc device-driver Binary
+io/dec/tc/nvtc.c		module nvtc	
+#
+MODULE/STATIC/bba		optional bba device-driver Binary
+io/dec/tc/amd79c30.c		module bba
+io/dec/tc/amd79c30_dummy.c	module bba
+io/dec/tc/amd79c30_hdlc.c	module bba
+#
+MODULE/STATIC/eisa              optional eisa device-driver Binary
+io/dec/eisa/eisa.c              module eisa
+io/dec/eisa/eisa_cnfg.c         module eisa
+arch/alpha/hal/isp.c		module eisa
+#
+MODULE/i2c			optional cpu DEC4100 or cpu DEC6600 or cpu DMCCEV6 Binary
+io/dec/i2c/i2c.c                module i2c
+#
+MODULE/iscc			optional iscc device-driver Binary
+io/dec/eisa/iscc.c		module iscc
+#
+MODULE/STATIC/isa               optional isa device-driver Binary
+io/dec/eisa/isa.c               module isa
+#
+MODULE/gpc			optional gpc device-driver Binary
+io/dec/eisa/gpc.c		module gpc
+MODULE/STATIC/ace		optional ace device-driver Binary
+io/dec/eisa/ace.c		module ace
+MODULE/lp			optional lp device-driver Binary optimize -g3
+io/dec/eisa/lp.c		module lp
+MODULE/envram			optional envram device-driver Binary
+io/dec/eisa/envram.c		module envram
+MODULE/re_xcr			optional re or xcr device-driver Binary
+io/dec/eisa/re_driver.c		module re_xcr
+io/dec/eisa/xcr_logger.c	module re_xcr
+io/dec/eisa/xcr_port.c		module re_xcr
+#
+MODULE/STATIC/pci               optional pci device-driver BINARY
+io/dec/pci/pci.c                module pci
+arch/alpha/hal/dma_sg_map.c	module pci -optimize -O2
+arch/alpha/hal/shared_intr.c	module pci
+io/dec/pci/pci_common_intr_handler.c 	module pci 
+#
+MODULE/pnvram			optional pnvram device-driver Binary
+io/dec/pci/pnvram.c		module pnvram
+#
+MODULE/STATIC/mchan		optional mchan device-driver Binary optimize -O2
+io/dec/pci/mchan.c		module mchan
+#
+MODULE/pcia_mult                optional pci and cpu DEC21000 and multi_platform device-driver Binary
+io/dec/pci/pcia_mult.c          module pcia_mult
+#
+MODULE/pcia			optional pci and cpu DEC21000 and not multi_platform device-driver Binary
+io/dec/pci/pcia.c		module pcia
+#
+MODULE/pd6729			optional pcmcia device-driver Binary
+io/dec/pcmcia/pd6729.c		module pd6729
+#
+MODULE/pcic			optional pcmcia device-driver Binary
+io/dec/pcmcia/pcic.c		module pcic
+#
+io/dec/pcmcia/pcmcia_fnc.c	module arch_alpha
+#
+MODULE/pcmcia			optional pcmcia device-driver Binary
+io/dec/pcmcia/pcmcia.c		module pcmcia
+io/dec/pcmcia/card_services.c   module pcmcia 
+io/dec/pcmcia/card_config.c	module pcmcia
+io/dec/pcmcia/pcmcia_event.c	module pcmcia 
+#
+MODULE/STATIC/i2o		optional i2o Binary
+io/i2o/i2oexec.c		module i2o optimize -g3
+io/i2o/i2omsg.c			module i2o optimize -g3
+io/i2o/i2opcixport.c		module i2o optimize -g3
+io/i2o/i2o.c			module i2o optimize -g3
+#
+MODULE/STATIC/i2o_bs		optional i2o Binary
+io/i2o/i2o_bs.c			module i2o_bs optimize -g3
+io/i2o/i2o_logger.c		module i2o_bs optimize -g3
+#
+MODULE/ln			optional ln Binary
+io/dec/netif/if_ln.c		module ln
+#
+MODULE/le			optional le device-driver Binary
+io/dec/netif/if_le.c		module le
+#
+MODULE/te			optional te Binary
+io/dec/netif/if_te.c		module te
+#
+MODULE/tu			optional tu Binary
+io/dec/netif/if_tu.c		module tu
+#
+MODULE/fza			optional fza Binary
+io/dec/netif/if_fza.c		module fza
+#
+MODULE/STATIC/fta		optional fta Binary
+io/dec/netif/if_fta.c		module fta
+#
+MODULE/tra			optional tra Binary
+io/dec/netif/if_tra.c		module tra
+#
+MODULE/faa			optional faa Binary
+io/dec/netif/if_faa.c		module faa
+#
+MODULE/STATIC/vb    		optional pci and vba and vb Binary
+io/dec/netif/if_vb.c            module vb
+#
+MODULE/STATIC/lta			optional lta Binary
+io/atm/drivers/otto/if_otto.c           module lta
+io/atm/drivers/otto/if_otto_xilinx.c    module lta
+io/atm/drivers/otto/if_ottodefs.c       module lta
+io/atm/drivers/otto/otto_platform.c     module lta
+io/atm/drivers/otto/otto_flow.c         module lta
+io/atm/drivers/otto/otto_fakesnmp.c     module lta
+io/atm/drivers/otto/aal5crc.c	        module lta
+#
+MODULE/STATIC/lpa			optional lpa Binary
+io/atm/drivers/meteor/acr_tbl.c		module lpa
+io/atm/drivers/meteor/adap_sw.c		module lpa
+io/atm/drivers/meteor/fm.c		module lpa
+io/atm/drivers/meteor/if_lpa.c		module lpa
+io/atm/drivers/meteor/if_lpa_defs.c	module lpa
+io/atm/drivers/meteor/if_lpa_platform.c	module lpa
+io/atm/drivers/meteor/met_sw.c		module lpa
+#
+MODULE/dsa_cippd		optional ci device-driver Binary
+io/dec/ci/ciconfig.c		module dsa_cippd
+io/dec/ci/cippd_error.c		module dsa_cippd
+io/dec/ci/cippd_event.c		module dsa_cippd
+io/dec/ci/cippd_pmaint.c	module dsa_cippd
+io/dec/ci/cippd_protocol.c	module dsa_cippd
+io/dec/ci/cippdvar.c		module dsa_cippd
+io/dec/gvp/gvp_block.c		module dsa_cippd
+io/dec/gvp/gvp_dg.c		module dsa_cippd
+io/dec/gvp/gvp_msg.c		module dsa_cippd
+io/dec/gvp/gvp_subr.c		module dsa_cippd
+io/dec/gvp/gvpvar.c		module dsa_cippd
+#
+MODULE/dsa_np			optional np device-driver Binary
+io/dec/np/np_block.c		module dsa_np
+io/dec/np/np_dg.c		module dsa_np
+io/dec/np/np_error.c		module dsa_np
+io/dec/np/np_init.c		module dsa_np
+io/dec/np/np_isr.c		module dsa_np
+io/dec/np/np_lpmaint.c		module dsa_np
+io/dec/np/np_msg.c		module dsa_np
+io/dec/np/np_subr.c		module dsa_np
+io/dec/np/npvar.c		module dsa_np
+io/dec/xmi/xminp.c		module dsa_np
+#
+MODULE/dsa_scs			optional uq or ci device-driver Binary
+io/dec/scs/scs_block.c		module dsa_scs
+io/dec/scs/scs_configdb.c	module dsa_scs
+io/dec/scs/scs_conn.c		module dsa_scs
+io/dec/scs/scs_dg.c		module dsa_scs
+io/dec/scs/scs_error.c		module dsa_scs
+io/dec/scs/scs_event.c		module dsa_scs
+io/dec/scs/scs_info.c		module dsa_scs
+io/dec/scs/scs_maint.c		module dsa_scs
+io/dec/scs/scs_msg.c		module dsa_scs
+io/dec/scs/scs_protocol.c	module dsa_scs
+io/dec/scs/scs_subr.c		module dsa_scs
+io/dec/scs/scsvar.c		module dsa_scs
+#
+MODULE/dsa_sysap		optional uq or ci device-driver Binary
+io/dec/sysap/scs_directory.c 	module dsa_sysap
+io/dec/sysap/mscp_tape.c	module dsa_sysap
+io/dec/sysap/mscp_disk.c	module dsa_sysap
+io/dec/sysap/mscp_bbr.c		module dsa_sysap
+io/dec/sysap/mscp_bbrstates.c 	module dsa_sysap
+io/dec/sysap/mscp_config.c	module dsa_sysap
+io/dec/sysap/mscp_conpol.c	module dsa_sysap
+io/dec/sysap/mscp_diskvar.c	module dsa_sysap
+io/dec/sysap/mscp_subr.c	module dsa_sysap
+io/dec/sysap/mscp_var.c		module dsa_sysap
+io/dec/sysap/sysap_start.c	module dsa_sysap
+#
+MODULE/dsa_uba			optional uba or uq device-driver Binary
+io/dec/uba/uba.c		module dsa_uba
+#
+MODULE/dsa_uqserv		optional uq device-driver Binary
+io/dec/uba/uqserv.c		module dsa_uqserv
+#
+MODULE/dsa_kdm			optional kdm device-driver Binary
+io/dec/uba/kdm.c		module dsa_kdm
+#
+# 
+MODULE/fdi			optional fdi device-driver Binary
+io/dec/fdi/fd.c                 module fdi
+io/dec/fdi/fdcam.c              module fdi
+#
+#
+# graphics drivers
+#
+MODULE/STATIC/ws		optional ws device-driver Binary
+io/dec/ws/ws_driver.c		module ws
+#
+MODULE/STATIC/scc_input		optional ws and scc device-driver Binary
+io/dec/ws/lk201.c		module scc_input
+io/dec/ws/vsxxx.c		module scc_input
+#
+MODULE/STATIC/gpc_input		optional ws and gpc device-driver Binary
+io/dec/ws/pcxal.c		module gpc_input
+io/dec/ws/pcxas.c		module gpc_input
+#
+MODULE/qfont			optional ws device-driver Binary
+io/dec/ws/qfont.c		module qfont
+#
+MODULE/bt431			optional fb or pv device-driver Binary
+io/dec/ws/bt431.c		module bt431
+MODULE/bt459			optional fb device-driver Binary
+io/dec/ws/bt459.c		module bt459
+MODULE/bt463			optional fb or pv device-driver Binary
+io/dec/ws/bt463.c		module bt463
+#
+MODULE/fb			optional fb device-driver Binary
+io/dec/ws/fb.c			module fb
+#
+# VGA and SVGA Driver Modules
+#
+io/dec/ws/vga_support.c		module ws
+#
+MODULE/STATIC/vga		optional vga or ati_vga or ati or cirrus or qvision or svision or trio or pvp or tga or comet or wd device-driver Binary
+io/dec/ws/vga.c			module vga
+#
+MODULE/STATIC/ati32		optional ati_vga device-driver Binary
+io/dec/ws/ati.c			module ati32
+#
+MODULE/STATIC/ati64		optional ati device-driver Binary
+io/dec/ws/ati64.c		module ati64
+#
+MODULE/STATIC/cirrus		optional cirrus device-driver Binary
+io/dec/ws/cirrus.c		module cirrus
+#
+MODULE/STATIC/qvision		optional qvision device-driver Binary
+io/dec/ws/qvision.c		module qvision
+#
+MODULE/STATIC/s3v864		optional svision device-driver Binary
+io/dec/ws/s3v864.c		module s3v864
+#
+MODULE/STATIC/s3trio		optional trio device-driver Binary
+io/dec/ws/s3trio.c		module s3trio
+#
+MODULE/STATIC/wd		optional wd device-driver Binary
+io/dec/ws/wd.c			module wd
+#
+# Open3d graphics drivers
+#
+MODULE/comet			optional comet device-driver Binary
+io/dec/ws/comet.c		module comet
+#
+MODULE/tga			optional tga device-driver Binary
+io/dec/ws/tga.c			module tga
+#
+MODULE/STATIC/sfbp		optional fb device-driver Binary
+io/dec/ws/pmagro.c		module sfbp
+io/dec/ws/sfb.c			module sfbp
+#
+MODULE/pv			optional pv device-driver Binary
+io/dec/ws/pv.c			module pv
+#
+MODULE/pvl			optional pvl device-driver Binary
+io/dec/ws/pvl.c			module pvl
+#
+MODULE/pvp			optional pvp device-driver Binary
+io/dec/ws/pvp.c			module pvp
+#
+MODULE/STATIC/presto		optional presto Binary
+io/dec/presto/pr.c		module presto optimize -g3
+io/dec/presto/presto_cfg.c	module presto
+#
+data/cbus_data.c		optional cpu DEC4000 Notbinary
+data/cbus2_data.c		optional cpu DEC2100_A500 or DEC2100_C500 Notbinary
+data/mbox_data.c		optional ibus or cpu DEC7000 or cpu DEC4000 or cpu DEC21000 Binary
+data/lsb_data.c			optional cpu DEC7000 or cpu DEC21000 Notbinary
+data/xmi_data.c			optional xmi or iop or xza or xfa Notbinary
+data/if_xna_data.c		optional xna Notbinary
+data/if_mfa_data.c		optional mfa Notbinary
+data/cam_data.c			optional scsi Notbinary
+data/cam_special_data.c		optional scsi Notbinary
+data/if_ln_data.c		optional ln Notbinary
+data/if_le_data.c		optional le Notbinary
+data/if_te_data.c		optional te Notbinary
+data/if_tu_data.c		optional tu Notbinary
+data/if_fza_data.c		optional fza Notbinary
+data/if_fta_data.c		optional fta Notbinary
+data/if_tra_data.c		optional tra Notbinary
+data/tms380_fw_data.c		optional tra Notbinary
+data/if_faa_data.c		optional faa Notbinary
+data/if_otto_data.c             optional lta Notbinary
+#
+data/bt_data.c			optional fb or pv Notbinary
+data/lk201_data.c		optional ws and scc Notbinary
+data/vsxxx_data.c		optional ws and scc Notbinary
+data/pcxal_data.c		optional ws and gpc Notbinary
+data/pcxas_data.c		optional ws and gpc Notbinary
+data/ws_data.c			standard Notbinary
+data/autoconf_data.c		standard Notbinary
+data/cons_sw_data.c		standard Notbinary
+./tc_option_data.c		optional tc Notbinary
+data/tty_pty_data.c		optional  pty Notbinary
+./pci_option_data.c		optional pci Notbinary
+./eisa_option_data.c		optional eisa Notbinary
+./isa_option_data.c		optional isa Notbinary
+data/fb_data.c			optional fb Notbinary
+data/scc_data.c			optional scc Notbinary
+data/nvtc_data.c		optional nvtc Notbinary
+data/envram_data.c		optional envram Notbinary
+data/pnvram_data.c		optional pnvram Notbinary
+data/ci_data.c			optional ci Notbinary
+data/cippd_data.c		optional ci Notbinary
+data/gvp_data.c			optional ci Notbinary
+data/mscp_data.c		optional uq or ci or mscp Notbinary
+data/np_data.c			optional np Notbinary
+data/scs_data.c			optional uq or ci or hsc or dssc or scsnet Notbinary
+data/sysap_data.c		optional uq or ci Notbinary
+data/binlog_data.c		standard Notbinary
+data/uq_data.c			optional uq Notbinary
+data/pmap_data.c		standard Notbinary
+data/presto_data.c		standard Notbinary
+data/pv_data.c			optional pv Notbinary
+data/pvl_data.c			optional pvl Notbinary
+data/pvp_data.c			optional pvp Notbinary
+data/iscc_data.c		optional iscc Notbinary
+io/common/error_event.c		module arch_alpha
+io/common/alloc_smt.c		module arch_alpha
+data/ace_data.c			optional ace device-driver Notbinary
+data/trn_sr_data.c              standard Notbinary
+data/xcr_data.c			optional re or xcr Notbinary
+net/trn_sr.c                    optional tra or trsrcf Binary optimize -g3
+#
+# LSM source files
+#
+#data/lsm_data.c		optional lsm Notbinary
+MODULE/STATIC/lsm		optional lsm Binary
+vxvm/dki_osf.c			module lsm
+#
+#       Plex Driver
+#
+vxvm/plex/plex.c		module lsm
+#
+#       Vols Driver
+#
+vxvm/volspec/volspec.c		module lsm
+#
+#       Vol Driver
+#
+vxvm/vol/vol.c			module lsm optimize -g3
+vxvm/vol/volblog.c		module lsm
+vxvm/vol/volioctl.c		module lsm
+vxvm/vol/volklog.c		module lsm
+vxvm/vol/volted.c		module lsm
+vxvm/vol/volSpace.c		module lsm
+vxvm/vol/volroot.c		module lsm
+vxvm/vol/vol_cfg.c		module lsm
+#
+# LSM ted files
+#
+ted/ted.c			optional lsm_ted Binary
+ted/tedSpace.c			optional lsm_ted Binary
+
+#
+# VME
+#
+MODULE/STATIC/vme_vba		optional vba Binary
+io/dec/vme/vba_generic.c	module vme_vba
+io/dec/vme/vba_tc.c		module vme_vba
+io/dec/vme/vba_pci.c	        module vme_vba
+io/dec/vme/vba_dispatch.c	module vme_vba
+
+#
+# DDR
+#
+MODULE/STATIC/ddr		standard Binary
+io/common/ddr.c 		module ddr
+
+#
+# kio: Kernel-IO Routines
+#
+MODULE/STATIC/kio		standard Binary
+io/common/kio.c			module kio
+
+#
+# kds: Kernel Database Sub-system
+#
+MODULE/STATIC/kds		standard Binary
+io/common/kds.c			module kds
+
+#
+# envmon: Environmental Monitoring subsystem
+#
+MODULE/DYNAMIC/envmon           standard Binary
+arch/alpha/hal/envmon.c         module envmon
+
+#
+# distint: Distributed Interrupt subsystem
+#
+MODULE/DYNAMIC/distint		optional distint Binary
+arch/alpha/hal/distint_cfg.c	module distint optimize -g3
+
+#
+# Support for ALPHAbook 1 systems
+#
+MODULE/STATIC/el               	optional cpu ALPHABOOK1 or multi_platform device-driver Binary
+io/dec/netif/if_el.c            module el
+
+MODULE/STATIC/lan_common        standard Binary
+io/dec/netif/lan_common.c       module lan_common
+
+MODULE/STATIC/hmc		optional hmc device-driver Binary
+io/dec/eisa/hmc.c		module hmc
+io/dec/eisa/hmc_support.c	module hmc
+
+#
+# support for pci devices with isa interrupts
+#
+MODULE/pci_isa_intr		optional cpu DECST30 or cpu EB164 BINARY
+io/dec/pci/pci_isa_intr.c	module pci_isa_intr
+
+#
+# common ev6 file
+#
+MODULE/ev6_common		optional cpu DEC6600 or cpu DMCCEV6 Binary
+arch/alpha/hal/ev6_common.c	module ev6_common
+
+#
+# USB (Universal Serial Bus) Modules
+#
+MODULE/STATIC/usb		optional usb Binary optimize -g3
+io/dec/usb/usbd.c		module usb 
+MODULE/STATIC/usb_ohci		optional usb device-driver Binary
+io/dec/usb/usb_ohci.c		module usb_ohci
+MODULE/STATIC/usb_hub		optional usb Binary optimize -g3
+io/dec/usb/usb_hub.c		module usb_hub 
+MODULE/STATIC/usb_hid		optional usb Binary optimize -g3
+io/dec/usb/usb_hid.c		module usb_hid
+MODULE/STATIC/usb_keyboard	optional usb Binary optimize -g3
+io/dec/usb/usb_keyboard.c	module usb_keyboard 
+MODULE/STATIC/usb_mouse		optional usb Binary optimize -g3
+io/dec/usb/usb_mouse.c		module usb_mouse
+MODULE/STATIC/usb_printer	optional usb Binary optimize -g3
+io/dec/usb/usb_printer.c	module usb_printer
+
+#
+# KGPSA Fibre Channel driver (emx)
+#
+MODULE/STATIC/emx		optional emx device-driver Binary
+io/cam/emx/emx.mod		module emx
+data/emx_data.c                 optional emx Notbinary
+
+#
+# DEGPA Gigabit Ethernet driver (alt)
+#
+MODULE/STATIC/alt		optional alt device-driver Binary
+io/dec/netif/gb/alt.mod		module alt
+
+#
+# FORE HE Series ATM driver (lfa)
+#
+MODULE/STATIC/lfa		optional lfa device-driver Binary
+io/atm/drivers/fore/lfa.mod	module lfa
+
+

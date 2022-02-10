@@ -1,0 +1,233 @@
+// **************************************************************
+// *								*
+// * Keymaps for fr_CH.ISO8859-1 - French for Switzerland	*
+// *								*
+// **************************************************************
+
+xkb_keymap "lk201-tw" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk201)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(vt105-tw)"	};
+    xkb_geometry	{ description = "Digital Swiss French LK201 - Typewriter Keys";
+			  include "geometry/digital_lk(lk201)"		};
+};
+
+xkb_keymap "lk201-dp" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk201)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(vt105-dp)"	};
+    xkb_geometry	{ description = "Digital Swiss French LK201 - Data Processing Keys";
+			  include "geometry/digital_lk(lk201)"		};
+};
+
+xkb_keymap "lk201" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk201)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(vt105)"	};
+    xkb_geometry	{ description = "Digital Swiss French LK201";
+			  include "geometry/digital_lk(lk201)"		};
+};
+
+xkb_keymap "lk401-tw" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(vt108-tw)"	};
+    xkb_geometry	{ description = "Digital Swiss French LK401 - Typewriter Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk401-dp" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(vt108-dp)"	};
+    xkb_geometry	{ description = "Digital Swiss French LK401 - Data Processing Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk401" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk401)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(vt108)"	};
+    xkb_geometry	{ description = "Digital Swiss French LK401";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411-tw" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(vt108-tw)"	};
+    xkb_geometry	{ description = "Digital Swiss French LK411 - Typewriter Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411-dp" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(vt108-dp)"	};
+    xkb_geometry	{ description = "Digital Swiss French LK411 - Data Processing Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk411" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(vt108)"	};
+    xkb_geometry	{ description = "Digital Swiss French LK411";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461-tw" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(vt108-tw)"	};
+    xkb_geometry	{ description = "Digital Swiss French LK461 - Typewriter Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461-dp" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(vt108-dp)"	};
+    xkb_geometry	{ description = "Digital Swiss French LK461 - Data Processing Keys";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk461" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk411)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(vt108)"	};
+    xkb_geometry	{ description = "Digital Swiss French LK461";
+			  include "geometry/digital_lk(lk401)"		};
+};
+
+xkb_keymap "lk442" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk444)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(lk44x)"	};
+    xkb_geometry	{ description = "Digital Swiss French LK442";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk444" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk444)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(lk44x)"	};
+    xkb_geometry	{ description = "Digital Swiss French LK444";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk44x" {
+    xkb_keycodes        { include "keycodes/digital_lk(lk444)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(lk44x)"	};
+    xkb_geometry	{ description = "Digital Swiss French LK444";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk450" {
+    xkb_keycodes        { include "keycodes/digital_pc(lk450)" 		};
+    xkb_types           { include "types/default"    	        	};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(vt108)"	};
+    xkb_geometry	{ description = "Digital Swiss French LK450";
+			  include "geometry/digital_lk(lk450)"		};
+};
+
+xkb_keymap "pcxalap" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(pcxalap)"};
+    xkb_geometry	{ description = "Digital Swiss French PCXAL-AP";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxalfk" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(pcxalfk)"};
+    xkb_geometry	{ description = "Digital Swiss French PCXAL-FK";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_on_keys)"	};
+};
+
+xkb_keymap "pcxalgk" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(pcxalgk)"};
+    xkb_geometry	{ description = "Digital Swiss French PCXAL-GK";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "pcxal" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(pcxal)"};
+    xkb_geometry	{ description = "Digital Swiss French PCXAL";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471ak" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(lk471ak)"};
+    xkb_geometry	{ description = "Digital Swiss French LK471-AK";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk471" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(lk471)"};
+    xkb_geometry	{ description = "Digital Swiss French LK471";
+			  include "geometry/digital_pc(pc102)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97wak" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(lk471ak)"};
+    xkb_geometry	{ description = "Digital Swiss French LK97W-AK";
+			  include "geometry/digital_pc(pc105)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+
+xkb_keymap "lk97w" {
+    xkb_keycodes        { include "keycodes/digital_pc(pc102)" 		};
+    xkb_types           { include "types/default"   	 		};
+    xkb_compatibility   { include "compat/default"			};
+    xkb_symbols         { include "symbols/digital_swiss_french(lk471)"};
+    xkb_geometry	{ description = "Digital Swiss French LK97W";
+			  include "geometry/digital_pc(pc105)"
+			  include "geometry/digital_pc(leds_alone)"	};
+};
+

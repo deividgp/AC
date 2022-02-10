@@ -1,0 +1,32 @@
+#/* @(#)@(#)help/logStartF.hlp	2.1 11 May 1993 19:05:18 -  */
+#ident  "@(#)va11:help/logStartF.hlp   2.1"
+#
+#
+Forms, forms.hlp
+Logging Menu, loggingM.hlp
+Options Menu, optionsM.hlp
+#########################################
+LOGGING START FORM HELP
+
+This form allows you to specify the path name of the file that you want to
+use to store the command log.  If the file exists it will be opened and the
+log entries will be appended to the end.  You must be able to write to the
+specified file (and all directories in the path).
+
+If you specify a filename only, then the Visual Administrator creates that
+file in the directory from which you executed the Visual Administrator.
+There is no standard location for log files.
+
+As this name is not sent to a shell, do not use shell meta-characters
+(like ~) or environment variables (like $HOME) in the specified pathname.  
+These will result in an error.
+
+
+Fields
+----------
+
+Log File:
+	This is the name of the file that you want the log written to.  The
+	maximum length of the path specified here is 127 characters.  It
+	must contain a valid pathname. 
+

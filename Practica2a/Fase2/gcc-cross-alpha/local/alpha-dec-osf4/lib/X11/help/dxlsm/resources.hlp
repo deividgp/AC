@@ -1,0 +1,72 @@
+/* @(#)@(#)help/resources.hlp	2.1 11 May 1993 19:05:49 -  */
+#ident  "@(#)va11:help/resources.hlp   2.1"
+#
+#
+Options, optionsM.hlp
+Color, colors.hlp
+#########################################
+RESOURCES HELP
+
+The following resources are provided so that you can configure the Visual
+Administrator according to your own preferences and system requirements.
+These can be specified in your .Xdefaults file with your preferences; see
+system documentation on X resources for more information.
+
+The default values specified here correspond to those defaults compiled
+into the Visual Administrator.  Preferences specified in your system's
+"app-defaults" file may change these defaults.
+
+For descriptions of the color and monochrome resources, see help on Color.
+
+To change a resource in your .Xdefaults file, begin the line with "DXlsm*",
+the resource name, a colon, optional tab(s), and then the new value.  For
+example, the following would change the alarmPixel value to the color
+orange:
+
+DXlsm*alarmPixel:	orange
+
+
+			Default Value	Comment
+			-------------	-------
+Color Resources
+    foreground		black		(see help on Color)
+    background		white
+    selectedPixel	green		
+    disabledPixel	blue
+    alarmPixel		red
+    freesdPixel		yellow
+    projectPixel	yellow
+    lowPixel		green
+    midPixel		yellow
+    highPixel		red
+
+Monochrome Resources
+    selectedPixmap	gray3		(see help on Color)
+    disabledPixmap	stripe4
+    alarmPixmap		gray1
+    freesdPixmap	root_weave
+    projectPixmap	root_weave
+    lowPixmap		cross_weave
+    midPixmap		root_weave
+    highPixmap		wide_weave
+
+Icon Resources
+    volumeMinimizeIcons	False		If true, volumes minimize by default
+    plexMinimizeIcons	False		If true, plexes minimize by default
+    diskMinimizeIcons	False		If true, LSM disks minimize by def.
+    phyDiskMinimizeIcons  False		If true, phys. disks minimize by def.
+    autoDeselect	True		If true, all icons deselected after
+					successful operation completes
+
+Miscellaneous Resources
+    DXlsmHelp		False		Force help message on startup
+    mono		False		Force monochrome
+    tutorial		False		Force enter DXlsm in tutorial mode
+    title		"Visual Administrator"   Name of the application
+    fontList		fixed		Default font list for DXlsm
+    commandSilos	50		Number of command stacks
+    commandHistorySize	20		Commands to keep in history
+    defaultViewWindow	rootdg		First view shown upon DXlsm startup
+    chkMntptInterval	5		How often to check file system
+					mount information (seconds)
+    twoButtonMouse	False		Remap buttons for 2 btn mouse

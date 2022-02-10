@@ -1,0 +1,28 @@
+#/* @(#)@(#)help/viewM.hlp	2.1 11 May 1993 19:06:36 -  */
+#ident  "@(#)va11:help/viewM.hlp   2.1"
+#
+#
+Views, views.hlp
+View Create Form, viewCreatF.hlp
+View Rename Form, viewRenF.hlp
+View Remove Form, viewRemF.hlp
+#########################################
+VIEW MENU HELP
+
+This pulldown menu lets you manipulate user views.
+
+
+Create a View
+-------------
+This creates a user view.  Icons can be added and manipulated within this
+new view.
+
+Rename a View
+-------------
+Change the name of an existing user view.  The new name cannot be a
+duplicate of any other view names.
+
+Remove Views
+------------
+Permanently remove a user view.  This has no effect on the physical
+entities themselves, just the icons within this user view.

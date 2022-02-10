@@ -1,0 +1,291 @@
+#!/sbin/sh -
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+# @(#)$RCSfile: disk.init.sh,v $ $Revision: 1.1.11.8 $ (DEC) $Date: 1995/12/20 16:09:07 $
+# @(#)src/common/cmd/vxvm/voladm/disk.init.sh	5.11 16 Mar 1993 01:19:18 - Copyright (c) 1993 VERITAS Software Corp.
+#ident	"@(#)vxvm:common/cmd/vxvm/voladm/disk.init.sh	5.11"
+
+
+DSPMSG="/sbin/lsm.d/bin/dspmsg -s 1 lsm_sh.cat"
+
+VOLADM_ROOT=${VOLADM_ROOT-/usr/lib/lsm}
+VOLADM_LIB=${VOLADM_LIB-$VOLADM_ROOT/lib}
+VOLADM_BIN=${VOLADM_BIN-$VOLADM_ROOT/bin}
+. $VOLADM_LIB/voladm_lib.sh
+
+input_device=$1
+input_daname=${input_device}
+
+
+voladm_menu_push AddDisk
+voladm_help_push disk.init.help
+
+while true
+do
+	voladm_begin_screen -M 2600 "Add or initialize a disk"
+	$DSPMSG 2601 "  Use this operation to add a disk to a disk group.  You can\n"
+	$DSPMSG 2602 "  select an existing disk group or create a new disk group.  You\n"
+	$DSPMSG 2603 "  can also initialize a disk without adding it to a disk group,\n"
+	$DSPMSG 2604 "  which leaves the disk available for use as a replacement disk.\n"
+	$DSPMSG 2605 "  This operation takes, as input, a disk device or partition and \n"
+	$DSPMSG 2606 "  a disk group (or none to leave the disk available for use as a \n"
+	$DSPMSG 2607 "  replacement disk).  If you are adding the disk to a disk\n"
+	$DSPMSG 2608 "  group, you will be asked to give a name to the disk.\n"
+
+	if [ -z "$input_device" ]
+	then
+		voladm_disk_device -M 2609 "Select disk device to add"
+		ask_more=yes
+	else
+		device=$input_device
+		daname=$input_daname
+		input_device=
+		input_daname=
+		ask_more=
+	fi
+
+	call_init=
+	call_encap=
+	creat_group=
+	privlen=1024
+	attrs="nconfig=1 nlog=1"
+	voladm_call disk.ckinit "$device" "$daname" add
+
+
+	if [ $status -eq 0 ]
+	then
+		call_init=yes
+	elif [ $status -eq 11 ]
+	then
+		$DSPMSG 2610 "\n  The requested operation is to reattach device %s to its disk group\n" \
+			"$daname"
+		voladm_yorn -M 2612 "Continue with operation?" y
+		if [ $? -ne 0 ]
+		then
+			[ "$ask_more" ] || quit 1
+			voladm_yorn -M 2613 "Select a different disk device?" n \
+				&& continue
+			break
+		fi
+		doit volreattach -rb $daname 2> $tmpfile1
+		if [ $? -eq 0 ]
+		then
+			$DSPMSG 2614 "\n  Reattaching device %s completed successfully.\n" \
+				"$daname"
+			[ "$ask_more" ] || quit 0
+			voladm_yorn -M 2615 "Add or initialize another disk?" n || break
+		else
+			$DSPMSG 2616 "\n  Reattaching device %s failed.\n" \
+				"$daname"
+			$DSPMSG 2617 "  Error: %s\n" \
+				"`cat $tmpfile1`"
+			[ "$ask_more" ] || quit 1
+			voladm_yorn -M 2613 "Select a different disk device?" n || break
+		fi
+		continue
+	elif [ $status -eq 12 ]
+	then
+		call_encap=true
+	elif [ $status -ne 10 ]
+	then
+		[ "$ask_more" ] || quit 1
+		if [ $status -eq 11 ]
+		then
+			voladm_yorn -M 2615 "Add or initialize another disk?" n
+		else
+			voladm_yorn -M 2613 "Select a different disk device?" n
+		fi || break
+		continue
+	fi
+
+	if [ -n "$call_encap" ]
+	then
+	 $DSPMSG 2618 "\n  You can choose to add this disk to an existing disk group, to\n"
+	 $DSPMSG 2619 "  create a new disk group.  To create a new disk group, select a\n"
+	 $DSPMSG 2620 "  disk group name that does not yet exist.\n"
+
+		voladm_disk_group -n "" rootdg
+	else
+	 $DSPMSG 2618 "\n  You can choose to add this disk to an existing disk group, to\n"
+	 $DSPMSG 2621 "  create a new disk group, or you can choose to leave the disk\n"
+	 $DSPMSG 2622 "  available for use by future add or replacement operations.  To\n"
+	 $DSPMSG 2623 "  create a new disk group, select a disk group name that does not\n"
+	 $DSPMSG 2624 "  yet exist.  To leave the disk available for future use, specify\n"
+	 $DSPMSG 2625 "  a disk group name of \"none\".\n"
+
+		voladm_disk_group -n "" rootdg optional
+	fi
+
+	[ $? -eq 10 ] && creat_group=yes
+	if [ "X$dgname" = Xnone ]
+	then
+		if [ -z "$call_init" ]
+		then
+	 $DSPMSG 2626 "\n  You selected an initialized disk device, but did not select a disk\n"
+	 $DSPMSG 2627 "  group.  There is no work to do.\n"
+			[ "$ask_more" ] || quit 1
+			voladm_yorn -M 2613 "Select a different disk device?" n &&
+				continue
+			break
+		fi
+	 $DSPMSG 2628 "\n  The requested operation is to initialize disk %s and to leave\n" $device
+	 $DSPMSG 2629 "  this disk free for use as a spare disk.\n"
+		voladm_yorn -M 2612 "Continue with operation?" y
+		if [ $? -ne 0 ]
+		then
+			[ "$ask_more" ] || quit 1
+			voladm_yorn -M 2613 "Select a different disk device?" n \
+				&& continue
+			break
+		fi
+		voladm_call disk.doinit "$device" "$daname" "$privlen" "$attrs"
+	 $DSPMSG 2630 "\n  Disk initialization for %s completed successfully.\n" $device
+		[ "$ask_more" ] || quit 1
+		voladm_yorn -M 2615 "Add or initialize another disk?" n &&
+			continue
+		break
+	fi
+
+	$DSPMSG 2631 "\n  You must now select a disk name for the disk.  This disk name\n"
+	$DSPMSG 2632 "  can be specified to disk removal, move, or replacement\n"
+	$DSPMSG 2633 "  operations.  If you move the disk, such as between host bus\n"
+	$DSPMSG 2634 "  adapters, the disk will retain the same disk name, even though\n"
+	$DSPMSG 2635 "  it will be accessed using a different disk device name.\n"
+
+	voladm_new_disk_dmname "$dgname" "$device"
+	if [ "$call_encap" ]
+	then
+		if [ "$creat_group" ]
+		then
+	 $DSPMSG 2636 "\n  The requested operation is to encapsulate disk device %s and\n" $device
+	 $DSPMSG 2637 "  to create a new disk group from this device named %s.  The\n" $dgname
+	 $DSPMSG 2638 "  disk will be named %s within the disk group.  The system must\n" $daname
+	 $DSPMSG 2639 "  be rebooted before this can take effect.\n"
+			c_opt=-c
+		else
+	 $DSPMSG 2636 "\n  The requested operation is to encapsulate disk device %s and\n" $device
+	 $DSPMSG 2640 "  to add this device to disk group %s as disk %s.  The\n" $dgname $daname
+	 $DSPMSG 2641 "  system must be rebooted before this can take effect.\n"
+			c_opt=
+		fi
+
+		voladm_yorn -M 2612 "Continue with operation?" y
+		if [ $? -ne 0 ]
+		then
+			[ "$ask_more" ] || quit 1
+			voladm_yorn -M 2613 "Select a different disk device?" n &&
+				continue
+			break
+		fi
+		doit volencap $c_opt -g "$dgname" $daname 2> $tmpfile1
+		if [ $? -ne 0 ]
+		then
+			$DSPMSG 2642 "\n  The encapsulation operation failed.\n"
+			$DSPMSG 2617 "  Error: %s\n" \
+				"`cat $tmpfile1`"
+			[ "$ask_more" ] || quit 1
+			voladm_yorn -M 2613 "Select a different disk device?" n || break
+		else
+	 $DSPMSG 2643 "\n  The first stage of encapsulation for %s has completed\n" $device
+	 $DSPMSG 2644 "  successfully.  If disk %s is in use \(e.g. a partition is mounted\)\n" $device
+	 $DSPMSG 2645 "  you might have to reboot the system.\n" 
+	 $DSPMSG 2646 "\n  If the disk %s is NOT in use, execute /sbin/vol-reconfig\n" $device
+	 $DSPMSG 2647 "  To reboot execute the command:\n"
+	 $DSPMSG 2649 "\n	shutdown -r -now \n\n"
+	 $DSPMSG 2650 "  This will update the /etc/fstab file so that volume devices are\n"
+	 $DSPMSG 2651 "  used to mount the file systems on this disk device.  You will need\n"
+	 $DSPMSG 2652 "  to update any other references such as backup scripts, databases,\n" 
+			[ "$ask_more" ] || quit 0
+			voladm_yorn -M 2615 "Add or initialize another disk?" n || break
+		fi
+		continue
+
+	elif [ "$call_init" ] && [ -z "$creat_group" ]
+	then
+	 $DSPMSG 2653 "\n  The requested operation is to initialize disk device %s and\n" $device
+	 $DSPMSG 2654 "  to add this device to disk group %s as disk %s.\n" $dgname $dmname
+		get_disk_params "$dgname"
+
+	elif [ "$call_init" ] && [ "$creat_group" ]
+	then
+	 $DSPMSG 2653 "\n  The requested operation is to initialize disk device %s and\n" $device
+	 $DSPMSG 2655 "  to create a new disk group named %s containing this disk.\n" $dgname
+	 $DSPMSG 2656 "  The disk will be named %s within the disk group.\n" $dmname
+		get_diskgroup_params "$dgname" 
+
+	elif [ -z "$call_init" ] && [ -z "$creat_group" ]
+	then
+	 $DSPMSG 2657 "\n  The requested operation is to add disk device %s to disk\n" $device
+	 $DSPMSG 2658 "  group %s as disk %s.\n" $dgname $dmname
+	get_disk_params "$dgname"
+
+	elif [ -z "$call_init" ] && [ "$creat_group" ]
+	then
+	 $DSPMSG 2659 "\n  The requested operation is to create a new disk group named %s\n" $dgname
+	 $DSPMSG 2660 "  containing disk device %s.  The disk will be named %s\n" $device $dmname
+	 $DSPMSG 2661 "  within the disk group.\n"
+
+		get_diskgroup_params "$dgname" 
+	fi
+	voladm_yorn -M 2612 "Continue with operation?" y
+	if [ $? -ne 0 ]
+	then
+		[ "$ask_more" ] || quit 1
+		voladm_yorn -M 2613 "Select a different disk device?" n &&
+			continue
+		break
+	fi
+
+	if [ "$call_init" ]
+	then
+		voladm_call disk.doinit "$device" "$daname" "$privlen" "$attrs"
+		if [ $? -ne 0 ]
+		then
+			[ "$ask_more" ] || quit 1
+			voladm_yorn -M 2613 "Select a different disk device?" n &&
+				continue
+			break
+		fi
+	fi
+	if [ "$creat_group" ]
+	then
+		doit voldg init $dgname $dmname=$daname 2> $tmpfile1
+		ret=$?
+	else
+		doit voldg -g $dgname adddisk $dmname=$daname 2> $tmpfile1
+		ret=$?
+	fi
+	if [ $ret -eq 0 ]
+	then
+		$DSPMSG 2630 "\n  Disk initialization for %s completed successfully.\n" $device
+		[ "$ask_more" ] || quit 0
+		voladm_yorn -M 2615 "Add or initialize another disk?" n || break
+	else
+		$DSPMSG 2667 "\n  Adding disk device %s to disk group %s as %s failed.\n" \
+			$daname $dgname $dmname
+		$DSPMSG 2617 "  Error: %s\n" \
+			"`cat $tmpfile1`"
+		[ "$ask_more" ] || quit 1
+		voladm_yorn -M 2613 "Select a different disk device?" n || break
+	fi
+done
+
+quit 0

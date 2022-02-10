@@ -1,0 +1,47 @@
+#/* @(#)@(#)help/optionsM.hlp	2.1 11 May 1993 19:05:24 -  */
+#ident  "@(#)va11:help/optionsM.hlp   2.1"
+#
+#
+X Resources, resources.hlp
+Show DXlsm Command Menu, showCmd.hlp
+Command Ready Menu, cmdReady.hlp
+Logging Menu, loggingM.hlp
+Size Unit, sizeFor.hlp
+#########################################
+OPTIONS MENU HELP
+
+This pulldown menu lets you specify your preferences on how the Visual
+Administrator should operate.  Your preferences are saved to the file
+".LSVA_pref" in your home directory so that these can be maintained across
+runs of the Visual Administrator.
+
+You should not modify the preferences file yourself.
+
+
+Show Command
+------------ 
+Here you specify when you want the command window to be shown, either
+before every command is executed, or only when a command fails.
+
+When Commands Are Ready
+----------------------- 
+Here you specify what the Visual Administrator should do when it is ready
+to run a Logical Storage Manager or system command.  The command can either 
+be run immediately, or brought up in the command window for inspection.
+
+Logging
+------- 
+Logging lets you keep a record on disk of all commands sent to the Logical 
+Storage Manager or the system by the Visual Administrator.  You may start 
+and stop this record.
+
+Popup the Command Window
+------------------------
+Bring up the Command Info window.  This shows the command history with the
+status and results of those commands.
+
+Format of Size
+--------------
+This pops up a menu that specifies the default unit for size fields when
+they are displayed in properties forms.  The choice in this field does not
+affect size values that are entered by the user.

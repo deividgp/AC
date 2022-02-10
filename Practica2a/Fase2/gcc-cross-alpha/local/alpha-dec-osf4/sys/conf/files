@@ -1,0 +1,1248 @@
+#
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+#
+# HISTORY
+#
+# @(#)$RCSfile: files,v $ $Revision: 4.2.418.4 $ (DEC) $Date: 1999/01/28 12:57:14 $
+#
+#
+# (c) Copyright 1990, OPEN SOFTWARE FOUNDATION, INC.
+# ALL RIGHTS RESERVED
+#
+#
+# OSF/1 Release 1.0
+#
+# !!!!!!!!!!!!!!!!!!!!!!!!!!
+# !!! NOTE TO DEVELOPERS !!!
+# !!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# The running kernel will be comprised from a collection of modules.
+# A module is simply a collection of one or more objects which are "linked" 
+# together into a single entity. The resulting module can have references to 
+# structures/functions outside of the module. MODULES represent a way to 
+# compact and simplify a group of objects that are always included together. 
+# Every object in a module must be optional on the same list of options. 
+# Everything optional on a list of options will typically (but not always)
+# be in the same module. For example if an object is to be replaced by 
+# a layered  product, that object should be in its own module.  Developers 
+# are  encouraged to keep modules as large and few as possible to gain 
+# the maximum benefit from them.
+#
+# Files which are tagged as NotBinary or are ordered can not be placed into 
+# modules. These files are automatically built into a special module in the
+# NotBinary (TARGET) kernel build area.
+#
+# The basic syntax for module declarations are as follows:
+#
+# MODULE/<optional_modifier>/<module_name>  <standard|optional> Binary
+#        
+# The MODULE/<optional_modifier>/foo line has exactly the same rules as
+# the original <path>/<file_name.c> lines did. All attributes given on the
+# MODULE/foo line are inherited by each file in that module; The optimize
+# string can be overridden for an individual file.  The optional modifier
+# supported is STATIC.  There are three supported types of modules:
+# 
+#   MODULE/<module_name>       : A module without a modfier is simply a
+#				 group-linked object file. There is no
+#				 configuration routine or attributes table.
+#				 These modules can be boot-linked or statically
+#				 linked into a kernel.
+#
+#   MODULE/STATIC/<module_name> : A module with the modifier STATIC specified
+#				  is a group-linked object, which has a
+#				  <module_name>_configure routine and a
+#				  <module_name>_attributes table in it.
+#				  An entry for the module will automatically 
+#			          be made in the in the kernel's
+#				  static_subsys_list table with the state:
+#				  CFG_STATE_LOADED.
+#				  The configuration routine for the module will 
+#				  be invoked very early in the boot process, and
+#				  should use callbacks to perform other tasks later.
+#
+#   if_dynamic <name> :		This is the original OSF supported syntax.
+#				They are almost identical to STATIC modules,
+#				except that the configure point gets called
+#				once at the point: CFG_PT_OLD_CONF_ALL.
+#				It is differentiated from a STATIC module in
+#				that the state in static_subsys_list will have
+#				the bit CFG_STATE_TYPE_OLD set.
+#				NOTE: This syntax is being retired in the next
+#				major release. Developers are encouraged to
+#				switch to STATIC or DYNAMIC modules.
+#				The syntax is:
+#	<path>/<filename1.c> optional foo if_dynamic bar Binary
+#	<path>/<filename2.c> optional foo if_dynamic bar Binary
+#				This makes a module "bar", with the two files
+#				"filename1.o" and "filename2.o" in it.
+#
+#   STATIC and if_dynamic modules are set up for bootstrap linking by default,
+#   but can also be dynamically loaded. The exception to this rule is that
+#   modules which are identified as standard are not dynamically loadable
+#   (they are required prior to kloadsrv being started)
+#
+#   STATIC and if_dynamic modules can also be statically linked into a kernel. 
+#
+# Modules that are marked 'standard' are always linked into a kernel and 
+# modules that are  marked 'optional' are only linked in if the keyword 
+# they are optional on is in the config file.  A module can be optional
+# based on multiple keywords.  For example:
+# 
+#      MODULE/foo	 optional a and b Binary
+#      MODULE/foobar	 optional a or b or c Binary
+# 
+# The syntax for including an object into a module is as follows:
+# 
+# <path>/<file_name.c>	 module <module_name> <keywords>
+# 
+# In this case the module name is the name of the module the object will
+# be included in. The most common keywords are: device-driver and
+# optimize <opt level>
+#
+#	@(#)files	3.17	(ULTRIX/OSF)	10/8/91
+# Mach Operating System
+# Copyright (c) 1989 Carnegie-Mellon University
+# All rights reserved.  The CMU software License Agreement specifies
+# the terms and conditions for use and redistribution.
+#
+OPTIONS/bogus_memory		optional bogus_memory
+OPTIONS/bsd_a_out		optional bsd_a_out
+OPTIONS/bufcache_stats		optional bufcache_stats
+OPTIONS/dec_acl			optional dec_acl
+OPTIONS/dec_audit		optional dec_audit
+OPTIONS/hw_ast			optional hw_ast
+OPTIONS/hw_footprint		optional hw_footprint
+OPTIONS/inocache_stats		optional inocache_stats
+OPTIONS/mach_assert		optional mach_assert
+OPTIONS/mach_co_info		optional mach_co_info
+OPTIONS/mach_co_stats		optional mach_co_stats
+OPTIONS/mach_debug		optional mach_debug
+OPTIONS/mach_host		optional mach_host
+OPTIONS/mach_ipc_stats		optional mach_ipc_stats
+OPTIONS/mach_ipc_sighack	optional mach_ipc_sighack
+OPTIONS/mach_ipc_tcache		optional mach_ipc_tcache
+OPTIONS/mach_ipc_wwa		optional mach_ipc_wwa
+OPTIONS/mach_ipc_xxxhack	optional mach_ipc_xxxhack
+OPTIONS/mach_km			optional mach_km
+OPTIONS/mach_kdb		optional mach_kdb
+OPTIONS/mach_ldebug		optional mach_ldebug
+OPTIONS/mach_ltracks		optional mach_ltracks
+OPTIONS/mach_load		optional mach_load
+OPTIONS/mach_sctimes		optional mach_sctimes
+OPTIONS/mach_xp_fpd		optional mach_xp_fpd
+OPTIONS/mach_emulation		optional mach_emulation
+OPTIONS/nfs			optional nfs
+OPTIONS/nfs_server		optional nfs_server
+OPTIONS/procfs			optional procfs
+OPTIONS/cdfs			optional cdfs
+OPTIONS/dvdfs			optional dvdfs
+OPTIONS/dcedfs			optional dcedfs
+OPTIONS/dceefs			optional dceefs
+OPTIONS/msfs                    optional msfs
+OPTIONS/sec_base		optional sec_base
+OPTIONS/sec_mac_ob		optional sec_mac_ob
+OPTIONS/sec_acl_sware		optional sec_acl_sware
+OPTIONS/sec_acl_posix		optional sec_acl_posix
+OPTIONS/sec_cmw			optional sec_cmw
+OPTIONS/sec_shw			optional sec_shw
+OPTIONS/sec_priv		optional sec_priv
+OPTIONS/sec_ncav		optional sec_ncav
+OPTIONS/sec_net  		optional sec_net
+OPTIONS/sec_nfs  		optional sec_nfs
+OPTIONS/spd			optional spd
+OPTIONS/osf_mach_o		optional osf_mach_o
+OPTIONS/quota			optional quota
+OPTIONS/rpty			optional rpty
+OPTIONS/rt_preempt		optional rt_preempt
+OPTIONS/rt_preempt_debug	optional rt_preempt_debug
+OPTIONS/rt_sched		optional rt_sched
+OPTIONS/rt_sched_mon		optional rt_sched_mon
+OPTIONS/rt_sched_rq		optional rt_sched_rq
+OPTIONS/rt_sched_opt		optional rt_sched_opt
+OPTIONS/rt_pml			optional rt_pml
+OPTIONS/rt_timer		optional rt_timer
+OPTIONS/rt_csem                 optional rt_csem
+OPTIONS/rt_ipc                  optional rt_ipc
+OPTIONS/ser_compat		optional ser_compat
+OPTIONS/bin_compat		optional bin_compat
+OPTIONS/_lmf_			optional _lmf_
+OPTIONS/simple_clock		optional simple_clock
+OPTIONS/sl			optional sl
+OPTIONS/stat_time		optional stat_time
+OPTIONS/streams			optional streams
+OPTIONS/streams_debug		optional streams_debug
+OPTIONS/streams_memdbg		optional streams_memdbg
+OPTIONS/sysv_coff		optional sysv_coff
+OPTIONS/sysv_elf		optional sysv_elf
+OPTIONS/sysv_fs			optional sysv_fs
+OPTIONS/ffm_fs			optional ffm_fs
+OPTIONS/xpr_debug		optional xpr_debug
+OPTIONS/unix_locks		optional unix_locks
+OPTIONS/unix_uni		optional unix_uni
+OPTIONS/vague_stats		optional vague_stats
+OPTIONS/uipc			optional uipc
+OPTIONS/snmpinfo		optional snmpinfo
+OPTIONS/inet			optional inet
+OPTIONS/dli			optional dli
+OPTIONS/packetfilter		optional packetfilter
+OPTIONS/lat			optional lat
+OPTIONS/strifnet		optional strifnet
+OPTIONS/strkinfo		optional strkinfo
+OPTIONS/timod			optional timod
+OPTIONS/tirdwr			optional tirdwr
+OPTIONS/xtiso			optional xtiso
+OPTIONS/ldtty			optional ldtty
+OPTIONS/pckt			optional pckt
+OPTIONS/bsd_tty			optional bsd_tty
+OPTIONS/slip			optional slip
+OPTIONS/ppp			optional ppp
+OPTIONS/dlb			optional dlb
+OPTIONS/dlpi			optional dlpi
+OPTIONS/kdebug			optional kdebug
+OPTIONS/sas			optional sas
+OPTIONS/svvs            	optional svvs
+OPTIONS/atm                     optional atm
+OPTIONS/atmip			optional atmip
+OPTIONS/atmtm			optional atmtm
+OPTIONS/atmifmp			optional atmifmp
+OPTIONS/uni3x			optional uni3x
+OPTIONS/lane			optional lane
+OPTIONS/atmuni                  optional atmuni
+OPTIONS/atmilmi3x               optional atmilmi3x
+OPTIONS/drd			optional drd 
+OPTIONS/rmvm			optional rmvm
+OPTIONS/ntp_time		optional ntp_time
+OPTIONS/cnx			optional cnx
+OPTIONS/rm			optional rm
+OPTIONS/ccomsub			optional ccomsub
+OPTIONS/mcnet			optional mcnet
+OPTIONS/dlmsl			optional dlmsl
+OPTIONS/dlm			optional dlm
+OPTIONS/pwrmgr_enabled		optional pwrmgr_enabled
+OPTIONS/bparm			optional bparm
+#
+# Modules
+#
+MODULE/STATIC/cm		standard Binary
+bsd/cm_cfg.c			module cm
+MODULE/STATIC/generic		standard Binary
+bsd/generic_cfg.c		module generic
+MODULE/STATIC/io		standard Binary
+bsd/io_cfg.c			module io
+bsd/kern_devsw.c		module io
+MODULE/STATIC/ipc		standard Binary
+bsd/ipc_cfg.c			module ipc
+MODULE/STATIC/proc		standard Binary
+bsd/proc_cfg.c			module proc
+MODULE/STATIC/sec		standard Binary
+dec/sec/sec_cfg.c		module sec
+MODULE/STATIC/socket		standard Binary
+bsd/socket_cfg.c		module socket
+#
+MODULE/sec_min			standard Binary
+sec/spd_proplist.c		module sec_min
+sec/spd_udac.c			module sec_min
+sec/sec_conf.c			module sec_min
+sec/sec_subrs.c			module sec_min
+sec/sec_acl.c			module sec_min
+#
+MODULE/STATIC/rt		standard Binary
+kern/rt_cfg.c			module rt
+#
+MODULE/std_kern			standard Binary
+./init_sysent.c			module std_kern
+./mach/exc_server.c		module std_kern
+./mach/exc_user.c		module std_kern
+./mach/mach_host_server.c	module std_kern
+./mach/mach_server.c		module std_kern
+./syscalls.c			module std_kern
+bsd/cmu_syscalls.c		module std_kern
+bsd/coff_exec.c			module std_kern
+bsd/interp_exec.c		module std_kern
+bsd/kern_acct.c			module std_kern
+bsd/kern_aio.c			module std_kern optimize -g3
+bsd/kern_clock.c		module std_kern optimize -g3
+bsd/kern_class.c		module std_kern
+bsd/kern_compat.c		module std_kern
+bsd/kern_descrip.c		module std_kern
+bsd/kern_exec.c			module std_kern
+bsd/kern_execargs.c		module std_kern
+bsd/kern_execconfig.c		module std_kern
+bsd/kern_exit.c			module std_kern
+bsd/kern_fork.c			module std_kern
+bsd/kern_kmodcall.c		module std_kern
+bsd/kern_malloc.c               module std_kern optimize -g3
+bsd/contig_malloc.c             module std_kern
+bsd/kern_mman.c			module std_kern
+bsd/kern_proc.c			module std_kern
+bsd/kern_prot.c			module std_kern
+bsd/kern_resource.c		module std_kern
+bsd/kern_sig.c			module std_kern optimize -g3
+bsd/kern_sigqueue.c		module std_kern
+bsd/kern_subr.c			module std_kern
+bsd/kern_subsys.c		module std_kern
+bsd/kern_synch.c		module std_kern
+bsd/kern_time.c			module std_kern
+bsd/kern_utctime.c		module std_kern
+bsd/kern_xxx.c			module std_kern optimize -g3
+bsd/ldr_kload.c			module std_kern
+bsd/lwc.c			module std_kern
+bsd/mach_process.c		module std_kern
+bsd/mach_signal.c		module std_kern
+bsd/subr_binlog.c		module std_kern
+bsd/subr_log.c			module std_kern optimize -g3
+bsd/subr_prf.c			module std_kern optimize -D_USE_KERNEL_INTRINSICS
+bsd/subr_rmap.c			module std_kern
+bsd/subr_select.c		module std_kern
+bsd/subr_xxx.c			module std_kern
+bsd/subsys_conf.c		module std_kern
+bsd/svipc_ipc.c			module std_kern
+bsd/svipc_msg.c			module std_kern
+bsd/svipc_sem.c			module std_kern
+bsd/svipc_shm.c			module std_kern
+bsd/sys_generic.c		module std_kern
+bsd/sys_socket.c		module std_kern
+bsd/sys_sysinfo.c		module std_kern
+bsd/tty_tty.c			module std_kern
+bsd/uipc_domain.c		module std_kern
+bsd/uipc_mbuf.c			module std_kern
+bsd/uipc_socket.c		module std_kern
+bsd/uipc_socket2.c		module std_kern
+bsd/uipc_syscalls.c		module std_kern
+builtin/ux_exception.c		module std_kern
+ddidki/ddi_subr.c		module std_kern
+dec/debug/kdebug/kdebug_kern.c	module std_kern
+kern/event.c			module std_kern
+kern/exception.c		module std_kern
+kern/host.c			module std_kern
+kern/ipc_basics.c		module std_kern
+kern/ipc_copyin.c		module std_kern
+kern/ipc_copyout.c		module std_kern
+kern/ipc_host.c			module std_kern
+kern/ipc_kport.c		module std_kern
+kern/ipc_kreply.c		module std_kern
+kern/ipc_kset.c			module std_kern
+kern/ipc_mports.c		module std_kern
+kern/ipc_pobj.c			module std_kern
+kern/ipc_port.c			module std_kern
+kern/ipc_prims.c		module std_kern
+kern/ipc_ptraps.c		module std_kern
+kern/ipc_tt.c			module std_kern
+kern/kalloc.c			module std_kern
+kern/lock.c			module std_kern optimize -g3
+kern/lockdev.c			module std_kern 
+kern/mach_factor.c		module std_kern
+kern/mach_sysdev.c		module std_kern
+kern/mach_user_internal.c	module std_kern
+kern/machine.c			module std_kern
+kern/mig_support.c		module std_kern
+kern/parallel.c			module std_kern
+kern/processor.c		module std_kern
+kern/queue.c			module std_kern
+kern/sched_prim.c		module std_kern optimize -g3
+kern/syscall_emulation.c	module std_kern
+kern/syscall_subr.c		module std_kern
+kern/syscall_sw.c		module std_kern
+kern/task.c			module std_kern optimize -g3
+kern/task_swap.c		module std_kern
+kern/thread.c			module std_kern optimize -g3
+kern/thread_swap.c		module std_kern
+kern/threadcall.c		module std_kern
+kern/timer.c			module std_kern
+kern/zalloc.c			module std_kern optimize -g3
+msfs/osf/msfs_syscalls.c	module std_kern
+net/if.c			module std_kern
+net/netisr.c			module std_kern optimize -g3
+nfs/nfs_hooks.c			module std_kern
+svr4/fdfs_vfsops.c 		module std_kern
+svr4/fdfs_vnops.c		module std_kern
+svr4/kern_fuser.c 		module std_kern
+svr4/kern_sigsend.c		module std_kern
+svr4/kern_sysfs.c		module std_kern
+svr4/kern_sysinfo.c 		module std_kern
+svr4/kern_uadmin.c 		module std_kern
+svr4/kern_wait.c		module std_kern
+svr4/priocntl.c			module std_kern
+svr4/procset.c			module std_kern
+tty/tty_common.c		module std_kern
+#
+MODULE/STATIC/bsd_tty		optional bsd_tty Binary
+tty/tty_cfg.c			module bsd_tty
+bsd/tty.c			module bsd_tty
+bsd/tty_compat.c		module bsd_tty
+bsd/tty_subr.c			module bsd_tty
+#
+MODULE/STATIC/xpr		optional mach xpr_debug Binary
+kern/xpr.c			module xpr
+#
+MODULE/mach_xp			optional mach_xp Binary
+./mach/memory_object_default_user.c module mach_xp
+#
+MODULE/cdfs			optional cdfs Binary
+cdfs/cdfs_bmap.c		module cdfs
+cdfs/cdfs_config.c		module cdfs
+cdfs/cdfs_lookup.c		module cdfs
+cdfs/cdfs_node.c		module cdfs
+cdfs/cdfs_subr.c		module cdfs
+cdfs/cdfs_vfsops.c		module cdfs
+cdfs/cdfs_vnops.c		module cdfs
+#
+MODULE/dvdfs			optional dvdfs Binary
+dvdfs/dvdfs_vfsops.c		module dvdfs
+dvdfs/dvdfs_node.c		module dvdfs
+dvdfs/dvdfs_vnops.c		module dvdfs
+#
+# ESS (Event Simulation Subsystem) static and loadable files
+#
+MODULE/STATIC/ess		      optional ess Binary
+dec/debug/ess/ess.c		      module ess				
+dec/debug/ess/eventTypes.c	      module ess	
+dec/debug/ess/groupEventFuncs.c	      module ess	
+dec/debug/ess/macroFuncs.c	      module ess	
+dec/debug/ess/eventTypes_extensions.c module ess	
+dec/debug/ess/macroFuncs_extensions.c module ess	
+#
+MODULE/ess_stub			  optional ess_stub Binary
+dec/debug/ess/event_simulation.c  module ess_stub optimize -g3
+#
+MODULE/STATIC/kdebug		optional kdebug Binary
+dec/debug/kdebug/kdebug_brkpt.c	module kdebug
+dec/debug/kdebug/kdebug_conf.c	module kdebug
+dec/debug/kdebug/kdebug_cfg.c	module kdebug
+dec/debug/kdebug/kdebug_io.c	module kdebug
+dec/debug/kdebug/kdebug_main.c	module kdebug
+dec/debug/kdebug/kdebug_proto.c	module kdebug
+dec/debug/ddb/db_access.c	module kdebug
+dec/debug/ddb/db_aout.c		module kdebug
+dec/debug/ddb/db_break.c	module kdebug
+dec/debug/ddb/db_command.c	module kdebug
+dec/debug/ddb/db_cond.c		module kdebug
+dec/debug/ddb/db_doprnt.c	module kdebug
+dec/debug/ddb/db_examine.c	module kdebug
+dec/debug/ddb/db_expr.c		module kdebug
+dec/debug/ddb/db_ext_symtab.c	module kdebug
+dec/debug/ddb/db_input.c	module kdebug
+dec/debug/ddb/db_lex.c		module kdebug
+dec/debug/ddb/db_macro.c	module kdebug
+dec/debug/ddb/db_output.c	module kdebug
+dec/debug/ddb/db_print.c	module kdebug
+dec/debug/ddb/db_run.c		module kdebug
+dec/debug/ddb/db_sym.c		module kdebug
+dec/debug/ddb/db_task_thread.c	module kdebug
+dec/debug/ddb/db_tr.c		module kdebug
+dec/debug/ddb/db_trap.c		module kdebug
+dec/debug/ddb/db_variables.c	module kdebug
+dec/debug/ddb/db_watch.c	module kdebug
+dec/debug/ddb/db_write_cmd.c	module kdebug
+#
+MODULE/STATIC/dli		optional dli or dlb or lat Binary
+dli/dli_bind.c			module dli
+dli/dli_filter.c		module dli
+dli/dli_init.c			module dli
+dli/dli_input.c			module dli
+dli/dli_mopctrs.c		module dli
+dli/dli_netsync.c		module dli
+dli/dli_output.c		module dli
+dli/dli_proto.c			module dli
+dli/dli_sockopt.c		module dli
+dli/dli_subr.c			module dli
+dli/dli_timer.c			module dli
+dli/dli_usrreq.c		module dli
+#
+MODULE/STATIC/ffm_fs		optional ffm_fs Binary
+ffm/ffm_cfg.c			module ffm_fs
+ffm/ffm_vfsops.c		module ffm_fs
+ffm/ffm_vnops.c			module ffm_fs
+#
+# ATM files
+#
+# ATM Connection Management Module
+MODULE/STATIC/atm		  optional atm or atmuni or atmip or lane or atmtm or atmifmp or uni3x or atmilmi3x Binary
+atm/cmm/cmm.c                   module atm optimize -g3
+atm/cmm/cmm_subr.c              module atm optimize -g3
+atm/cmm/cmm_adi.c               module atm optimize -g3
+atm/cmm/cmm_smi.c               module atm optimize -g3
+atm/cmm/cmm_cmi.c               module atm optimize -g3
+atm/cmm/cmm_ppa.c               module atm optimize -g3
+atm/cmm/cmm_esi.c               module atm optimize -g3
+atm/cmm/cmm_manage.c            module atm optimize -g3
+atm/cmm/cmm_state.c		module atm optimize -g3
+#
+# ATM Classical IP Module
+#
+MODULE/STATIC/atmip			optional atmip Binary
+netinet/atm/atm_arp.c              module atmip optimize -g3
+netinet/atm/ip_converge.c          module atmip optimize -g3
+#
+# ATM LAN Emulation Client Module
+#
+MODULE/STATIC/lane		optional lane Binary
+net/if_lane/cm_sap_shim.c	module lane optimize -g3
+net/if_lane/le_disp.c		module lane optimize -g3
+net/if_lane/lec_arp.c		module lane optimize -g3
+net/if_lane/lec_ctrl.c		module lane optimize -g3
+net/if_lane/lec_data.c		module lane optimize -g3
+net/if_lane/lec_upper.c		module lane optimize -g3
+net/if_lane/map.c		module lane optimize -g3
+net/if_lane/svc_info.c		module lane optimize -g3
+net/if_lane/utl.c		module lane optimize -g3
+net/if_lane/utl_os.c		module lane optimize -g3
+net/if_lane/g_event.c           module lane optimize -g3
+
+#
+# ATM IFMP Module.  
+# 
+#
+MODULE/STATIC/atmifmp		optional atmifmp Binary
+atm/ifmp/dunix/ipsh_dunix.c	module atmifmp optimize -g3
+atm/ifmp/host/ipshost.c	 	module atmifmp optimize -g3
+
+#
+#
+# ATM CBR Test Module.  Like SVVS, this is for testing only
+#
+MODULE/STATIC/atmtm			optional atmtm Binary
+atm/cmm/atmtm/atmtm.c	   module atmtm optimize -g3
+
+#
+# ATM UNI Manager
+#
+MODULE/STATIC/atmuni            optional atmuni or atmilmi3x or uni3x Binary
+atm/uni3.x/atmuni/atmuni_addrmgr.c     module atmuni optimize -g3
+atm/uni3.x/atmuni/atmuni_connect.c     module atmuni optimize -g3
+atm/uni3.x/atmuni/atmuni_data.c        module atmuni optimize -g3
+atm/uni3.x/atmuni/atmuni_devmanip.c    module atmuni optimize -g3
+atm/uni3.x/atmuni/atmuni_except.c      module atmuni optimize -g3
+atm/uni3.x/atmuni/atmuni_ilmi.c        module atmuni optimize -g3
+atm/uni3.x/atmuni/atmuni_loader.c      module atmuni optimize -g3
+atm/uni3.x/atmuni/atmuni_mmi.c         module atmuni optimize -g3
+atm/uni3.x/atmuni/atmuni_receive.c     module atmuni optimize -g3
+atm/uni3.x/atmuni/atmuni_sig.c         module atmuni optimize -g3
+atm/uni3.x/atmuni/atmuni_sigstubs.c    module atmuni optimize -g3
+atm/uni3.x/atmuni/atmuni_unimanip.c    module atmuni optimize -g3
+
+#
+# ATM ILMI 3.x Module
+#
+MODULE/STATIC/atmilmi3x		optional atmilmi3x Binary
+atm/uni3.x/ilmi/ilmi_manage.c   module atmilmi3x optimize -g3
+atm/uni3.x/ilmi/ilmi_loader.c   module atmilmi3x optimize -g3
+atm/uni3.x/ilmi/ilmi_data.c     module atmilmi3x optimize -g3
+atm/uni3.x/ilmi/ilmi_receive.c  module atmilmi3x optimize -g3
+atm/uni3.x/ilmi/agent.c         module atmilmi3x optimize -g3
+atm/uni3.x/ilmi/codec.c         module atmilmi3x optimize -g3
+atm/uni3.x/ilmi/dec_atm.c       module atmilmi3x optimize -g3
+atm/uni3.x/ilmi/fsm.c           module atmilmi3x optimize -g3
+atm/uni3.x/ilmi/netpref.c       module atmilmi3x optimize -g3
+atm/uni3.x/ilmi/system.c        module atmilmi3x optimize -g3
+
+#
+# ATM Signaling Module (Trillium based)
+# flags -g3 -DCMFILE_REORG_1
+MODULE/STATIC/uni3x	            		optional uni3x Binary
+atm/uni3.x/cmmintf/atmsig_manage.c		module uni3x optimize -g3
+atm/uni3.x/cmmintf/atmsig_loader.c      	module uni3x optimize -g3
+atm/uni3.x/cmmintf/atmsig_cmm_callbacks.c 	module uni3x optimize -g3
+atm/uni3.x/cmmintf/atmsig_qsaalrx.c             module uni3x optimize -g3
+atm/uni3.x/cmmintf/atmsig_mainloop.c            module uni3x optimize -g3
+atm/uni3.x/cmmintf/atmsig_receive.c             module uni3x optimize -g3
+atm/uni3.x/cmmintf/atmsig_data.c                module uni3x optimize -g3
+atm/uni3.x/cmmintf/atmsig_ies.c                 module uni3x optimize -g3
+atm/uni3.x/cmmintf/atmsig_status.c              module uni3x optimize -g3
+atm/uni3.x/cmmintf/atmsig_add.c                 module uni3x optimize -g3
+atm/uni3.x/cmmintf/atmsig_drop.c                module uni3x optimize -g3
+atm/uni3.x/cmmintf/atmsig_release.c             module uni3x optimize -g3
+atm/uni3.x/cmmintf/atmsig_restart.c             module uni3x optimize -g3
+atm/uni3.x/cmmintf/atmsig_callrefs.c            module uni3x optimize -g3
+atm/uni3.x/cmmintf/atmsig_misc.c                module uni3x optimize -g3
+atm/uni3.x/cmmintf/atmsig_setup.c               module uni3x optimize -g3
+atm/uni3.x/cmmintf/atmsig_addrman.c             module uni3x optimize -g3
+atm/uni3.x/cmmintf/atmsig_trill_as.c            module uni3x optimize -g3
+atm/uni3.x/common/aal.c	     			module uni3x optimize -g3
+atm/uni3.x/common/asd.c	     			module uni3x optimize -g3
+atm/uni3.x/common/asi.c	     			module uni3x optimize -g3
+atm/uni3.x/common/cm_lib.c	     		module uni3x optimize -g3
+atm/uni3.x/common/las.c	     			module uni3x optimize -g3
+atm/uni3.x/common/cm_atm.c	     		module uni3x optimize -g3
+atm/uni3.x/common/cm_bdy5.c			module uni3x optimize -g3
+atm/uni3.x/common/cm_gen.c			module uni3x optimize -g3
+atm/uni3.x/common/cm_hash.c     		module uni3x optimize -g3
+atm/uni3.x/common/ss_ptsp.c     		module uni3x optimize -g3
+atm/uni3.x/q93b/am_bdy1.c       		module uni3x optimize -g3
+atm/uni3.x/q93b/am_bdy2.c      			module uni3x optimize -g3
+atm/uni3.x/q93b/am_bdy3.c       		module uni3x optimize -g3
+atm/uni3.x/q93b/am_bdy4.c       		module uni3x optimize -g3
+atm/uni3.x/q93b/am_bdy5.c       		module uni3x optimize -g3
+atm/uni3.x/q93b/am_db1.c        		module uni3x optimize -g3
+atm/uni3.x/q93b/am_db2.c        		module uni3x optimize -g3
+atm/uni3.x/q93b/am_id.c         		module uni3x optimize -g3
+atm/uni3.x/q93b/am_ex_pt.c        		module uni3x optimize -g3
+atm/uni3.x/q93b/am_ptli.c       		module uni3x optimize -g3
+atm/uni3.x/q93b/am_mf.c         		module uni3x optimize -g3
+atm/uni3.x/q93b/am_ptmi.c       		module uni3x optimize -g3
+atm/uni3.x/qsaal/as_bdy1.c      		module uni3x optimize -g3
+atm/uni3.x/qsaal/as_bdy2.c      		module uni3x optimize -g3
+atm/uni3.x/qsaal/as_bdy3.c      		module uni3x optimize -g3
+atm/uni3.x/qsaal/as_bdy4.c      		module uni3x optimize -g3
+atm/uni3.x/qsaal/as_bdy5.c      		module uni3x optimize -g3
+atm/uni3.x/qsaal/as_bdy6.c     		 	module uni3x optimize -g3
+atm/uni3.x/qsaal/as_ex_pt.c        		module uni3x optimize -g3
+atm/uni3.x/qsaal/as_id.c        		module uni3x optimize -g3
+atm/uni3.x/qsaal/as_ptui.c      		module uni3x optimize -g3
+atm/uni3.x/qsaal/as_ptmi.c      		module uni3x optimize -g3
+atm/uni3.x/lm/lm.c              		module uni3x optimize -g3
+atm/uni3.x/lm/smambdy1.c           		module uni3x optimize -g3
+atm/uni3.x/lm/smasbdy1.c           		module uni3x optimize -g3
+
+#
+# bparm: Console Boot Parameters Module
+#
+MODULE/STATIC/bparm		optional bparm Binary
+arch/alpha/hal/bparm_cfg.c	module bparm optimize -g3
+#
+MODULE/DYNAMIC/lat		optional lat Binary
+lat/engine/aclchk.c		module lat
+lat/engine/aclclr.c		module lat
+lat/engine/aclcmp.c		module lat
+lat/engine/aclrep.c		module lat
+lat/engine/aclset.c		module lat
+lat/engine/adpcre.c		module lat
+lat/engine/adpdel.c		module lat
+lat/engine/adplist.c		module lat
+lat/engine/adpsh.c		module lat
+lat/engine/asclro.c		module lat
+lat/engine/asclrp.c		module lat
+lat/engine/ascre.c		module lat
+lat/engine/asdel.c		module lat
+lat/engine/aslist.c		module lat
+lat/engine/asmsg.c		module lat
+lat/engine/asrset.c		module lat
+lat/engine/assetf.c		module lat
+lat/engine/asseti.c		module lat
+lat/engine/asseto.c		module lat
+lat/engine/assetp.c		module lat
+lat/engine/asshow.c		module lat
+lat/engine/cbabo.c		module lat
+lat/engine/cbcre.c		module lat
+lat/engine/cbdel.c		module lat
+lat/engine/cbhalt.c		module lat
+lat/engine/cbhrun.c		module lat
+lat/engine/cbhstr.c		module lat
+lat/engine/cborun.c		module lat
+lat/engine/cbostr.c		module lat
+lat/engine/cbrout.c		module lat
+lat/engine/cbrxmt.c		module lat
+lat/engine/cbsrun.c		module lat
+lat/engine/cbsstr.c		module lat
+lat/engine/dbchgc.c		module lat
+lat/engine/dbrepb.c		module lat
+lat/engine/dbrepc.c		module lat
+lat/engine/dbreps.c		module lat
+lat/engine/dbsetc.c		module lat
+lat/engine/dbsetm.c		module lat
+lat/engine/exerr.c		module lat
+lat/engine/hicre.c		module lat
+lat/engine/hidel.c		module lat
+lat/engine/hiecan.c		module lat
+lat/engine/hierpt.c		module lat
+lat/engine/hifind.c		module lat
+lat/engine/hihra.c		module lat
+lat/engine/hihri.c		module lat
+lat/engine/hihsts.c		module lat
+lat/engine/hiinit.c		module lat
+lat/engine/hiocmd.c		module lat
+lat/engine/hiopen.c		module lat
+lat/engine/hiora.c		module lat
+lat/engine/hioreq.c		module lat
+lat/engine/hiori.c		module lat
+lat/engine/hiosi.c		module lat
+lat/engine/hiosts.c		module lat
+lat/engine/hiqrpt.c		module lat
+lat/engine/hiqsts.c		module lat
+lat/engine/hirej.c		module lat
+lat/engine/hiscmd.c		module lat
+lat/engine/hises.c		module lat
+lat/engine/hissi.c		module lat
+lat/engine/histr.c		module lat
+lat/engine/hsrset.c		module lat
+lat/engine/hszero.c		module lat
+lat/engine/hxsts.c		module lat
+lat/engine/idlchk.c		module lat
+lat/engine/idlclr.c		module lat
+lat/engine/idlcmp.c		module lat
+lat/engine/idlset.c		module lat
+lat/engine/ifchk.c		module lat
+lat/engine/ifmsg.c		module lat
+lat/engine/latcom.c		module lat optimize -g3
+lat/engine/lscre.c		module lat
+lat/engine/lsdel.c		module lat
+lat/engine/lsdups.c		module lat
+lat/engine/lslist.c		module lat
+lat/engine/lslook.c		module lat
+lat/engine/lslsth.c             module lat
+lat/engine/lsmsg.c		module lat
+lat/engine/lsperm.c		module lat
+lat/engine/lsrem.c		module lat
+lat/engine/lsrset.c		module lat
+lat/engine/lsscan.c		module lat
+lat/engine/lsshow.c		module lat
+lat/engine/lstmo.c		module lat
+lat/engine/ndcre.c		module lat
+lat/engine/nddel.c		module lat
+lat/engine/ndfail.c		module lat
+lat/engine/ndlist.c		module lat
+lat/engine/ndpur.c		module lat
+lat/engine/ndshow.c		module lat
+lat/engine/ndzero.c		module lat
+lat/engine/obclon.c		module lat
+lat/engine/obcre.c		module lat
+lat/engine/obdel.c		module lat
+lat/engine/obfind.c		module lat
+lat/engine/oblist.c		module lat
+lat/engine/obrel.c		module lat
+lat/engine/obren.c		module lat
+lat/engine/obrset.c		module lat
+lat/engine/obsetf.c		module lat
+lat/engine/obshow.c		module lat
+lat/engine/oxses.c		module lat
+lat/engine/qrcre.c		module lat
+lat/engine/qrdel.c		module lat
+lat/engine/qrfind.c		module lat
+lat/engine/qrlist.c		module lat
+lat/engine/qrscan.c		module lat
+lat/engine/sb1inp.c		module lat
+lat/engine/sb1out.c		module lat
+lat/engine/sbacc.c		module lat
+lat/engine/sbcre.c		module lat
+lat/engine/sbdel.c		module lat
+lat/engine/sbdups.c		module lat
+lat/engine/sbfind.c		module lat
+lat/engine/sbopen.c		module lat
+lat/engine/sbrej.c		module lat
+lat/engine/sbria.c		module lat
+lat/engine/sbsig.c		module lat
+lat/engine/sbstop.c		module lat
+lat/engine/sbstr.c		module lat
+lat/engine/ticelp.c		module lat
+lat/engine/tocelp.c		module lat
+lat/engine/vcshow.c             module lat
+lat/streams/axrate.c		module lat
+lat/streams/grpret.c		module lat
+lat/streams/hxses.c		module lat
+lat/streams/ixerr.c		module lat
+lat/streams/latadpsubs.c	module lat
+lat/streams/latclose.c		module lat
+lat/streams/latdefsvc.c		module lat
+lat/streams/lathashsubs.c	module lat
+lat/streams/latlioc.c		module lat
+lat/streams/latlog.c		module lat
+lat/streams/latlrput.c		module lat
+lat/streams/latlrsrv.c		module lat
+lat/streams/latmain.c		module lat optimize -g3
+lat/streams/latopen.c		module lat
+lat/streams/latsub.c		module lat
+lat/streams/lattimer.c		module lat
+lat/streams/lattioc.c		module lat
+lat/streams/lattli.c		module lat
+lat/streams/latursrv.c		module lat
+lat/streams/latuwput.c		module lat
+lat/streams/ofmsg.c		module lat
+lat/streams/strchk.c		module lat
+lat/streams/strcvt.c		module lat
+lat/streams/strdif.c		module lat
+lat/streams/strequ.c		module lat
+lat/streams/strinp.c		module lat
+lat/streams/strmov.c		module lat
+lat/streams/strret.c		module lat
+lat/streams/sxgetc.c		module lat
+lat/streams/sxputc.c		module lat
+lat/streams/sxses.c		module lat
+lat/streams/sxsig.c		module lat
+#
+MODULE/lv			optional lv Binary
+lvm/lv_block.c			module lv
+lvm/lv_config.c			module lv
+lvm/lv_defect.c			module lv
+lvm/lv_ioctls.c			module lv
+lvm/lv_kdb.c			module lv
+lvm/lv_lvsubr.c			module lv
+lvm/lv_mircons.c		module lv
+lvm/lv_pbuf.c			module lv
+lvm/lv_phys.c			module lv
+lvm/lv_schedule.c		module lv
+lvm/lv_strategy.c		module lv
+lvm/lv_subr.c			module lv
+lvm/lv_syscalls.c		module lv
+lvm/lv_vgda.c			module lv
+lvm/lv_vgsa.c			module lv
+#
+# msfs:
+#
+MODULE/STATIC/advfs		optional msfs Binary
+msfs/bs/bs_access.c		module advfs optimize -g3
+msfs/bs/bs_bitfile_sets.c	module advfs optimize -g3
+msfs/bs/bs_bmt_util.c		module advfs
+msfs/bs/bs_buffer2.c		module advfs optimize -g3
+msfs/bs/bs_copy.c		module advfs
+msfs/bs/bs_create.c		module advfs
+msfs/bs/bs_delete.c		module advfs
+msfs/bs/bs_domain.c		module advfs
+msfs/bs/bs_errlst.c		module advfs
+msfs/bs/bs_extents.c		module advfs
+msfs/bs/bs_init.c		module advfs
+msfs/bs/bs_inmem_map.c		module advfs
+msfs/bs/bs_migrate.c		module advfs
+msfs/bs/bs_misc.c		module advfs optimize -D_USE_KERNEL_INTRINSICS
+msfs/bs/bs_msg_queue.c		module advfs
+msfs/bs/bs_params.c		module advfs
+msfs/bs/bs_qio.c		module advfs optimize -g3
+msfs/bs/bs_sbm.c		module advfs
+msfs/bs/bs_service_class.c	module advfs
+msfs/bs/bs_shadow.c		module advfs
+msfs/bs/bs_stg.c		module advfs
+msfs/bs/bs_stripe.c		module advfs
+msfs/bs/bs_tagdir.c		module advfs
+msfs/bs/ftx_recovery.c		module advfs
+msfs/bs/ftx_routines.c		module advfs optimize -g3
+msfs/bs/ms_generic_locks.c	module advfs
+msfs/bs/ms_logger.c		module advfs
+msfs/bs/ms_mode.c		module advfs
+msfs/bs/ms_privates.c		module advfs
+msfs/bs/ms_public.c		module advfs
+msfs/fs/fs_create.c		module advfs
+msfs/fs/fs_dir_init.c		module advfs
+msfs/fs/fs_dir_lookup.c		module advfs
+msfs/fs/fs_file_sets.c		module advfs
+msfs/fs/fs_quota.c		module advfs
+msfs/fs/fs_read_write.c		module advfs
+msfs/mss/mss_common.c		module advfs
+msfs/mss/mss_entry.c		module advfs
+msfs/mss/mss_fs.c		module advfs
+msfs/mss/mss_lock.c		module advfs
+msfs/mss/mss_log.c		module advfs
+msfs/mss/mss_misc.c		module advfs
+msfs/mss/mss_pqd.c		module advfs
+msfs/mss/mss_send.c		module advfs
+msfs/mss/mss_space.c		module advfs
+msfs/mss/mss_syscall.c		module advfs
+msfs/mss/ter_inmem_map.c	module advfs
+msfs/mss/ter_ondisk_map.c	module advfs
+msfs/mss/ter_stg.c		module advfs
+msfs/osf/msfs_cfg.c		module advfs
+msfs/osf/msfs_config.c		module advfs
+msfs/osf/msfs_io.c		module advfs optimize -g3
+msfs/osf/msfs_lookup.c		module advfs
+msfs/osf/msfs_misc.c		module advfs
+msfs/osf/msfs_proplist.c	module advfs
+msfs/osf/msfs_vfsops.c		module advfs
+msfs/osf/msfs_vnops.c		module advfs optimize -g3
+#
+MODULE/packetfilter		optional packetfilter Binary
+net/bpf_filter.c                module packetfilter
+net/pfilt.c                     module packetfilter
+net/pfilt_bpf.c                 module packetfilter
+#
+MODULE/STATIC/net		standard Binary
+net/net_cfg.c			module net
+net/raw_cb.c			module net
+net/raw_usrreq.c		module net
+net/route.c			module net optimize -g3
+#
+MODULE/STATIC/netrain		standard Binary flags
+net/netrain_cfg.c		module netrain flags -g3
+net/netrain.c			module netrain flags -g3
+net/if_nr.c			module netrain flags -g3
+#
+MODULE/ether			optional ether Binary
+net/if_ethersubr.c		module ether
+netinet/if_ether.c		module ether optimize -g3
+#
+MODULE/loop			optional loop Binary
+net/if_loop.c			module loop
+#
+MODULE/sl			optional sl Binary
+net/if_sl.c			module sl optimize -g3
+#
+MODULE/STATIC/ppp		optional ppp Binary
+streamsm/ppp_init.c		module ppp
+streamsm/ppp_if.c		module ppp
+streamsm/ppp_async.c		module ppp
+streamsm/ppp_comp.c		module ppp
+streamsm/vjcompress.c		module ppp
+streamsm/bsd_comp.c		module ppp
+#
+MODULE/STATIC/inet		optional inet Binary
+netinet/inet_cfg.c		module inet
+netinet/igmp.c			module inet
+netinet/in.c			module inet
+netinet/in_pcb.c		module inet
+netinet/in_proto.c		module inet
+netinet/ip_icmp.c		module inet
+netinet/ip_input.c		module inet
+netinet/ip_mroute.c		module inet optimize -g3
+netinet/ip_output.c		module inet
+netinet/ip_screen.c		module inet
+netinet/pmtu.c			module inet
+netinet/raw_ip.c		module inet
+netinet/tcp_debug.c		module inet
+netinet/tcp_input.c		module inet
+netinet/tcp_output.c		module inet
+netinet/tcp_subr.c		module inet
+netinet/tcp_timer.c		module inet
+netinet/tcp_usrreq.c		module inet
+netinet/udp_usrreq.c		module inet optimize -g3
+#
+MODULE/nfs			optional nfs Binary
+nfs/nfs3_vfsops.c		module nfs
+nfs/nfs3_vnodeops.c		module nfs
+nfs/nfs3_xdr.c			module nfs
+nfs/nfs_client.c		module nfs
+nfs/nfs_common.c		module nfs
+nfs/nfs_config.c		module nfs
+nfs/nfs_dump.c			module nfs
+nfs/nfs_subr.c			module nfs optimize -g3
+nfs/nfs_vfsops.c		module nfs
+nfs/nfs_vnodeops.c		module nfs
+nfs/nfs_xdr.c			module nfs
+nfs/prop_xdr.c			module nfs
+#
+# ONC RPC support
+#
+rpc/auth_kern.c			module nfs
+rpc/authunix_prot.c		module nfs
+rpc/clnt_kudp.c			module nfs optimize -g3
+rpc/clnt_ktcp.c			module nfs optimize -g3
+rpc/clnt_perror.c		module nfs
+rpc/kudp_fastsend.c		module nfs optimize -g3
+rpc/pmap_kgetport.c		module nfs
+rpc/pmap_prot.c			module nfs
+rpc/pmap_rmt.c			module nfs
+rpc/rpc_callmsg.c		module nfs
+rpc/rpc_prot.c			module nfs
+rpc/subr_kudp.c			module nfs
+rpc/svc.c			module nfs
+rpc/svc_auth.c			module nfs
+rpc/svc_auth_unix.c		module nfs
+rpc/svc_kudp.c			module nfs optimize -g3
+rpc/svc_ktcp.c			module nfs optimize -g3
+rpc/xdr.c			module nfs
+rpc/xdr_array.c			module nfs
+rpc/xdr_mbuf.c			module nfs
+rpc/xdr_mem.c			module nfs
+rpc/xdr_reference.c		module nfs
+rpcsvc/bootparam_xdr.c		module nfs
+rpcsvc/mountxdr.c		module nfs
+klm/klm_kprot.c			module nfs
+klm/klm_lockmgr.c		module nfs
+#
+MODULE/nfs_server		optional nfs_server Binary
+nfs/nfs_server.c		module nfs_server optimize -g3
+nfs/nfs3_server.c		module nfs_server optimize -g3
+#
+MODULE/procfs			optional procfs Binary
+procfs/procfs_subrs.c		module procfs optimize -g3
+procfs/procfs_vfsops.c		module procfs optimize -g3
+procfs/procfs_vnops.c		module procfs optimize -g3
+procfs/procfs_ioctl.c		module procfs optimize -g3
+#
+MODULE/notprocfs		optional not procfs Binary
+procfs/procfs_vfsops_stubs.c	module notprocfs optimize -g3
+procfs/procfs_subrs_stubs.c	module notprocfs optimize -g3
+procfs/procfs_vnops_stubs.c	module notprocfs optimize -g3
+#
+MODULE/STATIC/snmpinfo		optional snmpinfo Binary
+bsd/snmpinfo.c			module snmpinfo
+#
+MODULE/STATIC/bufcall		optional streams or timod or svvs or strkinfo or strifnet or xtiso or dlb or dlpi or ldtty or rpty or pckt or lat or bba or tirdwr or ppp Binary 
+streams/str_memory.c		module bufcall optimize -g3
+#
+MODULE/STATIC/streams            optional streams or timod or svvs or strkinfo or strifnet or xtiso or dlb or dlpi or ldtty or rpty or pckt or lat or bba or tirdwr or ppp Binary
+streams/nd.c			module streams
+streams/str_cfg.c		module streams
+streams/str_env.c		module streams
+streams/str_filesys.c		module streams
+streams/str_init.c		module streams
+streams/str_modsw.c		module streams optimize -g3
+streams/str_osr.c		module streams
+streams/str_runq.c		module streams optimize -g3
+streams/str_scalls.c		module streams optimize -g3
+streams/str_shead.c		module streams
+streams/str_subr.c		module streams
+streams/str_support.c		module streams
+streams/str_synch.c		module streams optimize -g3
+streams/str_tty.c		module streams
+streams/str_util.c		module streams
+streams/str_weld.c		module streams optimize -g3
+#
+MODULE/streams_debug		optional streams_debug Binary
+streams/str_debug.c		module streams_debug
+MODULE/STATIC/dlb		optional dlb or lat Binary
+streamsm/dlb.c			module dlb optimize -g3
+#
+MODULE/STATIC/dlpi		optional dlpi Binary
+data/dlpi_data.c		module dlpi
+streamsm/dlpi/dl.c		module dlpi optimize -g3
+streamsm/dlpi/dlhash.c		module dlpi
+streamsm/dlpi/dlioctl.c		module dlpi
+streamsm/dlpi/dlprim.c		module dlpi
+streamsm/dlpi/dlproc.c		module dlpi
+streamsm/dlpi/dltimer.c		module dlpi
+streamsm/dlpi/dlutil.c		module dlpi
+#
+MODULE/STATIC/ifnet		optional strifnet Binary
+streamsm/ifnet.c		module ifnet
+#
+MODULE/STATIC/kinfo		optional streams or timod or svvs or strkinfo or strifnet or xtiso or dlb or dlpi or ldtty or rpty or pckt or lat or bba or tirdwr Binary
+streamsm/kinfo.c		module kinfo
+#
+MODULE/STATIC/strstd            optional streams or timod or svvs or strkinfo or strifnet or xtiso or dlb or dlpi or ldtty or rpty or pckt or lat or bba or tirdwr or ppp Binary
+streamsm/log.c			module strstd
+streamsm/sad.c    	        module strstd
+streamsm/standard.c             module strstd
+#
+MODULE/svvs			optional svvs Binary
+streamsm/svvs.c       		module svvs
+#
+MODULE/STATIC/timod		optional timod Binary
+streamsm/timod.c		module timod
+#
+MODULE/STATIC/tirdwr		optional tirdwr Binary
+streamsm/tirdwr.c		module tirdwr
+#
+MODULE/STATIC/ldtty		optional ldtty or lat or rpty Binary
+tty/ldtty.c			module ldtty optimize -g3
+tty/ldtty_compat.c		module ldtty
+tty/ldtty_euc.c			module ldtty
+#
+MODULE/STATIC/xtiso		optional xtiso Binary
+streamsm/xtiso.c		module xtiso optimize -g3
+#
+MODULE/STATIC/pts		optional rpty Binary
+tty/pty.c			module pts optimize -g3
+#
+MODULE/STATIC/ufs		standard Binary
+ufs/mfs_vfsops.c		module ufs
+ufs/mfs_vnops.c			module ufs
+ufs/ufs_alloc.c			module ufs
+ufs/ufs_bmap.c			module ufs
+ufs/ufs_cfg.c			module ufs
+ufs/ufs_disksubr.c		module ufs
+ufs/ufs_inode.c			module ufs optimize -g3
+ufs/ufs_lookup.c		module ufs
+ufs/ufs_physio.c		module ufs
+ufs/ufs_proplist.c		module ufs
+ufs/ufs_subr.c			module ufs
+ufs/ufs_tables.c		module ufs
+ufs/ufs_vfsops.c		module ufs
+ufs/ufs_vnops.c			module ufs optimize -g3
+ufs/ufs_quota.c			optional quota Binary optimize -g3
+ufs/ufs_quota_stubs.c		standard Notbinary optimize -g3
+#
+MODULE/uipc			optional uipc Binary
+bsd/uipc_proto.c		module uipc
+bsd/uipc_usrreq.c		module uipc
+#
+MODULE/STATIC/vfs		standard Binary
+vfs/dead_vfsops.c		module vfs
+vfs/dead_vnops.c		module vfs
+vfs/fifo_vnops.c		module vfs optimize -g3
+vfs/spec_vnops.c		module ufs
+vfs/vfs_bio.c			module vfs optimize -g3
+vfs/vfs_cache.c			module vfs optimize -g3
+vfs/vfs_cfg.c			module vfs
+vfs/vfs_flock.c			module vfs optimize -g3
+vfs/vfs_lookup.c		module vfs
+vfs/vfs_subr.c			module vfs optimize -g3
+vfs/vfs_syscalls.c		module vfs
+vfs/vfs_ubc.c			module vfs
+vfs/vfs_vnops.c			module vfs
+#
+MODULE/STATIC/vm		standard Binary
+vm/k_mape_inv.c			module vm
+vm/k_mape_io.c			module vm
+vm/k_mape_mem.c			module vm
+vm/u_mape_anon.c		module vm
+vm/u_mape_dev.c			module vm
+vm/u_mape_seg.c			module vm
+vm/u_mape_shm.c			module vm
+vm/u_mape_ssm.c			module vm
+vm/u_mape_vp.c			module vm
+vm/vm_anon.c			module vm optimize -g3
+vm/vm_anonpage.c		module vm
+vm/vm_cfg.c			module vm
+vm/vm_cmap.c			module vm
+vm/vm_fault.c			module vm
+vm/vm_kern.c			module vm
+vm/vm_kmap.c			module vm
+vm/vm_map.c			module vm
+vm/vm_object.c			module vm
+vm/vm_pagelru.c			module vm optimize -g3
+vm/vm_resident.c		module vm optimize -g3
+vm/vm_subr.c			module vm
+vm/vm_swap.c			module vm optimize -g3
+vm/vm_umap.c			module vm
+vm/vm_unix.c			module vm
+vm/vm_user.c			module vm
+vm/vm_vlock.c			module vm
+vm/vpage.c			module vm
+#
+MODULE/_lmf_			optional _lmf_ Binary
+bsd/kern_lmf.c			module _lmf_
+#
+MODULE/pckt			optional pckt Binary
+tty/pckt.c			module pckt
+#
+MODULE/ntp_time			optional ntp_time Binary
+bsd/kern_ntptime.c		module ntp_time
+#
+MODULE/mlog			optional mlog Binary
+bsd/memlog.c			module mlog
+#
+MODULE/profiling		optional profiling Binary
+bsd/subr_mcount.c		module profiling
+#
+MODULE/pty			optional pty Binary
+bsd/tty_pty.c			module pty
+#
+MODULE/prf			optional prf Binary
+dec/prf/prf.c			module prf
+#
+MODULE/mach_co_stats		optional mach_co_info or mach_co_stats Binary
+kern/callout_statistics.c	module mach_co_stats
+#
+MODULE/mach_ipc_stats		optional mach_ipc_stats Binary
+kern/ipc_statistics.c		module mach_ipc_stats
+#
+MODULE/gwscreen			optional gwscreen Binary
+net/gw_screen.c			module gwscreen
+#
+MODULE/STATIC/pwrmgr		optional pwrmgr_enabled Binary
+dec/pwrmgr/pwrmgr.c		module pwrmgr
+#
+MODULE/dec_audit		optional dec_audit Binary
+dec/sec/kern_audit.c		module dec_audit optimize -g3
+dec/sec/kern_auditcalls.c	module dec_audit
+dec/sec/kern_auditdev.c		module dec_audit optimize -g3
+#
+MODULE/sec_base			optional sec_base Binary
+sec/sec_calls.c			module sec_base
+sec/sec_socket.c		module sec_base
+sec/sec_stream.c		module sec_base
+#
+MODULE/sec_driver 		optional sec_acl_posix or sec_mac_ob or sec_cmw or sec_shw or sec_ncav Binary
+sec/sec_driver.c		module sec_driver	
+#
+MODULE/sec_mld			optional sec_mac_ob or sec_cmw or sec_shw Binary
+sec/sec_mld.c			module sec_mld		
+#
+MODULE/dec_acl			optional dec_acl Binary
+sec/spd_pacl.c		 	module dec_acl	
+#
+MODULE/dce_acl_stubs          standard Binary
+sec/dce_acl_stubs.c           module dce_acl_stubs
+#
+MODULE/spd_cache		optional dec_acl Binary
+sec/spd_cache.c		        module spd_cache	
+#
+MODULE/acl_stubs		optional not dec_acl Binary
+sec/acl_stubs.c		        module acl_stubs	
+#
+MODULE/spd_mac			optional sec_mac_ob or sec_cmw or sec_shw Binary
+sec/spd_mac.c		        module spd_mac	
+#
+MODULE/spd_misc			optional sec_mac_ob or sec_acl_posix or sec_cmw or sec_shw Binary
+sec/spd_misc.c			module spd_misc
+#
+svr4/kern_memcntl.c		optional not sas Binary
+svr4/kern_swapctl.c		optional not sas Binary optimize -g3
+#
+#
+# syscall/habitat stuff
+#
+svr_four_syscalls.master	optional svr_four_hab syscall svr_four_
+syscalls.master			standard syscall std
+sysv_syscalls.master		optional sysv_hab syscall sysv_
+svid_three_syscalls.master	optional svid_three_hab syscall svid_three_
+soe_two_syscalls.master		optional soe_two_hab syscall soe_two_
+rt_syscalls.master		optional rt_hab syscall rt_
+./rt_init_sysent.c		optional rt_hab Binary
+./rt_syscalls.c			optional rt_hab Binary
+./soe_two_init_sysent.c		optional soe_two_hab Binary
+./soe_two_syscalls.c		optional soe_two_hab Binary
+./svid_three_init_sysent.c	optional svid_three_hab Binary
+./svid_three_syscalls.c		optional svid_three_hab Binary
+./svr_four_init_sysent.c	optional svr_four_hab Binary
+./svr_four_syscalls.c		optional svr_four_hab Binary
+./sysv_init_sysent.c		optional sysv_hab Binary
+./sysv_syscalls.c		optional sysv_hab Binary
+kmod/rt_hab/rt_hab_cfg.c	optional rt_hab Binary
+kmod/soe2_hab/soe_two_cfg.c     optional soe_two_hab Binary
+kmod/svid3_hab/svid_three_cfg.c optional svid_three_hab Binary
+kmod/svr4_hab/svr_four_cfg.c    optional svr_four_hab Binary
+kmod/sysv_hab/sysv_hab_cfg.c	optional sysv_hab Binary
+kmod/sysv_hab/vfs_svid2calls.c	optional sysv_hab Binary
+# 
+# Ordered files - text pages starting from setup_main() are scavenged
+#
+bsd/init_main.c			standard ordered Binary optimize -g3
+kern/ipc_globals.c		standard ordered Binary
+vm/vm_init.c			standard ordered Binary
+#
+# Files that are compiled from source on the installed system
+#
+data/audit_data.c		standard Notbinary
+data/cm_data.c			standard Notbinary
+data/dcedfs_data.c		standard Notbinary
+data/gw_screen_data.c		standard Notbinary
+data/sec_data.c			standard Notbinary
+data/time_data.c		standard Notbinary
+kern/lockinfo.c			standard ordered Notbinary
+net/netaf_config.c		standard Notbinary
+nfs/nfs_server_stubs.c          optional not nfs_server Notbinary
+streams/str_config.c		optional streams or timod or svvs or strkinfo or strifnet or xtiso or dlb or dlpi or ldtty or rpty or pckt or lat or bba or tirdwr or ppp Notbinary 
+vfs/vfs_conf.c			standard Notbinary
+bsd/tty_conf.c			standard Notbinary
+#
+# Entries which aren't currently compiled
+#
+###NO COMPILE###./mach/memory_object_user.c	optional mach_xp Binary
+###NO COMPILE###./mach/monitor_server.c		optional mach_km Binary
+###NO COMPILE###./mach_debug/mach_debug_server.c optional mach_debug Binary
+###NO COMPILE###bsd/tty_bk.c			optional bk Binary
+###NO COMPILE###bsd/tty_kji.c			optional kji Binary
+###NO COMPILE###bsd/tty_tb.c			optional tb Binary
+###NO COMPILE###kern/ipc_kdb.c			optional bsd_kdb bsd_mach Binary
+###NO COMPILE###kern/kernel_monitor.c		optional mach_km Binary
+###NO COMPILE###netns/idp_usrreq.c		optional ns Binary
+###NO COMPILE###netns/ns.c			optional ns Binary
+###NO COMPILE###netns/ns_error.c		optional ns Binary
+###NO COMPILE###netns/ns_input.c		optional ns Binary
+###NO COMPILE###netns/ns_ip.c			optional ns Binary
+###NO COMPILE###netns/ns_output.c		optional ns Binary
+###NO COMPILE###netns/ns_pcb.c			optional ns Binary
+###NO COMPILE###netns/ns_proto.c		optional ns Binary
+###NO COMPILE###netns/spp_debug.c		optional ns Binary
+###NO COMPILE###netns/spp_usrreq.c		optional ns Binary
+###NO COMPILE###sec/sec_ufs.c	optional sec_priv or sec_acl_posix or sec_mac_ob or sec_cmw or sec_shw or sec_ncav Binary
+###NO COMPILE###tty/slip.c			optional slip Binary
+###NO COMPILE###sec/sec_b1.c			optional sec_mac_ob or sec_priv or sec_acl_posix or sec_cmw or sec_shw or sec_ncav Binary
+###NO COMPILE###vm/memory_object.c		optional mach_xp Binary

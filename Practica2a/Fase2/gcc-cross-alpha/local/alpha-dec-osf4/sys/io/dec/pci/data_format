@@ -1,0 +1,58 @@
+#
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+#
+#
+# HISTORY
+#
+# @(#)$RCSfile: data_format,v $ $Revision: 1.1.8.2 $ (DEC) $Date: 1995/02/27 21:58:17 $
+#
+#
+# This is the format for pci_option_data.c entries.
+#
+# The order of the entries in this file controls the order in which
+# they are printed in the option_data file.
+#
+# The format for these entries is:
+#
+#	token:default:printf format string
+#
+SW_REV:210:     {0x%s,
+VENDOR_ID:0: 0x%s,  
+DEV_ID:0: 0x%s,  
+REV:0: 0x%s,
+BASE:0: 0x%s,
+SUB:0: 0x%s,
+PIF:0: 0x%s,
+SUB_VENDOR_ID:0:0x%s,
+SUB_DEV_ID:0:0x%s,
+VID_FLAG:1: 0x%s,
+DID_FLAG:1: 0x%s,
+REV_FLAG:0: 0x%s,
+BASE_FLAG:0: 0x%s,
+SUB_FLAG:0: 0x%s,
+PIF_FLAG:0: 0x%s,
+SUB_VID_FLAG:0: 0x%s,
+SUB_DID_FLAG:0: 0x%s,
+DRV_NAME: :"%s",   
+TYPE:C:'%s',  
+ADPT_CNFG:0:%s},  
+COMMENT: :/* %s */

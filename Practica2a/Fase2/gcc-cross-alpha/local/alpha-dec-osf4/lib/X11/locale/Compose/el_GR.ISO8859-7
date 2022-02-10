@@ -1,0 +1,744 @@
+# Copyright (c) Digital Equipment Corporation, 1995,1996
+# All Rights Reserved.  Unpublished rights reserved
+# under the copyright laws of the United States.
+#
+# The software contained on this media is proprietary to
+# and embodies the confidential technology of Digital
+# Equipment Corporation.  Possession, use, duplication
+# or dissemination of the software and media is
+# authorized only pursuant to a valid written license
+# from Digital Equipment Corporation.
+#
+# RESTRICTED RIGHTS LEGEND Use, duplication, or
+# disclosure by the U.S. Government is subject to
+# restrictions as set forth in Subparagraph (c)(1)(ii)
+# of DFARS 252.227-7013, or in FAR 52.227-19, as
+# applicable.
+<Multi_key> <plus> <plus>               : "\43"      numbersign
+<Multi_key> <parenleft> <parenleft>     : "\133"     bracketleft
+<Multi_key> <parenright> <parenright>   : "\135"     bracketright
+<Multi_key> <parenleft> <minus>         : "\173"     braceleft
+<Multi_key> <minus> <parenleft>         : "\173"     braceleft
+<Multi_key> <parenright> <minus>        : "\175"     braceright
+<Multi_key> <minus> <parenright>        : "\175"     braceright
+<Multi_key> <A> <A>                     : "\100"     at
+<Multi_key> <A> <a>                     : "\100"     at
+<Multi_key> <a> <A>                     : "\100"     at
+<Multi_key> <a> <a>                     : "\100"     at
+<Multi_key> <slash> <slash>             : "\134"     backslash
+<Multi_key> <slash> <less>              : "\134"     backslash
+<Multi_key> <less> <slash>              : "\134"     backslash
+<Multi_key> <space> <asciicircum>       : "\136"     asciicircum
+<Multi_key> <asciicircum> <space>       : "\136"     asciicircum
+~Ctrl <Dcircumflex_accent> <space>      : "\136"     asciicircum
+Alt <Dcircumflex_accent> <space>        : "\136"     asciicircum
+<Multi_key> <slash> <asciicircum>       : "\174"     bar
+<Multi_key> <asciicircum> <slash>       : "\174"     bar
+~Ctrl <Dcircumflex_accent> <slash>      : "\174"     bar
+Alt <Dcircumflex_accent> <slash>        : "\174"     bar
+<Multi_key> <space> <asciitilde>        : "\176"     asciitilde
+<Multi_key> <asciitilde> <space>        : "\176"     asciitilde
+~Ctrl <Dtilde> <space>                  : "\176"     asciitilde
+Alt <Dtilde> <space>                    : "\176"     asciitilde
+<Multi_key> <space> <grave>             : "\140"     grave
+<Multi_key> <grave> <space>             : "\140"     grave
+~Ctrl <Dgrave_accent> <space>           : "\140"     grave
+Alt <Dgrave_accent> <space>             : "\140"     grave
+<Multi_key> <space> <space>             : "\240"     nobreakspace
+<Multi_key> <space> <apostrophe>        : "\47"      apostrophe
+<Multi_key> <apostrophe> <space>        : "\47"      apostrophe
+~Ctrl <Dacute_accent> <space>           : "\47"      apostrophe
+Alt <Dacute_accent> <space>             : "\47"      apostrophe
+<Multi_key> <minus> <L>                 : "\243"     sterling
+<Multi_key> <minus> <l>                 : "\243"     sterling
+<Multi_key> <equal> <L>                 : "\243"     sterling
+<Multi_key> <equal> <l>                 : "\243"     sterling
+<Multi_key> <L> <minus>                 : "\243"     sterling
+<Multi_key> <L> <equal>                 : "\243"     sterling
+<Multi_key> <l> <minus>                 : "\243"     sterling
+<Multi_key> <l> <equal>                 : "\243"     sterling
+<Multi_key> <bar> <bar>                 : "\246"     brokenbar
+<Multi_key> <exclam> <S>                : "\247"     section
+<Multi_key> <exclam> <s>                : "\247"     section
+<Multi_key> <0> <S>                     : "\247"     section
+<Multi_key> <0> <s>                     : "\247"     section
+<Multi_key> <O> <S>                     : "\247"     section
+<Multi_key> <O> <s>                     : "\247"     section
+<Multi_key> <S> <exclam>                : "\247"     section
+<Multi_key> <S> <0>                     : "\247"     section
+<Multi_key> <S> <O>                     : "\247"     section
+<Multi_key> <S> <o>                     : "\247"     section
+<Multi_key> <o> <S>                     : "\247"     section
+<Multi_key> <o> <s>                     : "\247"     section
+<Multi_key> <s> <exclam>                : "\247"     section
+<Multi_key> <s> <0>                     : "\247"     section
+<Multi_key> <s> <O>                     : "\247"     section
+<Multi_key> <s> <o>                     : "\247"     section
+<Multi_key> <space> <diaeresis>         : "\250"     diaeresis
+<Multi_key> <quotedbl> <quotedbl>       : "\250"     diaeresis
+~Ctrl <Ddiaeresis> <quotedbl>           : "\250"     diaeresis
+Alt <Ddiaeresis> <quotedbl>             : "\250"     diaeresis
+<Multi_key> <diaeresis> <space>         : "\250"     diaeresis
+<Multi_key> <0> <C>                     : "\251"     copyright
+<Multi_key> <0> <c>                     : "\251"     copyright
+<Multi_key> <C> <0>                     : "\251"     copyright
+<Multi_key> <C> <O>                     : "\251"     copyright
+<Multi_key> <C> <o>                     : "\251"     copyright
+<Multi_key> <O> <C>                     : "\251"     copyright
+<Multi_key> <O> <c>                     : "\251"     copyright
+<Multi_key> <c> <0>                     : "\251"     copyright
+<Multi_key> <c> <O>                     : "\251"     copyright
+<Multi_key> <c> <o>                     : "\251"     copyright
+<Multi_key> <o> <C>                     : "\251"     copyright
+<Multi_key> <o> <c>                     : "\251"     copyright
+<Multi_key> <less> <less>               : "\253"     guillemotleft
+<Multi_key> <greater> <greater>         : "\273"     guillemotright
+<Multi_key> <minus> <comma>             : "\254"     notsign
+<Multi_key> <comma> <minus>             : "\254"     notsign
+~Ctrl <Dcedilla_accent> <minus>         : "\254"     notsign
+Alt <Dcedilla_accent> <minus>           : "\254"     notsign
+<Multi_key> <minus> <minus>             : "\255"     hyphen
+<Multi_key> <underscore> <underscore>   : "\257"     Greek_horizbar
+<Multi_key> <space> <asterisk>          : "\260"     degree
+<Multi_key> <asterisk> <space>          : "\260"     degree
+<Multi_key> <space> <degree>            : "\260"     degree
+<Multi_key> <degree> <space>            : "\260"     degree
+~Ctrl <Dring_accent> <space>            : "\260"     degree
+Alt <Dring_accent> <space>              : "\260"     degree
+<Multi_key> <asciicircum> <0>           : "\260"     degree
+~Ctrl <Dcircumflex_accent> <0>          : "\260"     degree
+Alt <Dcircumflex_accent> <0>            : "\260"     degree
+<Multi_key> <0> <asciicircum>           : "\260"     degree
+<Multi_key> <plus> <minus>              : "\261"     plusminus
+<Multi_key> <minus> <plus>              : "\261"     plusminus
+<Multi_key> <2> <asciicircum>           : "\262"     twosuperior
+<Multi_key> <asciicircum> <2>           : "\262"     twosuperior
+~Ctrl <Dcircumflex_accent> <2>          : "\262"     twosuperior
+Alt <Dcircumflex_accent> <2>            : "\262"     twosuperior
+<Multi_key> <3> <asciicircum>           : "\263"     threesuperior
+<Multi_key> <asciicircum> <3>           : "\263"     threesuperior
+~Ctrl <Dcircumflex_accent> <3>          : "\263"     threesuperior
+Alt <Dcircumflex_accent> <3>            : "\263"     threesuperior
+<Multi_key> <space> <acute>             : "\264"     acute
+<Multi_key> <acute> <space>             : "\264"     acute
+<Multi_key> <apostrophe> <apostrophe>   : "\264"     acute
+~Ctrl <Dacute_accent> <apostrophe>      : "\264"     acute
+Alt <Dacute_accent> <apostrophe>        : "\264"     acute
+<Multi_key> <space> <acute>             : "\264"     acute
+<Multi_key> <acute> <space>             : "\264"     acute
+<Multi_key> <apostrophe> <apostrophe>   : "\264"     acute
+~Ctrl <Dacute_accent> <apostrophe>      : "\264"     acute
+Alt <Dacute_accent> <apostrophe>        : "\264"     acute
+<Multi_key> <apostrophe> <space>        : "\47"      apostrophe
+~Ctrl <Dacute_accent> <space>           : "\47"      apostrophe
+Alt <Dacute_accent> <space>             : "\47"      apostrophe
+<Multi_key> <space> <apostrophe>        : "\47"      apostrophe
+<Multi_key> <diaeresis> <apostrophe>    : "\265"     Greek_accentdieresis
+<Multi_key> <apostrophe> <diaeresis>    : "\265"     Greek_accentdieresis
+~Ctrl <Dacute_accent> <diaeresis>       : "\265"     Greek_accentdieresis
+Alt <Dacute_accent> <diaeresis>         : "\265"     Greek_accentdieresis
+<Multi_key> <diaeresis> <acute>         : "\265"     Greek_accentdieresis
+<Multi_key> <acute> <diaeresis>         : "\265"     Greek_accentdieresis
+<Multi_key> <diaeresis> <grave>         : "\265"     Greek_accentdieresis
+<Multi_key> <grave> <diaeresis>         : "\265"     Greek_accentdieresis
+~Ctrl <Dgrave_accent> <diaeresis>       : "\265"     Greek_accentdieresis
+Alt <Dgrave_accent> <diaeresis>         : "\265"     Greek_accentdieresis
+<Multi_key> <diaeresis> <grave>         : "\265"     Greek_accentdieresis
+<Multi_key> <grave> <diaeresis>         : "\265"     Greek_accentdieresis
+~Ctrl <Dgrave_accent> <diaeresis>       : "\265"     Greek_accentdieresis
+Alt <Dgrave_accent> <diaeresis>         : "\265"     Greek_accentdieresis
+<Multi_key> <diaeresis> <apostrophe>    : "\265"     Greek_accentdieresis
+<Multi_key> <apostrophe> <diaeresis>    : "\265"     Greek_accentdieresis
+~Ctrl <Dacute_accent> <diaeresis>       : "\265"     Greek_accentdieresis
+Alt <Dacute_accent> <diaeresis>         : "\265"     Greek_accentdieresis
+<Multi_key> <quotedbl> <apostrophe>     : "\265"     Greek_accentdieresis
+~Ctrl <Ddiaeresis> <apostrophe>         : "\265"     Greek_accentdieresis
+Alt <Ddiaeresis> <apostrophe>           : "\265"     Greek_accentdieresis
+<Multi_key> <apostrophe> <quotedbl>     : "\265"     Greek_accentdieresis
+~Ctrl <Dacute_accent> <quotedbl>        : "\265"     Greek_accentdieresis
+Alt <Dacute_accent> <quotedbl>          : "\265"     Greek_accentdieresis
+<Multi_key> <quotedbl> <acute>          : "\265"     Greek_accentdieresis
+~Ctrl <Ddiaeresis> <acute>              : "\265"     Greek_accentdieresis
+Alt <Ddiaeresis> <acute>                : "\265"     Greek_accentdieresis
+<Multi_key> <acute> <quotedbl>          : "\265"     Greek_accentdieresis
+<Multi_key> <quotedbl> <grave>          : "\265"     Greek_accentdieresis
+~Ctrl <Ddiaeresis> <grave>              : "\265"     Greek_accentdieresis
+Alt <Ddiaeresis> <grave>                : "\265"     Greek_accentdieresis
+<Multi_key> <grave> <quotedbl>          : "\265"     Greek_accentdieresis
+~Ctrl <Dgrave_accent> <quotedbl>        : "\265"     Greek_accentdieresis
+Alt <Dgrave_accent> <quotedbl>          : "\265"     Greek_accentdieresis
+<Multi_key> <quotedbl> <grave>          : "\265"     Greek_accentdieresis
+~Ctrl <Ddiaeresis> <grave>              : "\265"     Greek_accentdieresis
+Alt <Ddiaeresis> <grave>                : "\265"     Greek_accentdieresis
+<Multi_key> <grave> <quotedbl>          : "\265"     Greek_accentdieresis
+~Ctrl <Dgrave_accent> <quotedbl>        : "\265"     Greek_accentdieresis
+Alt <Dgrave_accent> <quotedbl>          : "\265"     Greek_accentdieresis
+<Multi_key> <quotedbl> <apostrophe>     : "\265"     Greek_accentdieresis
+~Ctrl <Ddiaeresis> <apostrophe>         : "\265"     Greek_accentdieresis
+Alt <Ddiaeresis> <apostrophe>           : "\265"     Greek_accentdieresis
+<Multi_key> <apostrophe> <quotedbl>     : "\265"     Greek_accentdieresis
+~Ctrl <Dacute_accent> <quotedbl>        : "\265"     Greek_accentdieresis
+Alt <Dacute_accent> <quotedbl>          : "\265"     Greek_accentdieresis
+<Multi_key> <Greek_ALPHA> <apostrophe>  : "\266"     Greek_ALPHAaccent
+<Multi_key> <Greek_ALPHA> <acute>       : "\266"     Greek_ALPHAaccent
+<Multi_key> <Greek_ALPHA> <grave>       : "\266"     Greek_ALPHAaccent
+<Multi_key> <Greek_ALPHA> <grave>       : "\266"     Greek_ALPHAaccent
+<Multi_key> <Greek_ALPHA> <apostrophe>  : "\266"     Greek_ALPHAaccent
+<Multi_key> <apostrophe> <Greek_ALPHA>  : "\266"     Greek_ALPHAaccent
+~Ctrl <Dacute_accent> <Greek_ALPHA>     : "\266"     Greek_ALPHAaccent
+Alt <Dacute_accent> <Greek_ALPHA>       : "\266"     Greek_ALPHAaccent
+<Multi_key> <acute> <Greek_ALPHA>       : "\266"     Greek_ALPHAaccent
+<Multi_key> <grave> <Greek_ALPHA>       : "\266"     Greek_ALPHAaccent
+~Ctrl <Dgrave_accent> <Greek_ALPHA>     : "\266"     Greek_ALPHAaccent
+Alt <Dgrave_accent> <Greek_ALPHA>       : "\266"     Greek_ALPHAaccent
+<Multi_key> <grave> <Greek_ALPHA>       : "\266"     Greek_ALPHAaccent
+~Ctrl <Dgrave_accent> <Greek_ALPHA>     : "\266"     Greek_ALPHAaccent
+Alt <Dgrave_accent> <Greek_ALPHA>       : "\266"     Greek_ALPHAaccent
+<Multi_key> <apostrophe> <Greek_ALPHA>  : "\266"     Greek_ALPHAaccent
+~Ctrl <Dacute_accent> <Greek_ALPHA>     : "\266"     Greek_ALPHAaccent
+Alt <Dacute_accent> <Greek_ALPHA>       : "\266"     Greek_ALPHAaccent
+<Multi_key> <period> <asciicircum>      : "\267"     periodcentered
+<Multi_key> <asciicircum> <period>      : "\267"     periodcentered
+~Ctrl <Dcircumflex_accent> <period>     : "\267"     periodcentered
+Alt <Dcircumflex_accent> <period>       : "\267"     periodcentered
+<Multi_key> <Greek_EPSILON> <apostrophe> : "\270"     Greek_EPSILONaccent
+<Multi_key> <Greek_EPSILON> <acute>     : "\270"     Greek_EPSILONaccent
+<Multi_key> <Greek_EPSILON> <grave>     : "\270"     Greek_EPSILONaccent
+<Multi_key> <Greek_EPSILON> <grave>     : "\270"     Greek_EPSILONaccent
+<Multi_key> <Greek_EPSILON> <apostrophe> : "\270"     Greek_EPSILONaccent
+<Multi_key> <apostrophe> <Greek_EPSILON> : "\270"     Greek_EPSILONaccent
+~Ctrl <Dacute_accent> <Greek_EPSILON>   : "\270"     Greek_EPSILONaccent
+Alt <Dacute_accent> <Greek_EPSILON>     : "\270"     Greek_EPSILONaccent
+<Multi_key> <acute> <Greek_EPSILON>     : "\270"     Greek_EPSILONaccent
+<Multi_key> <grave> <Greek_EPSILON>     : "\270"     Greek_EPSILONaccent
+~Ctrl <Dgrave_accent> <Greek_EPSILON>   : "\270"     Greek_EPSILONaccent
+Alt <Dgrave_accent> <Greek_EPSILON>     : "\270"     Greek_EPSILONaccent
+<Multi_key> <grave> <Greek_EPSILON>     : "\270"     Greek_EPSILONaccent
+~Ctrl <Dgrave_accent> <Greek_EPSILON>   : "\270"     Greek_EPSILONaccent
+Alt <Dgrave_accent> <Greek_EPSILON>     : "\270"     Greek_EPSILONaccent
+<Multi_key> <apostrophe> <Greek_EPSILON> : "\270"     Greek_EPSILONaccent
+~Ctrl <Dacute_accent> <Greek_EPSILON>   : "\270"     Greek_EPSILONaccent
+Alt <Dacute_accent> <Greek_EPSILON>     : "\270"     Greek_EPSILONaccent
+<Multi_key> <Greek_ETA> <apostrophe>    : "\271"     Greek_ETAaccent
+<Multi_key> <Greek_ETA> <acute>         : "\271"     Greek_ETAaccent
+<Multi_key> <Greek_ETA> <grave>         : "\271"     Greek_ETAaccent
+<Multi_key> <Greek_ETA> <grave>         : "\271"     Greek_ETAaccent
+<Multi_key> <Greek_ETA> <apostrophe>    : "\271"     Greek_ETAaccent
+<Multi_key> <apostrophe> <Greek_ETA>    : "\271"     Greek_ETAaccent
+~Ctrl <Dacute_accent> <Greek_ETA>       : "\271"     Greek_ETAaccent
+Alt <Dacute_accent> <Greek_ETA>         : "\271"     Greek_ETAaccent
+<Multi_key> <acute> <Greek_ETA>         : "\271"     Greek_ETAaccent
+<Multi_key> <grave> <Greek_ETA>         : "\271"     Greek_ETAaccent
+~Ctrl <Dgrave_accent> <Greek_ETA>       : "\271"     Greek_ETAaccent
+Alt <Dgrave_accent> <Greek_ETA>         : "\271"     Greek_ETAaccent
+<Multi_key> <grave> <Greek_ETA>         : "\271"     Greek_ETAaccent
+~Ctrl <Dgrave_accent> <Greek_ETA>       : "\271"     Greek_ETAaccent
+Alt <Dgrave_accent> <Greek_ETA>         : "\271"     Greek_ETAaccent
+<Multi_key> <apostrophe> <Greek_ETA>    : "\271"     Greek_ETAaccent
+~Ctrl <Dacute_accent> <Greek_ETA>       : "\271"     Greek_ETAaccent
+Alt <Dacute_accent> <Greek_ETA>         : "\271"     Greek_ETAaccent
+<Multi_key> <Greek_IOTA> <apostrophe>   : "\272"     Greek_IOTAaccent
+<Multi_key> <Greek_IOTA> <acute>        : "\272"     Greek_IOTAaccent
+<Multi_key> <Greek_IOTA> <grave>        : "\272"     Greek_IOTAaccent
+<Multi_key> <Greek_IOTA> <grave>        : "\272"     Greek_IOTAaccent
+<Multi_key> <Greek_IOTA> <apostrophe>   : "\272"     Greek_IOTAaccent
+<Multi_key> <apostrophe> <Greek_IOTA>   : "\272"     Greek_IOTAaccent
+~Ctrl <Dacute_accent> <Greek_IOTA>      : "\272"     Greek_IOTAaccent
+Alt <Dacute_accent> <Greek_IOTA>        : "\272"     Greek_IOTAaccent
+<Multi_key> <acute> <Greek_IOTA>        : "\272"     Greek_IOTAaccent
+<Multi_key> <grave> <Greek_IOTA>        : "\272"     Greek_IOTAaccent
+~Ctrl <Dgrave_accent> <Greek_IOTA>      : "\272"     Greek_IOTAaccent
+Alt <Dgrave_accent> <Greek_IOTA>        : "\272"     Greek_IOTAaccent
+<Multi_key> <grave> <Greek_IOTA>        : "\272"     Greek_IOTAaccent
+~Ctrl <Dgrave_accent> <Greek_IOTA>      : "\272"     Greek_IOTAaccent
+Alt <Dgrave_accent> <Greek_IOTA>        : "\272"     Greek_IOTAaccent
+<Multi_key> <apostrophe> <Greek_IOTA>   : "\272"     Greek_IOTAaccent
+~Ctrl <Dacute_accent> <Greek_IOTA>      : "\272"     Greek_IOTAaccent
+Alt <Dacute_accent> <Greek_IOTA>        : "\272"     Greek_IOTAaccent
+<Multi_key> <Greek_OMICRON> <apostrophe> : "\274"     Greek_OMICRONaccent
+<Multi_key> <Greek_OMICRON> <acute>     : "\274"     Greek_OMICRONaccent
+<Multi_key> <Greek_OMICRON> <grave>     : "\274"     Greek_OMICRONaccent
+<Multi_key> <Greek_OMICRON> <grave>     : "\274"     Greek_OMICRONaccent
+<Multi_key> <Greek_OMICRON> <apostrophe> : "\274"     Greek_OMICRONaccent
+<Multi_key> <apostrophe> <Greek_OMICRON> : "\274"     Greek_OMICRONaccent
+~Ctrl <Dacute_accent> <Greek_OMICRON>   : "\274"     Greek_OMICRONaccent
+Alt <Dacute_accent> <Greek_OMICRON>     : "\274"     Greek_OMICRONaccent
+<Multi_key> <acute> <Greek_OMICRON>     : "\274"     Greek_OMICRONaccent
+<Multi_key> <grave> <Greek_OMICRON>     : "\274"     Greek_OMICRONaccent
+~Ctrl <Dgrave_accent> <Greek_OMICRON>   : "\274"     Greek_OMICRONaccent
+Alt <Dgrave_accent> <Greek_OMICRON>     : "\274"     Greek_OMICRONaccent
+<Multi_key> <grave> <Greek_OMICRON>     : "\274"     Greek_OMICRONaccent
+~Ctrl <Dgrave_accent> <Greek_OMICRON>   : "\274"     Greek_OMICRONaccent
+Alt <Dgrave_accent> <Greek_OMICRON>     : "\274"     Greek_OMICRONaccent
+<Multi_key> <apostrophe> <Greek_OMICRON> : "\274"     Greek_OMICRONaccent
+~Ctrl <Dacute_accent> <Greek_OMICRON>   : "\274"     Greek_OMICRONaccent
+Alt <Dacute_accent> <Greek_OMICRON>     : "\274"     Greek_OMICRONaccent
+<Multi_key> <1> <2>                     : "\275"     onehalf
+<Multi_key> <Greek_UPSILON> <apostrophe> : "\276"     Greek_UPSILONaccent
+<Multi_key> <Greek_UPSILON> <acute>     : "\276"     Greek_UPSILONaccent
+<Multi_key> <Greek_UPSILON> <grave>     : "\276"     Greek_UPSILONaccent
+<Multi_key> <Greek_UPSILON> <grave>     : "\276"     Greek_UPSILONaccent
+<Multi_key> <Greek_UPSILON> <apostrophe> : "\276"     Greek_UPSILONaccent
+<Multi_key> <apostrophe> <Greek_UPSILON> : "\276"     Greek_UPSILONaccent
+~Ctrl <Dacute_accent> <Greek_UPSILON>   : "\276"     Greek_UPSILONaccent
+Alt <Dacute_accent> <Greek_UPSILON>     : "\276"     Greek_UPSILONaccent
+<Multi_key> <acute> <Greek_UPSILON>     : "\276"     Greek_UPSILONaccent
+<Multi_key> <grave> <Greek_UPSILON>     : "\276"     Greek_UPSILONaccent
+~Ctrl <Dgrave_accent> <Greek_UPSILON>   : "\276"     Greek_UPSILONaccent
+Alt <Dgrave_accent> <Greek_UPSILON>     : "\276"     Greek_UPSILONaccent
+<Multi_key> <grave> <Greek_UPSILON>     : "\276"     Greek_UPSILONaccent
+~Ctrl <Dgrave_accent> <Greek_UPSILON>   : "\276"     Greek_UPSILONaccent
+Alt <Dgrave_accent> <Greek_UPSILON>     : "\276"     Greek_UPSILONaccent
+<Multi_key> <apostrophe> <Greek_UPSILON> : "\276"     Greek_UPSILONaccent
+~Ctrl <Dacute_accent> <Greek_UPSILON>   : "\276"     Greek_UPSILONaccent
+Alt <Dacute_accent> <Greek_UPSILON>     : "\276"     Greek_UPSILONaccent
+<Multi_key> <Greek_OMEGA> <apostrophe>  : "\277"     Greek_OMEGAaccent
+<Multi_key> <Greek_OMEGA> <acute>       : "\277"     Greek_OMEGAaccent
+<Multi_key> <Greek_OMEGA> <grave>       : "\277"     Greek_OMEGAaccent
+<Multi_key> <Greek_OMEGA> <grave>       : "\277"     Greek_OMEGAaccent
+<Multi_key> <Greek_OMEGA> <apostrophe>  : "\277"     Greek_OMEGAaccent
+<Multi_key> <apostrophe> <Greek_OMEGA>  : "\277"     Greek_OMEGAaccent
+~Ctrl <Dacute_accent> <Greek_OMEGA>     : "\277"     Greek_OMEGAaccent
+Alt <Dacute_accent> <Greek_OMEGA>       : "\277"     Greek_OMEGAaccent
+<Multi_key> <acute> <Greek_OMEGA>       : "\277"     Greek_OMEGAaccent
+<Multi_key> <grave> <Greek_OMEGA>       : "\277"     Greek_OMEGAaccent
+~Ctrl <Dgrave_accent> <Greek_OMEGA>     : "\277"     Greek_OMEGAaccent
+Alt <Dgrave_accent> <Greek_OMEGA>       : "\277"     Greek_OMEGAaccent
+<Multi_key> <grave> <Greek_OMEGA>       : "\277"     Greek_OMEGAaccent
+~Ctrl <Dgrave_accent> <Greek_OMEGA>     : "\277"     Greek_OMEGAaccent
+Alt <Dgrave_accent> <Greek_OMEGA>       : "\277"     Greek_OMEGAaccent
+<Multi_key> <apostrophe> <Greek_OMEGA>  : "\277"     Greek_OMEGAaccent
+~Ctrl <Dacute_accent> <Greek_OMEGA>     : "\277"     Greek_OMEGAaccent
+Alt <Dacute_accent> <Greek_OMEGA>       : "\277"     Greek_OMEGAaccent
+<Multi_key> <asterisk> <Greek_iota>     : "\332"     Greek_IOTAdiaeresis
+<Multi_key> <Greek_iota> <asterisk>     : "\332"     Greek_IOTAdiaeresis
+<Multi_key> <Greek_IOTA> <diaeresis>    : "\332"     Greek_IOTAdiaeresis
+<Multi_key> <Greek_IOTA> <quotedbl>     : "\332"     Greek_IOTAdiaeresis
+<Multi_key> <diaeresis> <Greek_IOTA>    : "\332"     Greek_IOTAdiaeresis
+<Multi_key> <quotedbl> <Greek_IOTA>     : "\332"     Greek_IOTAdiaeresis
+~Ctrl <Ddiaeresis> <Greek_IOTA>         : "\332"     Greek_IOTAdiaeresis
+Alt <Ddiaeresis> <Greek_IOTA>           : "\332"     Greek_IOTAdiaeresis
+<Multi_key> <Greek_UPSILON> <diaeresis> : "\333"     Greek_UPSILONdieresis
+<Multi_key> <Greek_UPSILON> <quotedbl>  : "\333"     Greek_UPSILONdieresis
+<Multi_key> <diaeresis> <Greek_UPSILON> : "\333"     Greek_UPSILONdieresis
+<Multi_key> <quotedbl> <Greek_UPSILON>  : "\333"     Greek_UPSILONdieresis
+~Ctrl <Ddiaeresis> <Greek_UPSILON>      : "\333"     Greek_UPSILONdieresis
+Alt <Ddiaeresis> <Greek_UPSILON>        : "\333"     Greek_UPSILONdieresis
+<Multi_key> <Greek_alpha> <apostrophe>  : "\334"     Greek_alphaaccent
+<Multi_key> <Greek_alpha> <acute>       : "\334"     Greek_alphaaccent
+<Multi_key> <Greek_alpha> <grave>       : "\334"     Greek_alphaaccent
+<Multi_key> <Greek_alpha> <grave>       : "\334"     Greek_alphaaccent
+<Multi_key> <Greek_alpha> <apostrophe>  : "\334"     Greek_alphaaccent
+<Multi_key> <apostrophe> <Greek_alpha>  : "\334"     Greek_alphaaccent
+~Ctrl <Dacute_accent> <Greek_alpha>     : "\334"     Greek_alphaaccent
+Alt <Dacute_accent> <Greek_alpha>       : "\334"     Greek_alphaaccent
+<Multi_key> <acute> <Greek_alpha>       : "\334"     Greek_alphaaccent
+<Multi_key> <grave> <Greek_alpha>       : "\334"     Greek_alphaaccent
+~Ctrl <Dgrave_accent> <Greek_alpha>     : "\334"     Greek_alphaaccent
+Alt <Dgrave_accent> <Greek_alpha>       : "\334"     Greek_alphaaccent
+<Multi_key> <grave> <Greek_alpha>       : "\334"     Greek_alphaaccent
+~Ctrl <Dgrave_accent> <Greek_alpha>     : "\334"     Greek_alphaaccent
+Alt <Dgrave_accent> <Greek_alpha>       : "\334"     Greek_alphaaccent
+<Multi_key> <apostrophe> <Greek_alpha>  : "\334"     Greek_alphaaccent
+~Ctrl <Dacute_accent> <Greek_alpha>     : "\334"     Greek_alphaaccent
+Alt <Dacute_accent> <Greek_alpha>       : "\334"     Greek_alphaaccent
+<Multi_key> <Greek_epsilon> <apostrophe> : "\335"     Greek_epsilonaccent
+<Multi_key> <Greek_epsilon> <acute>     : "\335"     Greek_epsilonaccent
+<Multi_key> <Greek_epsilon> <grave>     : "\335"     Greek_epsilonaccent
+<Multi_key> <Greek_epsilon> <grave>     : "\335"     Greek_epsilonaccent
+<Multi_key> <Greek_epsilon> <apostrophe> : "\335"     Greek_epsilonaccent
+<Multi_key> <apostrophe> <Greek_epsilon> : "\335"     Greek_epsilonaccent
+~Ctrl <Dacute_accent> <Greek_epsilon>   : "\335"     Greek_epsilonaccent
+Alt <Dacute_accent> <Greek_epsilon>     : "\335"     Greek_epsilonaccent
+<Multi_key> <acute> <Greek_epsilon>     : "\335"     Greek_epsilonaccent
+<Multi_key> <grave> <Greek_epsilon>     : "\335"     Greek_epsilonaccent
+~Ctrl <Dgrave_accent> <Greek_epsilon>   : "\335"     Greek_epsilonaccent
+Alt <Dgrave_accent> <Greek_epsilon>     : "\335"     Greek_epsilonaccent
+<Multi_key> <grave> <Greek_epsilon>     : "\335"     Greek_epsilonaccent
+~Ctrl <Dgrave_accent> <Greek_epsilon>   : "\335"     Greek_epsilonaccent
+Alt <Dgrave_accent> <Greek_epsilon>     : "\335"     Greek_epsilonaccent
+<Multi_key> <apostrophe> <Greek_epsilon> : "\335"     Greek_epsilonaccent
+~Ctrl <Dacute_accent> <Greek_epsilon>   : "\335"     Greek_epsilonaccent
+Alt <Dacute_accent> <Greek_epsilon>     : "\335"     Greek_epsilonaccent
+<Multi_key> <Greek_eta> <apostrophe>    : "\336"     Greek_etaaccent
+<Multi_key> <Greek_eta> <acute>         : "\336"     Greek_etaaccent
+<Multi_key> <Greek_eta> <grave>         : "\336"     Greek_etaaccent
+<Multi_key> <Greek_eta> <grave>         : "\336"     Greek_etaaccent
+<Multi_key> <Greek_eta> <apostrophe>    : "\336"     Greek_etaaccent
+<Multi_key> <apostrophe> <Greek_eta>    : "\336"     Greek_etaaccent
+~Ctrl <Dacute_accent> <Greek_eta>       : "\336"     Greek_etaaccent
+Alt <Dacute_accent> <Greek_eta>         : "\336"     Greek_etaaccent
+<Multi_key> <acute> <Greek_eta>         : "\336"     Greek_etaaccent
+<Multi_key> <grave> <Greek_eta>         : "\336"     Greek_etaaccent
+~Ctrl <Dgrave_accent> <Greek_eta>       : "\336"     Greek_etaaccent
+Alt <Dgrave_accent> <Greek_eta>         : "\336"     Greek_etaaccent
+<Multi_key> <grave> <Greek_eta>         : "\336"     Greek_etaaccent
+~Ctrl <Dgrave_accent> <Greek_eta>       : "\336"     Greek_etaaccent
+Alt <Dgrave_accent> <Greek_eta>         : "\336"     Greek_etaaccent
+<Multi_key> <apostrophe> <Greek_eta>    : "\336"     Greek_etaaccent
+~Ctrl <Dacute_accent> <Greek_eta>       : "\336"     Greek_etaaccent
+Alt <Dacute_accent> <Greek_eta>         : "\336"     Greek_etaaccent
+<Multi_key> <Greek_iota> <apostrophe>   : "\337"     Greek_iotaaccent
+<Multi_key> <Greek_iota> <acute>        : "\337"     Greek_iotaaccent
+<Multi_key> <Greek_iota> <grave>        : "\337"     Greek_iotaaccent
+<Multi_key> <Greek_iota> <grave>        : "\337"     Greek_iotaaccent
+<Multi_key> <Greek_iota> <apostrophe>   : "\337"     Greek_iotaaccent
+<Multi_key> <apostrophe> <Greek_iota>   : "\337"     Greek_iotaaccent
+~Ctrl <Dacute_accent> <Greek_iota>      : "\337"     Greek_iotaaccent
+Alt <Dacute_accent> <Greek_iota>        : "\337"     Greek_iotaaccent
+<Multi_key> <acute> <Greek_iota>        : "\337"     Greek_iotaaccent
+<Multi_key> <grave> <Greek_iota>        : "\337"     Greek_iotaaccent
+~Ctrl <Dgrave_accent> <Greek_iota>      : "\337"     Greek_iotaaccent
+Alt <Dgrave_accent> <Greek_iota>        : "\337"     Greek_iotaaccent
+<Multi_key> <grave> <Greek_iota>        : "\337"     Greek_iotaaccent
+~Ctrl <Dgrave_accent> <Greek_iota>      : "\337"     Greek_iotaaccent
+Alt <Dgrave_accent> <Greek_iota>        : "\337"     Greek_iotaaccent
+<Multi_key> <apostrophe> <Greek_iota>   : "\337"     Greek_iotaaccent
+~Ctrl <Dacute_accent> <Greek_iota>      : "\337"     Greek_iotaaccent
+Alt <Dacute_accent> <Greek_iota>        : "\337"     Greek_iotaaccent
+<Multi_key> <asterisk> <Greek_upsilon>  : "\340"     Greek_upsilonaccentdieresis
+<Multi_key> <Greek_upsilon> <asterisk>  : "\340"     Greek_upsilonaccentdieresis
+<Multi_key> <Greek_iota> <diaeresis>    : "\372"     Greek_iotadieresis
+<Multi_key> <Greek_iota> <quotedbl>     : "\372"     Greek_iotadieresis
+<Multi_key> <diaeresis> <Greek_iota>    : "\372"     Greek_iotadieresis
+<Multi_key> <quotedbl> <Greek_iota>     : "\372"     Greek_iotadieresis
+~Ctrl <Ddiaeresis> <Greek_iota>         : "\372"     Greek_iotadieresis
+Alt <Ddiaeresis> <Greek_iota>           : "\372"     Greek_iotadieresis
+<Multi_key> <Greek_upsilon> <diaeresis> : "\373"     Greek_upsilondieresis
+<Multi_key> <Greek_upsilon> <quotedbl>  : "\373"     Greek_upsilondieresis
+<Multi_key> <diaeresis> <Greek_upsilon> : "\373"     Greek_upsilondieresis
+<Multi_key> <quotedbl> <Greek_upsilon>  : "\373"     Greek_upsilondieresis
+~Ctrl <Ddiaeresis> <Greek_upsilon>      : "\373"     Greek_upsilondieresis
+Alt <Ddiaeresis> <Greek_upsilon>        : "\373"     Greek_upsilondieresis
+<Multi_key> <Greek_omicron> <apostrophe> : "\374"     Greek_omicronaccent
+<Multi_key> <Greek_omicron> <acute>     : "\374"     Greek_omicronaccent
+<Multi_key> <Greek_omicron> <grave>     : "\374"     Greek_omicronaccent
+<Multi_key> <Greek_omicron> <grave>     : "\374"     Greek_omicronaccent
+<Multi_key> <Greek_omicron> <apostrophe> : "\374"     Greek_omicronaccent
+<Multi_key> <apostrophe> <Greek_omicron> : "\374"     Greek_omicronaccent
+~Ctrl <Dacute_accent> <Greek_omicron>   : "\374"     Greek_omicronaccent
+Alt <Dacute_accent> <Greek_omicron>     : "\374"     Greek_omicronaccent
+<Multi_key> <acute> <Greek_omicron>     : "\374"     Greek_omicronaccent
+<Multi_key> <grave> <Greek_omicron>     : "\374"     Greek_omicronaccent
+~Ctrl <Dgrave_accent> <Greek_omicron>   : "\374"     Greek_omicronaccent
+Alt <Dgrave_accent> <Greek_omicron>     : "\374"     Greek_omicronaccent
+<Multi_key> <grave> <Greek_omicron>     : "\374"     Greek_omicronaccent
+~Ctrl <Dgrave_accent> <Greek_omicron>   : "\374"     Greek_omicronaccent
+Alt <Dgrave_accent> <Greek_omicron>     : "\374"     Greek_omicronaccent
+<Multi_key> <apostrophe> <Greek_omicron> : "\374"     Greek_omicronaccent
+~Ctrl <Dacute_accent> <Greek_omicron>   : "\374"     Greek_omicronaccent
+Alt <Dacute_accent> <Greek_omicron>     : "\374"     Greek_omicronaccent
+<Multi_key> <Greek_upsilon> <apostrophe> : "\375"     Greek_upsilonaccent
+<Multi_key> <Greek_upsilon> <acute>     : "\375"     Greek_upsilonaccent
+<Multi_key> <Greek_upsilon> <grave>     : "\375"     Greek_upsilonaccent
+<Multi_key> <Greek_upsilon> <grave>     : "\375"     Greek_upsilonaccent
+<Multi_key> <Greek_upsilon> <apostrophe> : "\375"     Greek_upsilonaccent
+<Multi_key> <apostrophe> <Greek_upsilon> : "\375"     Greek_upsilonaccent
+~Ctrl <Dacute_accent> <Greek_upsilon>   : "\375"     Greek_upsilonaccent
+Alt <Dacute_accent> <Greek_upsilon>     : "\375"     Greek_upsilonaccent
+<Multi_key> <acute> <Greek_upsilon>     : "\375"     Greek_upsilonaccent
+<Multi_key> <grave> <Greek_upsilon>     : "\375"     Greek_upsilonaccent
+~Ctrl <Dgrave_accent> <Greek_upsilon>   : "\375"     Greek_upsilonaccent
+Alt <Dgrave_accent> <Greek_upsilon>     : "\375"     Greek_upsilonaccent
+<Multi_key> <grave> <Greek_upsilon>     : "\375"     Greek_upsilonaccent
+~Ctrl <Dgrave_accent> <Greek_upsilon>   : "\375"     Greek_upsilonaccent
+Alt <Dgrave_accent> <Greek_upsilon>     : "\375"     Greek_upsilonaccent
+<Multi_key> <apostrophe> <Greek_upsilon> : "\375"     Greek_upsilonaccent
+~Ctrl <Dacute_accent> <Greek_upsilon>   : "\375"     Greek_upsilonaccent
+Alt <Dacute_accent> <Greek_upsilon>     : "\375"     Greek_upsilonaccent
+<Multi_key> <Greek_omega> <apostrophe>  : "\376"     Greek_omegaaccent
+<Multi_key> <Greek_omega> <acute>       : "\376"     Greek_omegaaccent
+<Multi_key> <Greek_omega> <grave>       : "\376"     Greek_omegaaccent
+<Multi_key> <Greek_omega> <grave>       : "\376"     Greek_omegaaccent
+<Multi_key> <Greek_omega> <apostrophe>  : "\376"     Greek_omegaaccent
+<Multi_key> <apostrophe> <Greek_omega>  : "\376"     Greek_omegaaccent
+~Ctrl <Dacute_accent> <Greek_omega>     : "\376"     Greek_omegaaccent
+Alt <Dacute_accent> <Greek_omega>       : "\376"     Greek_omegaaccent
+<Multi_key> <acute> <Greek_omega>       : "\376"     Greek_omegaaccent
+<Multi_key> <grave> <Greek_omega>       : "\376"     Greek_omegaaccent
+~Ctrl <Dgrave_accent> <Greek_omega>     : "\376"     Greek_omegaaccent
+Alt <Dgrave_accent> <Greek_omega>       : "\376"     Greek_omegaaccent
+<Multi_key> <grave> <Greek_omega>       : "\376"     Greek_omegaaccent
+~Ctrl <Dgrave_accent> <Greek_omega>     : "\376"     Greek_omegaaccent
+Alt <Dgrave_accent> <Greek_omega>       : "\376"     Greek_omegaaccent
+<Multi_key> <apostrophe> <Greek_omega>  : "\376"     Greek_omegaaccent
+~Ctrl <Dacute_accent> <Greek_omega>     : "\376"     Greek_omegaaccent
+Alt <Dacute_accent> <Greek_omega>       : "\376"     Greek_omegaaccent
+Alt ~Ctrl ~Shift <space> <plus> <plus>  : "\43"      numbersign
+Alt ~Ctrl ~Shift <space> <parenleft> <parenleft> : "\133"     bracketleft
+Alt ~Ctrl ~Shift <space> <parenright> <parenright> : "\135"     bracketright
+Alt ~Ctrl ~Shift <space> <parenleft> <minus> : "\173"     braceleft
+Alt ~Ctrl ~Shift <space> <minus> <parenleft> : "\173"     braceleft
+Alt ~Ctrl ~Shift <space> <parenright> <minus> : "\175"     braceright
+Alt ~Ctrl ~Shift <space> <minus> <parenright> : "\175"     braceright
+Alt ~Ctrl ~Shift <space> <A> <A>        : "\100"     at
+Alt ~Ctrl ~Shift <space> <A> <a>        : "\100"     at
+Alt ~Ctrl ~Shift <space> <a> <A>        : "\100"     at
+Alt ~Ctrl ~Shift <space> <a> <a>        : "\100"     at
+Alt ~Ctrl ~Shift <space> <slash> <slash> : "\134"     backslash
+Alt ~Ctrl ~Shift <space> <slash> <less> : "\134"     backslash
+Alt ~Ctrl ~Shift <space> <less> <slash> : "\134"     backslash
+Alt ~Ctrl ~Shift <space> <space> <asciicircum> : "\136"     asciicircum
+Alt ~Ctrl ~Shift <space> <asciicircum> <space> : "\136"     asciicircum
+Alt ~Ctrl ~Shift <space> <slash> <asciicircum> : "\174"     bar
+Alt ~Ctrl ~Shift <space> <asciicircum> <slash> : "\174"     bar
+Alt ~Ctrl ~Shift <space> <space> <asciitilde> : "\176"     asciitilde
+Alt ~Ctrl ~Shift <space> <asciitilde> <space> : "\176"     asciitilde
+Alt ~Ctrl ~Shift <space> <space> <grave> : "\140"     grave
+Alt ~Ctrl ~Shift <space> <grave> <space> : "\140"     grave
+Alt ~Ctrl ~Shift <space> <space> <space> : "\240"     nobreakspace
+Alt ~Ctrl ~Shift <space> <space> <apostrophe> : "\47"      apostrophe
+Alt ~Ctrl ~Shift <space> <apostrophe> <space> : "\47"      apostrophe
+Alt ~Ctrl ~Shift <space> <minus> <L>    : "\243"     sterling
+Alt ~Ctrl ~Shift <space> <minus> <l>    : "\243"     sterling
+Alt ~Ctrl ~Shift <space> <equal> <L>    : "\243"     sterling
+Alt ~Ctrl ~Shift <space> <equal> <l>    : "\243"     sterling
+Alt ~Ctrl ~Shift <space> <L> <minus>    : "\243"     sterling
+Alt ~Ctrl ~Shift <space> <L> <equal>    : "\243"     sterling
+Alt ~Ctrl ~Shift <space> <l> <minus>    : "\243"     sterling
+Alt ~Ctrl ~Shift <space> <l> <equal>    : "\243"     sterling
+Alt ~Ctrl ~Shift <space> <bar> <bar>    : "\246"     brokenbar
+Alt ~Ctrl ~Shift <space> <exclam> <S>   : "\247"     section
+Alt ~Ctrl ~Shift <space> <exclam> <s>   : "\247"     section
+Alt ~Ctrl ~Shift <space> <0> <S>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <0> <s>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <O> <S>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <O> <s>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <S> <exclam>   : "\247"     section
+Alt ~Ctrl ~Shift <space> <S> <0>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <S> <O>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <S> <o>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <o> <S>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <o> <s>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <s> <exclam>   : "\247"     section
+Alt ~Ctrl ~Shift <space> <s> <0>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <s> <O>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <s> <o>        : "\247"     section
+Alt ~Ctrl ~Shift <space> <space> <diaeresis> : "\250"     diaeresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <quotedbl> : "\250"     diaeresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <space> : "\250"     diaeresis
+Alt ~Ctrl ~Shift <space> <0> <C>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <0> <c>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <C> <0>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <C> <O>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <C> <o>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <O> <C>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <O> <c>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <c> <0>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <c> <O>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <c> <o>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <o> <C>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <o> <c>        : "\251"     copyright
+Alt ~Ctrl ~Shift <space> <less> <less>  : "\253"     guillemotleft
+Alt ~Ctrl ~Shift <space> <greater> <greater> : "\273"     guillemotright
+Alt ~Ctrl ~Shift <space> <minus> <comma> : "\254"     notsign
+Alt ~Ctrl ~Shift <space> <comma> <minus> : "\254"     notsign
+Alt ~Ctrl ~Shift <space> <minus> <minus> : "\255"     hyphen
+Alt ~Ctrl ~Shift <space> <underscore> <underscore> : "\257"     Greek_horizbar
+Alt ~Ctrl ~Shift <space> <space> <asterisk> : "\260"     degree
+Alt ~Ctrl ~Shift <space> <asterisk> <space> : "\260"     degree
+Alt ~Ctrl ~Shift <space> <space> <degree> : "\260"     degree
+Alt ~Ctrl ~Shift <space> <degree> <space> : "\260"     degree
+Alt ~Ctrl ~Shift <space> <asciicircum> <0> : "\260"     degree
+Alt ~Ctrl ~Shift <space> <0> <asciicircum> : "\260"     degree
+Alt ~Ctrl ~Shift <space> <plus> <minus> : "\261"     plusminus
+Alt ~Ctrl ~Shift <space> <minus> <plus> : "\261"     plusminus
+Alt ~Ctrl ~Shift <space> <2> <asciicircum> : "\262"     twosuperior
+Alt ~Ctrl ~Shift <space> <asciicircum> <2> : "\262"     twosuperior
+Alt ~Ctrl ~Shift <space> <3> <asciicircum> : "\263"     threesuperior
+Alt ~Ctrl ~Shift <space> <asciicircum> <3> : "\263"     threesuperior
+Alt ~Ctrl ~Shift <space> <space> <acute> : "\264"     acute
+Alt ~Ctrl ~Shift <space> <acute> <space> : "\264"     acute
+Alt ~Ctrl ~Shift <space> <apostrophe> <apostrophe> : "\264"     acute
+Alt ~Ctrl ~Shift <space> <space> <acute> : "\264"     acute
+Alt ~Ctrl ~Shift <space> <acute> <space> : "\264"     acute
+Alt ~Ctrl ~Shift <space> <apostrophe> <apostrophe> : "\264"     acute
+Alt ~Ctrl ~Shift <space> <apostrophe> <space> : "\47"      apostrophe
+Alt ~Ctrl ~Shift <space> <space> <apostrophe> : "\47"      apostrophe
+Alt ~Ctrl ~Shift <space> <diaeresis> <apostrophe> : "\265"     Greek_accentdieresis
+Alt ~Ctrl ~Shift <space> <apostrophe> <diaeresis> : "\265"     Greek_accentdieresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <acute> : "\265"     Greek_accentdieresis
+Alt ~Ctrl ~Shift <space> <acute> <diaeresis> : "\265"     Greek_accentdieresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <grave> : "\265"     Greek_accentdieresis
+Alt ~Ctrl ~Shift <space> <grave> <diaeresis> : "\265"     Greek_accentdieresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <grave> : "\265"     Greek_accentdieresis
+Alt ~Ctrl ~Shift <space> <grave> <diaeresis> : "\265"     Greek_accentdieresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <apostrophe> : "\265"     Greek_accentdieresis
+Alt ~Ctrl ~Shift <space> <apostrophe> <diaeresis> : "\265"     Greek_accentdieresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <apostrophe> : "\265"     Greek_accentdieresis
+Alt ~Ctrl ~Shift <space> <apostrophe> <quotedbl> : "\265"     Greek_accentdieresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <acute> : "\265"     Greek_accentdieresis
+Alt ~Ctrl ~Shift <space> <acute> <quotedbl> : "\265"     Greek_accentdieresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <grave> : "\265"     Greek_accentdieresis
+Alt ~Ctrl ~Shift <space> <grave> <quotedbl> : "\265"     Greek_accentdieresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <grave> : "\265"     Greek_accentdieresis
+Alt ~Ctrl ~Shift <space> <grave> <quotedbl> : "\265"     Greek_accentdieresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <apostrophe> : "\265"     Greek_accentdieresis
+Alt ~Ctrl ~Shift <space> <apostrophe> <quotedbl> : "\265"     Greek_accentdieresis
+Alt ~Ctrl ~Shift <space> <Greek_ALPHA> <apostrophe> : "\266"     Greek_ALPHAaccent
+Alt ~Ctrl ~Shift <space> <Greek_ALPHA> <acute> : "\266"     Greek_ALPHAaccent
+Alt ~Ctrl ~Shift <space> <Greek_ALPHA> <grave> : "\266"     Greek_ALPHAaccent
+Alt ~Ctrl ~Shift <space> <Greek_ALPHA> <grave> : "\266"     Greek_ALPHAaccent
+Alt ~Ctrl ~Shift <space> <Greek_ALPHA> <apostrophe> : "\266"     Greek_ALPHAaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_ALPHA> : "\266"     Greek_ALPHAaccent
+Alt ~Ctrl ~Shift <space> <acute> <Greek_ALPHA> : "\266"     Greek_ALPHAaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_ALPHA> : "\266"     Greek_ALPHAaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_ALPHA> : "\266"     Greek_ALPHAaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_ALPHA> : "\266"     Greek_ALPHAaccent
+Alt ~Ctrl ~Shift <space> <period> <asciicircum> : "\267"     periodcentered
+Alt ~Ctrl ~Shift <space> <asciicircum> <period> : "\267"     periodcentered
+Alt ~Ctrl ~Shift <space> <Greek_EPSILON> <apostrophe> : "\270"     Greek_EPSILONaccent
+Alt ~Ctrl ~Shift <space> <Greek_EPSILON> <acute> : "\270"     Greek_EPSILONaccent
+Alt ~Ctrl ~Shift <space> <Greek_EPSILON> <grave> : "\270"     Greek_EPSILONaccent
+Alt ~Ctrl ~Shift <space> <Greek_EPSILON> <grave> : "\270"     Greek_EPSILONaccent
+Alt ~Ctrl ~Shift <space> <Greek_EPSILON> <apostrophe> : "\270"     Greek_EPSILONaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_EPSILON> : "\270"     Greek_EPSILONaccent
+Alt ~Ctrl ~Shift <space> <acute> <Greek_EPSILON> : "\270"     Greek_EPSILONaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_EPSILON> : "\270"     Greek_EPSILONaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_EPSILON> : "\270"     Greek_EPSILONaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_EPSILON> : "\270"     Greek_EPSILONaccent
+Alt ~Ctrl ~Shift <space> <Greek_ETA> <apostrophe> : "\271"     Greek_ETAaccent
+Alt ~Ctrl ~Shift <space> <Greek_ETA> <acute> : "\271"     Greek_ETAaccent
+Alt ~Ctrl ~Shift <space> <Greek_ETA> <grave> : "\271"     Greek_ETAaccent
+Alt ~Ctrl ~Shift <space> <Greek_ETA> <grave> : "\271"     Greek_ETAaccent
+Alt ~Ctrl ~Shift <space> <Greek_ETA> <apostrophe> : "\271"     Greek_ETAaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_ETA> : "\271"     Greek_ETAaccent
+Alt ~Ctrl ~Shift <space> <acute> <Greek_ETA> : "\271"     Greek_ETAaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_ETA> : "\271"     Greek_ETAaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_ETA> : "\271"     Greek_ETAaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_ETA> : "\271"     Greek_ETAaccent
+Alt ~Ctrl ~Shift <space> <Greek_IOTA> <apostrophe> : "\272"     Greek_IOTAaccent
+Alt ~Ctrl ~Shift <space> <Greek_IOTA> <acute> : "\272"     Greek_IOTAaccent
+Alt ~Ctrl ~Shift <space> <Greek_IOTA> <grave> : "\272"     Greek_IOTAaccent
+Alt ~Ctrl ~Shift <space> <Greek_IOTA> <grave> : "\272"     Greek_IOTAaccent
+Alt ~Ctrl ~Shift <space> <Greek_IOTA> <apostrophe> : "\272"     Greek_IOTAaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_IOTA> : "\272"     Greek_IOTAaccent
+Alt ~Ctrl ~Shift <space> <acute> <Greek_IOTA> : "\272"     Greek_IOTAaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_IOTA> : "\272"     Greek_IOTAaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_IOTA> : "\272"     Greek_IOTAaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_IOTA> : "\272"     Greek_IOTAaccent
+Alt ~Ctrl ~Shift <space> <Greek_OMICRON> <apostrophe> : "\274"     Greek_OMICRONaccent
+Alt ~Ctrl ~Shift <space> <Greek_OMICRON> <acute> : "\274"     Greek_OMICRONaccent
+Alt ~Ctrl ~Shift <space> <Greek_OMICRON> <grave> : "\274"     Greek_OMICRONaccent
+Alt ~Ctrl ~Shift <space> <Greek_OMICRON> <grave> : "\274"     Greek_OMICRONaccent
+Alt ~Ctrl ~Shift <space> <Greek_OMICRON> <apostrophe> : "\274"     Greek_OMICRONaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_OMICRON> : "\274"     Greek_OMICRONaccent
+Alt ~Ctrl ~Shift <space> <acute> <Greek_OMICRON> : "\274"     Greek_OMICRONaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_OMICRON> : "\274"     Greek_OMICRONaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_OMICRON> : "\274"     Greek_OMICRONaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_OMICRON> : "\274"     Greek_OMICRONaccent
+Alt ~Ctrl ~Shift <space> <1> <2>        : "\275"     onehalf
+Alt ~Ctrl ~Shift <space> <Greek_UPSILON> <apostrophe> : "\276"     Greek_UPSILONaccent
+Alt ~Ctrl ~Shift <space> <Greek_UPSILON> <acute> : "\276"     Greek_UPSILONaccent
+Alt ~Ctrl ~Shift <space> <Greek_UPSILON> <grave> : "\276"     Greek_UPSILONaccent
+Alt ~Ctrl ~Shift <space> <Greek_UPSILON> <grave> : "\276"     Greek_UPSILONaccent
+Alt ~Ctrl ~Shift <space> <Greek_UPSILON> <apostrophe> : "\276"     Greek_UPSILONaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_UPSILON> : "\276"     Greek_UPSILONaccent
+Alt ~Ctrl ~Shift <space> <acute> <Greek_UPSILON> : "\276"     Greek_UPSILONaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_UPSILON> : "\276"     Greek_UPSILONaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_UPSILON> : "\276"     Greek_UPSILONaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_UPSILON> : "\276"     Greek_UPSILONaccent
+Alt ~Ctrl ~Shift <space> <Greek_OMEGA> <apostrophe> : "\277"     Greek_OMEGAaccent
+Alt ~Ctrl ~Shift <space> <Greek_OMEGA> <acute> : "\277"     Greek_OMEGAaccent
+Alt ~Ctrl ~Shift <space> <Greek_OMEGA> <grave> : "\277"     Greek_OMEGAaccent
+Alt ~Ctrl ~Shift <space> <Greek_OMEGA> <grave> : "\277"     Greek_OMEGAaccent
+Alt ~Ctrl ~Shift <space> <Greek_OMEGA> <apostrophe> : "\277"     Greek_OMEGAaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_OMEGA> : "\277"     Greek_OMEGAaccent
+Alt ~Ctrl ~Shift <space> <acute> <Greek_OMEGA> : "\277"     Greek_OMEGAaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_OMEGA> : "\277"     Greek_OMEGAaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_OMEGA> : "\277"     Greek_OMEGAaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_OMEGA> : "\277"     Greek_OMEGAaccent
+Alt ~Ctrl ~Shift <space> <asterisk> <Greek_iota> : "\332"     Greek_IOTAdiaeresis
+Alt ~Ctrl ~Shift <space> <Greek_iota> <asterisk> : "\332"     Greek_IOTAdiaeresis
+Alt ~Ctrl ~Shift <space> <Greek_IOTA> <diaeresis> : "\332"     Greek_IOTAdiaeresis
+Alt ~Ctrl ~Shift <space> <Greek_IOTA> <quotedbl> : "\332"     Greek_IOTAdiaeresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <Greek_IOTA> : "\332"     Greek_IOTAdiaeresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <Greek_IOTA> : "\332"     Greek_IOTAdiaeresis
+Alt ~Ctrl ~Shift <space> <Greek_UPSILON> <diaeresis> : "\333"     Greek_UPSILONdieresis
+Alt ~Ctrl ~Shift <space> <Greek_UPSILON> <quotedbl> : "\333"     Greek_UPSILONdieresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <Greek_UPSILON> : "\333"     Greek_UPSILONdieresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <Greek_UPSILON> : "\333"     Greek_UPSILONdieresis
+Alt ~Ctrl ~Shift <space> <Greek_alpha> <apostrophe> : "\334"     Greek_alphaaccent
+Alt ~Ctrl ~Shift <space> <Greek_alpha> <acute> : "\334"     Greek_alphaaccent
+Alt ~Ctrl ~Shift <space> <Greek_alpha> <grave> : "\334"     Greek_alphaaccent
+Alt ~Ctrl ~Shift <space> <Greek_alpha> <grave> : "\334"     Greek_alphaaccent
+Alt ~Ctrl ~Shift <space> <Greek_alpha> <apostrophe> : "\334"     Greek_alphaaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_alpha> : "\334"     Greek_alphaaccent
+Alt ~Ctrl ~Shift <space> <acute> <Greek_alpha> : "\334"     Greek_alphaaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_alpha> : "\334"     Greek_alphaaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_alpha> : "\334"     Greek_alphaaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_alpha> : "\334"     Greek_alphaaccent
+Alt ~Ctrl ~Shift <space> <Greek_epsilon> <apostrophe> : "\335"     Greek_epsilonaccent
+Alt ~Ctrl ~Shift <space> <Greek_epsilon> <acute> : "\335"     Greek_epsilonaccent
+Alt ~Ctrl ~Shift <space> <Greek_epsilon> <grave> : "\335"     Greek_epsilonaccent
+Alt ~Ctrl ~Shift <space> <Greek_epsilon> <grave> : "\335"     Greek_epsilonaccent
+Alt ~Ctrl ~Shift <space> <Greek_epsilon> <apostrophe> : "\335"     Greek_epsilonaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_epsilon> : "\335"     Greek_epsilonaccent
+Alt ~Ctrl ~Shift <space> <acute> <Greek_epsilon> : "\335"     Greek_epsilonaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_epsilon> : "\335"     Greek_epsilonaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_epsilon> : "\335"     Greek_epsilonaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_epsilon> : "\335"     Greek_epsilonaccent
+Alt ~Ctrl ~Shift <space> <Greek_eta> <apostrophe> : "\336"     Greek_etaaccent
+Alt ~Ctrl ~Shift <space> <Greek_eta> <acute> : "\336"     Greek_etaaccent
+Alt ~Ctrl ~Shift <space> <Greek_eta> <grave> : "\336"     Greek_etaaccent
+Alt ~Ctrl ~Shift <space> <Greek_eta> <grave> : "\336"     Greek_etaaccent
+Alt ~Ctrl ~Shift <space> <Greek_eta> <apostrophe> : "\336"     Greek_etaaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_eta> : "\336"     Greek_etaaccent
+Alt ~Ctrl ~Shift <space> <acute> <Greek_eta> : "\336"     Greek_etaaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_eta> : "\336"     Greek_etaaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_eta> : "\336"     Greek_etaaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_eta> : "\336"     Greek_etaaccent
+Alt ~Ctrl ~Shift <space> <Greek_iota> <apostrophe> : "\337"     Greek_iotaaccent
+Alt ~Ctrl ~Shift <space> <Greek_iota> <acute> : "\337"     Greek_iotaaccent
+Alt ~Ctrl ~Shift <space> <Greek_iota> <grave> : "\337"     Greek_iotaaccent
+Alt ~Ctrl ~Shift <space> <Greek_iota> <grave> : "\337"     Greek_iotaaccent
+Alt ~Ctrl ~Shift <space> <Greek_iota> <apostrophe> : "\337"     Greek_iotaaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_iota> : "\337"     Greek_iotaaccent
+Alt ~Ctrl ~Shift <space> <acute> <Greek_iota> : "\337"     Greek_iotaaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_iota> : "\337"     Greek_iotaaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_iota> : "\337"     Greek_iotaaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_iota> : "\337"     Greek_iotaaccent
+Alt ~Ctrl ~Shift <space> <asterisk> <Greek_upsilon> : "\340"     Greek_upsilonaccentdieresis
+Alt ~Ctrl ~Shift <space> <Greek_upsilon> <asterisk> : "\340"     Greek_upsilonaccentdieresis
+Alt ~Ctrl ~Shift <space> <Greek_iota> <diaeresis> : "\372"     Greek_iotadieresis
+Alt ~Ctrl ~Shift <space> <Greek_iota> <quotedbl> : "\372"     Greek_iotadieresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <Greek_iota> : "\372"     Greek_iotadieresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <Greek_iota> : "\372"     Greek_iotadieresis
+Alt ~Ctrl ~Shift <space> <Greek_upsilon> <diaeresis> : "\373"     Greek_upsilondieresis
+Alt ~Ctrl ~Shift <space> <Greek_upsilon> <quotedbl> : "\373"     Greek_upsilondieresis
+Alt ~Ctrl ~Shift <space> <diaeresis> <Greek_upsilon> : "\373"     Greek_upsilondieresis
+Alt ~Ctrl ~Shift <space> <quotedbl> <Greek_upsilon> : "\373"     Greek_upsilondieresis
+Alt ~Ctrl ~Shift <space> <Greek_omicron> <apostrophe> : "\374"     Greek_omicronaccent
+Alt ~Ctrl ~Shift <space> <Greek_omicron> <acute> : "\374"     Greek_omicronaccent
+Alt ~Ctrl ~Shift <space> <Greek_omicron> <grave> : "\374"     Greek_omicronaccent
+Alt ~Ctrl ~Shift <space> <Greek_omicron> <grave> : "\374"     Greek_omicronaccent
+Alt ~Ctrl ~Shift <space> <Greek_omicron> <apostrophe> : "\374"     Greek_omicronaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_omicron> : "\374"     Greek_omicronaccent
+Alt ~Ctrl ~Shift <space> <acute> <Greek_omicron> : "\374"     Greek_omicronaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_omicron> : "\374"     Greek_omicronaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_omicron> : "\374"     Greek_omicronaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_omicron> : "\374"     Greek_omicronaccent
+Alt ~Ctrl ~Shift <space> <Greek_upsilon> <apostrophe> : "\375"     Greek_upsilonaccent
+Alt ~Ctrl ~Shift <space> <Greek_upsilon> <acute> : "\375"     Greek_upsilonaccent
+Alt ~Ctrl ~Shift <space> <Greek_upsilon> <grave> : "\375"     Greek_upsilonaccent
+Alt ~Ctrl ~Shift <space> <Greek_upsilon> <grave> : "\375"     Greek_upsilonaccent
+Alt ~Ctrl ~Shift <space> <Greek_upsilon> <apostrophe> : "\375"     Greek_upsilonaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_upsilon> : "\375"     Greek_upsilonaccent
+Alt ~Ctrl ~Shift <space> <acute> <Greek_upsilon> : "\375"     Greek_upsilonaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_upsilon> : "\375"     Greek_upsilonaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_upsilon> : "\375"     Greek_upsilonaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_upsilon> : "\375"     Greek_upsilonaccent
+Alt ~Ctrl ~Shift <space> <Greek_omega> <apostrophe> : "\376"     Greek_omegaaccent
+Alt ~Ctrl ~Shift <space> <Greek_omega> <acute> : "\376"     Greek_omegaaccent
+Alt ~Ctrl ~Shift <space> <Greek_omega> <grave> : "\376"     Greek_omegaaccent
+Alt ~Ctrl ~Shift <space> <Greek_omega> <grave> : "\376"     Greek_omegaaccent
+Alt ~Ctrl ~Shift <space> <Greek_omega> <apostrophe> : "\376"     Greek_omegaaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_omega> : "\376"     Greek_omegaaccent
+Alt ~Ctrl ~Shift <space> <acute> <Greek_omega> : "\376"     Greek_omegaaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_omega> : "\376"     Greek_omegaaccent
+Alt ~Ctrl ~Shift <space> <grave> <Greek_omega> : "\376"     Greek_omegaaccent
+Alt ~Ctrl ~Shift <space> <apostrophe> <Greek_omega> : "\376"     Greek_omegaaccent
+
+# additions for latin 1 codes
+<sterling>					   : "\243"     sterling
+<diaeresis>					   : "\250"     diaeresis

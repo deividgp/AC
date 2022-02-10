@@ -1,0 +1,76 @@
+#
+# *****************************************************************
+# *                                                               *
+# *    Copyright (c) Digital Equipment Corporation, 1991, 1999    *
+# *                                                               *
+# *   All Rights Reserved.  Unpublished rights  reserved  under   *
+# *   the copyright laws of the United States.                    *
+# *                                                               *
+# *   The software contained on this media  is  proprietary  to   *
+# *   and  embodies  the  confidential  technology  of  Digital   *
+# *   Equipment Corporation.  Possession, use,  duplication  or   *
+# *   dissemination of the software and media is authorized only  *
+# *   pursuant to a valid written license from Digital Equipment  *
+# *   Corporation.                                                *
+# *                                                               *
+# *   RESTRICTED RIGHTS LEGEND   Use, duplication, or disclosure  *
+# *   by the U.S. Government is subject to restrictions  as  set  *
+# *   forth in Subparagraph (c)(1)(ii)  of  DFARS  252.227-7013,  *
+# *   or  in  FAR 52.227-19, as applicable.                       *
+# *                                                               *
+# *****************************************************************
+#
+#
+#
+# (c) Copyright 1990, OPEN SOFTWARE FOUNDATION, INC.
+# ALL RIGHTS RESERVED
+#
+#
+# OSF/1 Release 1.0
+# HISTORY
+#
+# Make file for creating lint libraries after OSF/1 is booted
+#
+#
+DATAFILES       = ${ANSI_LIST} ${STD_LIST} ${STD_NOTARGET} ${LLIB_LIST}
+
+LFLAGS = -Dlint -DLINT -D__lint -D__LINT -wP
+
+LIB_IDIR        = /usr/ccs/lib/
+
+ANSI_LIST = \
+          llib-lansi.ln \
+          llib-lcrses.ln \
+          llib-lm.ln
+
+STD_LIST = \
+    llib-lc.ln
+
+STD_NOTARGET = \
+    llib-lcstd.ln
+
+LLIB_LIST = \
+    llib-port.ln
+
+LINT = /usr/bin/lint
+
+#   This builds the lint libraries for OSF/1.  N.B, that this
+#   needs to be done RUNNING on an OSF/1 system.
+
+all: ${DATAFILES}
+	mv ${DATAFILES} ${LIB_IDIR}
+
+$(ANSI_LIST): $$(@:.ln=.c)
+	rm -f $@
+	$(LINT) $(LFLAGS) -std1 -wP -c $* 
+
+
+$(STD_LIST): $$(@:.ln=.c)
+	rm -f $@
+	$(LINT) -std $(LFLAGS) -c $*
+	mv $@ $(@:.ln=std.ln)
+	$(LINT) -std -c $(LFLAGS) -D_NONSTD_TYPES $* 
+
+$(LLIB_LIST): $$(@:.ln=.c)
+	rm -f $@
+	$(LINT) -std0 $(LFLAGS) -c $*

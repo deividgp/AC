@@ -1,0 +1,1 @@
+#define NPNVRAM 0

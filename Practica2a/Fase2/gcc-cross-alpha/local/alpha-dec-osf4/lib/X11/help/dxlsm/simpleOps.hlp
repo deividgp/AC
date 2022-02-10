@@ -1,0 +1,42 @@
+#/* @(#)@(#)help/simpleOps.hlp	2.1 11 May 1993 19:06:12 -  */
+#ident  "@(#)va11:help/simpleOps.hlp   2.1"
+#
+#
+Pulldown Menus, pulldown.hlp
+Volume, volume.hlp
+Plex, plex.hlp
+Subdisk, subdisk.hlp
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+Basic Volume Operations, simpleVol.hlp
+File System Operation, fsOps.hlp
+Basic Disk Operation, simpleDisk.hlp
+Advanced Operations, advOps.hlp
+#########################################
+BASIC OPERATIONS HELP
+
+Basic operations are the way that the Logical Storage Manager and the Visual
+Administrator provide for easier system administration.  The commands are
+designed to allow the user to do administrative operations quickly and
+easily using free space management techniques.
+
+The user should find that these operations are easier to use than their
+counterparts under the "Advanced Operations" pulldown menu.
+
+
+File System Operations
+----------------------
+Operations involving general file system maintenance.  File systems can be
+created, mounted and unmounted, resized, and displayed.
+
+Volume Operations
+-----------------
+Operations involving general volume maintenance.  The user may create
+volumes from Logical Storage Manager disks, remove volumes, add a mirror to a
+volume, resize volumes, and take a volume snapshot.
+
+Disk Operations
+---------------
+Operations involving general disk maintenance.  Disks may be initialized,
+removed, or replaced.
+

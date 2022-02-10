@@ -1,0 +1,1 @@
+#define NCIRRUS 0

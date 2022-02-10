@@ -1,0 +1,99 @@
+#/* @(#)@(#)help/plexCreat.hlp	2.1 11 May 1993 19:05:38 -  */
+#ident  "@(#)va11:help/plexCreat.hlp   2.1"
+#
+#
+Forms, forms.hlp
+Volume, volume.hlp
+Plex, plex.hlp
+Subdisk, subdisk.hlp
+Disk Group, diskGrp.hlp
+Mirroring, mirror.hlp
+Striping, stripe.hlp
+Concatenated, concat.hlp
+#########################################
+PLEX CREATE FORM
+
+The plex create form is where you specify parameters on how you want a plex
+to be created.
+
+For more information about these fields, see the plexrec(4) reference
+manual page from the Logical Storage Manager Programmers Reference Guide.
+
+
+Fields
+----------
+
+Plex Name:
+	The name of the plex you are about to create.  The name must be
+	unique within this disk group.  The maximum length of this field is
+	14 characters.  This field is required.  
+
+Plex State:
+	The plex utility state.  This is reserved for use by usage types. 
+
+Volume:
+	The name of the volume that this plex should be associated with.
+	The name entered here must be a valid volume name in this disk
+	group.  The maximum length of this field is 14 characters.
+
+Layout:
+	This is the desired layout of this plex, Concatenated or Striped.
+	For more information on these choices, see their individual help
+	files. 
+
+Stripe Width:
+	The width of the stripes on this plex.  If no unit is specified
+	then number entered here is assumed to be in sectors.  Only
+	positive numbers greater than zero are accepted.  This field must
+	be blank if "Concatenated" plex layout has been specified.  If
+	"Striped" plex layout has been specified, then this field is
+	required.  The maximum length of this field is 14 characters. 
+
+Subdisks:
+	Number of subdisks associated with this plex.  This field cannot be
+	changed. 
+
+Comment:
+	The user-specified comment for this plex.  The maximum length of
+	the comment is 40 characters. 
+
+Errors:	
+	This specifies if plex should participate in Logical Storage Manager 
+	error policies. 
+
+Putil[0]:
+	Permanent utility field 0.  This is reserved for Logical Storage Manager
+	use, but may be changed.  The maximum length of all Putil fields is
+	14 characters. 
+
+Putil[1]:
+	Permanent utility field 1.  This field is reserved, but may be
+	changed. 
+
+Putil[2]:
+	Permanent utility field 2.  This field is reserved, but may be
+	changed.
+
+
+Errors
+----------
+
+"Plex name is required."
+A valid name must be entered in this field for the operation to continue.
+Enter a valid name.
+
+"There's already a component by this name in this disk group."
+The name specified for this plex is not unique within this disk group.
+Enter a different name.
+
+"Bad characters in stripe width field."
+The string entered in the Stripe Width field contains invalid characters.
+Enter a positive number greater than zero in this field.
+
+"Stripe width must be blank if layout is not striped."
+If "Concatenated" plex layout has been specified, then this field must be
+blank.  Erase the information in this field.
+
+"Stripe width required if layout is striped."
+If "Striped" plex layout has been specified, then a valid stripe width must
+be entered in this field.  Enter a valid stripe width.

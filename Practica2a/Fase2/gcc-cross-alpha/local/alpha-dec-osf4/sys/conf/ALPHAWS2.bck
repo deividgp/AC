@@ -1,0 +1,147 @@
+ident		"ALPHAWS2"
+
+options		UERF
+options		OSF
+options		_LMF_
+options		BIN_COMPAT
+options		COMPAT_43
+options		MACH
+options		MACH_IPC_TCACHE
+options		MACH_IPC_WWA
+options		MACH_IPC_XXXHACK 
+options		BUFCACHE_STATS
+options		INOCACHE_STATS
+options		STAT_TIME
+options		VAGUE_STATS
+options		UFS
+options		NFS
+options		NFS_SERVER
+options		MSFS
+options		STRKINFO
+options		STREAMS
+options		LDTTY
+options		RPTY
+options		INET
+options		UIPC
+options		SYSV_COFF
+options		QUOTA
+options		LABELS
+options	SL
+options SNMPINFO
+options		DLI
+options		BSD_TTY
+options	BPARM
+options		FFM_FS
+options		DLB
+options	PROCFS
+options         FFM_FS
+options	NTP_TIME
+options	KDEBUG
+options	PACKETFILTER
+options   PPP
+options   PCKT
+options         TIRDWR
+options 	TIMOD
+options		XTISO
+options		DVDFS
+options		CDFS
+options	DEC_AUDIT
+options	DEC_ACL
+options         ATM                     
+options         ATMILMI3X
+options		ATM
+options		ATMIFMP
+options		ATM
+options		LANE
+options		ATM
+options		ATMIP
+options		ATM
+options 	UNI3X
+options		ATM
+
+#
+# Standard options.
+#
+options		UNIX_LOCKS
+options		SER_COMPAT
+options		RT_PREEMPT
+options		RT_SCHED
+options		RT_SCHED_RQ
+options		RT_PML
+options		RT_TIMER
+options		RT_SEM
+options		RT_CSEM
+options		RT_IPC
+#
+
+#
+# pwrmgr option
+#
+options		PWRMGR_ENABLED
+makeoptions	CDEBUGOPTS="-g3"
+makeoptions	CCOMPRESS="-compress"
+makeoptions	PROFOPTS="-DPROFILING -DPROFTYPE=4"
+
+#
+# Max number of processors in the system (DO NOT CHANGE)
+#
+processors	16
+
+#
+# Special options (see configuring the kernel chapter
+# in the Guide to System Administration)
+#
+dfldsiz		134217728
+maxdsiz		1073741824
+dflssiz		2097152
+maxssiz		33554432
+cpu		"DEC6600"
+maxusers	32
+config		vmunix	swap generic
+
+bus             pci1       at nexus?    slot  1 
+callout after_c "../bin/mkdata pci"
+bus             isp0       at pci1      slot  6 vector    ispintr 
+controller      scsi0      at isp0      slot  0 
+bus             pci2001    at pci1      slot  8 
+bus             itpsa0     at pci2001   slot  9 vector    itpsaintr 
+controller      scsi1      at itpsa0    slot  0 
+controller      tu0        at pci1      slot  3 
+bus             pci0       at nexus?    slot  0 
+bus             isa0       at pci0      slot  7 
+callout after_c "../bin/mkdata isa"
+controller      gpc0       at isa0      slot  0 vector    gpcintr 
+controller      ace0       at isa0      slot  2 vector    aceintr 
+controller      ace1       at isa0      slot  3 vector    aceintr 
+controller      lp0        at isa0      slot  4 vector    lpintr 
+controller      fdi0       at isa0      slot  5 
+device disk     fd0        at fdi0      drive     0 
+bus             ata0       at pci0      slot  107 
+controller      scsi2      at ata0      slot  0 
+bus             ata1       at pci0      slot  207 
+controller      scsi3      at ata1      slot  0 
+bus             itpsa1     at pci0      slot  12 vector    itpsaintr 
+controller      scsi4      at itpsa1    slot  0 
+controller      vga0       at pci0      slot  13 
+
+
+#
+# Static Driver Definitions 
+#
+
+#
+# Pseudodevice Definitions (see configuring the 
+# kernel chapter in the Guide to System Administration)
+#
+pseudo-device	sysv_hab
+pseudo-device	svid_three_hab
+pseudo-device	svr_four_hab
+pseudo-device	soe_two_hab
+pseudo-device	rt_hab
+pseudo-device	ether
+pseudo-device	loop
+pseudo-device   prf    6
+pseudo-device	lv	2
+pseudo-device	lsm_ted	0
+pseudo-device	lsm	1
+pseudo-device	ws

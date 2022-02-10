@@ -1,0 +1,17 @@
+#/* @(#)@(#)help/concat.hlp	2.1 11 May 1993 19:03:53 -  */
+#ident  "@(#)va11:help/concat.hlp   2.1"
+#
+#
+Striping, stripe.hlp
+Mirroring, mirror.hlp
+Volume, volume.hlp
+Plex, plex.hlp
+Subdisk, subdisk.hlp
+#########################################
+CONCATENATION HELP
+
+A concatenated plex is the simplest kind of plex supported by the Volume
+Manager.  Data that is sequentially addressed in the volume is also
+sequentially located on the disk where the plex's subdisks reside.  This
+layout may be especially useful for data that may be used without Volume
+Manager interpretation, such as databases or boot disks.

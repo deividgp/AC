@@ -1,0 +1,31 @@
+#/* @(#)@(#)help/diskGrp.hlp	2.1 11 May 1993 19:04:19 -  */
+#ident  "@(#)va11:help/diskGrp.hlp   2.1"
+#
+#
+Views, views.hlp
+Physical Disk, pdisk.hlp
+Logical Storage Manager Disk, vdisk.hlp
+Volume, volume.hlp
+Plex, plex.hlp
+Subdisk, subdisk.hlp
+#########################################
+DISK GROUP HELP
+
+A disk group is a group of disks that share a common configuration.  Each
+disk group has a administrator-assigned name that can be used by the
+administrator to reference the disk group. Each disk group has an
+internally defined unique disk group ID, which is used to disambiguate two
+disk groups with the same administrator-assigned name.
+
+Disks groups serve two purposes: they provide for scalable configurations
+by limiting the number of disks that must be managed in tandem as
+configurations change, and they allow the Logical Storage manager to operate 
+with physical disk media that can be moved between systems.
+
+Disk groups are graphically represented in the Visual Administrator as
+views: these views are automatically created, maintained, and destroyed by
+DXlsm so that a disk group view always shows the entities that reside in that
+disk group.
+
+For more information consult the Logical Storage Manager documentation.
+
