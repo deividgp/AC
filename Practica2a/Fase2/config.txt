@@ -2,6 +2,7 @@
 -max:inst 50000000
 
 -res:ialu 4
+-res:imult 1
 -res:fpalu 4
 -res:fpmult 2
 

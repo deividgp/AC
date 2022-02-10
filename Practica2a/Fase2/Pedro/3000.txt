@@ -7,7 +7,7 @@ of SimpleScalar, LLC (info@simplescalar.com).
 
 sim: command line: sim-outorder -redir:sim Pedro/3000.txt -config config.txt fitxer_alpha 3000 
 
-sim: simulation started @ Thu Feb 10 23:27:45 2022, options follow:
+sim: simulation started @ Thu Feb 10 23:49:07 2022, options follow:
 
 sim-outorder: This simulator implements a very detailed out-of-order issue
 superscalar processor with a two-level memory system and speculative
@@ -250,6 +250,6 @@ ld_target_big_endian              0 # target executable endian-ness, non-zero if
 mem.page_count                26796 # total number of pages allocated
 mem.page_mem                214368k # total size of memory pages allocated
 mem.ptab_misses             2568431 # total first level page table misses
-mem.ptab_accesses        1368683703 # total page table accesses
+mem.ptab_accesses        1368683745 # total page table accesses
 mem.ptab_miss_rate           0.0019 # first level page table miss rate
 
