@@ -1,20 +1,20 @@
 -fastfwd 50000000
 -max:inst 50000000
 
--res:ialu 4
--res:imult 1
--res:fpalu 4
--res:fpmult 2
+-res:ialu 12
+-res:imult 3
+-res:fpalu 12
+-res:fpmult 6
 
--fetch:ifqsize 8
--decode:width 4
--issue:width 8
--commit:width 8
+-fetch:ifqsize 11
+-decode:width 7
+-issue:width 11
+-commit:width 11
 
--ruu:size 256
--lsq:size 128
+-ruu:size 512
+-lsq:size 256
 
--cache:dl1 dl1:32:64:8:l
+-cache:dl1 dl1:64:128:8:l
 -cache:il1 il1:32:64:8:l
 -cache:dl2 ul2:512:128:8:l
 -cache:il2 dl2
@@ -23,7 +23,7 @@
 -cache:dl1lat 8
 -cache:dl2lat 12
 
--res:memport 3
+-res:memport 9
 -mem:lat 60 1
 -mem:width 32
 
